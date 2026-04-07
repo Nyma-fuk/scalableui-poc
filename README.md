@@ -38,6 +38,8 @@
   - 現在の HMI 構成、package 調査結果、Grip 仕様、fullscreen overlay、既知制約の整理
 - `variants/no-grip/`
   - grip を使わない固定 3 分割 variant
+- `wiki/`
+  - HMI を自分好みに組み替えるための wiki-ready markdown 群
 
 ## 再現手順
 
@@ -65,6 +67,21 @@
   - 左 map / 右上 calendar / 右下 radio を固定 split で持つ variant
 
 複数ユースケースを試す場合は、variant は directory で分け、release や検証区切りを tag で管理するのが扱いやすいです。
+
+## Customization Wiki
+
+HMI の構成を自分で編集したい人向けに、repo 内に wiki-ready な markdown を用意しています。
+
+- `wiki/Home.md`
+  - wiki の入口
+- `wiki/HMI_Customization_HowTo_ja.md`
+  - どの順で何を触ればよいかの実践手順
+- `wiki/XML_and_Panel_Reference_ja.md`
+  - XML / panel 構成のリファレンス
+- `wiki/Customization_Recipes_ja.md`
+  - 典型的なカスタマイズ例
+
+GitHub Wiki を有効にしたい場合は、これらの markdown をそのまま移植するか、repo の `wiki/` を docs として公開する運用がしやすいです。
 
 ## 次の前提
 
