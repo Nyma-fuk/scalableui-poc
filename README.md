@@ -36,6 +36,8 @@
   - `packages/apps/Car/Launcher` repo 向け patch を置く
 - `docs/scalableui_hmi_poc_spec_ja.md`
   - 現在の HMI 構成、package 調査結果、Grip 仕様、fullscreen overlay、既知制約の整理
+- `variants/no-grip/`
+  - grip を使わない固定 3 分割 variant
 
 ## 再現手順
 
@@ -54,6 +56,15 @@
 - `git apply --check` に失敗した場合は何も変更せず止まる
 
 この script は「他人の checkout を壊さない」ことを優先しているため、想定ベースからズレている環境では無理に当てず abort する。
+
+## Variant
+
+- root
+  - 現在の `grip` あり variant
+- `variants/no-grip`
+  - 左 map / 右上 calendar / 右下 radio を固定 split で持つ variant
+
+複数ユースケースを試す場合は、variant は directory で分け、release や検証区切りを tag で管理するのが扱いやすいです。
 
 ## 次の前提
 
