@@ -1,0 +1,53 @@
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index 8c2cc18904b631994695b2d24cbd4013dc4d8969..1fd986243286f96bb90a4e834f70fd8cfd18722d 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -20,6 +20,7 @@ PRODUCT_MAKEFILES := \
+     $(LOCAL_DIR)/sdk_car_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_cw_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_dewd_x86_64.mk \
+@@ -29,6 +30,7 @@ COMMON_LUNCH_CHOICES := \
+     gsi_car_x86_64-trunk_staging-userdebug \
+     sdk_car_arm64-trunk_staging-userdebug \
+     sdk_car_md_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_x86_64-trunk_staging-userdebug \
+     sdk_car_cw_x86_64-trunk_staging-userdebug \
+     sdk_car_x86_64-trunk_staging-userdebug \
+ 
+diff --git a/sdk_car_scalableui_x86_64.mk b/sdk_car_scalableui_x86_64.mk
+new file mode 100644
+index 0000000000000000000000000000000000000000..97fe889a1884d679c90fd775c69082c4ff7a3663
+--- /dev/null
++++ b/sdk_car_scalableui_x86_64.mk
+@@ -0,0 +1,27 @@
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++# Small-start ScalableUI product for PoC work.
++# Start from the standard emulator car product and layer only the
++# ScalableUI-specific PoC resources on top.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_poc/car_scalableui_poc.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Car ScalableUI PoC on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for development purposes only.)

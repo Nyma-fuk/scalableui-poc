@@ -1,0 +1,45 @@
+diff --git a/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java b/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java
+index 92dc9417576692ce02f89906cf585ad40f18b4f3..1611840d449e0990b890315ca90cf901353b008c 100644
+--- a/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java
++++ b/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java
+@@ -24,6 +24,7 @@ import static com.android.car.carlauncher.AppGridConstants.PageOrientation;
+ import static com.android.car.carlauncher.AppGridConstants.isHorizontal;
+ import static com.android.car.hidden.apis.HiddenApiAccess.DRAG_FLAG_REQUEST_SURFACE_FOR_RETURN_ANIMATION;
+ 
++import android.app.Activity;
+ import android.content.ClipData;
+ import android.content.ComponentName;
+ import android.content.Context;
+@@ -195,6 +196,9 @@ public class AppItemViewHolder extends RecyclerView.ViewHolder {
+                 @Override
+                 public void onClick(View v) {
+                     app.getLaunchCallback().accept(mContext);
++                    if (mContext instanceof Activity activity && !activity.isFinishing()) {
++                        activity.finish();
++                    }
+                     mSnapCallback.notifySnapToPosition(getAbsoluteAdapterPosition());
+                 }
+             };
+diff --git a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
+index 7c78b801c04f581bab06aa0fcf1bb66d02d16744..37ac7aa4164079ab765b2666821754feb1c0bd1a 100644
+--- a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
++++ b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
+@@ -39,6 +39,10 @@ import java.net.URISyntaxException
+  * @see MirroringAppLaunchProvider
+  */
+ sealed class AppLaunchProvider {
++    companion object {
++        private const val EXTRA_LAUNCH_IN_APP_PANEL =
++            "com.android.car.carlauncher.extra.LAUNCH_IN_APP_PANEL"
++    }
+ 
+     /**
+      *  Launches the app associated with the given ComponentName. This is the core
+@@ -60,6 +64,7 @@ sealed class AppLaunchProvider {
+     protected fun launchApp(context: Context, intent: Intent) {
+         val options = ActivityOptions.makeBasic()
+         options.launchDisplayId = context.display?.displayId ?: 0
++        intent.putExtra(EXTRA_LAUNCH_IN_APP_PANEL, true)
+         context.startActivity(intent, options.toBundle())
+     }
+ 
