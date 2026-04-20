@@ -1,0 +1,341 @@
+diff --git a/car_product/scalableui_hmi_parking_mode/car_scalableui_hmi_parking_mode.mk b/car_product/scalableui_hmi_parking_mode/car_scalableui_hmi_parking_mode.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/car_scalableui_hmi_parking_mode.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Product layer for the Parking and charging dashboard ScalableUI HMI.
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_parking_mode/rro/rro.mk)
++
++PRODUCT_PACKAGES += \
++    Calendar \
++    ScalableUiHmiDemoApps
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/Android.bp b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/Android.bp
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/Android.bp
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++//
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++android_app {
++    name: "CarSystemUIScalableUiHmiParkingModeRRO",
++    resource_dirs: ["res"],
++    certificate: "platform",
++    sdk_version: "current",
++    manifest: "AndroidManifest.xml",
++    system_ext_specific: true,
++    static_libs: [
++        "car-portrait-ui-common",
++        "car-ui-lib",
++    ],
++    aaptflags: [
++        "--no-resource-deduping",
++        "--no-resource-removal",
++    ],
++}
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/AndroidManifest.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/AndroidManifest.xml
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.systemui.rro.scalableui.hmi.parking_mode">
++    <application android:hasCode="false" />
++    <overlay
++        android:targetPackage="com.android.systemui"
++        android:isStatic="true"
++        android:resourcesMap="@xml/overlays"
++        android:priority="138"
++    />
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/layout/scalableui_hmi_decor_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/layout/scalableui_hmi_decor_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/layout/scalableui_hmi_decor_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#121820" />
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/config.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/config.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/config.xml
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <bool name="config_enableScalableUI" translatable="false">true</bool>
++    <bool name="config_enableClearBackStack" translatable="false">false</bool>
++
++    <array name="window_states">
++        <item>@xml/energy_panel</item>
++        <item>@xml/media_panel</item>
++        <item>@xml/settings_panel</item>
++        <item>@xml/shortcuts_panel</item>
++        <item>@xml/panel_app_grid</item>
++        <item>@xml/app_panel</item>
++    </array>
++
++    <string-array name="config_untrimmable_activities" translatable="false">
++    </string-array>
++
++    <string-array name="config_default_activities" translatable="false">
++        <item>energy_panel;com.android.car.scalableui.hmi.demo/.EnergyPanelActivity</item>
++        <item>media_panel;com.android.car.scalableui.hmi.demo/.MediaPanelActivity</item>
++        <item>settings_panel;com.android.car.scalableui.hmi.demo/.SettingsPanelActivity</item>
++        <item>shortcuts_panel;com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity</item>
++        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
++    </string-array>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/dimens.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/dimens.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/dimens.xml
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <dimen name="scalableui_hmi_card_radius">18dp</dimen>
++    <dimen name="scalableui_hmi_panel_gap">12dp</dimen>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/integers.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/integers.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/integers.xml
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <integer name="energy_panel_layer">30</integer>
++    <integer name="media_panel_layer">31</integer>
++    <integer name="settings_panel_layer">32</integer>
++    <integer name="shortcuts_panel_layer">33</integer>
++    <integer name="app_panel_layer">180</integer>
++    <integer name="app_grid_panel_layer">200</integer>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/strings.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/strings.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/values/strings.xml
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="default_config" translatable="false">DEFAULT</string>
++    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
++    <string name="energy_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.EnergyPanelActivity</string>
++    <string name="media_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MediaPanelActivity</string>
++    <string name="settings_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.SettingsPanelActivity</string>
++    <string name="shortcuts_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity</string>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/app_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/app_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="app_panel" defaultVariant="@id/closed" role="@string/default_config" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/app_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="0" top="0" right="100%" bottom="100%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/app_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=energy_panel" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=media_panel" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=settings_panel" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=shortcuts_panel" toVariant="@id/closed"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
++    </Transitions>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/energy_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/energy_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/energy_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="energy_panel" defaultVariant="@id/opened" role="@string/energy_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/energy_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="2%" top="3%" right="49%" bottom="48%"/>
++<Corner radius="18dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/energy_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/media_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/media_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/media_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="media_panel" defaultVariant="@id/opened" role="@string/media_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/media_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="51%" top="3%" right="98%" bottom="48%"/>
++<Corner radius="18dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/media_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/overlays.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/overlays.xml
++<overlay>
++    <item target="bool/config_enableScalableUI" value="@bool/config_enableScalableUI"/>
++    <item target="bool/config_enableClearBackStack" value="@bool/config_enableClearBackStack"/>
++    <item target="array/window_states" value="@array/window_states"/>
++    <item target="array/config_untrimmable_activities" value="@array/config_untrimmable_activities"/>
++    <item target="array/config_default_activities" value="@array/config_default_activities"/>
++</overlay>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/panel_app_grid.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/panel_app_grid.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/app_grid_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="0" top="0" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/app_grid_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
++        <Transition onEvent="close_app_grid" toVariant="@id/closed"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed"/>
++    </Transitions>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/settings_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/settings_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/settings_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="settings_panel" defaultVariant="@id/opened" role="@string/settings_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/settings_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="2%" top="52%" right="49%" bottom="97%"/>
++<Corner radius="18dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/settings_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/shortcuts_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/shortcuts_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/shortcuts_panel.xml
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="shortcuts_panel" defaultVariant="@id/opened" role="@string/shortcuts_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/shortcuts_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="51%" top="52%" right="98%" bottom="97%"/>
++<Corner radius="18dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/shortcuts_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_parking_mode/rro/rro.mk b/car_product/scalableui_hmi_parking_mode/rro/rro.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_parking_mode/rro/rro.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++PRODUCT_PACKAGES += \
++    CarSystemUIScalableUiHmiParkingModeRRO \

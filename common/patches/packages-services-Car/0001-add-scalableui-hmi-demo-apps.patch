@@ -1,0 +1,165 @@
+diff --git a/car_product/scalableui_hmi_demo_apps/Android.bp b/car_product/scalableui_hmi_demo_apps/Android.bp
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/Android.bp
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++//
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++android_app {
++    name: "ScalableUiHmiDemoApps",
++    srcs: ["src/**/*.java"],
++    manifest: "AndroidManifest.xml",
++    certificate: "platform",
++    platform_apis: true,
++    system_ext_specific: true,
++    privileged: true,
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.demo">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI HMI Demo">
++        <activity
++            android:name=".ScalableUiDemoActivity"
++            android:exported="false" />
++        <activity-alias
++            android:name=".TaskPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Tasks" />
++        <activity-alias
++            android:name=".PhonePanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Phone" />
++        <activity-alias
++            android:name=".MediaPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Media" />
++        <activity-alias
++            android:name=".StatusPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Status" />
++        <activity-alias
++            android:name=".ControlsPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Controls" />
++        <activity-alias
++            android:name=".ShortcutsPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Shortcuts" />
++        <activity-alias
++            android:name=".EnergyPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Energy" />
++        <activity-alias
++            android:name=".SettingsPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Settings" />
++        <activity-alias
++            android:name=".DebugPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Debug" />
++        <activity-alias
++            android:name=".PassengerPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Passenger" />
++        <activity-alias
++            android:name=".CalmPanelActivity"
++            android:targetActivity=".ScalableUiDemoActivity"
++            android:exported="true"
++            android:label="ScalableUI Calm" />
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
++package com.android.car.scalableui.hmi.demo;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.Typeface;
++import android.graphics.drawable.GradientDrawable;
++import android.os.Bundle;
++import android.view.Gravity;
++import android.view.ViewGroup;
++import android.widget.LinearLayout;
++import android.widget.TextView;
++
++public final class ScalableUiDemoActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++
++        String className = getComponentName().getClassName();
++        String title = className.substring(className.lastIndexOf('.') + 1)
++                .replace("PanelActivity", "")
++                .replace("Activity", "");
++
++        LinearLayout root = new LinearLayout(this);
++        root.setOrientation(LinearLayout.VERTICAL);
++        root.setGravity(Gravity.CENTER);
++        root.setPadding(40, 32, 40, 32);
++
++        GradientDrawable background = new GradientDrawable(
++                GradientDrawable.Orientation.TL_BR,
++                new int[] {Color.rgb(20, 28, 38), Color.rgb(36, 51, 68)});
++        background.setCornerRadius(28f);
++        root.setBackground(background);
++
++        TextView heading = new TextView(this);
++        heading.setText(title);
++        heading.setTextColor(Color.WHITE);
++        heading.setTextSize(30f);
++        heading.setTypeface(Typeface.DEFAULT_BOLD);
++        heading.setGravity(Gravity.CENTER);
++
++        TextView body = new TextView(this);
++        body.setText("ScalableUI demo activity\n" + className);
++        body.setTextColor(Color.rgb(210, 224, 238));
++        body.setTextSize(15f);
++        body.setGravity(Gravity.CENTER);
++        body.setPadding(0, 20, 0, 0);
++
++        root.addView(heading, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++        root.addView(body, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++        setContentView(root);
++    }
++}

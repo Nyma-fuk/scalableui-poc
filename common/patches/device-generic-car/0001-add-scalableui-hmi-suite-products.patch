@@ -1,0 +1,426 @@
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index 1111111..2222222 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -20,6 +20,18 @@
+     $(LOCAL_DIR)/sdk_car_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_fixed_3zone_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_map_first_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_media_dock_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_productivity_dashboard_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_app_with_rail_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_floating_card_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_app_grid_hub_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_calm_mode_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_parking_mode_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_developer_cockpit_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_dual_display_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_showcase_modes_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_cw_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_dewd_x86_64.mk \
+@@ -29,6 +41,18 @@
+     gsi_car_x86_64-trunk_staging-userdebug \
+     sdk_car_arm64-trunk_staging-userdebug \
+     sdk_car_md_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_fixed_3zone_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_media_dock_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_productivity_dashboard_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_app_with_rail_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_floating_card_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_app_grid_hub_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_calm_mode_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_parking_mode_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_developer_cockpit_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_dual_display_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_showcase_modes_x86_64-trunk_staging-userdebug \
+     sdk_car_cw_x86_64-trunk_staging-userdebug \
+     sdk_car_x86_64-trunk_staging-userdebug \
+ 
+
+diff --git a/sdk_car_scalableui_fixed_3zone_x86_64.mk b/sdk_car_scalableui_fixed_3zone_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_fixed_3zone_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Fixed 3-zone cockpit.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_fixed_3zone/car_scalableui_hmi_fixed_3zone.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_fixed_3zone_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Fixed 3-zone cockpit on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_map_first_x86_64.mk b/sdk_car_scalableui_map_first_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_map_first_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Map-first navigation cockpit.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_map_first/car_scalableui_hmi_map_first.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_map_first_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Map-first navigation cockpit on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_media_dock_x86_64.mk b/sdk_car_scalableui_media_dock_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_media_dock_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Media dock cockpit.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_media_dock/car_scalableui_hmi_media_dock.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_media_dock_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Media dock cockpit on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_productivity_dashboard_x86_64.mk b/sdk_car_scalableui_productivity_dashboard_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_productivity_dashboard_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Productivity assistant dashboard.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_productivity_dashboard/car_scalableui_hmi_productivity_dashboard.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_productivity_dashboard_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Productivity assistant dashboard on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_app_with_rail_x86_64.mk b/sdk_car_scalableui_app_with_rail_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_app_with_rail_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Fullscreen app with persistent rail.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_app_with_rail/car_scalableui_hmi_app_with_rail.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_app_with_rail_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Fullscreen app with persistent rail on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_floating_card_x86_64.mk b/sdk_car_scalableui_floating_card_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_floating_card_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Floating card HMI.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_floating_card/car_scalableui_hmi_floating_card.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_floating_card_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Floating card HMI on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_app_grid_hub_x86_64.mk b/sdk_car_scalableui_app_grid_hub_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_app_grid_hub_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: App grid hub.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_app_grid_hub/car_scalableui_hmi_app_grid_hub.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_app_grid_hub_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := App grid hub on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_calm_mode_x86_64.mk b/sdk_car_scalableui_calm_mode_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_calm_mode_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Calm mode minimal HMI.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_calm_mode/car_scalableui_hmi_calm_mode.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_calm_mode_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Calm mode minimal HMI on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_parking_mode_x86_64.mk b/sdk_car_scalableui_parking_mode_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_parking_mode_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Parking and charging dashboard.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_parking_mode/car_scalableui_hmi_parking_mode.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_parking_mode_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Parking and charging dashboard on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_developer_cockpit_x86_64.mk b/sdk_car_scalableui_developer_cockpit_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_developer_cockpit_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Diagnostics developer cockpit.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_developer_cockpit/car_scalableui_hmi_developer_cockpit.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_developer_cockpit_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Diagnostics developer cockpit on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_dual_display_x86_64.mk b/sdk_car_scalableui_dual_display_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_dual_display_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Driver and passenger display HMI.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_dual_display/car_scalableui_hmi_dual_display.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_dual_display_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Driver and passenger display HMI on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
+
+diff --git a/sdk_car_scalableui_showcase_modes_x86_64.mk b/sdk_car_scalableui_showcase_modes_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_showcase_modes_x86_64.mk
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Mode-switching showcase.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_showcase_modes/car_scalableui_hmi_showcase_modes.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_showcase_modes_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Mode-switching showcase on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)
