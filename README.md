@@ -37,11 +37,13 @@
 - `docs/scalableui_hmi_poc_spec_ja.md`
   - 現在の HMI 構成、package 調査結果、Grip 仕様、fullscreen overlay、既知制約の整理
 - `docs/hmi_variant_suite_ja.md`
-  - 12 個の HMI variant を patch 適用し、product / lunch target で切り替える手順
+  - 13 個の HMI variant を patch 適用し、product / lunch target で切り替える手順
+- `docs/widget_workspace_build_notes_ja.md`
+  - G Ball / synthetic map / widget workspace の設計判断と build warning の記録
 - `common/patches/`
   - HMI variant 群で共有する product / demo app patch
 - `hmi-variants/`
-  - 12 個の HMI variant suite の一覧
+  - 13 個の HMI variant suite の一覧
 - `variants/no-grip/`
   - grip を使わない固定 3 分割 variant
 - `variants/<variant>/`
@@ -74,11 +76,11 @@
 - `variants/no-grip`
   - 左 map / 右上 calendar / 右下 radio を固定 split で持つ variant
 - `hmi-variants`
-  - `HMI_Pattern_Ideas_ja.md` の 12 案を product 切り替え可能な generated variant として管理
+  - `HMI_Pattern_Ideas_ja.md` から発展した 13 案を product 切り替え可能な generated variant として管理
 
 複数ユースケースを試す場合は、variant は directory で分け、release や検証区切りを tag で管理するのが扱いやすいです。
 
-12 個の HMI 案をすべて適用する場合:
+13 個の HMI 案をすべて適用する場合:
 
 ```bash
 bash workdir/scalableui-poc/scripts/apply_hmi_suite.sh

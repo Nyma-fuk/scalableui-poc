@@ -12,7 +12,7 @@ A comparison layout keeps normal, calm, and app-focus concepts visible as separa
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `normal_map_panel` | Normal Map | `com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
+| `normal_map_panel` | Normal Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
 | `normal_context_panel` | Normal Context | `com.android.calendar/.AllInOneActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
 | `calm_preview_panel` | Calm Preview | `com.android.car.scalableui.hmi.demo/.CalmPanelActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
 | `app_focus_preview_panel` | App Focus Preview | `com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
@@ -20,6 +20,8 @@ A comparison layout keeps normal, calm, and app-focus concepts visible as separa
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned

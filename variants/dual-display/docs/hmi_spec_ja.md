@@ -12,13 +12,15 @@ Driver and passenger panels are split by displayId for multi-display exploration
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `driver_map_panel` | Driver Map | `com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
+| `driver_map_panel` | Driver Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
 | `driver_media_panel` | Driver Media | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `74%` | `3%` | `98%` | `97%` | `0` |
 | `passenger_app_panel` | Passenger App | `com.android.car.scalableui.hmi.demo/.PassengerPanelActivity` | `0` | `0` | `100%` | `100%` | `1` |
 
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned

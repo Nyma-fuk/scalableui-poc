@@ -1,0 +1,363 @@
+diff --git a/car_product/scalableui_hmi_widget_workspace/car_scalableui_hmi_widget_workspace.mk b/car_product/scalableui_hmi_widget_workspace/car_scalableui_hmi_widget_workspace.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/car_scalableui_hmi_widget_workspace.mk
+@@ -0,0 +1,22 @@
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Product layer for the Widget workspace cockpit ScalableUI HMI.
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_widget_workspace/rro/rro.mk)
++
++PRODUCT_PACKAGES += \
++    Calendar \
++    ScalableUiHmiDemoApps
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/Android.bp b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/Android.bp
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/Android.bp
+@@ -0,0 +1,36 @@
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++//
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++android_app {
++    name: "CarSystemUIScalableUiHmiWidgetWorkspaceRRO",
++    resource_dirs: ["res"],
++    certificate: "platform",
++    sdk_version: "current",
++    manifest: "AndroidManifest.xml",
++    system_ext_specific: true,
++    static_libs: [
++        "car-portrait-ui-common",
++        "car-ui-lib",
++    ],
++    aaptflags: [
++        "--no-resource-deduping",
++        "--no-resource-removal",
++    ],
++}
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/AndroidManifest.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/AndroidManifest.xml
+@@ -0,0 +1,10 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.systemui.rro.scalableui.hmi.widget_workspace">
++    <application android:hasCode="false" />
++    <overlay
++        android:targetPackage="com.android.systemui"
++        android:isStatic="true"
++        android:resourcesMap="@xml/overlays"
++        android:priority="142"
++    />
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/layout/scalableui_hmi_decor_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/layout/scalableui_hmi_decor_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/layout/scalableui_hmi_decor_panel.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#121820" />
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/config.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/config.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/config.xml
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <bool name="config_enableScalableUI" translatable="false">true</bool>
++    <bool name="config_enableClearBackStack" translatable="false">false</bool>
++
++    <array name="window_states">
++        <item>@xml/panel_menu</item>
++        <item>@xml/workspace_panel</item>
++        <item>@xml/widget_controls_panel</item>
++        <item>@xml/workspace_status_panel</item>
++        <item>@xml/panel_app_grid</item>
++        <item>@xml/app_panel</item>
++    </array>
++
++    <string-array name="config_untrimmable_activities" translatable="false">
++    </string-array>
++
++    <string-array name="config_default_activities" translatable="false">
++        <item>panel_menu;com.android.car.scalableui.hmi.demo/.PanelMenuActivity</item>
++        <item>workspace_panel;com.android.car.scalableui.hmi.demo/.WidgetPanelActivity</item>
++        <item>widget_controls_panel;com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</item>
++        <item>workspace_status_panel;com.android.car.scalableui.hmi.demo/.StatusPanelActivity</item>
++        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
++    </string-array>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/dimens.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/dimens.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/dimens.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <dimen name="scalableui_hmi_card_radius">18dp</dimen>
++    <dimen name="scalableui_hmi_panel_gap">12dp</dimen>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/integers.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/integers.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/integers.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <integer name="panel_menu_layer">55</integer>
++    <integer name="workspace_panel_layer">35</integer>
++    <integer name="widget_controls_panel_layer">42</integer>
++    <integer name="workspace_status_panel_layer">43</integer>
++    <integer name="app_panel_layer">180</integer>
++    <integer name="app_grid_panel_layer">200</integer>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/strings.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/strings.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/values/strings.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="default_config" translatable="false">DEFAULT</string>
++    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
++    <string name="panel_menu_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.PanelMenuActivity</string>
++    <string-array name="workspace_panel_componentNames" translatable="false">
++        <item>com.android.car.scalableui.hmi.demo/.WidgetPanelActivity</item>
++        <item>com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
++        <item>com.android.car.scalableui.hmi.demo/.GBallActivity</item>
++        <item>com.android.car.scalableui.hmi.demo/.MediaPanelActivity</item>
++        <item>com.android.car.scalableui.hmi.demo/.TaskPanelActivity</item>
++    </string-array>
++    <string name="widget_controls_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</string>
++    <string name="workspace_status_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.StatusPanelActivity</string>
++</resources>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/app_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/app_panel.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="app_panel" defaultVariant="@id/closed" role="@string/default_config" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/app_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="0" top="0" right="100%" bottom="100%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/app_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_menu" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=workspace_panel" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=widget_controls_panel" toVariant="@id/closed"/>
++<Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=workspace_status_panel" toVariant="@id/closed"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
++    </Transitions>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/overlays.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/overlays.xml
+@@ -0,0 +1,7 @@
++<overlay>
++    <item target="bool/config_enableScalableUI" value="@bool/config_enableScalableUI"/>
++    <item target="bool/config_enableClearBackStack" value="@bool/config_enableClearBackStack"/>
++    <item target="array/window_states" value="@array/window_states"/>
++    <item target="array/config_untrimmable_activities" value="@array/config_untrimmable_activities"/>
++    <item target="array/config_default_activities" value="@array/config_default_activities"/>
++</overlay>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_app_grid.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_app_grid.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/app_grid_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="0" top="0" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/app_grid_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
++        <Transition onEvent="close_app_grid" toVariant="@id/closed"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed"/>
++    </Transitions>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_menu.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_menu.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/panel_menu.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="panel_menu" defaultVariant="@id/opened" role="@string/panel_menu_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/panel_menu_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="2%" top="3%" right="22%" bottom="97%"/>
++<Corner radius="18dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/panel_menu_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/widget_controls_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/widget_controls_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/widget_controls_panel.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="widget_controls_panel" defaultVariant="@id/opened" role="@string/widget_controls_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/widget_controls_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="24%" top="72%" right="60%" bottom="97%"/>
++<Corner radius="22dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/widget_controls_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_panel.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="workspace_panel" defaultVariant="@id/opened" role="@array/workspace_panel_componentNames" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/workspace_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="24%" top="3%" right="98%" bottom="68%"/>
++<Corner radius="24dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/workspace_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_status_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_status_panel.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/workspace_status_panel.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="workspace_status_panel" defaultVariant="@id/opened" role="@string/workspace_status_panel_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/workspace_status_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="62%" top="72%" right="98%" bottom="97%"/>
++<Corner radius="22dp"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/workspace_status_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
++    </Variant>
++</Panel>
+
+diff --git a/car_product/scalableui_hmi_widget_workspace/rro/rro.mk b/car_product/scalableui_hmi_widget_workspace/rro/rro.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_widget_workspace/rro/rro.mk
+@@ -0,0 +1,18 @@
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++PRODUCT_PACKAGES += \
++    CarSystemUIScalableUiHmiWidgetWorkspaceRRO \

@@ -39,7 +39,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,85 @@
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +          package="com.android.car.scalableui.hmi.demo">
 +    <application
@@ -48,92 +48,255 @@ index 0000000..1111111
 +        <activity
 +            android:name=".ScalableUiDemoActivity"
 +            android:exported="false" />
-+        <activity-alias
++        <activity
++            android:name=".MapPanelActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Map" />
++        <activity
++            android:name=".GBallActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="G Ball" />
++        <activity
++            android:name=".WidgetPanelActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Widgets" />
++        <activity
++            android:name=".PanelMenuActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Panel Menu" />
++        <activity
 +            android:name=".TaskPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Tasks" />
-+        <activity-alias
++        <activity
 +            android:name=".PhonePanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Phone" />
-+        <activity-alias
++        <activity
 +            android:name=".MediaPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Media" />
-+        <activity-alias
++        <activity
 +            android:name=".StatusPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Status" />
-+        <activity-alias
++        <activity
 +            android:name=".ControlsPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Controls" />
-+        <activity-alias
++        <activity
 +            android:name=".ShortcutsPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Shortcuts" />
-+        <activity-alias
++        <activity
 +            android:name=".EnergyPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Energy" />
-+        <activity-alias
++        <activity
 +            android:name=".SettingsPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Settings" />
-+        <activity-alias
++        <activity
 +            android:name=".DebugPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Debug" />
-+        <activity-alias
++        <activity
 +            android:name=".PassengerPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Passenger" />
-+        <activity-alias
++        <activity
 +            android:name=".CalmPanelActivity"
-+            android:targetActivity=".ScalableUiDemoActivity"
 +            android:exported="true"
++            android:resizeableActivity="true"
 +            android:label="ScalableUI Calm" />
 +    </application>
 +</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class CalmPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class ControlsPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class DebugPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class EnergyPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class GBallActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class MapPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class MediaPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class PanelMenuActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class PassengerPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class PhonePanelActivity extends ScalableUiDemoActivity {
++}
 
 diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,318 @@
 +package com.android.car.scalableui.hmi.demo;
 +
 +import android.app.Activity;
++import android.content.ComponentName;
++import android.content.Intent;
++import android.graphics.Canvas;
 +import android.graphics.Color;
++import android.graphics.Paint;
++import android.graphics.Path;
++import android.graphics.RectF;
 +import android.graphics.Typeface;
 +import android.graphics.drawable.GradientDrawable;
 +import android.os.Bundle;
 +import android.view.Gravity;
++import android.view.MotionEvent;
++import android.view.View;
 +import android.view.ViewGroup;
++import android.widget.Button;
 +import android.widget.LinearLayout;
++import android.widget.SeekBar;
++import android.widget.Switch;
 +import android.widget.TextView;
 +
-+public final class ScalableUiDemoActivity extends Activity {
++public class ScalableUiDemoActivity extends Activity {
++    private static final String PKG = "com.android.car.scalableui.hmi.demo";
++
 +    @Override
 +    protected void onCreate(Bundle savedInstanceState) {
 +        super.onCreate(savedInstanceState);
 +
 +        String className = getComponentName().getClassName();
++        if (className.endsWith("MapPanelActivity")) {
++            setContentView(new SyntheticMapView(this));
++            return;
++        }
++        if (className.endsWith("GBallActivity")) {
++            setContentView(new GBallView(this));
++            return;
++        }
++        if (className.endsWith("WidgetPanelActivity")) {
++            setContentView(createWidgetPanel());
++            return;
++        }
++        if (className.endsWith("PanelMenuActivity")) {
++            setContentView(createPanelMenu());
++            return;
++        }
++
 +        String title = className.substring(className.lastIndexOf('.') + 1)
 +                .replace("PanelActivity", "")
 +                .replace("Activity", "");
++        setContentView(createInfoPanel(title, "ScalableUI demo activity\n" + className));
++    }
 +
++    private LinearLayout createInfoPanel(String title, String bodyText) {
 +        LinearLayout root = new LinearLayout(this);
 +        root.setOrientation(LinearLayout.VERTICAL);
 +        root.setGravity(Gravity.CENTER);
@@ -153,7 +316,7 @@ index 0000000..1111111
 +        heading.setGravity(Gravity.CENTER);
 +
 +        TextView body = new TextView(this);
-+        body.setText("ScalableUI demo activity\n" + className);
++        body.setText(bodyText);
 +        body.setTextColor(Color.rgb(210, 224, 238));
 +        body.setTextSize(15f);
 +        body.setGravity(Gravity.CENTER);
@@ -163,6 +326,292 @@ index 0000000..1111111
 +                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 +        root.addView(body, new LinearLayout.LayoutParams(
 +                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-+        setContentView(root);
++        return root;
 +    }
++
++    private LinearLayout createPanelMenu() {
++        LinearLayout root = createVerticalShell("Panel Menu", "Swap the workspace panel");
++        addLaunchButton(root, "Widgets", "WidgetPanelActivity");
++        addLaunchButton(root, "Map", "MapPanelActivity");
++        addLaunchButton(root, "G Ball", "GBallActivity");
++        addLaunchButton(root, "Media", "MediaPanelActivity");
++        addLaunchButton(root, "Tasks", "TaskPanelActivity");
++        return root;
++    }
++
++    private LinearLayout createWidgetPanel() {
++        LinearLayout root = createVerticalShell("Interactive Widgets", "Tap, slide, and toggle");
++
++        TextView status = new TextView(this);
++        status.setText("Cabin: 22 C  |  Fan: 35%  |  Drive mode: Comfort");
++        status.setTextColor(Color.WHITE);
++        status.setTextSize(18f);
++        status.setGravity(Gravity.CENTER);
++        status.setPadding(0, 14, 0, 14);
++        root.addView(status, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        SeekBar fan = new SeekBar(this);
++        fan.setMax(100);
++        fan.setProgress(35);
++        fan.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
++            @Override
++            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
++                status.setText("Cabin: 22 C  |  Fan: " + progress + "%  |  Drive mode: Comfort");
++            }
++
++            @Override
++            public void onStartTrackingTouch(SeekBar seekBar) {}
++
++            @Override
++            public void onStopTrackingTouch(SeekBar seekBar) {}
++        });
++        root.addView(fan, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        Switch quiet = new Switch(this);
++        quiet.setText("Quiet cabin mode");
++        quiet.setTextColor(Color.rgb(222, 238, 246));
++        quiet.setTextSize(18f);
++        quiet.setPadding(0, 18, 0, 18);
++        root.addView(quiet, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        Button action = createButton("Apply widget layout");
++        action.setOnClickListener(v -> status.setText(
++                quiet.isChecked() ? "Quiet widget layout applied" : "Widget layout applied"));
++        root.addView(action);
++        return root;
++    }
++
++    private LinearLayout createVerticalShell(String heading, String subheading) {
++        LinearLayout root = new LinearLayout(this);
++        root.setOrientation(LinearLayout.VERTICAL);
++        root.setGravity(Gravity.CENTER);
++        root.setPadding(28, 24, 28, 24);
++        GradientDrawable background = new GradientDrawable(
++                GradientDrawable.Orientation.TL_BR,
++                new int[] {Color.rgb(16, 25, 34), Color.rgb(30, 58, 66)});
++        background.setCornerRadius(30f);
++        root.setBackground(background);
++
++        TextView title = new TextView(this);
++        title.setText(heading);
++        title.setTextColor(Color.WHITE);
++        title.setTextSize(28f);
++        title.setTypeface(Typeface.DEFAULT_BOLD);
++        title.setGravity(Gravity.CENTER);
++        root.addView(title, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        TextView subtitle = new TextView(this);
++        subtitle.setText(subheading);
++        subtitle.setTextColor(Color.rgb(188, 218, 224));
++        subtitle.setTextSize(14f);
++        subtitle.setGravity(Gravity.CENTER);
++        subtitle.setPadding(0, 6, 0, 18);
++        root.addView(subtitle, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++        return root;
++    }
++
++    private void addLaunchButton(LinearLayout root, String label, String activityName) {
++        Button button = createButton(label);
++        button.setOnClickListener(v -> {
++            Intent intent = new Intent(Intent.ACTION_MAIN);
++            intent.setComponent(new ComponentName(PKG, PKG + "." + activityName));
++            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            startActivity(intent);
++        });
++        root.addView(button, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++    }
++
++    private Button createButton(String label) {
++        Button button = new Button(this);
++        button.setText(label);
++        button.setTextSize(16f);
++        button.setAllCaps(false);
++        return button;
++    }
++
++    private static final class SyntheticMapView extends View {
++        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++        private final Path mPath = new Path();
++
++        SyntheticMapView(Activity activity) {
++            super(activity);
++            setBackgroundColor(Color.rgb(221, 231, 224));
++        }
++
++        @Override
++        protected void onDraw(Canvas canvas) {
++            super.onDraw(canvas);
++            int width = getWidth();
++            int height = getHeight();
++
++            mPaint.setStyle(Paint.Style.FILL);
++            mPaint.setColor(Color.rgb(198, 220, 205));
++            canvas.drawRect(0, 0, width, height, mPaint);
++
++            mPaint.setColor(Color.rgb(169, 205, 178));
++            canvas.drawRoundRect(new RectF(width * .04f, height * .08f, width * .34f,
++                    height * .38f), 28, 28, mPaint);
++            canvas.drawRoundRect(new RectF(width * .68f, height * .52f, width * .96f,
++                    height * .92f), 28, 28, mPaint);
++
++            mPaint.setStyle(Paint.Style.STROKE);
++            mPaint.setStrokeCap(Paint.Cap.ROUND);
++            mPaint.setStrokeWidth(34f);
++            mPaint.setColor(Color.rgb(244, 239, 218));
++            mPath.reset();
++            mPath.moveTo(width * .02f, height * .68f);
++            mPath.cubicTo(width * .28f, height * .54f, width * .36f, height * .22f,
++                    width * .62f, height * .28f);
++            mPath.cubicTo(width * .80f, height * .32f, width * .78f, height * .74f,
++                    width * .98f, height * .78f);
++            canvas.drawPath(mPath, mPaint);
++
++            mPaint.setStrokeWidth(10f);
++            mPaint.setColor(Color.rgb(255, 194, 71));
++            canvas.drawPath(mPath, mPaint);
++
++            mPaint.setStrokeWidth(18f);
++            mPaint.setColor(Color.rgb(235, 235, 229));
++            canvas.drawLine(width * .18f, height * .02f, width * .90f, height * .96f, mPaint);
++            canvas.drawLine(width * .04f, height * .42f, width * .96f, height * .18f, mPaint);
++            canvas.drawLine(width * .10f, height * .90f, width * .88f, height * .44f, mPaint);
++
++            mPaint.setStyle(Paint.Style.FILL);
++            mPaint.setColor(Color.rgb(31, 83, 146));
++            canvas.drawCircle(width * .52f, height * .50f, 16f, mPaint);
++            mPaint.setColor(Color.rgb(14, 35, 48));
++            mPaint.setTextSize(28f);
++            mPaint.setTypeface(Typeface.DEFAULT_BOLD);
++            canvas.drawText("Synthetic Map Sample", 28f, 42f, mPaint);
++            mPaint.setTypeface(Typeface.DEFAULT);
++            mPaint.setTextSize(18f);
++            canvas.drawText("Bundled demo artwork, no external map tiles", 28f, 68f, mPaint);
++        }
++    }
++
++    private static final class GBallView extends View {
++        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++        private float mX;
++        private float mY;
++        private float mVx = 7f;
++        private float mVy = 5f;
++
++        GBallView(Activity activity) {
++            super(activity);
++            setBackgroundColor(Color.rgb(13, 21, 32));
++        }
++
++        @Override
++        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
++            mX = w * .38f;
++            mY = h * .42f;
++        }
++
++        @Override
++        public boolean onTouchEvent(MotionEvent event) {
++            if (event.getAction() == MotionEvent.ACTION_DOWN
++                    || event.getAction() == MotionEvent.ACTION_MOVE) {
++                mX = event.getX();
++                mY = event.getY();
++                invalidate();
++                return true;
++            }
++            return true;
++        }
++
++        @Override
++        protected void onDraw(Canvas canvas) {
++            super.onDraw(canvas);
++            int width = getWidth();
++            int height = getHeight();
++            float radius = Math.max(28f, Math.min(width, height) * .10f);
++            mX += mVx;
++            mY += mVy;
++            if (mX < radius || mX > width - radius) {
++                mVx = -mVx;
++            }
++            if (mY < radius || mY > height - radius) {
++                mVy = -mVy;
++            }
++            mX = Math.max(radius, Math.min(width - radius, mX));
++            mY = Math.max(radius, Math.min(height - radius, mY));
++
++            mPaint.setStyle(Paint.Style.FILL);
++            mPaint.setColor(Color.rgb(20, 34, 50));
++            canvas.drawRoundRect(new RectF(18, 18, width - 18, height - 18), 36, 36, mPaint);
++            mPaint.setColor(Color.rgb(76, 211, 194));
++            canvas.drawCircle(mX, mY, radius, mPaint);
++            mPaint.setColor(Color.WHITE);
++            canvas.drawCircle(mX - radius * .28f, mY - radius * .32f, radius * .18f, mPaint);
++            mPaint.setColor(Color.rgb(225, 240, 246));
++            mPaint.setTextSize(28f);
++            mPaint.setTypeface(Typeface.DEFAULT_BOLD);
++            canvas.drawText("G Ball", 34f, 54f, mPaint);
++            mPaint.setTypeface(Typeface.DEFAULT);
++            mPaint.setTextSize(18f);
++            canvas.drawText("Touch to reposition", 34f, 82f, mPaint);
++            postInvalidateOnAnimation();
++        }
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class SettingsPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class ShortcutsPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class StatusPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class TaskPanelActivity extends ScalableUiDemoActivity {
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java
+@@ -0,0 +1,4 @@
++package com.android.car.scalableui.hmi.demo;
++
++public final class WidgetPanelActivity extends ScalableUiDemoActivity {
 +}

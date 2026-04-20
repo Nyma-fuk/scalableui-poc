@@ -12,7 +12,7 @@ The map owns most of the display while a narrow right rail shows glanceable cont
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_panel` | Wide Map | `com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
+| `map_panel` | Wide Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
 | `event_panel` | Next Event | `com.android.calendar/.AllInOneActivity` | `74%` | `3%` | `98%` | `31%` | `0` |
 | `media_mini_panel` | Media Mini | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `74%` | `35%` | `98%` | `64%` | `0` |
 | `status_panel` | Vehicle Status | `com.android.car.scalableui.hmi.demo/.StatusPanelActivity` | `74%` | `68%` | `98%` | `97%` | `0` |
@@ -20,6 +20,8 @@ The map owns most of the display while a narrow right rail shows glanceable cont
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned

@@ -4,7 +4,7 @@
 
 目的は、単に「今の PoC をどう触るか」ではなく、ScalableUI の panel / variant / transition / overlay を組み合わせると、どんな車載 HMI の方向性を試せるかを見渡せるようにすることです。
 
-このページの 12 案は、`variants/<variant>/` 配下に generated patch として展開済みです。適用手順と product / lunch target の一覧は [HMI Variant Suite](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/hmi_variant_suite_ja.md) を参照してください。
+このページの案は、`variants/<variant>/` 配下に generated patch として展開済みです。適用手順と product / lunch target の一覧は [HMI Variant Suite](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/hmi_variant_suite_ja.md) を参照してください。
 
 ## 前提
 
@@ -613,6 +613,47 @@ variant 名の例:
 - `normal-calm-app-v1`
 - `hmi-comparison-v1`
 
+## Pattern 13: Widget workspace cockpit
+
+左側に ScalableUI menu を置き、中央の workspace panel に表示する app をユーザー操作で入れ替える構成です。
+
+```text
++------------+-------------------------------------+
+| panel menu |          workspace app              |
+|            |  widget / map / G Ball / media      |
+|            +------------------+------------------+
+|            | widget controls  | workspace status |
++------------+------------------+------------------+
+```
+
+向いている用途:
+
+- panel 内の app 入れ替えをユーザー操作で試したい
+- widget を表示し、実際に `SeekBar` / `Switch` / `Button` を操作したい
+- map sample や G Ball sample を同じ workspace panel で比較したい
+
+panel 構成:
+
+- `panel_menu`
+- `workspace_panel`
+- `widget_controls_panel`
+- `workspace_status_panel`
+- `app_panel`
+- `panel_app_grid`
+
+実装の要点:
+
+- `workspace_panel` の `role` を `@array/workspace_panel_componentNames` にする
+- `PanelMenuActivity` から explicit component launch する
+- ScalableUI の routing が component を見て `workspace_panel` に割り当てる
+- map は外部 tile ではなく synthetic map artwork を app 内で描画する
+
+variant 名の例:
+
+- `widget-workspace-v1`
+- `interactive-workspace-v1`
+- `menu-driven-panel-v1`
+
 ## 実装難易度の目安
 
 | レベル | 内容 | 例 |
@@ -637,6 +678,7 @@ variant 名の例:
 | 4 | `app-with-rail-v1` | fullscreen app と side rail の共存案 | `app_panel` を広く、right rail を固定 |
 | 5 | `calm-mode-v1` | 情報量を減らした運転中表示案 | fixed panel を hidden / alpha down、map + status 中心 |
 | 6 | `showcase-modes-v1` | 複数 mode を 1 product で比較する案 | normal / calm / app focus variant を追加 |
+| 7 | `widget-workspace-v1` | menu から panel 内 app を入れ替える案 | workspace role array、PanelMenuActivity、Widget / Map / G Ball sample |
 
 ## アイデアを variant に落とす手順
 

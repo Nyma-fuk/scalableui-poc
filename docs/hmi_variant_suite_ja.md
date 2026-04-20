@@ -51,6 +51,7 @@
 | `developer-cockpit` | `sdk_car_scalableui_developer_cockpit_x86_64` | debug / validation 用 cockpit |
 | `dual-display` | `sdk_car_scalableui_dual_display_x86_64` | driver / passenger display 分離の検討 |
 | `showcase-modes` | `sdk_car_scalableui_showcase_modes_x86_64` | normal / calm / app focus の比較 showcase |
+| `widget-workspace` | `sdk_car_scalableui_widget_workspace_x86_64` | menu 操作で workspace panel の app を入れ替える widget cockpit |
 
 ## すべての HMI を適用する
 
@@ -64,7 +65,7 @@ bash workdir/scalableui-poc/scripts/apply_hmi_suite.sh
 
 - suite 用 device product patch
 - 共通 demo app patch
-- 12 個すべての variant RRO patch
+- 13 個すべての variant RRO patch
 - 既存 PoC と同じ SystemUI routing patch
 - 既存 PoC と同じ Launcher All apps patch
 
@@ -117,7 +118,7 @@ apply script は次の方針です。
 
 ## 共通 demo app
 
-標準 AAOS に存在しない task / status / energy / debug / controls などの領域には、共通の placeholder app を使います。
+標準 AAOS に存在しない map / G Ball / widget / task / status / energy / debug / controls などの領域には、共通の demo app を使います。
 
 module:
 
@@ -127,8 +128,12 @@ package:
 
 - `com.android.car.scalableui.hmi.demo`
 
-主な Activity alias:
+主な Activity:
 
+- `.MapPanelActivity`
+- `.GBallActivity`
+- `.WidgetPanelActivity`
+- `.PanelMenuActivity`
 - `.TaskPanelActivity`
 - `.PhonePanelActivity`
 - `.MediaPanelActivity`
@@ -141,8 +146,10 @@ package:
 - `.PassengerPanelActivity`
 - `.CalmPanelActivity`
 
-この app は HMI variant の panel 領域を検証するための軽量 placeholder です。
-量産向け UI ではなく、panel bounds / routing / layout を試すためのものです。
+この app は HMI variant の panel 領域を検証するための軽量 demo / placeholder です。
+`MapPanelActivity` は外部地図 tile を同梱せず、repo 内で再配布可能な synthetic map artwork をコード描画します。
+`PanelMenuActivity` は `widget-workspace` の menu panel から workspace panel に表示する app を起動し、ScalableUI の role routing で同一 panel 内の app 入れ替えを確認します。
+量産向け UI ではなく、panel bounds / routing / layout / widget 操作を試すためのものです。
 
 ## RRO の見方
 
@@ -217,7 +224,7 @@ git -C "$tmp" apply --check workdir/scalableui-poc/common/patches/device-generic
 
 ## tag 管理
 
-12 variant の初期生成状態は、tag を切って snapshot 化する運用が向いています。
+13 variant の初期生成状態は、tag を切って snapshot 化する運用が向いています。
 
 例:
 
@@ -237,11 +244,12 @@ git push origin main hmi-suite-v1
 
 ## 既知の制約
 
-- ここで追加した 12 variant は HMI layout / routing 検証用の PoC です
+- ここで追加した 13 variant は HMI layout / routing 検証用の PoC です
 - 車両状態連動、parking / charging event、UX restriction 連動はまだ実装していません
 - `dual-display` は `displayId=1` を含むため、multi-display 環境での検証が必要です
-- demo app は placeholder であり、量産 UI 品質の app ではありません
+- demo app は placeholder / sample app であり、量産 UI 品質の app ではありません
 - fixed panel app を All apps から起動したときの fullscreen 化は、app 自身の launch mode に影響されます
+- Google Maps の画像や tile は再配布権限が不明確なため同梱していません。地図領域は synthetic map artwork で代替しています。
 
 ## エミュレータ image の作成と保存
 
@@ -262,7 +270,7 @@ bash workdir/scalableui-poc/scripts/build_hmi_modules.sh map-first
 エミュレータ image は、full build の生 output をコピーするのではなく、AAOS / Goldfish の配布用 target である `emu_img_zip` を使います。
 script は各 variant で `m emu_img_zip` を実行し、`sdk-repo-linux-system-images.zip` と展開済み起動用 image を保存します。
 
-12 variant すべての emulator image zip を build して保存する場合:
+13 variant すべての emulator image zip を build して保存する場合:
 
 ```bash
 AAOS_IMAGE_ROOT=/mnt/f/aaos_images \

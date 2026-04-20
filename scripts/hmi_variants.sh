@@ -13,6 +13,7 @@ HMI_VARIANTS=(
   "developer-cockpit|sdk_car_scalableui_developer_cockpit_x86_64"
   "dual-display|sdk_car_scalableui_dual_display_x86_64"
   "showcase-modes|sdk_car_scalableui_showcase_modes_x86_64"
+  "widget-workspace|sdk_car_scalableui_widget_workspace_x86_64"
 )
 
 find_hmi_product() {
@@ -50,6 +51,7 @@ hmi_rro_module_for_slug() {
     developer-cockpit) echo "CarSystemUIScalableUiHmiDeveloperCockpitRRO" ;;
     dual-display) echo "CarSystemUIScalableUiHmiDualDisplayRRO" ;;
     showcase-modes) echo "CarSystemUIScalableUiHmiShowcaseModesRRO" ;;
+    widget-workspace) echo "CarSystemUIScalableUiHmiWidgetWorkspaceRRO" ;;
     *) return 1 ;;
   esac
 }

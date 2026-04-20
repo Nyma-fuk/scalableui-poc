@@ -20,6 +20,8 @@ Parking and charging use cases get a dense dashboard with energy, media, setting
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned
