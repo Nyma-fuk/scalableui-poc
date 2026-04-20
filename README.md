@@ -94,6 +94,13 @@ lunch sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug
 
 詳細は `docs/hmi_variant_suite_ja.md` を参照してください。
 
+HMI image を Windows host の `F:\aaos_images` に保存する場合、WSL では `/mnt/f/aaos_images` を使います。
+
+```bash
+AAOS_IMAGE_ROOT=/mnt/f/aaos_images bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh
+bash workdir/scalableui-poc/scripts/run_hmi_emulator.sh map-first
+```
+
 ## Customization Wiki
 
 HMI の構成を自分で編集したい人向けに、repo 内に wiki-ready な markdown を用意しています。

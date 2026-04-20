@@ -3,6 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/car_scalableui_hmi_map_first.mk
+@@ -0,0 +1,22 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -31,6 +32,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/Android.bp
+@@ -0,0 +1,36 @@
 +//
 +// Copyright (C) 2026 The Android Open Source Project
 +//
@@ -73,6 +75,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/AndroidManifest.xml
+@@ -0,0 +1,10 @@
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +          package="com.android.systemui.rro.scalableui.hmi.map_first">
 +    <application android:hasCode="false" />
@@ -89,6 +92,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/layout/scalableui_hmi_decor_panel.xml
+@@ -0,0 +1,5 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 +    android:layout_width="match_parent"
@@ -100,6 +104,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/values/config.xml
+@@ -0,0 +1,25 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <bool name="config_enableScalableUI" translatable="false">true</bool>
@@ -131,6 +136,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/values/dimens.xml
+@@ -0,0 +1,5 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <dimen name="scalableui_hmi_card_radius">18dp</dimen>
@@ -142,6 +148,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/values/integers.xml
+@@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <integer name="map_panel_layer">20</integer>
@@ -157,6 +164,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/values/strings.xml
+@@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
@@ -172,6 +180,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/app_panel.xml
+@@ -0,0 +1,23 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="app_panel" defaultVariant="@id/closed" role="@string/default_config" displayId="0">
 +    <Variant id="@+id/opened">
@@ -201,6 +210,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/event_panel.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="event_panel" defaultVariant="@id/opened" role="@string/event_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -221,6 +231,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/map_panel.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="map_panel" defaultVariant="@id/opened" role="@string/map_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -241,6 +252,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/media_mini_panel.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="media_mini_panel" defaultVariant="@id/opened" role="@string/media_mini_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -261,6 +273,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/overlays.xml
+@@ -0,0 +1,7 @@
 +<overlay>
 +    <item target="bool/config_enableScalableUI" value="@bool/config_enableScalableUI"/>
 +    <item target="bool/config_enableClearBackStack" value="@bool/config_enableClearBackStack"/>
@@ -274,6 +287,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/panel_app_grid.xml
+@@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -301,6 +315,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/status_panel.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="status_panel" defaultVariant="@id/opened" role="@string/status_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -321,6 +336,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/rro.mk
+@@ -0,0 +1,18 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#

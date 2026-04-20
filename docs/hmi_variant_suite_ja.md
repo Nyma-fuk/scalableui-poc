@@ -242,3 +242,54 @@ git push origin main hmi-suite-v1
 - `dual-display` は `displayId=1` を含むため、multi-display 環境での検証が必要です
 - demo app は placeholder であり、量産 UI 品質の app ではありません
 - fixed panel app を All apps から起動したときの fullscreen 化は、app 自身の launch mode に影響されます
+
+## エミュレータ image の作成と保存
+
+Windows host の `F:\aaos_images` は、WSL からは `/mnt/f/aaos_images` として見えます。
+
+12 variant すべてを build して保存する場合:
+
+```bash
+AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
+  bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh
+```
+
+1 variant だけ build する場合:
+
+```bash
+AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
+  bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh map-first
+```
+
+保存先:
+
+```text
+/mnt/f/aaos_images/<variant>/
+  manifest.txt
+  run.sh
+  product/
+    system.img
+    vendor.img
+    userdata.img
+    ...
+```
+
+保存済み image から起動する場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/run_hmi_emulator.sh map-first
+```
+
+または保存先の wrapper を使います。
+
+```bash
+/mnt/f/aaos_images/map-first/run.sh
+```
+
+emulator に追加 option を渡す場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/run_hmi_emulator.sh map-first -no-window -gpu swiftshader_indirect
+```
+
+`AAOS_IMAGE_ROOT` を指定しない場合、script は `/mnt/f/aaos_images` を使います。

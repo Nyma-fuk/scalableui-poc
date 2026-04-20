@@ -284,14 +284,16 @@ def write(path: Path, content: str, mode: int | None = None) -> None:
 
 
 def new_file_patch(path: str, content: str, mode: str = "100644") -> str:
+    content_lines = content.rstrip().splitlines()
     lines = [
         f"diff --git a/{path} b/{path}",
         f"new file mode {mode}",
         "index 0000000..1111111",
         "--- /dev/null",
         f"+++ b/{path}",
+        f"@@ -0,0 +1,{len(content_lines)} @@",
     ]
-    lines.extend("+" + line for line in content.rstrip().splitlines())
+    lines.extend("+" + line for line in content_lines)
     return "\n".join(lines) + "\n"
 
 

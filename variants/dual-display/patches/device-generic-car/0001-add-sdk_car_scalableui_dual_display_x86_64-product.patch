@@ -24,6 +24,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_dual_display_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
