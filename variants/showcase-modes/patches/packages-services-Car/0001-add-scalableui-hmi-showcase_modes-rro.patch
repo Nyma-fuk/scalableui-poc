@@ -123,7 +123,7 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+        <item>normal_map_panel;com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity</item>
++        <item>normal_map_panel;com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
 +        <item>normal_context_panel;com.android.calendar/.AllInOneActivity</item>
 +        <item>calm_preview_panel;com.android.car.scalableui.hmi.demo/.CalmPanelActivity</item>
 +        <item>app_focus_preview_panel;com.android.car.scalableui.hmi.demo/.TaskPanelActivity</item>
@@ -169,7 +169,7 @@ index 0000000..1111111
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
-+    <string name="normal_map_panel_componentName" translatable="false">com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity</string>
++    <string name="normal_map_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MapPanelActivity</string>
 +    <string name="normal_context_panel_componentName" translatable="false">com.android.calendar/.AllInOneActivity</string>
 +    <string name="calm_preview_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.CalmPanelActivity</string>
 +    <string name="app_focus_preview_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.TaskPanelActivity</string>

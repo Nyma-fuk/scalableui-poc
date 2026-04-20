@@ -19,21 +19,21 @@ from textwrap import dedent
 REPO = Path(__file__).resolve().parents[1]
 AAOS_ROOT = REPO.parents[1]
 
-MAP_COMPONENT = (
-    "com.android.car.carlauncher/"
-    "com.android.car.carlauncher.homescreen.MapTosActivity"
-)
+DEMO_PKG = "com.android.car.scalableui.hmi.demo"
+MAP_COMPONENT = f"{DEMO_PKG}/.MapPanelActivity"
+GBALL_COMPONENT = f"{DEMO_PKG}/.GBallActivity"
+WIDGET_COMPONENT = f"{DEMO_PKG}/.WidgetPanelActivity"
+PANEL_MENU_COMPONENT = f"{DEMO_PKG}/.PanelMenuActivity"
 CALENDAR_COMPONENT = "com.android.calendar/.AllInOneActivity"
 RADIO_COMPONENT = "com.android.car.radio/.RadioActivity"
 APP_GRID_COMPONENT = "com.android.car.carlauncher/.AppGridActivity"
-DEMO_PKG = "com.android.car.scalableui.hmi.demo"
 
 
 @dataclass(frozen=True)
 class Panel:
     panel_id: str
     title: str
-    component: str | None
+    component: str | tuple[str, ...] | None
     bounds: tuple[str, str, str, str]
     layer: int
     role_kind: str = "activity"
@@ -226,6 +226,63 @@ VARIANTS: tuple[Variant, ...] = (
         ),
         notes=("This variant is a static showcase; interactive mode buttons can be added later.",),
     ),
+    Variant(
+        slug="widget-workspace",
+        title="Widget workspace cockpit",
+        product_suffix="widget_workspace",
+        summary=(
+            "An interactive left menu launches map, G Ball, widget, media, and task apps into "
+            "one ScalableUI workspace panel so users can swap the panel content at runtime."
+        ),
+        use_cases=(
+            "runtime panel app swapping",
+            "widget interaction demo",
+            "map and G Ball sample validation",
+        ),
+        panels=(
+            Panel(
+                "panel_menu",
+                "Panel Menu",
+                PANEL_MENU_COMPONENT,
+                ("2%", "3%", "22%", "97%"),
+                55,
+            ),
+            Panel(
+                "workspace_panel",
+                "Interactive Workspace",
+                (
+                    WIDGET_COMPONENT,
+                    MAP_COMPONENT,
+                    GBALL_COMPONENT,
+                    demo_activity("MediaPanelActivity"),
+                    demo_activity("TaskPanelActivity"),
+                ),
+                ("24%", "3%", "98%", "68%"),
+                35,
+                corner="24dp",
+            ),
+            Panel(
+                "widget_controls_panel",
+                "Widget Controls",
+                demo_activity("ControlsPanelActivity"),
+                ("24%", "72%", "60%", "97%"),
+                42,
+                corner="22dp",
+            ),
+            Panel(
+                "workspace_status_panel",
+                "Workspace Status",
+                demo_activity("StatusPanelActivity"),
+                ("62%", "72%", "98%", "97%"),
+                43,
+                corner="22dp",
+            ),
+        ),
+        notes=(
+            "workspace_panel uses a role string-array so multiple apps can be routed to one panel.",
+            "Panel Menu starts the selected component; ScalableUI routes it into workspace_panel.",
+        ),
+    ),
 )
 
 
@@ -317,14 +374,35 @@ def component_string_name(panel_id: str) -> str:
     return f"{panel_id}_componentName"
 
 
+def component_array_name(panel_id: str) -> str:
+    return f"{panel_id}_componentNames"
+
+
+def default_component(component: str | tuple[str, ...] | None) -> str | None:
+    if component is None:
+        return None
+    if isinstance(component, tuple):
+        return component[0] if component else None
+    return component
+
+
+def component_display(component: str | tuple[str, ...] | None, role_kind: str) -> str:
+    if component is None:
+        return role_kind
+    if isinstance(component, tuple):
+        return ", ".join(component)
+    return component
+
+
 def panel_xml(panel: Panel) -> str:
     left, top, right, bottom = panel.bounds
     layer = panel_layer_name(panel.panel_id)
-    role = (
-        "@layout/scalableui_hmi_decor_panel"
-        if panel.role_kind == "decor"
-        else f"@string/{component_string_name(panel.panel_id)}"
-    )
+    if panel.role_kind == "decor":
+        role = "@layout/scalableui_hmi_decor_panel"
+    elif isinstance(panel.component, tuple):
+        role = f"@array/{component_array_name(panel.panel_id)}"
+    else:
+        role = f"@string/{component_string_name(panel.panel_id)}"
     corner = f"\n        <Corner radius=\"{panel.corner}\"/>" if panel.corner else ""
     background = ""
     if panel.background:
@@ -417,15 +495,27 @@ def rro_files(variant: Variant) -> dict[str, str]:
     rro_base = f"{base}/rro/{variant.rro_name}"
     panel_items = "\n".join(f"        <item>@xml/{p.panel_id}</item>" for p in variant.panels)
     default_items = "\n".join(
-        f"        <item>{p.panel_id};{p.component}</item>"
+        f"        <item>{p.panel_id};{default_component(p.component)}</item>"
         for p in variant.panels
-        if p.role_kind == "activity" and p.component
+        if p.role_kind == "activity" and default_component(p.component)
     )
-    string_items = "\n".join(
-        f'    <string name="{component_string_name(p.panel_id)}" translatable="false">{p.component}</string>'
-        for p in variant.panels
-        if p.role_kind == "activity" and p.component
-    )
+    string_blocks: list[str] = []
+    for panel in variant.panels:
+        if panel.role_kind != "activity" or panel.component is None:
+            continue
+        if isinstance(panel.component, tuple):
+            items = "\n".join(f"        <item>{component}</item>" for component in panel.component)
+            string_blocks.append(
+                f"""\
+    <string-array name="{component_array_name(panel.panel_id)}" translatable="false">
+{items}
+    </string-array>"""
+            )
+        else:
+            string_blocks.append(
+                f'    <string name="{component_string_name(panel.panel_id)}" translatable="false">{panel.component}</string>'
+            )
+    string_items = "\n".join(string_blocks)
     integer_items = "\n".join(
         f'    <integer name="{panel_layer_name(p.panel_id)}">{p.layer}</integer>'
         for p in variant.panels
@@ -559,50 +649,88 @@ android_app {{
 
 def demo_app_files() -> dict[str, str]:
     base = "car_product/scalableui_hmi_demo_apps"
-    manifest_aliases = "\n".join(
+    activities = (
+        ("MapPanelActivity", "ScalableUI Map"),
+        ("GBallActivity", "G Ball"),
+        ("WidgetPanelActivity", "ScalableUI Widgets"),
+        ("PanelMenuActivity", "ScalableUI Panel Menu"),
+        ("TaskPanelActivity", "ScalableUI Tasks"),
+        ("PhonePanelActivity", "ScalableUI Phone"),
+        ("MediaPanelActivity", "ScalableUI Media"),
+        ("StatusPanelActivity", "ScalableUI Status"),
+        ("ControlsPanelActivity", "ScalableUI Controls"),
+        ("ShortcutsPanelActivity", "ScalableUI Shortcuts"),
+        ("EnergyPanelActivity", "ScalableUI Energy"),
+        ("SettingsPanelActivity", "ScalableUI Settings"),
+        ("DebugPanelActivity", "ScalableUI Debug"),
+        ("PassengerPanelActivity", "ScalableUI Passenger"),
+        ("CalmPanelActivity", "ScalableUI Calm"),
+    )
+    manifest_activities = "\n".join(
         f"""\
-        <activity-alias
+        <activity
             android:name=".{name}"
-            android:targetActivity=".ScalableUiDemoActivity"
             android:exported="true"
+            android:resizeableActivity="true"
             android:label="{label}" />"""
-        for name, label in (
-            ("TaskPanelActivity", "ScalableUI Tasks"),
-            ("PhonePanelActivity", "ScalableUI Phone"),
-            ("MediaPanelActivity", "ScalableUI Media"),
-            ("StatusPanelActivity", "ScalableUI Status"),
-            ("ControlsPanelActivity", "ScalableUI Controls"),
-            ("ShortcutsPanelActivity", "ScalableUI Shortcuts"),
-            ("EnergyPanelActivity", "ScalableUI Energy"),
-            ("SettingsPanelActivity", "ScalableUI Settings"),
-            ("DebugPanelActivity", "ScalableUI Debug"),
-            ("PassengerPanelActivity", "ScalableUI Passenger"),
-            ("CalmPanelActivity", "ScalableUI Calm"),
-        )
+        for name, label in activities
     )
     java = """\
 package com.android.car.scalableui.hmi.demo;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
-public final class ScalableUiDemoActivity extends Activity {
+public class ScalableUiDemoActivity extends Activity {
+    private static final String PKG = "com.android.car.scalableui.hmi.demo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         String className = getComponentName().getClassName();
+        if (className.endsWith("MapPanelActivity")) {
+            setContentView(new SyntheticMapView(this));
+            return;
+        }
+        if (className.endsWith("GBallActivity")) {
+            setContentView(new GBallView(this));
+            return;
+        }
+        if (className.endsWith("WidgetPanelActivity")) {
+            setContentView(createWidgetPanel());
+            return;
+        }
+        if (className.endsWith("PanelMenuActivity")) {
+            setContentView(createPanelMenu());
+            return;
+        }
+
         String title = className.substring(className.lastIndexOf('.') + 1)
                 .replace("PanelActivity", "")
                 .replace("Activity", "");
+        setContentView(createInfoPanel(title, "ScalableUI demo activity\\n" + className));
+    }
 
+    private LinearLayout createInfoPanel(String title, String bodyText) {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER);
@@ -622,7 +750,7 @@ public final class ScalableUiDemoActivity extends Activity {
         heading.setGravity(Gravity.CENTER);
 
         TextView body = new TextView(this);
-        body.setText("ScalableUI demo activity\\n" + className);
+        body.setText(bodyText);
         body.setTextColor(Color.rgb(210, 224, 238));
         body.setTextSize(15f);
         body.setGravity(Gravity.CENTER);
@@ -632,11 +760,242 @@ public final class ScalableUiDemoActivity extends Activity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         root.addView(body, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        setContentView(root);
+        return root;
+    }
+
+    private LinearLayout createPanelMenu() {
+        LinearLayout root = createVerticalShell("Panel Menu", "Swap the workspace panel");
+        addLaunchButton(root, "Widgets", "WidgetPanelActivity");
+        addLaunchButton(root, "Map", "MapPanelActivity");
+        addLaunchButton(root, "G Ball", "GBallActivity");
+        addLaunchButton(root, "Media", "MediaPanelActivity");
+        addLaunchButton(root, "Tasks", "TaskPanelActivity");
+        return root;
+    }
+
+    private LinearLayout createWidgetPanel() {
+        LinearLayout root = createVerticalShell("Interactive Widgets", "Tap, slide, and toggle");
+
+        TextView status = new TextView(this);
+        status.setText("Cabin: 22 C  |  Fan: 35%  |  Drive mode: Comfort");
+        status.setTextColor(Color.WHITE);
+        status.setTextSize(18f);
+        status.setGravity(Gravity.CENTER);
+        status.setPadding(0, 14, 0, 14);
+        root.addView(status, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        SeekBar fan = new SeekBar(this);
+        fan.setMax(100);
+        fan.setProgress(35);
+        fan.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                status.setText("Cabin: 22 C  |  Fan: " + progress + "%  |  Drive mode: Comfort");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+        root.addView(fan, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        Switch quiet = new Switch(this);
+        quiet.setText("Quiet cabin mode");
+        quiet.setTextColor(Color.rgb(222, 238, 246));
+        quiet.setTextSize(18f);
+        quiet.setPadding(0, 18, 0, 18);
+        root.addView(quiet, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        Button action = createButton("Apply widget layout");
+        action.setOnClickListener(v -> status.setText(
+                quiet.isChecked() ? "Quiet widget layout applied" : "Widget layout applied"));
+        root.addView(action);
+        return root;
+    }
+
+    private LinearLayout createVerticalShell(String heading, String subheading) {
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setGravity(Gravity.CENTER);
+        root.setPadding(28, 24, 28, 24);
+        GradientDrawable background = new GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                new int[] {Color.rgb(16, 25, 34), Color.rgb(30, 58, 66)});
+        background.setCornerRadius(30f);
+        root.setBackground(background);
+
+        TextView title = new TextView(this);
+        title.setText(heading);
+        title.setTextColor(Color.WHITE);
+        title.setTextSize(28f);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        title.setGravity(Gravity.CENTER);
+        root.addView(title, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        TextView subtitle = new TextView(this);
+        subtitle.setText(subheading);
+        subtitle.setTextColor(Color.rgb(188, 218, 224));
+        subtitle.setTextSize(14f);
+        subtitle.setGravity(Gravity.CENTER);
+        subtitle.setPadding(0, 6, 0, 18);
+        root.addView(subtitle, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return root;
+    }
+
+    private void addLaunchButton(LinearLayout root, String label, String activityName) {
+        Button button = createButton(label);
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setComponent(new ComponentName(PKG, PKG + "." + activityName));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+        root.addView(button, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+
+    private Button createButton(String label) {
+        Button button = new Button(this);
+        button.setText(label);
+        button.setTextSize(16f);
+        button.setAllCaps(false);
+        return button;
+    }
+
+    private static final class SyntheticMapView extends View {
+        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final Path mPath = new Path();
+
+        SyntheticMapView(Activity activity) {
+            super(activity);
+            setBackgroundColor(Color.rgb(221, 231, 224));
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            int width = getWidth();
+            int height = getHeight();
+
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(Color.rgb(198, 220, 205));
+            canvas.drawRect(0, 0, width, height, mPaint);
+
+            mPaint.setColor(Color.rgb(169, 205, 178));
+            canvas.drawRoundRect(new RectF(width * .04f, height * .08f, width * .34f,
+                    height * .38f), 28, 28, mPaint);
+            canvas.drawRoundRect(new RectF(width * .68f, height * .52f, width * .96f,
+                    height * .92f), 28, 28, mPaint);
+
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeCap(Paint.Cap.ROUND);
+            mPaint.setStrokeWidth(34f);
+            mPaint.setColor(Color.rgb(244, 239, 218));
+            mPath.reset();
+            mPath.moveTo(width * .02f, height * .68f);
+            mPath.cubicTo(width * .28f, height * .54f, width * .36f, height * .22f,
+                    width * .62f, height * .28f);
+            mPath.cubicTo(width * .80f, height * .32f, width * .78f, height * .74f,
+                    width * .98f, height * .78f);
+            canvas.drawPath(mPath, mPaint);
+
+            mPaint.setStrokeWidth(10f);
+            mPaint.setColor(Color.rgb(255, 194, 71));
+            canvas.drawPath(mPath, mPaint);
+
+            mPaint.setStrokeWidth(18f);
+            mPaint.setColor(Color.rgb(235, 235, 229));
+            canvas.drawLine(width * .18f, height * .02f, width * .90f, height * .96f, mPaint);
+            canvas.drawLine(width * .04f, height * .42f, width * .96f, height * .18f, mPaint);
+            canvas.drawLine(width * .10f, height * .90f, width * .88f, height * .44f, mPaint);
+
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(Color.rgb(31, 83, 146));
+            canvas.drawCircle(width * .52f, height * .50f, 16f, mPaint);
+            mPaint.setColor(Color.rgb(14, 35, 48));
+            mPaint.setTextSize(28f);
+            mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("Synthetic Map Sample", 28f, 42f, mPaint);
+            mPaint.setTypeface(Typeface.DEFAULT);
+            mPaint.setTextSize(18f);
+            canvas.drawText("Bundled demo artwork, no external map tiles", 28f, 68f, mPaint);
+        }
+    }
+
+    private static final class GBallView extends View {
+        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private float mX;
+        private float mY;
+        private float mVx = 7f;
+        private float mVy = 5f;
+
+        GBallView(Activity activity) {
+            super(activity);
+            setBackgroundColor(Color.rgb(13, 21, 32));
+        }
+
+        @Override
+        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+            mX = w * .38f;
+            mY = h * .42f;
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN
+                    || event.getAction() == MotionEvent.ACTION_MOVE) {
+                mX = event.getX();
+                mY = event.getY();
+                invalidate();
+                return true;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            int width = getWidth();
+            int height = getHeight();
+            float radius = Math.max(28f, Math.min(width, height) * .10f);
+            mX += mVx;
+            mY += mVy;
+            if (mX < radius || mX > width - radius) {
+                mVx = -mVx;
+            }
+            if (mY < radius || mY > height - radius) {
+                mVy = -mVy;
+            }
+            mX = Math.max(radius, Math.min(width - radius, mX));
+            mY = Math.max(radius, Math.min(height - radius, mY));
+
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(Color.rgb(20, 34, 50));
+            canvas.drawRoundRect(new RectF(18, 18, width - 18, height - 18), 36, 36, mPaint);
+            mPaint.setColor(Color.rgb(76, 211, 194));
+            canvas.drawCircle(mX, mY, radius, mPaint);
+            mPaint.setColor(Color.WHITE);
+            canvas.drawCircle(mX - radius * .28f, mY - radius * .32f, radius * .18f, mPaint);
+            mPaint.setColor(Color.rgb(225, 240, 246));
+            mPaint.setTextSize(28f);
+            mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("G Ball", 34f, 54f, mPaint);
+            mPaint.setTypeface(Typeface.DEFAULT);
+            mPaint.setTextSize(18f);
+            canvas.drawText("Touch to reposition", 34f, 82f, mPaint);
+            postInvalidateOnAnimation();
+        }
     }
 }
 """
-    return {
+    files = {
         f"{base}/Android.bp": (
             copyright("//")
             + """
@@ -664,12 +1023,20 @@ android_app {
         <activity
             android:name=".ScalableUiDemoActivity"
             android:exported="false" />
-{manifest_aliases}
+{manifest_activities}
     </application>
 </manifest>
 """,
         f"{base}/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java": java,
     }
+    for name, _label in activities:
+        files[f"{base}/src/com/android/car/scalableui/hmi/demo/{name}.java"] = f"""\
+package com.android.car.scalableui.hmi.demo;
+
+public final class {name} extends ScalableUiDemoActivity {{
+}}
+"""
+    return files
 
 
 def device_product_file(variant: Variant) -> str:
@@ -797,7 +1164,7 @@ the product patch for this variant, and the RRO patch for this variant.
 
 def variant_spec(variant: Variant) -> str:
     rows = "\n".join(
-        f"| `{p.panel_id}` | {p.title} | `{p.component or p.role_kind}` | "
+        f"| `{p.panel_id}` | {p.title} | `{component_display(p.component, p.role_kind)}` | "
         f"`{p.bounds[0]}` | `{p.bounds[1]}` | `{p.bounds[2]}` | `{p.bounds[3]}` | `{p.display_id}` |"
         for p in variant.panels
     )
@@ -821,6 +1188,8 @@ def variant_spec(variant: Variant) -> str:
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned

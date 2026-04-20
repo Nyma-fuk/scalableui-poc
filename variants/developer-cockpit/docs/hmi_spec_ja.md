@@ -15,11 +15,13 @@ Debug status, controls, app-under-test, and map/media panels are arranged for Po
 | `debug_status_panel` | Debug Status | `com.android.car.scalableui.hmi.demo/.DebugPanelActivity` | `2%` | `3%` | `39%` | `48%` | `0` |
 | `app_under_test_panel` | App Under Test | `com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `41%` | `3%` | `98%` | `48%` | `0` |
 | `control_panel` | Controls | `com.android.car.scalableui.hmi.demo/.ControlsPanelActivity` | `2%` | `52%` | `39%` | `97%` | `0` |
-| `map_media_panel` | Map Media | `com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity` | `41%` | `52%` | `98%` | `97%` | `0` |
+| `map_media_panel` | Map Media | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `41%` | `52%` | `98%` | `97%` | `0` |
 
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned

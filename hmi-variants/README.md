@@ -19,6 +19,7 @@ the wiki page `HMI_Pattern_Ideas_ja.md`.
 | `developer-cockpit` | `sdk_car_scalableui_developer_cockpit_x86_64` | Diagnostics developer cockpit |
 | `dual-display` | `sdk_car_scalableui_dual_display_x86_64` | Driver and passenger display HMI |
 | `showcase-modes` | `sdk_car_scalableui_showcase_modes_x86_64` | Mode-switching showcase |
+| `widget-workspace` | `sdk_car_scalableui_widget_workspace_x86_64` | Widget workspace cockpit |
 
 ## Apply All Variants
 

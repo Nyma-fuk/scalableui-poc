@@ -12,13 +12,15 @@ A full-screen map/background is combined with floating rounded cards.
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_background_panel` | Map Background | `com.android.car.carlauncher/com.android.car.carlauncher.homescreen.MapTosActivity` | `0` | `0` | `100%` | `100%` | `0` |
+| `map_background_panel` | Map Background | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `0` | `0` | `100%` | `100%` | `0` |
 | `primary_card_panel` | Primary Card | `com.android.calendar/.AllInOneActivity` | `8%` | `12%` | `55%` | `52%` | `0` |
 | `secondary_card_panel` | Secondary Card | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `58%` | `58%` | `94%` | `90%` | `0` |
 
 ## Routing
 
 - Fixed panels are assigned through `config_default_activities`.
+- Panels with multiple component names use a ScalableUI role string-array so
+  user-launched apps can be routed into the same panel.
 - `panel_app_grid` opens as the All apps overlay.
 - `app_panel` is the `DEFAULT` launch-root fallback for generic apps.
 - The common Launcher/SystemUI patches keep the All apps launch behavior aligned
