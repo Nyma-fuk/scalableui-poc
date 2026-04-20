@@ -1,6 +1,7 @@
 ### ScalableUI PoC Wiki
 
 - [Home](Home.md)
+- [HMI Pattern Ideas](HMI_Pattern_Ideas_ja.md)
 - [HMI Customization HowTo](HMI_Customization_HowTo_ja.md)
 - [XML and Panel Reference](XML_and_Panel_Reference_ja.md)
 - [Customization Recipes](Customization_Recipes_ja.md)

@@ -9,15 +9,17 @@
 
 この wiki で分かること:
 - どの directory と file を触れば HMI が変わるか
+- ScalableUI で作りやすい HMI 構成の候補
 - panel / overlay / fullscreen routing の役割分担
 - app の固定配置や `All apps` の挙動の変え方
 - grip あり / なし variant の作り分け方
 - patch / variant / tag をどう管理すると再利用しやすいか
 
 おすすめの読み順:
-1. [HMI Customization HowTo](HMI_Customization_HowTo_ja.md)
-2. [XML and Panel Reference](XML_and_Panel_Reference_ja.md)
-3. [Customization Recipes](Customization_Recipes_ja.md)
+1. [HMI Pattern Ideas](HMI_Pattern_Ideas_ja.md)
+2. [HMI Customization HowTo](HMI_Customization_HowTo_ja.md)
+3. [XML and Panel Reference](XML_and_Panel_Reference_ja.md)
+4. [Customization Recipes](Customization_Recipes_ja.md)
 
 既存のベース資料:
 - [README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/README.md)
