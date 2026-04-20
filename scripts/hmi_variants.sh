@@ -35,3 +35,21 @@ print_hmi_variants() {
     printf '  %-24s %s\n' "$slug" "$product"
   done
 }
+
+hmi_rro_module_for_slug() {
+  case "$1" in
+    fixed-3zone) echo "CarSystemUIScalableUiHmiFixed3zoneRRO" ;;
+    map-first) echo "CarSystemUIScalableUiHmiMapFirstRRO" ;;
+    media-dock) echo "CarSystemUIScalableUiHmiMediaDockRRO" ;;
+    productivity-dashboard) echo "CarSystemUIScalableUiHmiProductivityDashboardRRO" ;;
+    app-with-rail) echo "CarSystemUIScalableUiHmiAppWithRailRRO" ;;
+    floating-card) echo "CarSystemUIScalableUiHmiFloatingCardRRO" ;;
+    app-grid-hub) echo "CarSystemUIScalableUiHmiAppGridHubRRO" ;;
+    calm-mode) echo "CarSystemUIScalableUiHmiCalmModeRRO" ;;
+    parking-mode) echo "CarSystemUIScalableUiHmiParkingModeRRO" ;;
+    developer-cockpit) echo "CarSystemUIScalableUiHmiDeveloperCockpitRRO" ;;
+    dual-display) echo "CarSystemUIScalableUiHmiDualDisplayRRO" ;;
+    showcase-modes) echo "CarSystemUIScalableUiHmiShowcaseModesRRO" ;;
+    *) return 1 ;;
+  esac
+}

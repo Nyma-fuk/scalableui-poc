@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
 WORKDIR="$ROOT_DIR/workdir/scalableui-poc"
 IMAGE_ROOT="${AAOS_IMAGE_ROOT:-/mnt/f/aaos_images}"
+EMU_IMAGE_ZIP_NAME="sdk-repo-linux-system-images.zip"
 
 source "$WORKDIR/scripts/hmi_variants.sh"
 
@@ -25,10 +26,37 @@ fi
 
 IFS="|" read -r SLUG PRODUCT <<<"$match"
 IMAGE_DIR="$IMAGE_ROOT/$SLUG"
-PRODUCT_OUT="$IMAGE_DIR/product"
+PRODUCT_OUT=""
 
-if [[ ! -d "$PRODUCT_OUT" ]]; then
-  echo "error: saved image set not found: $PRODUCT_OUT" >&2
+find_extracted_image_dir() {
+  local extracted_root="$1"
+  local abi
+  for abi in x86_64 x86 arm64-v8a armeabi-v7a; do
+    if [[ -d "$extracted_root/$abi" ]]; then
+      echo "$extracted_root/$abi"
+      return 0
+    fi
+  done
+  find "$extracted_root" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1
+}
+
+if [[ -d "$IMAGE_DIR/extracted" ]]; then
+  PRODUCT_OUT="$(find_extracted_image_dir "$IMAGE_DIR/extracted")"
+fi
+
+if [[ ( -z "$PRODUCT_OUT" || ! -d "$PRODUCT_OUT" ) && -f "$IMAGE_DIR/$EMU_IMAGE_ZIP_NAME" ]]; then
+  mkdir -p "$IMAGE_DIR/extracted"
+  unzip -oq "$IMAGE_DIR/$EMU_IMAGE_ZIP_NAME" -d "$IMAGE_DIR/extracted"
+  PRODUCT_OUT="$(find_extracted_image_dir "$IMAGE_DIR/extracted")"
+fi
+
+if [[ ( -z "$PRODUCT_OUT" || ! -d "$PRODUCT_OUT" ) && -d "$IMAGE_DIR/product" ]]; then
+  # Legacy layout from early PoC scripts. Kept so already-copied raw images still run.
+  PRODUCT_OUT="$IMAGE_DIR/product"
+fi
+
+if [[ -z "$PRODUCT_OUT" || ! -d "$PRODUCT_OUT" ]]; then
+  echo "error: saved image set not found under: $IMAGE_DIR" >&2
   echo "build it first:" >&2
   echo "  AAOS_IMAGE_ROOT=$IMAGE_ROOT $WORKDIR/scripts/build_hmi_emulator_images.sh $SLUG" >&2
   exit 1
