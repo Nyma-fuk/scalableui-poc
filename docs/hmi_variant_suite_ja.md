@@ -247,14 +247,29 @@ git push origin main hmi-suite-v1
 
 Windows host の `F:\aaos_images` は、WSL からは `/mnt/f/aaos_images` として見えます。
 
-12 variant すべてを build して保存する場合:
+先に app / RRO だけを順次 build して、Java / resource / overlay の問題を潰す場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/build_hmi_modules.sh
+```
+
+1 variant だけ確認する場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/build_hmi_modules.sh map-first
+```
+
+エミュレータ image は、full build の生 output をコピーするのではなく、AAOS / Goldfish の配布用 target である `emu_img_zip` を使います。
+script は各 variant で `m emu_img_zip` を実行し、`sdk-repo-linux-system-images.zip` と展開済み起動用 image を保存します。
+
+12 variant すべての emulator image zip を build して保存する場合:
 
 ```bash
 AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
   bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh
 ```
 
-1 variant だけ build する場合:
+1 variant だけ emulator image zip を build する場合:
 
 ```bash
 AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
@@ -267,10 +282,14 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
 /mnt/f/aaos_images/<variant>/
   manifest.txt
   run.sh
-  product/
+  sdk-repo-linux-system-images.zip
+  sdk-repo-linux-system-images.zip.sha256
+  extracted/
+    x86_64/
     system.img
     vendor.img
-    userdata.img
+    ramdisk.img
+    kernel-ranchu
     ...
 ```
 
