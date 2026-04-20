@@ -29,7 +29,9 @@ else
 fi
 
 cd "$ROOT_DIR"
+set +u
 source build/envsetup.sh >/dev/null
+set -u
 
 copy_product_out() {
   local slug="$1"
@@ -63,7 +65,9 @@ EOF
 for entry in "${SELECTED[@]}"; do
   IFS="|" read -r slug product <<<"$entry"
   echo "==> lunch ${product}-trunk_staging-userdebug"
+  set +u
   lunch "${product}-trunk_staging-userdebug"
+  set -u
 
   echo "==> installclean"
   m installclean
