@@ -4,6 +4,8 @@
 
 目的は、単に「今の PoC をどう触るか」ではなく、ScalableUI の panel / variant / transition / overlay を組み合わせると、どんな車載 HMI の方向性を試せるかを見渡せるようにすることです。
 
+このページの 12 案は、`variants/<variant>/` 配下に generated patch として展開済みです。適用手順と product / lunch target の一覧は [HMI Variant Suite](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/hmi_variant_suite_ja.md) を参照してください。
+
 ## 前提
 
 このページでは、次の前提で考えます。

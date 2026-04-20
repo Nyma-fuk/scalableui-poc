@@ -36,8 +36,16 @@
   - `packages/apps/Car/Launcher` repo 向け patch を置く
 - `docs/scalableui_hmi_poc_spec_ja.md`
   - 現在の HMI 構成、package 調査結果、Grip 仕様、fullscreen overlay、既知制約の整理
+- `docs/hmi_variant_suite_ja.md`
+  - 12 個の HMI variant を patch 適用し、product / lunch target で切り替える手順
+- `common/patches/`
+  - HMI variant 群で共有する product / demo app patch
+- `hmi-variants/`
+  - 12 個の HMI variant suite の一覧
 - `variants/no-grip/`
   - grip を使わない固定 3 分割 variant
+- `variants/<variant>/`
+  - HMI 案ごとの docs / patches / apply wrapper
 - `wiki/`
   - HMI を自分好みに組み替えるための wiki-ready markdown 群
 
@@ -65,8 +73,26 @@
   - 現在の `grip` あり variant
 - `variants/no-grip`
   - 左 map / 右上 calendar / 右下 radio を固定 split で持つ variant
+- `hmi-variants`
+  - `HMI_Pattern_Ideas_ja.md` の 12 案を product 切り替え可能な generated variant として管理
 
 複数ユースケースを試す場合は、variant は directory で分け、release や検証区切りを tag で管理するのが扱いやすいです。
+
+12 個の HMI 案をすべて適用する場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/apply_hmi_suite.sh
+lunch sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug
+```
+
+1 個だけ適用する場合:
+
+```bash
+bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh map-first
+lunch sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug
+```
+
+詳細は `docs/hmi_variant_suite_ja.md` を参照してください。
 
 ## Customization Wiki
 
