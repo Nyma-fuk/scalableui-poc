@@ -42,7 +42,14 @@ copy_product_out() {
   rm -rf "$dest"
   mkdir -p "$product_dest"
 
-  cp -a "$ANDROID_PRODUCT_OUT"/. "$product_dest/"
+  # Do not copy the full product out tree to a Windows-mounted filesystem:
+  # generated license metadata can contain case-only filename variants that
+  # collide on NTFS. The emulator only needs the top-level images/configs and
+  # the packaged emulator directory.
+  find "$ANDROID_PRODUCT_OUT" -maxdepth 1 -type f -exec cp -a {} "$product_dest/" \;
+  if [[ -d "$ANDROID_PRODUCT_OUT/emulator" ]]; then
+    cp -a "$ANDROID_PRODUCT_OUT/emulator" "$product_dest/"
+  fi
   cat >"$dest/manifest.txt" <<EOF
 slug=$slug
 product=$product
