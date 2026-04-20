@@ -60,12 +60,12 @@ saved_product_out=$product_dest
 saved_at=$(date -Iseconds)
 EOF
 
-  cat >"$dest/run.sh" <<EOF
-#!/bin/bash
-set -euo pipefail
-SCRIPT_DIR="\\$(cd "\\$(dirname "\\$0")" && pwd)"
-"$WORKDIR/scripts/run_hmi_emulator.sh" "$slug" "\\$@"
-EOF
+  {
+    echo "#!/bin/bash"
+    echo "set -euo pipefail"
+    printf "AAOS_IMAGE_ROOT=%q exec %q %q \"\$@\"\n" \
+      "$IMAGE_ROOT" "$WORKDIR/scripts/run_hmi_emulator.sh" "$slug"
+  } >"$dest/run.sh"
   chmod +x "$dest/run.sh"
 }
 
