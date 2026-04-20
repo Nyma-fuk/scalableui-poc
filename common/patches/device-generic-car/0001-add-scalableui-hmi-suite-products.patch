@@ -46,6 +46,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_fixed_3zone_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -78,6 +79,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_map_first_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -110,6 +112,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_media_dock_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -142,6 +145,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_productivity_dashboard_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -174,6 +178,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_app_with_rail_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -206,6 +211,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_floating_card_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -238,6 +244,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_app_grid_hub_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -270,6 +277,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_calm_mode_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -302,6 +310,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_parking_mode_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -334,6 +343,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_developer_cockpit_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -366,6 +376,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_dual_display_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -398,6 +409,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/sdk_car_scalableui_showcase_modes_x86_64.mk
+@@ -0,0 +1,26 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#

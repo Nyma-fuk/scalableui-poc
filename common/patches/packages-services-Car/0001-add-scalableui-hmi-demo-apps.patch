@@ -3,6 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/Android.bp
+@@ -0,0 +1,29 @@
 +//
 +// Copyright (C) 2026 The Android Open Source Project
 +//
@@ -38,6 +39,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
+@@ -0,0 +1,65 @@
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +          package="com.android.car.scalableui.hmi.demo">
 +    <application
@@ -109,6 +111,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
+@@ -0,0 +1,54 @@
 +package com.android.car.scalableui.hmi.demo;
 +
 +import android.app.Activity;
