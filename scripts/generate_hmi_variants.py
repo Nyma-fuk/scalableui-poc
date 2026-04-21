@@ -19,11 +19,61 @@ from textwrap import dedent
 REPO = Path(__file__).resolve().parents[1]
 AAOS_ROOT = REPO.parents[1]
 
-DEMO_PKG = "com.android.car.scalableui.hmi.demo"
-MAP_COMPONENT = f"{DEMO_PKG}/.MapPanelActivity"
-GBALL_COMPONENT = f"{DEMO_PKG}/.GBallActivity"
-WIDGET_COMPONENT = f"{DEMO_PKG}/.WidgetPanelActivity"
-PANEL_MENU_COMPONENT = f"{DEMO_PKG}/.PanelMenuActivity"
+@dataclass(frozen=True)
+class DemoApp:
+    key: str
+    module: str
+    package: str
+    activity: str
+    label: str
+    kind: str
+
+    @property
+    def component(self) -> str:
+        return f"{self.package}/.{self.activity}"
+
+
+DEMO_APPS: tuple[DemoApp, ...] = (
+    DemoApp("map", "ScalableUiHmiMapDemoApp", "com.android.car.scalableui.hmi.map", "MapActivity", "ScalableUI Map", "MAP"),
+    DemoApp("gball", "ScalableUiHmiGBallDemoApp", "com.android.car.scalableui.hmi.gball", "GBallActivity", "G Ball", "GBALL"),
+    DemoApp("widgets", "ScalableUiHmiWidgetsDemoApp", "com.android.car.scalableui.hmi.widgets", "WidgetActivity", "ScalableUI Widgets", "WIDGET"),
+    DemoApp("panel_menu", "ScalableUiHmiPanelMenuDemoApp", "com.android.car.scalableui.hmi.panelmenu", "PanelMenuActivity", "ScalableUI Panel Menu", "PANEL_MENU"),
+    DemoApp("tasks", "ScalableUiHmiTasksDemoApp", "com.android.car.scalableui.hmi.tasks", "TaskActivity", "ScalableUI Tasks", "INFO"),
+    DemoApp("phone", "ScalableUiHmiPhoneDemoApp", "com.android.car.scalableui.hmi.phone", "PhoneActivity", "ScalableUI Phone", "INFO"),
+    DemoApp("media", "ScalableUiHmiMediaDemoApp", "com.android.car.scalableui.hmi.media", "MediaActivity", "ScalableUI Media", "INFO"),
+    DemoApp("status", "ScalableUiHmiStatusDemoApp", "com.android.car.scalableui.hmi.status", "StatusActivity", "ScalableUI Status", "INFO"),
+    DemoApp("controls", "ScalableUiHmiControlsDemoApp", "com.android.car.scalableui.hmi.controls", "ControlsActivity", "ScalableUI Controls", "INFO"),
+    DemoApp("shortcuts", "ScalableUiHmiShortcutsDemoApp", "com.android.car.scalableui.hmi.shortcuts", "ShortcutsActivity", "ScalableUI Shortcuts", "INFO"),
+    DemoApp("energy", "ScalableUiHmiEnergyDemoApp", "com.android.car.scalableui.hmi.energy", "EnergyActivity", "ScalableUI Energy", "INFO"),
+    DemoApp("settings", "ScalableUiHmiSettingsDemoApp", "com.android.car.scalableui.hmi.settings", "SettingsActivity", "ScalableUI Settings", "INFO"),
+    DemoApp("debug", "ScalableUiHmiDebugDemoApp", "com.android.car.scalableui.hmi.debug", "DebugActivity", "ScalableUI Debug", "INFO"),
+    DemoApp("passenger", "ScalableUiHmiPassengerDemoApp", "com.android.car.scalableui.hmi.passenger", "PassengerActivity", "ScalableUI Passenger", "INFO"),
+    DemoApp("calm", "ScalableUiHmiCalmDemoApp", "com.android.car.scalableui.hmi.calm", "CalmActivity", "ScalableUI Calm", "INFO"),
+)
+
+DEMO_BY_KEY = {app.key: app for app in DEMO_APPS}
+DEMO_ACTIVITY_TO_KEY = {
+    "MapPanelActivity": "map",
+    "GBallActivity": "gball",
+    "WidgetPanelActivity": "widgets",
+    "PanelMenuActivity": "panel_menu",
+    "TaskPanelActivity": "tasks",
+    "PhonePanelActivity": "phone",
+    "MediaPanelActivity": "media",
+    "StatusPanelActivity": "status",
+    "ControlsPanelActivity": "controls",
+    "ShortcutsPanelActivity": "shortcuts",
+    "EnergyPanelActivity": "energy",
+    "SettingsPanelActivity": "settings",
+    "DebugPanelActivity": "debug",
+    "PassengerPanelActivity": "passenger",
+    "CalmPanelActivity": "calm",
+}
+
+MAP_COMPONENT = DEMO_BY_KEY["map"].component
+GBALL_COMPONENT = DEMO_BY_KEY["gball"].component
+WIDGET_COMPONENT = DEMO_BY_KEY["widgets"].component
+PANEL_MENU_COMPONENT = DEMO_BY_KEY["panel_menu"].component
 CALENDAR_COMPONENT = "com.android.calendar/.AllInOneActivity"
 RADIO_COMPONENT = "com.android.car.radio/.RadioActivity"
 APP_GRID_COMPONENT = "com.android.car.carlauncher/.AppGridActivity"
@@ -68,7 +118,10 @@ class Variant:
 
 
 def demo_activity(name: str) -> str:
-    return f"{DEMO_PKG}/.{name}"
+    try:
+        return DEMO_BY_KEY[DEMO_ACTIVITY_TO_KEY[name]].component
+    except KeyError as exc:
+        raise ValueError(f"Unknown demo activity: {name}") from exc
 
 
 VARIANTS: tuple[Variant, ...] = (
@@ -493,6 +546,7 @@ def app_grid_xml(default_open: bool = False) -> str:
 def rro_files(variant: Variant) -> dict[str, str]:
     base = f"car_product/{variant.car_product_dir}"
     rro_base = f"{base}/rro/{variant.rro_name}"
+    demo_packages = " \\\n    ".join(app.module for app in DEMO_APPS)
     panel_items = "\n".join(f"        <item>@xml/{p.panel_id}</item>" for p in variant.panels)
     default_items = "\n".join(
         f"        <item>{p.panel_id};{default_component(p.component)}</item>"
@@ -530,7 +584,7 @@ $(call inherit-product, packages/services/Car/car_product/{variant.car_product_d
 
 PRODUCT_PACKAGES += \\
     Calendar \\
-    ScalableUiHmiDemoApps
+    {demo_packages}
 """
     )
     files[f"{base}/rro/rro.mk"] = (
@@ -649,34 +703,27 @@ android_app {{
 
 def demo_app_files() -> dict[str, str]:
     base = "car_product/scalableui_hmi_demo_apps"
-    activities = (
-        ("MapPanelActivity", "ScalableUI Map"),
-        ("GBallActivity", "G Ball"),
-        ("WidgetPanelActivity", "ScalableUI Widgets"),
-        ("PanelMenuActivity", "ScalableUI Panel Menu"),
-        ("TaskPanelActivity", "ScalableUI Tasks"),
-        ("PhonePanelActivity", "ScalableUI Phone"),
-        ("MediaPanelActivity", "ScalableUI Media"),
-        ("StatusPanelActivity", "ScalableUI Status"),
-        ("ControlsPanelActivity", "ScalableUI Controls"),
-        ("ShortcutsPanelActivity", "ScalableUI Shortcuts"),
-        ("EnergyPanelActivity", "ScalableUI Energy"),
-        ("SettingsPanelActivity", "ScalableUI Settings"),
-        ("DebugPanelActivity", "ScalableUI Debug"),
-        ("PassengerPanelActivity", "ScalableUI Passenger"),
-        ("CalmPanelActivity", "ScalableUI Calm"),
-    )
-    manifest_activities = "\n".join(
+    module_blocks = "\n".join(
         f"""\
-        <activity
-            android:name=".{name}"
-            android:exported="true"
-            android:resizeableActivity="true"
-            android:label="{label}" />"""
-        for name, label in activities
+android_app {{
+    name: "{app.module}",
+    srcs: ["apps/{app.key}/src/**/*.java"],
+    manifest: "apps/{app.key}/AndroidManifest.xml",
+    certificate: "platform",
+    sdk_version: "current",
+    system_ext_specific: true,
+    privileged: true,
+    static_libs: ["ScalableUiHmiDemoCommon"],
+}}
+"""
+        for app in DEMO_APPS
+    )
+    menu_targets = "\n".join(
+        f'            new LaunchTarget("{DEMO_BY_KEY[key].label}", "{DEMO_BY_KEY[key].component}"),'
+        for key in ("widgets", "map", "gball", "media", "tasks")
     )
     java = """\
-package com.android.car.scalableui.hmi.demo;
+package com.android.car.scalableui.hmi.demo.common;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -699,35 +746,40 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class ScalableUiDemoActivity extends Activity {
-    private static final String PKG = "com.android.car.scalableui.hmi.demo";
+public abstract class DemoBaseActivity extends Activity {
+    protected static final int DEMO_INFO = 0;
+    protected static final int DEMO_MAP = 1;
+    protected static final int DEMO_GBALL = 2;
+    protected static final int DEMO_WIDGET = 3;
+    protected static final int DEMO_PANEL_MENU = 4;
+
+    protected abstract int getDemoType();
+
+    protected abstract String getDemoTitle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String className = getComponentName().getClassName();
-        if (className.endsWith("MapPanelActivity")) {
+        if (getDemoType() == DEMO_MAP) {
             setContentView(new SyntheticMapView(this));
             return;
         }
-        if (className.endsWith("GBallActivity")) {
+        if (getDemoType() == DEMO_GBALL) {
             setContentView(new GBallView(this));
             return;
         }
-        if (className.endsWith("WidgetPanelActivity")) {
+        if (getDemoType() == DEMO_WIDGET) {
             setContentView(createWidgetPanel());
             return;
         }
-        if (className.endsWith("PanelMenuActivity")) {
+        if (getDemoType() == DEMO_PANEL_MENU) {
             setContentView(createPanelMenu());
             return;
         }
 
-        String title = className.substring(className.lastIndexOf('.') + 1)
-                .replace("PanelActivity", "")
-                .replace("Activity", "");
-        setContentView(createInfoPanel(title, "ScalableUI demo activity\\n" + className));
+        setContentView(createInfoPanel(getDemoTitle(),
+                "ScalableUI demo app\\n" + getPackageName()));
     }
 
     private LinearLayout createInfoPanel(String title, String bodyText) {
@@ -765,11 +817,9 @@ public class ScalableUiDemoActivity extends Activity {
 
     private LinearLayout createPanelMenu() {
         LinearLayout root = createVerticalShell("Panel Menu", "Swap the workspace panel");
-        addLaunchButton(root, "Widgets", "WidgetPanelActivity");
-        addLaunchButton(root, "Map", "MapPanelActivity");
-        addLaunchButton(root, "G Ball", "GBallActivity");
-        addLaunchButton(root, "Media", "MediaPanelActivity");
-        addLaunchButton(root, "Tasks", "TaskPanelActivity");
+        for (LaunchTarget target : MENU_TARGETS) {
+            addLaunchButton(root, target);
+        }
         return root;
     }
 
@@ -849,11 +899,12 @@ public class ScalableUiDemoActivity extends Activity {
         return root;
     }
 
-    private void addLaunchButton(LinearLayout root, String label, String activityName) {
-        Button button = createButton(label);
+    private void addLaunchButton(LinearLayout root, LaunchTarget target) {
+        Button button = createButton(target.label);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setComponent(new ComponentName(PKG, PKG + "." + activityName));
+            ComponentName component = ComponentName.unflattenFromString(target.component);
+            intent.setComponent(component);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
@@ -867,6 +918,20 @@ public class ScalableUiDemoActivity extends Activity {
         button.setTextSize(16f);
         button.setAllCaps(false);
         return button;
+    }
+
+    private static final LaunchTarget[] MENU_TARGETS = new LaunchTarget[] {
+__MENU_TARGETS__
+    };
+
+    private static final class LaunchTarget {
+        final String label;
+        final String component;
+
+        LaunchTarget(String label, String component) {
+            this.label = label;
+            this.component = component;
+        }
     }
 
     private static final class SyntheticMapView extends View {
@@ -994,46 +1059,61 @@ public class ScalableUiDemoActivity extends Activity {
         }
     }
 }
-"""
+""".replace("__MENU_TARGETS__", menu_targets)
     files = {
         f"{base}/Android.bp": (
             copyright("//")
-            + """
-package {
+            + f"""
+package {{
     default_applicable_licenses: ["Android-Apache-2.0"],
-}
+}}
 
-android_app {
-    name: "ScalableUiHmiDemoApps",
-    srcs: ["src/**/*.java"],
-    manifest: "AndroidManifest.xml",
-    certificate: "platform",
-    platform_apis: true,
-    system_ext_specific: true,
-    privileged: true,
-}
+java_library {{
+    name: "ScalableUiHmiDemoCommon",
+    srcs: ["common/src/**/*.java"],
+    sdk_version: "current",
+}}
+
+{module_blocks}
 """
         ),
-        f"{base}/AndroidManifest.xml": f"""\
+        f"{base}/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java": java,
+    }
+    for app in DEMO_APPS:
+        files[f"{base}/apps/{app.key}/AndroidManifest.xml"] = f"""\
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="{DEMO_PKG}">
+          package="{app.package}">
     <application
         android:theme="@android:style/Theme.Material.NoActionBar"
-        android:label="ScalableUI HMI Demo">
+        android:label="{app.label}">
         <activity
-            android:name=".ScalableUiDemoActivity"
-            android:exported="false" />
-{manifest_activities}
+            android:name=".{app.activity}"
+            android:exported="true"
+            android:resizeableActivity="true"
+            android:label="{app.label}">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
-""",
-        f"{base}/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java": java,
-    }
-    for name, _label in activities:
-        files[f"{base}/src/com/android/car/scalableui/hmi/demo/{name}.java"] = f"""\
-package com.android.car.scalableui.hmi.demo;
+"""
+        files[f"{base}/apps/{app.key}/src/{app.package.replace('.', '/')}/{app.activity}.java"] = f"""\
+package {app.package};
 
-public final class {name} extends ScalableUiDemoActivity {{
+import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
+
+public final class {app.activity} extends DemoBaseActivity {{
+    @Override
+    protected int getDemoType() {{
+        return DEMO_{app.kind};
+    }}
+
+    @Override
+    protected String getDemoTitle() {{
+        return "{app.label}";
+    }}
 }}
 """
     return files

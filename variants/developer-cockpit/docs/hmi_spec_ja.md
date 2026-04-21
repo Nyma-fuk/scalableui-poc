@@ -12,10 +12,10 @@ Debug status, controls, app-under-test, and map/media panels are arranged for Po
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `debug_status_panel` | Debug Status | `com.android.car.scalableui.hmi.demo/.DebugPanelActivity` | `2%` | `3%` | `39%` | `48%` | `0` |
-| `app_under_test_panel` | App Under Test | `com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `41%` | `3%` | `98%` | `48%` | `0` |
-| `control_panel` | Controls | `com.android.car.scalableui.hmi.demo/.ControlsPanelActivity` | `2%` | `52%` | `39%` | `97%` | `0` |
-| `map_media_panel` | Map Media | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `41%` | `52%` | `98%` | `97%` | `0` |
+| `debug_status_panel` | Debug Status | `com.android.car.scalableui.hmi.debug/.DebugActivity` | `2%` | `3%` | `39%` | `48%` | `0` |
+| `app_under_test_panel` | App Under Test | `com.android.car.scalableui.hmi.tasks/.TaskActivity` | `41%` | `3%` | `98%` | `48%` | `0` |
+| `control_panel` | Controls | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `2%` | `52%` | `39%` | `97%` | `0` |
+| `map_media_panel` | Map Media | `com.android.car.scalableui.hmi.map/.MapActivity` | `41%` | `52%` | `98%` | `97%` | `0` |
 
 ## Routing
 

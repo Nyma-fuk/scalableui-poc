@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_developer_cockpit/car_scalableui_hmi_developer_cockpit.mk
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,36 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,7 +25,21 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
-+    ScalableUiHmiDemoApps
++    ScalableUiHmiMapDemoApp \
++    ScalableUiHmiGBallDemoApp \
++    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiTasksDemoApp \
++    ScalableUiHmiPhoneDemoApp \
++    ScalableUiHmiMediaDemoApp \
++    ScalableUiHmiStatusDemoApp \
++    ScalableUiHmiControlsDemoApp \
++    ScalableUiHmiShortcutsDemoApp \
++    ScalableUiHmiEnergyDemoApp \
++    ScalableUiHmiSettingsDemoApp \
++    ScalableUiHmiDebugDemoApp \
++    ScalableUiHmiPassengerDemoApp \
++    ScalableUiHmiCalmDemoApp
 
 diff --git a/car_product/scalableui_hmi_developer_cockpit/rro/CarSystemUIScalableUiHmiDeveloperCockpitRRO/Android.bp b/car_product/scalableui_hmi_developer_cockpit/rro/CarSystemUIScalableUiHmiDeveloperCockpitRRO/Android.bp
 new file mode 100644
@@ -123,10 +137,10 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+        <item>debug_status_panel;com.android.car.scalableui.hmi.demo/.DebugPanelActivity</item>
-+        <item>app_under_test_panel;com.android.car.scalableui.hmi.demo/.TaskPanelActivity</item>
-+        <item>control_panel;com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</item>
-+        <item>map_media_panel;com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
++        <item>debug_status_panel;com.android.car.scalableui.hmi.debug/.DebugActivity</item>
++        <item>app_under_test_panel;com.android.car.scalableui.hmi.tasks/.TaskActivity</item>
++        <item>control_panel;com.android.car.scalableui.hmi.controls/.ControlsActivity</item>
++        <item>map_media_panel;com.android.car.scalableui.hmi.map/.MapActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +    </string-array>
 +</resources>
@@ -169,10 +183,10 @@ index 0000000..1111111
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
-+    <string name="debug_status_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.DebugPanelActivity</string>
-+    <string name="app_under_test_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.TaskPanelActivity</string>
-+    <string name="control_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</string>
-+    <string name="map_media_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MapPanelActivity</string>
++    <string name="debug_status_panel_componentName" translatable="false">com.android.car.scalableui.hmi.debug/.DebugActivity</string>
++    <string name="app_under_test_panel_componentName" translatable="false">com.android.car.scalableui.hmi.tasks/.TaskActivity</string>
++    <string name="control_panel_componentName" translatable="false">com.android.car.scalableui.hmi.controls/.ControlsActivity</string>
++    <string name="map_media_panel_componentName" translatable="false">com.android.car.scalableui.hmi.map/.MapActivity</string>
 +</resources>
 
 diff --git a/car_product/scalableui_hmi_developer_cockpit/rro/CarSystemUIScalableUiHmiDeveloperCockpitRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_developer_cockpit/rro/CarSystemUIScalableUiHmiDeveloperCockpitRRO/res/xml/app_panel.xml

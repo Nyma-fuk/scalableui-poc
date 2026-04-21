@@ -12,10 +12,10 @@ A comparison layout keeps normal, calm, and app-focus concepts visible as separa
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `normal_map_panel` | Normal Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
+| `normal_map_panel` | Normal Map | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
 | `normal_context_panel` | Normal Context | `com.android.calendar/.AllInOneActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
-| `calm_preview_panel` | Calm Preview | `com.android.car.scalableui.hmi.demo/.CalmPanelActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
-| `app_focus_preview_panel` | App Focus Preview | `com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
+| `calm_preview_panel` | Calm Preview | `com.android.car.scalableui.hmi.calm/.CalmActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
+| `app_focus_preview_panel` | App Focus Preview | `com.android.car.scalableui.hmi.tasks/.TaskActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
 
 ## Routing
 

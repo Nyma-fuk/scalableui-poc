@@ -12,8 +12,8 @@ All apps is treated as the central hub and launched apps are routed to fullscree
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `home_status_panel` | Home Status | `com.android.car.scalableui.hmi.demo/.StatusPanelActivity` | `2%` | `3%` | `98%` | `18%` | `0` |
-| `media_mini_panel` | Media Mini | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `2%` | `82%` | `98%` | `97%` | `0` |
+| `home_status_panel` | Home Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `2%` | `3%` | `98%` | `18%` | `0` |
+| `media_mini_panel` | Media Mini | `com.android.car.scalableui.hmi.media/.MediaActivity` | `2%` | `82%` | `98%` | `97%` | `0` |
 
 ## Routing
 

@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_parking_mode/car_scalableui_hmi_parking_mode.mk
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,36 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,7 +25,21 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
-+    ScalableUiHmiDemoApps
++    ScalableUiHmiMapDemoApp \
++    ScalableUiHmiGBallDemoApp \
++    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiTasksDemoApp \
++    ScalableUiHmiPhoneDemoApp \
++    ScalableUiHmiMediaDemoApp \
++    ScalableUiHmiStatusDemoApp \
++    ScalableUiHmiControlsDemoApp \
++    ScalableUiHmiShortcutsDemoApp \
++    ScalableUiHmiEnergyDemoApp \
++    ScalableUiHmiSettingsDemoApp \
++    ScalableUiHmiDebugDemoApp \
++    ScalableUiHmiPassengerDemoApp \
++    ScalableUiHmiCalmDemoApp
 
 diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/Android.bp b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/Android.bp
 new file mode 100644
@@ -123,10 +137,10 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+        <item>energy_panel;com.android.car.scalableui.hmi.demo/.EnergyPanelActivity</item>
-+        <item>media_panel;com.android.car.scalableui.hmi.demo/.MediaPanelActivity</item>
-+        <item>settings_panel;com.android.car.scalableui.hmi.demo/.SettingsPanelActivity</item>
-+        <item>shortcuts_panel;com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity</item>
++        <item>energy_panel;com.android.car.scalableui.hmi.energy/.EnergyActivity</item>
++        <item>media_panel;com.android.car.scalableui.hmi.media/.MediaActivity</item>
++        <item>settings_panel;com.android.car.scalableui.hmi.settings/.SettingsActivity</item>
++        <item>shortcuts_panel;com.android.car.scalableui.hmi.shortcuts/.ShortcutsActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +    </string-array>
 +</resources>
@@ -169,10 +183,10 @@ index 0000000..1111111
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
-+    <string name="energy_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.EnergyPanelActivity</string>
-+    <string name="media_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MediaPanelActivity</string>
-+    <string name="settings_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.SettingsPanelActivity</string>
-+    <string name="shortcuts_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity</string>
++    <string name="energy_panel_componentName" translatable="false">com.android.car.scalableui.hmi.energy/.EnergyActivity</string>
++    <string name="media_panel_componentName" translatable="false">com.android.car.scalableui.hmi.media/.MediaActivity</string>
++    <string name="settings_panel_componentName" translatable="false">com.android.car.scalableui.hmi.settings/.SettingsActivity</string>
++    <string name="shortcuts_panel_componentName" translatable="false">com.android.car.scalableui.hmi.shortcuts/.ShortcutsActivity</string>
 +</resources>
 
 diff --git a/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_parking_mode/rro/CarSystemUIScalableUiHmiParkingModeRRO/res/xml/app_panel.xml

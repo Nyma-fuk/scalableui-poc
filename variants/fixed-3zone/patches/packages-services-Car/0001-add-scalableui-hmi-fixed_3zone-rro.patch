@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_fixed_3zone/car_scalableui_hmi_fixed_3zone.mk
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,36 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,7 +25,21 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
-+    ScalableUiHmiDemoApps
++    ScalableUiHmiMapDemoApp \
++    ScalableUiHmiGBallDemoApp \
++    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiTasksDemoApp \
++    ScalableUiHmiPhoneDemoApp \
++    ScalableUiHmiMediaDemoApp \
++    ScalableUiHmiStatusDemoApp \
++    ScalableUiHmiControlsDemoApp \
++    ScalableUiHmiShortcutsDemoApp \
++    ScalableUiHmiEnergyDemoApp \
++    ScalableUiHmiSettingsDemoApp \
++    ScalableUiHmiDebugDemoApp \
++    ScalableUiHmiPassengerDemoApp \
++    ScalableUiHmiCalmDemoApp
 
 diff --git a/car_product/scalableui_hmi_fixed_3zone/rro/CarSystemUIScalableUiHmiFixed3zoneRRO/Android.bp b/car_product/scalableui_hmi_fixed_3zone/rro/CarSystemUIScalableUiHmiFixed3zoneRRO/Android.bp
 new file mode 100644
@@ -122,7 +136,7 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+        <item>map_panel;com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
++        <item>map_panel;com.android.car.scalableui.hmi.map/.MapActivity</item>
 +        <item>calendar_panel;com.android.calendar/.AllInOneActivity</item>
 +        <item>radio_panel;com.android.car.radio/.RadioActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
@@ -166,7 +180,7 @@ index 0000000..1111111
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
-+    <string name="map_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MapPanelActivity</string>
++    <string name="map_panel_componentName" translatable="false">com.android.car.scalableui.hmi.map/.MapActivity</string>
 +    <string name="calendar_panel_componentName" translatable="false">com.android.calendar/.AllInOneActivity</string>
 +    <string name="radio_panel_componentName" translatable="false">com.android.car.radio/.RadioActivity</string>
 +</resources>

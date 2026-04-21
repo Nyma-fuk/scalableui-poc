@@ -19,7 +19,7 @@
 - `common/patches/device-generic-car/`
   - すべての HMI product を `AndroidProducts.mk` に追加する suite 用 patch
 - `common/patches/packages-services-Car/`
-  - HMI 用共通 demo app `ScalableUiHmiDemoApps` を追加する patch
+  - HMI 評価用の複数 demo app APK と共通 library を追加する patch
 - `variants/<variant>/patches/device-generic-car/`
   - 1 variant だけを clean checkout に追加する product patch
 - `variants/<variant>/patches/packages-services-Car/`
@@ -116,38 +116,22 @@ apply script は次の方針です。
 
 つまり、想定と違う checkout に無理やり patch を当てることはありません。
 
-## 共通 demo app
+## Demo Apps
 
-標準 AAOS に存在しない map / G Ball / widget / task / status / energy / debug / controls などの領域には、共通の demo app を使います。
+標準 AAOS に存在しない map / G Ball / widget / task / status / energy / debug / controls などの領域には、評価用の複数 APK を使います。
+ScalableUI が複数 app package / task をどう panel routing するかを正しく見るため、各 demo app は個別 module / 個別 package に分けています。
 
-module:
+主な module / component:
 
-- `ScalableUiHmiDemoApps`
+- `ScalableUiHmiMapDemoApp`: `com.android.car.scalableui.hmi.map/.MapActivity`
+- `ScalableUiHmiGBallDemoApp`: `com.android.car.scalableui.hmi.gball/.GBallActivity`
+- `ScalableUiHmiWidgetsDemoApp`: `com.android.car.scalableui.hmi.widgets/.WidgetActivity`
+- `ScalableUiHmiPanelMenuDemoApp`: `com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity`
+- `ScalableUiHmiMediaDemoApp`: `com.android.car.scalableui.hmi.media/.MediaActivity`
+- `ScalableUiHmiTasksDemoApp`: `com.android.car.scalableui.hmi.tasks/.TaskActivity`
 
-package:
-
-- `com.android.car.scalableui.hmi.demo`
-
-主な Activity:
-
-- `.MapPanelActivity`
-- `.GBallActivity`
-- `.WidgetPanelActivity`
-- `.PanelMenuActivity`
-- `.TaskPanelActivity`
-- `.PhonePanelActivity`
-- `.MediaPanelActivity`
-- `.StatusPanelActivity`
-- `.ControlsPanelActivity`
-- `.ShortcutsPanelActivity`
-- `.EnergyPanelActivity`
-- `.SettingsPanelActivity`
-- `.DebugPanelActivity`
-- `.PassengerPanelActivity`
-- `.CalmPanelActivity`
-
-この app は HMI variant の panel 領域を検証するための軽量 demo / placeholder です。
-`MapPanelActivity` は外部地図 tile を同梱せず、repo 内で再配布可能な synthetic map artwork をコード描画します。
+描画や widget の共通実装は static library `ScalableUiHmiDemoCommon` に集約し、各 APK は薄い Activity wrapper として実装しています。
+`MapActivity` は外部地図 tile を同梱せず、repo 内で再配布可能な synthetic map artwork をコード描画します。
 `PanelMenuActivity` は `widget-workspace` の menu panel から workspace panel に表示する app を起動し、ScalableUI の role routing で同一 panel 内の app 入れ替えを確認します。
 量産向け UI ではなく、panel bounds / routing / layout / widget 操作を試すためのものです。
 

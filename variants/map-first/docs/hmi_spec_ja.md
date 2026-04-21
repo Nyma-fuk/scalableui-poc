@@ -12,10 +12,10 @@ The map owns most of the display while a narrow right rail shows glanceable cont
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_panel` | Wide Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
+| `map_panel` | Wide Map | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
 | `event_panel` | Next Event | `com.android.calendar/.AllInOneActivity` | `74%` | `3%` | `98%` | `31%` | `0` |
-| `media_mini_panel` | Media Mini | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `74%` | `35%` | `98%` | `64%` | `0` |
-| `status_panel` | Vehicle Status | `com.android.car.scalableui.hmi.demo/.StatusPanelActivity` | `74%` | `68%` | `98%` | `97%` | `0` |
+| `media_mini_panel` | Media Mini | `com.android.car.scalableui.hmi.media/.MediaActivity` | `74%` | `35%` | `98%` | `64%` | `0` |
+| `status_panel` | Vehicle Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `74%` | `68%` | `98%` | `97%` | `0` |
 
 ## Routing
 

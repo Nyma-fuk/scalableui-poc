@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/Android.bp
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,190 @@
 +//
 +// Copyright (C) 2026 The Android Open Source Project
 +//
@@ -24,225 +24,874 @@ index 0000000..1111111
 +    default_applicable_licenses: ["Android-Apache-2.0"],
 +}
 +
++java_library {
++    name: "ScalableUiHmiDemoCommon",
++    srcs: ["common/src/**/*.java"],
++    sdk_version: "current",
++}
++
 +android_app {
-+    name: "ScalableUiHmiDemoApps",
-+    srcs: ["src/**/*.java"],
-+    manifest: "AndroidManifest.xml",
++    name: "ScalableUiHmiMapDemoApp",
++    srcs: ["apps/map/src/**/*.java"],
++    manifest: "apps/map/AndroidManifest.xml",
 +    certificate: "platform",
-+    platform_apis: true,
++    sdk_version: "current",
 +    system_ext_specific: true,
 +    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiGBallDemoApp",
++    srcs: ["apps/gball/src/**/*.java"],
++    manifest: "apps/gball/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiWidgetsDemoApp",
++    srcs: ["apps/widgets/src/**/*.java"],
++    manifest: "apps/widgets/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiPanelMenuDemoApp",
++    srcs: ["apps/panel_menu/src/**/*.java"],
++    manifest: "apps/panel_menu/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiTasksDemoApp",
++    srcs: ["apps/tasks/src/**/*.java"],
++    manifest: "apps/tasks/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiPhoneDemoApp",
++    srcs: ["apps/phone/src/**/*.java"],
++    manifest: "apps/phone/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiMediaDemoApp",
++    srcs: ["apps/media/src/**/*.java"],
++    manifest: "apps/media/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiStatusDemoApp",
++    srcs: ["apps/status/src/**/*.java"],
++    manifest: "apps/status/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiControlsDemoApp",
++    srcs: ["apps/controls/src/**/*.java"],
++    manifest: "apps/controls/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiShortcutsDemoApp",
++    srcs: ["apps/shortcuts/src/**/*.java"],
++    manifest: "apps/shortcuts/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiEnergyDemoApp",
++    srcs: ["apps/energy/src/**/*.java"],
++    manifest: "apps/energy/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiSettingsDemoApp",
++    srcs: ["apps/settings/src/**/*.java"],
++    manifest: "apps/settings/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiDebugDemoApp",
++    srcs: ["apps/debug/src/**/*.java"],
++    manifest: "apps/debug/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiPassengerDemoApp",
++    srcs: ["apps/passenger/src/**/*.java"],
++    manifest: "apps/passenger/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
++}
++
++android_app {
++    name: "ScalableUiHmiCalmDemoApp",
++    srcs: ["apps/calm/src/**/*.java"],
++    manifest: "apps/calm/AndroidManifest.xml",
++    certificate: "platform",
++    sdk_version: "current",
++    system_ext_specific: true,
++    privileged: true,
++    static_libs: ["ScalableUiHmiDemoCommon"],
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/AndroidManifest.xml
-@@ -0,0 +1,85 @@
++++ b/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml
+@@ -0,0 +1,17 @@
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+          package="com.android.car.scalableui.hmi.demo">
++          package="com.android.car.scalableui.hmi.calm">
 +    <application
 +        android:theme="@android:style/Theme.Material.NoActionBar"
-+        android:label="ScalableUI HMI Demo">
++        android:label="ScalableUI Calm">
 +        <activity
-+            android:name=".ScalableUiDemoActivity"
-+            android:exported="false" />
-+        <activity
-+            android:name=".MapPanelActivity"
++            android:name=".CalmActivity"
 +            android:exported="true"
 +            android:resizeableActivity="true"
-+            android:label="ScalableUI Map" />
++            android:label="ScalableUI Calm">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java b/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.calm;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class CalmActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Calm";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.controls">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Controls">
++        <activity
++            android:name=".ControlsActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Controls">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.controls;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class ControlsActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Controls";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.debug">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Debug">
++        <activity
++            android:name=".DebugActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Debug">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java b/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.debug;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class DebugActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Debug";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.energy">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Energy">
++        <activity
++            android:name=".EnergyActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Energy">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java b/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.energy;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class EnergyActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Energy";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.gball">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="G Ball">
 +        <activity
 +            android:name=".GBallActivity"
 +            android:exported="true"
 +            android:resizeableActivity="true"
-+            android:label="G Ball" />
++            android:label="G Ball">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java b/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.gball;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class GBallActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_GBALL;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "G Ball";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.map">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Map">
 +        <activity
-+            android:name=".WidgetPanelActivity"
++            android:name=".MapActivity"
 +            android:exported="true"
 +            android:resizeableActivity="true"
-+            android:label="ScalableUI Widgets" />
++            android:label="ScalableUI Map">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java b/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.map;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class MapActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_MAP;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Map";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.media">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Media">
++        <activity
++            android:name=".MediaActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Media">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java b/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.media;
++
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class MediaActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Media";
++    }
++}
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.panelmenu">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Panel Menu">
 +        <activity
 +            android:name=".PanelMenuActivity"
 +            android:exported="true"
 +            android:resizeableActivity="true"
-+            android:label="ScalableUI Panel Menu" />
-+        <activity
-+            android:name=".TaskPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Tasks" />
-+        <activity
-+            android:name=".PhonePanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Phone" />
-+        <activity
-+            android:name=".MediaPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Media" />
-+        <activity
-+            android:name=".StatusPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Status" />
-+        <activity
-+            android:name=".ControlsPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Controls" />
-+        <activity
-+            android:name=".ShortcutsPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Shortcuts" />
-+        <activity
-+            android:name=".EnergyPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Energy" />
-+        <activity
-+            android:name=".SettingsPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Settings" />
-+        <activity
-+            android:name=".DebugPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Debug" />
-+        <activity
-+            android:name=".PassengerPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Passenger" />
-+        <activity
-+            android:name=".CalmPanelActivity"
-+            android:exported="true"
-+            android:resizeableActivity="true"
-+            android:label="ScalableUI Calm" />
++            android:label="ScalableUI Panel Menu">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
 +    </application>
 +</manifest>
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/CalmPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.panelmenu;
 +
-+public final class CalmPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class PanelMenuActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_PANEL_MENU;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Panel Menu";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ControlsPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.passenger">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Passenger">
++        <activity
++            android:name=".PassengerActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Passenger">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java b/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.passenger;
 +
-+public final class ControlsPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class PassengerActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Passenger";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/DebugPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.phone">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Phone">
++        <activity
++            android:name=".PhoneActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Phone">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java b/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.phone;
 +
-+public final class DebugPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class PhoneActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Phone";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/EnergyPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.settings">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Settings">
++        <activity
++            android:name=".SettingsActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Settings">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.settings;
 +
-+public final class EnergyPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class SettingsActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Settings";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/GBallActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.shortcuts">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Shortcuts">
++        <activity
++            android:name=".ShortcutsActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Shortcuts">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.shortcuts;
 +
-+public final class GBallActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class ShortcutsActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Shortcuts";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MapPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.status">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Status">
++        <activity
++            android:name=".StatusActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Status">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java b/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.status;
 +
-+public final class MapPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class StatusActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Status";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/MediaPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.tasks">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Tasks">
++        <activity
++            android:name=".TaskActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Tasks">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java b/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.tasks;
 +
-+public final class MediaPanelActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class TaskActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_INFO;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Tasks";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PanelMenuActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml
+@@ -0,0 +1,17 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.scalableui.hmi.widgets">
++    <application
++        android:theme="@android:style/Theme.Material.NoActionBar"
++        android:label="ScalableUI Widgets">
++        <activity
++            android:name=".WidgetActivity"
++            android:exported="true"
++            android:resizeableActivity="true"
++            android:label="ScalableUI Widgets">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java b/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java
+@@ -0,0 +1,15 @@
++package com.android.car.scalableui.hmi.widgets;
 +
-+public final class PanelMenuActivity extends ScalableUiDemoActivity {
++import com.android.car.scalableui.hmi.demo.common.DemoBaseActivity;
++
++public final class WidgetActivity extends DemoBaseActivity {
++    @Override
++    protected int getDemoType() {
++        return DEMO_WIDGET;
++    }
++
++    @Override
++    protected String getDemoTitle() {
++        return "ScalableUI Widgets";
++    }
 +}
 
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java b/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java
 new file mode 100644
 index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PassengerPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class PassengerPanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/PhonePanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class PhonePanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ScalableUiDemoActivity.java
-@@ -0,0 +1,318 @@
-+package com.android.car.scalableui.hmi.demo;
++++ b/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java
+@@ -0,0 +1,340 @@
++package com.android.car.scalableui.hmi.demo.common;
 +
 +import android.app.Activity;
 +import android.content.ComponentName;
@@ -265,35 +914,40 @@ index 0000000..1111111
 +import android.widget.Switch;
 +import android.widget.TextView;
 +
-+public class ScalableUiDemoActivity extends Activity {
-+    private static final String PKG = "com.android.car.scalableui.hmi.demo";
++public abstract class DemoBaseActivity extends Activity {
++    protected static final int DEMO_INFO = 0;
++    protected static final int DEMO_MAP = 1;
++    protected static final int DEMO_GBALL = 2;
++    protected static final int DEMO_WIDGET = 3;
++    protected static final int DEMO_PANEL_MENU = 4;
++
++    protected abstract int getDemoType();
++
++    protected abstract String getDemoTitle();
 +
 +    @Override
 +    protected void onCreate(Bundle savedInstanceState) {
 +        super.onCreate(savedInstanceState);
 +
-+        String className = getComponentName().getClassName();
-+        if (className.endsWith("MapPanelActivity")) {
++        if (getDemoType() == DEMO_MAP) {
 +            setContentView(new SyntheticMapView(this));
 +            return;
 +        }
-+        if (className.endsWith("GBallActivity")) {
++        if (getDemoType() == DEMO_GBALL) {
 +            setContentView(new GBallView(this));
 +            return;
 +        }
-+        if (className.endsWith("WidgetPanelActivity")) {
++        if (getDemoType() == DEMO_WIDGET) {
 +            setContentView(createWidgetPanel());
 +            return;
 +        }
-+        if (className.endsWith("PanelMenuActivity")) {
++        if (getDemoType() == DEMO_PANEL_MENU) {
 +            setContentView(createPanelMenu());
 +            return;
 +        }
 +
-+        String title = className.substring(className.lastIndexOf('.') + 1)
-+                .replace("PanelActivity", "")
-+                .replace("Activity", "");
-+        setContentView(createInfoPanel(title, "ScalableUI demo activity\n" + className));
++        setContentView(createInfoPanel(getDemoTitle(),
++                "ScalableUI demo app\n" + getPackageName()));
 +    }
 +
 +    private LinearLayout createInfoPanel(String title, String bodyText) {
@@ -331,11 +985,9 @@ index 0000000..1111111
 +
 +    private LinearLayout createPanelMenu() {
 +        LinearLayout root = createVerticalShell("Panel Menu", "Swap the workspace panel");
-+        addLaunchButton(root, "Widgets", "WidgetPanelActivity");
-+        addLaunchButton(root, "Map", "MapPanelActivity");
-+        addLaunchButton(root, "G Ball", "GBallActivity");
-+        addLaunchButton(root, "Media", "MediaPanelActivity");
-+        addLaunchButton(root, "Tasks", "TaskPanelActivity");
++        for (LaunchTarget target : MENU_TARGETS) {
++            addLaunchButton(root, target);
++        }
 +        return root;
 +    }
 +
@@ -415,11 +1067,12 @@ index 0000000..1111111
 +        return root;
 +    }
 +
-+    private void addLaunchButton(LinearLayout root, String label, String activityName) {
-+        Button button = createButton(label);
++    private void addLaunchButton(LinearLayout root, LaunchTarget target) {
++        Button button = createButton(target.label);
 +        button.setOnClickListener(v -> {
 +            Intent intent = new Intent(Intent.ACTION_MAIN);
-+            intent.setComponent(new ComponentName(PKG, PKG + "." + activityName));
++            ComponentName component = ComponentName.unflattenFromString(target.component);
++            intent.setComponent(component);
 +            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 +            startActivity(intent);
 +        });
@@ -433,6 +1086,24 @@ index 0000000..1111111
 +        button.setTextSize(16f);
 +        button.setAllCaps(false);
 +        return button;
++    }
++
++    private static final LaunchTarget[] MENU_TARGETS = new LaunchTarget[] {
++            new LaunchTarget("ScalableUI Widgets", "com.android.car.scalableui.hmi.widgets/.WidgetActivity"),
++            new LaunchTarget("ScalableUI Map", "com.android.car.scalableui.hmi.map/.MapActivity"),
++            new LaunchTarget("G Ball", "com.android.car.scalableui.hmi.gball/.GBallActivity"),
++            new LaunchTarget("ScalableUI Media", "com.android.car.scalableui.hmi.media/.MediaActivity"),
++            new LaunchTarget("ScalableUI Tasks", "com.android.car.scalableui.hmi.tasks/.TaskActivity"),
++    };
++
++    private static final class LaunchTarget {
++        final String label;
++        final String component;
++
++        LaunchTarget(String label, String component) {
++            this.label = label;
++            this.component = component;
++        }
 +    }
 +
 +    private static final class SyntheticMapView extends View {
@@ -559,59 +1230,4 @@ index 0000000..1111111
 +            postInvalidateOnAnimation();
 +        }
 +    }
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/SettingsPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class SettingsPanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/ShortcutsPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class ShortcutsPanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/StatusPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class StatusPanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/TaskPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class TaskPanelActivity extends ScalableUiDemoActivity {
-+}
-
-diff --git a/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/src/com/android/car/scalableui/hmi/demo/WidgetPanelActivity.java
-@@ -0,0 +1,4 @@
-+package com.android.car.scalableui.hmi.demo;
-+
-+public final class WidgetPanelActivity extends ScalableUiDemoActivity {
 +}

@@ -12,10 +12,10 @@ Parking and charging use cases get a dense dashboard with energy, media, setting
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `energy_panel` | Energy | `com.android.car.scalableui.hmi.demo/.EnergyPanelActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
-| `media_panel` | Media | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
-| `settings_panel` | Settings | `com.android.car.scalableui.hmi.demo/.SettingsPanelActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
-| `shortcuts_panel` | Shortcuts | `com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
+| `energy_panel` | Energy | `com.android.car.scalableui.hmi.energy/.EnergyActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
+| `media_panel` | Media | `com.android.car.scalableui.hmi.media/.MediaActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
+| `settings_panel` | Settings | `com.android.car.scalableui.hmi.settings/.SettingsActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
+| `shortcuts_panel` | Shortcuts | `com.android.car.scalableui.hmi.shortcuts/.ShortcutsActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
 
 ## Routing
 

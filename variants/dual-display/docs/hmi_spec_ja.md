@@ -12,9 +12,9 @@ Driver and passenger panels are split by displayId for multi-display exploration
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `driver_map_panel` | Driver Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
-| `driver_media_panel` | Driver Media | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `74%` | `3%` | `98%` | `97%` | `0` |
-| `passenger_app_panel` | Passenger App | `com.android.car.scalableui.hmi.demo/.PassengerPanelActivity` | `0` | `0` | `100%` | `100%` | `1` |
+| `driver_map_panel` | Driver Map | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `3%` | `72%` | `97%` | `0` |
+| `driver_media_panel` | Driver Media | `com.android.car.scalableui.hmi.media/.MediaActivity` | `74%` | `3%` | `98%` | `97%` | `0` |
+| `passenger_app_panel` | Passenger App | `com.android.car.scalableui.hmi.passenger/.PassengerActivity` | `0` | `0` | `100%` | `100%` | `1` |
 
 ## Routing
 

@@ -12,9 +12,9 @@ A full-screen map/background is combined with floating rounded cards.
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_background_panel` | Map Background | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `0` | `0` | `100%` | `100%` | `0` |
+| `map_background_panel` | Map Background | `com.android.car.scalableui.hmi.map/.MapActivity` | `0` | `0` | `100%` | `100%` | `0` |
 | `primary_card_panel` | Primary Card | `com.android.calendar/.AllInOneActivity` | `8%` | `12%` | `55%` | `52%` | `0` |
-| `secondary_card_panel` | Secondary Card | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `58%` | `58%` | `94%` | `90%` | `0` |
+| `secondary_card_panel` | Secondary Card | `com.android.car.scalableui.hmi.media/.MediaActivity` | `58%` | `58%` | `94%` | `90%` | `0` |
 
 ## Routing
 

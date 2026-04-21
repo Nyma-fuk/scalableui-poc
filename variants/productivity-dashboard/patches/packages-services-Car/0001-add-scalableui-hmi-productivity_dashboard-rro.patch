@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/car_scalableui_hmi_productivity_dashboard.mk
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,36 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,7 +25,21 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
-+    ScalableUiHmiDemoApps
++    ScalableUiHmiMapDemoApp \
++    ScalableUiHmiGBallDemoApp \
++    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiTasksDemoApp \
++    ScalableUiHmiPhoneDemoApp \
++    ScalableUiHmiMediaDemoApp \
++    ScalableUiHmiStatusDemoApp \
++    ScalableUiHmiControlsDemoApp \
++    ScalableUiHmiShortcutsDemoApp \
++    ScalableUiHmiEnergyDemoApp \
++    ScalableUiHmiSettingsDemoApp \
++    ScalableUiHmiDebugDemoApp \
++    ScalableUiHmiPassengerDemoApp \
++    ScalableUiHmiCalmDemoApp
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/Android.bp b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/Android.bp
 new file mode 100644
@@ -124,9 +138,9 @@ index 0000000..1111111
 +
 +    <string-array name="config_default_activities" translatable="false">
 +        <item>calendar_panel;com.android.calendar/.AllInOneActivity</item>
-+        <item>task_panel;com.android.car.scalableui.hmi.demo/.TaskPanelActivity</item>
-+        <item>map_mini_panel;com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
-+        <item>phone_panel;com.android.car.scalableui.hmi.demo/.PhonePanelActivity</item>
++        <item>task_panel;com.android.car.scalableui.hmi.tasks/.TaskActivity</item>
++        <item>map_mini_panel;com.android.car.scalableui.hmi.map/.MapActivity</item>
++        <item>phone_panel;com.android.car.scalableui.hmi.phone/.PhoneActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +    </string-array>
 +</resources>
@@ -170,9 +184,9 @@ index 0000000..1111111
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
 +    <string name="calendar_panel_componentName" translatable="false">com.android.calendar/.AllInOneActivity</string>
-+    <string name="task_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.TaskPanelActivity</string>
-+    <string name="map_mini_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.MapPanelActivity</string>
-+    <string name="phone_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.PhonePanelActivity</string>
++    <string name="task_panel_componentName" translatable="false">com.android.car.scalableui.hmi.tasks/.TaskActivity</string>
++    <string name="map_mini_panel_componentName" translatable="false">com.android.car.scalableui.hmi.map/.MapActivity</string>
++    <string name="phone_panel_componentName" translatable="false">com.android.car.scalableui.hmi.phone/.PhoneActivity</string>
 +</resources>
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/app_panel.xml
