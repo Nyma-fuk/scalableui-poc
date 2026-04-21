@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_widget_workspace/car_scalableui_hmi_widget_workspace.mk
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,36 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,7 +25,21 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
-+    ScalableUiHmiDemoApps
++    ScalableUiHmiMapDemoApp \
++    ScalableUiHmiGBallDemoApp \
++    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiTasksDemoApp \
++    ScalableUiHmiPhoneDemoApp \
++    ScalableUiHmiMediaDemoApp \
++    ScalableUiHmiStatusDemoApp \
++    ScalableUiHmiControlsDemoApp \
++    ScalableUiHmiShortcutsDemoApp \
++    ScalableUiHmiEnergyDemoApp \
++    ScalableUiHmiSettingsDemoApp \
++    ScalableUiHmiDebugDemoApp \
++    ScalableUiHmiPassengerDemoApp \
++    ScalableUiHmiCalmDemoApp
 
 diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/Android.bp b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/Android.bp
 new file mode 100644
@@ -123,10 +137,10 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+        <item>panel_menu;com.android.car.scalableui.hmi.demo/.PanelMenuActivity</item>
-+        <item>workspace_panel;com.android.car.scalableui.hmi.demo/.WidgetPanelActivity</item>
-+        <item>widget_controls_panel;com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</item>
-+        <item>workspace_status_panel;com.android.car.scalableui.hmi.demo/.StatusPanelActivity</item>
++        <item>panel_menu;com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity</item>
++        <item>workspace_panel;com.android.car.scalableui.hmi.widgets/.WidgetActivity</item>
++        <item>widget_controls_panel;com.android.car.scalableui.hmi.controls/.ControlsActivity</item>
++        <item>workspace_status_panel;com.android.car.scalableui.hmi.status/.StatusActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +    </string-array>
 +</resources>
@@ -169,16 +183,16 @@ index 0000000..1111111
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
-+    <string name="panel_menu_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.PanelMenuActivity</string>
++    <string name="panel_menu_componentName" translatable="false">com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity</string>
 +    <string-array name="workspace_panel_componentNames" translatable="false">
-+        <item>com.android.car.scalableui.hmi.demo/.WidgetPanelActivity</item>
-+        <item>com.android.car.scalableui.hmi.demo/.MapPanelActivity</item>
-+        <item>com.android.car.scalableui.hmi.demo/.GBallActivity</item>
-+        <item>com.android.car.scalableui.hmi.demo/.MediaPanelActivity</item>
-+        <item>com.android.car.scalableui.hmi.demo/.TaskPanelActivity</item>
++        <item>com.android.car.scalableui.hmi.widgets/.WidgetActivity</item>
++        <item>com.android.car.scalableui.hmi.map/.MapActivity</item>
++        <item>com.android.car.scalableui.hmi.gball/.GBallActivity</item>
++        <item>com.android.car.scalableui.hmi.media/.MediaActivity</item>
++        <item>com.android.car.scalableui.hmi.tasks/.TaskActivity</item>
 +    </string-array>
-+    <string name="widget_controls_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.ControlsPanelActivity</string>
-+    <string name="workspace_status_panel_componentName" translatable="false">com.android.car.scalableui.hmi.demo/.StatusPanelActivity</string>
++    <string name="widget_controls_panel_componentName" translatable="false">com.android.car.scalableui.hmi.controls/.ControlsActivity</string>
++    <string name="workspace_status_panel_componentName" translatable="false">com.android.car.scalableui.hmi.status/.StatusActivity</string>
 +</resources>
 
 diff --git a/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_widget_workspace/rro/CarSystemUIScalableUiHmiWidgetWorkspaceRRO/res/xml/app_panel.xml

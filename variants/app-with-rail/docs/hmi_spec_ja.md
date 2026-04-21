@@ -12,9 +12,9 @@ A large app workspace remains available while a side rail keeps shortcuts and st
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `rail_shortcuts_panel` | Shortcuts | `com.android.car.scalableui.hmi.demo/.ShortcutsPanelActivity` | `82%` | `3%` | `98%` | `31%` | `0` |
-| `rail_media_panel` | Media Mini | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `82%` | `35%` | `98%` | `64%` | `0` |
-| `rail_status_panel` | Status | `com.android.car.scalableui.hmi.demo/.StatusPanelActivity` | `82%` | `68%` | `98%` | `97%` | `0` |
+| `rail_shortcuts_panel` | Shortcuts | `com.android.car.scalableui.hmi.shortcuts/.ShortcutsActivity` | `82%` | `3%` | `98%` | `31%` | `0` |
+| `rail_media_panel` | Media Mini | `com.android.car.scalableui.hmi.media/.MediaActivity` | `82%` | `35%` | `98%` | `64%` | `0` |
+| `rail_status_panel` | Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `82%` | `68%` | `98%` | `97%` | `0` |
 
 ## Routing
 

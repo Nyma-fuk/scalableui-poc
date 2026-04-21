@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
 WORKDIR="$ROOT_DIR/workdir/scalableui-poc"
 
+source "$WORKDIR/scripts/hmi_variants.sh"
+
 require_repo() {
   local repo_path="$1"
   if [[ ! -d "$repo_path" ]]; then
@@ -76,10 +78,12 @@ apply_one_patch() {
 apply_one_patch "device/generic/car" "common/patches/device-generic-car/0001-add-scalableui-hmi-suite-products.patch"
 apply_one_patch "packages/services/Car" "common/patches/packages-services-Car/0001-add-scalableui-hmi-demo-apps.patch"
 
-while IFS= read -r patch_path; do
+for entry in "${HMI_VARIANTS[@]}"; do
+  IFS="|" read -r slug _product <<<"$entry"
+  patch_path="$(find "$WORKDIR/variants/$slug/patches/packages-services-Car" -maxdepth 1 -name '*.patch' | sort | head -n 1)"
   rel="${patch_path#"$WORKDIR/"}"
   apply_one_patch "packages/services/Car" "$rel"
-done < <(find "$WORKDIR/variants" -path '*/patches/packages-services-Car/*.patch' -type f | sort)
+done
 
 apply_one_patch "packages/apps/Car/SystemUI" "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch"
 apply_one_patch "packages/apps/Car/Launcher" "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch"

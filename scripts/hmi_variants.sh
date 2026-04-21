@@ -55,3 +55,22 @@ hmi_rro_module_for_slug() {
     *) return 1 ;;
   esac
 }
+
+hmi_demo_app_modules() {
+  printf '%s\n' \
+    ScalableUiHmiMapDemoApp \
+    ScalableUiHmiGBallDemoApp \
+    ScalableUiHmiWidgetsDemoApp \
+    ScalableUiHmiPanelMenuDemoApp \
+    ScalableUiHmiTasksDemoApp \
+    ScalableUiHmiPhoneDemoApp \
+    ScalableUiHmiMediaDemoApp \
+    ScalableUiHmiStatusDemoApp \
+    ScalableUiHmiControlsDemoApp \
+    ScalableUiHmiShortcutsDemoApp \
+    ScalableUiHmiEnergyDemoApp \
+    ScalableUiHmiSettingsDemoApp \
+    ScalableUiHmiDebugDemoApp \
+    ScalableUiHmiPassengerDemoApp \
+    ScalableUiHmiCalmDemoApp
+}

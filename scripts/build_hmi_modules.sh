@@ -6,6 +6,7 @@ WORKDIR="$ROOT_DIR/workdir/scalableui-poc"
 JOBS="${JOBS:-$(nproc)}"
 
 source "$WORKDIR/scripts/hmi_variants.sh"
+mapfile -t DEMO_APP_MODULES < <(hmi_demo_app_modules)
 
 if [[ $# -gt 0 ]]; then
   SELECTED=()
@@ -36,8 +37,8 @@ for entry in "${SELECTED[@]}"; do
   lunch "${product}-trunk_staging-userdebug"
   set -u
 
-  echo "==> build app/RRO modules for $slug with -j$JOBS"
-  m -j"$JOBS" ScalableUiHmiDemoApps "$rro_module"
+  echo "==> build demo app/RRO modules for $slug with -j$JOBS"
+  m -j"$JOBS" "${DEMO_APP_MODULES[@]}" "$rro_module"
 done
 
 echo "All requested HMI app/RRO modules built successfully."

@@ -12,10 +12,10 @@ An interactive left menu launches map, G Ball, widget, media, and task apps into
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `panel_menu` | Panel Menu | `com.android.car.scalableui.hmi.demo/.PanelMenuActivity` | `2%` | `3%` | `22%` | `97%` | `0` |
-| `workspace_panel` | Interactive Workspace | `com.android.car.scalableui.hmi.demo/.WidgetPanelActivity, com.android.car.scalableui.hmi.demo/.MapPanelActivity, com.android.car.scalableui.hmi.demo/.GBallActivity, com.android.car.scalableui.hmi.demo/.MediaPanelActivity, com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `24%` | `3%` | `98%` | `68%` | `0` |
-| `widget_controls_panel` | Widget Controls | `com.android.car.scalableui.hmi.demo/.ControlsPanelActivity` | `24%` | `72%` | `60%` | `97%` | `0` |
-| `workspace_status_panel` | Workspace Status | `com.android.car.scalableui.hmi.demo/.StatusPanelActivity` | `62%` | `72%` | `98%` | `97%` | `0` |
+| `panel_menu` | Panel Menu | `com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity` | `2%` | `3%` | `22%` | `97%` | `0` |
+| `workspace_panel` | Interactive Workspace | `com.android.car.scalableui.hmi.widgets/.WidgetActivity, com.android.car.scalableui.hmi.map/.MapActivity, com.android.car.scalableui.hmi.gball/.GBallActivity, com.android.car.scalableui.hmi.media/.MediaActivity, com.android.car.scalableui.hmi.tasks/.TaskActivity` | `24%` | `3%` | `98%` | `68%` | `0` |
+| `widget_controls_panel` | Widget Controls | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `24%` | `72%` | `60%` | `97%` | `0` |
+| `workspace_status_panel` | Workspace Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `62%` | `72%` | `98%` | `97%` | `0` |
 
 ## Routing
 

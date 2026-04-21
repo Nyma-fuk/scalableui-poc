@@ -12,7 +12,7 @@ Map, calendar, and radio are always visible in a stable 3-zone layout.
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_panel` | Map | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `58%` | `97%` | `0` |
+| `map_panel` | Map | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `3%` | `58%` | `97%` | `0` |
 | `calendar_panel` | Calendar | `com.android.calendar/.AllInOneActivity` | `60%` | `3%` | `98%` | `48%` | `0` |
 | `radio_panel` | Radio | `com.android.car.radio/.RadioActivity` | `60%` | `52%` | `98%` | `97%` | `0` |
 

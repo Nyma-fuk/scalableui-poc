@@ -13,9 +13,9 @@ Calendar, tasks, phone, and map are arranged as a parked or pre-drive assistant 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `calendar_panel` | Calendar | `com.android.calendar/.AllInOneActivity` | `2%` | `3%` | `49%` | `48%` | `0` |
-| `task_panel` | Tasks | `com.android.car.scalableui.hmi.demo/.TaskPanelActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
-| `map_mini_panel` | Map Mini | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
-| `phone_panel` | Phone | `com.android.car.scalableui.hmi.demo/.PhonePanelActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
+| `task_panel` | Tasks | `com.android.car.scalableui.hmi.tasks/.TaskActivity` | `51%` | `3%` | `98%` | `48%` | `0` |
+| `map_mini_panel` | Map Mini | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `52%` | `49%` | `97%` | `0` |
+| `phone_panel` | Phone | `com.android.car.scalableui.hmi.phone/.PhoneActivity` | `51%` | `52%` | `98%` | `97%` | `0` |
 
 ## Routing
 

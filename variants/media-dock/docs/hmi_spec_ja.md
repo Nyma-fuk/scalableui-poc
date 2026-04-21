@@ -12,9 +12,9 @@ Media controls are emphasized with a large bottom dock and compact navigation.
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `map_mini_panel` | Map Mini | `com.android.car.scalableui.hmi.demo/.MapPanelActivity` | `2%` | `3%` | `38%` | `44%` | `0` |
-| `now_playing_panel` | Now Playing | `com.android.car.scalableui.hmi.demo/.MediaPanelActivity` | `40%` | `3%` | `98%` | `44%` | `0` |
-| `media_dock_panel` | Media Dock | `com.android.car.scalableui.hmi.demo/.ControlsPanelActivity` | `2%` | `48%` | `98%` | `97%` | `0` |
+| `map_mini_panel` | Map Mini | `com.android.car.scalableui.hmi.map/.MapActivity` | `2%` | `3%` | `38%` | `44%` | `0` |
+| `now_playing_panel` | Now Playing | `com.android.car.scalableui.hmi.media/.MediaActivity` | `40%` | `3%` | `98%` | `44%` | `0` |
+| `media_dock_panel` | Media Dock | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `2%` | `48%` | `98%` | `97%` | `0` |
 
 ## Routing
 
