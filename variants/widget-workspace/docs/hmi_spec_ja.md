@@ -2,7 +2,7 @@
 
 ## Intent
 
-An interactive left menu launches map, G Ball, widget, media, and task apps into one ScalableUI workspace panel so users can swap the panel content at runtime.
+A compact Panel Control button reveals a hidden runtime menu. Users choose a destination panel, then choose which demo app should appear in that panel.
 
 ## Build Target
 
@@ -12,10 +12,11 @@ An interactive left menu launches map, G Ball, widget, media, and task apps into
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `panel_menu` | Panel Menu | `com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity` | `2%` | `3%` | `22%` | `97%` | `0` |
-| `workspace_panel` | Interactive Workspace | `com.android.car.scalableui.hmi.widgets/.WidgetActivity, com.android.car.scalableui.hmi.map/.MapActivity, com.android.car.scalableui.hmi.gball/.GBallActivity, com.android.car.scalableui.hmi.media/.MediaActivity, com.android.car.scalableui.hmi.tasks/.TaskActivity` | `24%` | `3%` | `98%` | `68%` | `0` |
-| `widget_controls_panel` | Widget Controls | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `24%` | `72%` | `60%` | `97%` | `0` |
-| `workspace_status_panel` | Workspace Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `62%` | `72%` | `98%` | `97%` | `0` |
+| `panel_menu_button` | Panel Control Button | `com.android.car.scalableui.hmi.panelmenubutton/.PanelMenuButtonActivity` | `2%` | `3%` | `11%` | `12%` | `0` |
+| `panel_menu` | Hidden Panel Menu | `com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity` | `2%` | `14%` | `34%` | `88%` | `0` |
+| `workspace_panel` | Interactive Workspace | `com.android.car.scalableui.hmi.widgets/.WidgetActivity` | `13%` | `3%` | `98%` | `68%` | `0` |
+| `widget_controls_panel` | Widget Controls | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `13%` | `72%` | `55%` | `97%` | `0` |
+| `workspace_status_panel` | Workspace Status | `com.android.car.scalableui.hmi.status/.StatusActivity` | `57%` | `72%` | `98%` | `97%` | `0` |
 
 ## Routing
 
@@ -34,3 +35,9 @@ An interactive left menu launches map, G Ball, widget, media, and task apps into
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- Panel Control opens the hidden menu only when the user asks for it.
+- Panel Menu adds a target panel extra so SystemUI can route the selected app to the requested panel.
+- All Apps launches are kept separate and should open in the fullscreen app_panel.

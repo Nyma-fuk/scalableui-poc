@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_showcase_modes/car_scalableui_hmi_showcase_modes.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -194,20 +202,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/app_focus_preview_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="app_focus_preview_panel" defaultVariant="@id/opened" role="@string/app_focus_preview_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/app_focus_preview_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="51%" top="52%" right="98%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/app_focus_preview_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/app_panel.xml
@@ -245,20 +254,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/calm_preview_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="calm_preview_panel" defaultVariant="@id/opened" role="@string/calm_preview_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/calm_preview_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="52%" right="49%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/calm_preview_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_context_panel.xml b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_context_panel.xml
@@ -266,20 +276,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_context_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="normal_context_panel" defaultVariant="@id/opened" role="@string/normal_context_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/normal_context_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="51%" top="3%" right="98%" bottom="48%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/normal_context_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_map_panel.xml b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_map_panel.xml
@@ -287,20 +298,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/normal_map_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="normal_map_panel" defaultVariant="@id/opened" role="@string/normal_map_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/normal_map_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="3%" right="49%" bottom="48%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/normal_map_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_showcase_modes/rro/CarSystemUIScalableUiHmiShowcaseModesRRO/res/xml/overlays.xml

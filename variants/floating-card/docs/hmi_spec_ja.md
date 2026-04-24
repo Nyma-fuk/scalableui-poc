@@ -33,3 +33,7 @@ A full-screen map/background is combined with floating rounded cards.
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- No special notes.

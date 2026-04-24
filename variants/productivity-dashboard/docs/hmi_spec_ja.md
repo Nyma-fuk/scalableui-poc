@@ -34,3 +34,7 @@ Calendar, tasks, phone, and map are arranged as a parked or pre-drive assistant 
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- Use this variant mostly for parked or pre-drive evaluation.

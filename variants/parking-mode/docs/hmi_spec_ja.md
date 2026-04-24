@@ -34,3 +34,7 @@ Parking and charging use cases get a dense dashboard with energy, media, setting
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- Vehicle parked/charging event wiring is not included; this is a build-time HMI variant.

@@ -33,3 +33,7 @@ A large app workspace remains available while a side rail keeps shortcuts and st
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- The DEFAULT app_panel opens in the left 80% instead of covering the rail.

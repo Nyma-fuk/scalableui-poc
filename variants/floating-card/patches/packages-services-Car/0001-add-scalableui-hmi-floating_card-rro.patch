@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_floating_card/car_scalableui_hmi_floating_card.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -219,7 +227,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/map_background_panel.xml
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="map_background_panel" defaultVariant="@id/opened" role="@string/map_background_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
@@ -232,6 +240,7 @@ index 0000000..1111111
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/overlays.xml
@@ -281,20 +290,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/primary_card_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="primary_card_panel" defaultVariant="@id/opened" role="@string/primary_card_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/primary_card_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="8%" top="12%" right="55%" bottom="52%"/>
-+<Corner radius="28dp"/>
++        <Corner radius="28dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/primary_card_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/secondary_card_panel.xml b/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/secondary_card_panel.xml
@@ -302,20 +312,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_floating_card/rro/CarSystemUIScalableUiHmiFloatingCardRRO/res/xml/secondary_card_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="secondary_card_panel" defaultVariant="@id/opened" role="@string/secondary_card_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/secondary_card_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="58%" top="58%" right="94%" bottom="90%"/>
-+<Corner radius="28dp"/>
++        <Corner radius="28dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/secondary_card_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_floating_card/rro/rro.mk b/car_product/scalableui_hmi_floating_card/rro/rro.mk

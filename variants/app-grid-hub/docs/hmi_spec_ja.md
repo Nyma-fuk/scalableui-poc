@@ -32,3 +32,7 @@ All apps is treated as the central hub and launched apps are routed to fullscree
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- panel_app_grid defaults to opened for this hub-like variant.

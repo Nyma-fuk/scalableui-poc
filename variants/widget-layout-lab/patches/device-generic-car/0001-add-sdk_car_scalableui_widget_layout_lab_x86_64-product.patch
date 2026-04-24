@@ -1,0 +1,53 @@
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index 1111111..2222222 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -20,6 +20,7 @@
+     $(LOCAL_DIR)/sdk_car_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_arm64.mk \
+     $(LOCAL_DIR)/sdk_car_md_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_widget_layout_lab_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_cw_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_x86_64.mk \
+     $(LOCAL_DIR)/sdk_car_dewd_x86_64.mk \
+@@ -29,6 +30,7 @@
+     gsi_car_x86_64-trunk_staging-userdebug \
+     sdk_car_arm64-trunk_staging-userdebug \
+     sdk_car_md_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_widget_layout_lab_x86_64-trunk_staging-userdebug \
+     sdk_car_cw_x86_64-trunk_staging-userdebug \
+     sdk_car_x86_64-trunk_staging-userdebug \
+ 
+
+diff --git a/sdk_car_scalableui_widget_layout_lab_x86_64.mk b/sdk_car_scalableui_widget_layout_lab_x86_64.mk
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/sdk_car_scalableui_widget_layout_lab_x86_64.mk
+@@ -0,0 +1,26 @@
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++
++# Generated ScalableUI HMI product for: Widget layout lab cockpit.
++$(call inherit-product, device/generic/car/sdk_car_x86_64.mk)
++$(call inherit-product, packages/services/Car/car_product/scalableui_hmi_widget_layout_lab/car_scalableui_hmi_widget_layout_lab.mk)
++
++PRODUCT_NAME := sdk_car_scalableui_widget_layout_lab_x86_64
++PRODUCT_DEVICE := emulator_car64_x86_64
++PRODUCT_BRAND := Android
++PRODUCT_MODEL := Widget layout lab cockpit on x86_64 emulator
++
++$(warning ${PRODUCT_NAME} is for ScalableUI HMI exploration only.)

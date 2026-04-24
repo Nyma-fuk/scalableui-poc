@@ -33,3 +33,7 @@ Driver and passenger panels are split by displayId for multi-display exploration
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- Requires a multi-display emulator or target to validate displayId=1 behavior.

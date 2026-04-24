@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/car_scalableui_hmi_productivity_dashboard.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -224,20 +232,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/calendar_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="calendar_panel" defaultVariant="@id/opened" role="@string/calendar_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/calendar_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="3%" right="49%" bottom="48%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/calendar_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/map_mini_panel.xml b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/map_mini_panel.xml
@@ -245,20 +254,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/map_mini_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="map_mini_panel" defaultVariant="@id/opened" role="@string/map_mini_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/map_mini_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="52%" right="49%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/map_mini_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/overlays.xml
@@ -308,20 +318,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/phone_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="phone_panel" defaultVariant="@id/opened" role="@string/phone_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/phone_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="51%" top="52%" right="98%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/phone_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/task_panel.xml b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/task_panel.xml
@@ -329,20 +340,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_productivity_dashboard/rro/CarSystemUIScalableUiHmiProductivityDashboardRRO/res/xml/task_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="task_panel" defaultVariant="@id/opened" role="@string/task_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/task_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="51%" top="3%" right="98%" bottom="48%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/task_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_productivity_dashboard/rro/rro.mk b/car_product/scalableui_hmi_productivity_dashboard/rro/rro.mk

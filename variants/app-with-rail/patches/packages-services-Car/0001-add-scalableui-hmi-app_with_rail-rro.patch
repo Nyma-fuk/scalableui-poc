@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_app_with_rail/car_scalableui_hmi_app_with_rail.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -261,20 +269,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_media_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="rail_media_panel" defaultVariant="@id/opened" role="@string/rail_media_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/rail_media_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="82%" top="35%" right="98%" bottom="64%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/rail_media_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_shortcuts_panel.xml b/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_shortcuts_panel.xml
@@ -282,20 +291,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_shortcuts_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="rail_shortcuts_panel" defaultVariant="@id/opened" role="@string/rail_shortcuts_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/rail_shortcuts_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="82%" top="3%" right="98%" bottom="31%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/rail_shortcuts_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_status_panel.xml b/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_status_panel.xml
@@ -303,20 +313,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_app_with_rail/rro/CarSystemUIScalableUiHmiAppWithRailRRO/res/xml/rail_status_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="rail_status_panel" defaultVariant="@id/opened" role="@string/rail_status_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/rail_status_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="82%" top="68%" right="98%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/rail_status_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_app_with_rail/rro/rro.mk b/car_product/scalableui_hmi_app_with_rail/rro/rro.mk
