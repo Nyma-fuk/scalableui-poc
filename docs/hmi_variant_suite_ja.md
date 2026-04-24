@@ -346,3 +346,44 @@ PoC の確認例:
 - `widget-layout-lab` では右下の `Widget Layout` button を押すと右側 picker が開く
 - `adb exec-out screencap -p` で表示を記録できる
 - `adb shell input tap` で preset button を押し、variant の切替結果を確認できる
+
+## 検証プロセスの標準化
+
+variant ごとに「見た目が出た」だけで完了扱いにはしません。基本フローは次です。
+
+1. patch を適用する
+2. module build を通す
+3. image 変更を含む場合は `emu_img_zip` まで作る
+4. emulator を起動する
+5. screenshot / `dumpsys` / `SharedPreferences` を使って受け入れ条件を確認する
+6. その variant の README / spec に結果を反映する
+
+特に `editable-home` は formal spec があるため、`widget-layout-lab` の動作確認を代用しません。
+必ず `editable-home` の emulator 上で次を確認します。
+
+- `L1/L2/L3` の layout 切替
+- panel ごとの whitelist app assignment
+- duplicate assignment rejection
+- 保存後の復元
+- system bar と content area の非干渉
+
+自動検証の入口:
+
+```bash
+bash workdir/scalableui-poc/scripts/verify_editable_home_acceptance.sh
+```
+
+既定の artifact 出力先:
+
+```text
+/tmp/editable-home-acceptance/
+  acceptance_report.md
+  home-l2.png
+  home-l1.png
+  home-l1-restored.png
+  activities-l2.txt
+  activities-l1.txt
+  activities-l1-restored.txt
+```
+
+この script は `editable-home` product 上でのみ動作し、受け入れ条件のうち自動化できる部分をまとめて確認します。
