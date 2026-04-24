@@ -85,12 +85,15 @@ generate_patch \
   "packages/apps/Car/SystemUI" \
   "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch" \
   "src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java" \
+  "src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java" \
+  "src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java" \
   "src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java" \
   "tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java"
 
 generate_patch \
   "packages/apps/Car/Launcher" \
   "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch" \
+  "app/AndroidManifest.xml" \
   "libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java" \
   "libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt"
 

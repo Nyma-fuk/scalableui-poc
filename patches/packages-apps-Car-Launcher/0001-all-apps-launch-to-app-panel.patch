@@ -1,3 +1,18 @@
+diff --git a/app/AndroidManifest.xml b/app/AndroidManifest.xml
+index b6100e222bfb63539c4fd7ddfbbdb3f956263c59..74255d091db04e61b0d0026732223c6e781efe62 100644
+--- a/app/AndroidManifest.xml
++++ b/app/AndroidManifest.xml
+@@ -103,10 +103,6 @@
+             <meta-data android:name="distractionOptimized" android:value="true"/>
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN"/>
+-                <category android:name="android.intent.category.HOME"/>
+-                <category android:name="android.intent.category.SECONDARY_HOME" />
+-                <category android:name="android.intent.category.DEFAULT"/>
+-                <category android:name="android.intent.category.LAUNCHER_APP"/>
+             </intent-filter>
+         </activity>
+         <activity
 diff --git a/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java b/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java
 index 92dc9417576692ce02f89906cf585ad40f18b4f3..1611840d449e0990b890315ca90cf901353b008c 100644
 --- a/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java
@@ -21,7 +36,7 @@ index 92dc9417576692ce02f89906cf585ad40f18b4f3..1611840d449e0990b890315ca90cf901
                  }
              };
 diff --git a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
-index 7c78b801c04f581bab06aa0fcf1bb66d02d16744..37ac7aa4164079ab765b2666821754feb1c0bd1a 100644
+index 7c78b801c04f581bab06aa0fcf1bb66d02d16744..a7afc6f80c0ee3cb9120f7c61257432db695d3ee 100644
 --- a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
 +++ b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
 @@ -39,6 +39,10 @@ import java.net.URISyntaxException
@@ -35,11 +50,16 @@ index 7c78b801c04f581bab06aa0fcf1bb66d02d16744..37ac7aa4164079ab765b2666821754fe
  
      /**
       *  Launches the app associated with the given ComponentName. This is the core
-@@ -60,6 +64,7 @@ sealed class AppLaunchProvider {
+@@ -60,6 +64,12 @@ sealed class AppLaunchProvider {
      protected fun launchApp(context: Context, intent: Intent) {
          val options = ActivityOptions.makeBasic()
          options.launchDisplayId = context.display?.displayId ?: 0
 +        intent.putExtra(EXTRA_LAUNCH_IN_APP_PANEL, true)
++        intent.addFlags(
++            Intent.FLAG_ACTIVITY_NEW_TASK or
++                Intent.FLAG_ACTIVITY_CLEAR_TOP or
++                Intent.FLAG_ACTIVITY_SINGLE_TOP
++        )
          context.startActivity(intent, options.toBundle())
      }
  

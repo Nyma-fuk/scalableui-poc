@@ -1,28 +1,276 @@
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-index 837ab0eec707eb9b3e27656185c473aa17530cc5..a3d1965992219ef9b2fb02fe48ae3ebac039fed2 100644
+index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5361a473d 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-@@ -63,6 +63,8 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -23,9 +23,11 @@ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventCon
+ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventConstants.SYSTEM_TASK_CLOSE_EVENT_ID;
+ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventConstants.SYSTEM_TASK_OPEN_EVENT_ID;
+ 
++import android.app.ActivityManager;
+ import android.content.ComponentName;
+ import android.content.Context;
+ import android.content.Intent;
++import android.net.Uri;
+ import android.os.Build;
+ import android.os.IBinder;
+ import android.util.Log;
+@@ -63,6 +65,13 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
          AutoTaskStackTransitionHandlerDelegate {
      private static final String TAG =
              PanelAutoTaskStackTransitionHandlerDelegate.class.getSimpleName();
 +    private static final String EXTRA_LAUNCH_IN_APP_PANEL =
 +            "com.android.car.carlauncher.extra.LAUNCH_IN_APP_PANEL";
++    private static final String EXTRA_TARGET_PANEL_ID =
++            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++    private static final String TARGET_PANEL_URI_SCHEME = "scalableui-hmi";
++    private static final String TARGET_PANEL_URI_HOST = "panel-launch";
++    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
  
      private static final Event EMPTY_EVENT = new Event.Builder(EMPTY_EVENT_ID).build();
      private static final boolean DEBUG = Build.IS_DEBUGGABLE;
-@@ -200,7 +202,10 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -116,6 +125,7 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+             AutoTaskStackTransaction wct =
+                     mPanelTransitionCoordinator.createAutoTaskStackTransaction(transition,
+                             panelTransaction, event);
++            reparentTriggerTaskToRequestedPanelIfNeeded(wct, request, event);
+             mPanelTransitionCoordinator.resetUnpreparedDecorPanel(panelTransaction);
+             if (DEBUG) {
+                 Log.d(TAG, "handleRequest: COMPLETED " + wct);
+@@ -199,8 +209,11 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+         }
          String componentString = component != null ? component.flattenToString() : null;
          String panelId;
-         TaskPanel panel = null;
+-        TaskPanel panel = null;
 -        if (component != null) {
-+        boolean launchInAppPanel = request.getTriggerTask().baseIntent != null
-+                && request.getTriggerTask().baseIntent.getBooleanExtra(
-+                EXTRA_LAUNCH_IN_APP_PANEL, /* defaultValue= */ false);
-+        if (!launchInAppPanel && component != null) {
++        TaskPanel panel = getExplicitTargetPanel(request);
++        if (panel == null && shouldLaunchInAppPanel(request)) {
++            panel = mPanelUtils.getTaskPanel(TaskPanel::isLaunchRoot);
++        }
++        if (panel == null && component != null) {
              panel = mPanelUtils.getTaskPanel(tp -> tp.handles(component));
          }
          if (panel == null) {
+@@ -230,7 +243,68 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+             return EMPTY_EVENT;
+         }
+     }
+-
++    private boolean shouldLaunchInAppPanel(@NonNull TransitionRequestInfo request) {
++        return request.getTriggerTask() != null
++                && request.getTriggerTask().baseIntent != null
++                && request.getTriggerTask().baseIntent.getBooleanExtra(
++                EXTRA_LAUNCH_IN_APP_PANEL, /* defaultValue= */ false);
++    }
++    @Nullable
++    private TaskPanel getExplicitTargetPanel(@NonNull TransitionRequestInfo request) {
++        if (request.getTriggerTask() == null || request.getTriggerTask().baseIntent == null) {
++            return null;
++        }
++        Intent baseIntent = request.getTriggerTask().baseIntent;
++        String targetPanelId = baseIntent.getStringExtra(EXTRA_TARGET_PANEL_ID);
++        if (targetPanelId == null || targetPanelId.isEmpty()) {
++            targetPanelId = getTargetPanelIdFromDataUri(baseIntent.getData());
++        }
++        if (targetPanelId == null || targetPanelId.isEmpty()) {
++            return null;
++        }
++        final String panelId = targetPanelId;
++        return mPanelUtils.getTaskPanel(tp -> panelId.equals(tp.getPanelId()));
++    }
++    @Nullable
++    private String getTargetPanelIdFromDataUri(@Nullable Uri data) {
++        if (data == null
++                || !TARGET_PANEL_URI_SCHEME.equals(data.getScheme())
++                || !TARGET_PANEL_URI_HOST.equals(data.getHost())) {
++            return null;
++        }
++        return data.getQueryParameter(TARGET_PANEL_URI_PARAM);
++    }
++    private void reparentTriggerTaskToRequestedPanelIfNeeded(
++            @NonNull AutoTaskStackTransaction transaction,
++            @NonNull TransitionRequestInfo request,
++            @NonNull Event event) {
++        if (!TransitionUtil.isOpeningType(request.getType())
++                || request.getTriggerTask() == null
++                || event.getPanelId() == null) {
++            return;
++        }
++        TaskPanel targetPanel = mPanelUtils.getTaskPanel(tp -> event.getPanelId().equals(
++                tp.getPanelId()));
++        if (targetPanel == null || targetPanel.getRootStack() == null
++                || request.getTriggerTask().parentTaskId == targetPanel.getRootTaskId()
++                || request.getTriggerTask().taskId == targetPanel.getRootTaskId()) {
++            return;
++        }
++        ComponentName component = mPanelUtils.getTaskComponentName(request.getTriggerTask());
++        ActivityManager.RunningTaskInfo reusableTask = mPanelInfoRepository.findReusableTask(component,
++                request.getTriggerTask().displayId, request.getTriggerTask().taskId);
++        if (reusableTask != null) {
++            if (DEBUG) {
++                Log.d(TAG, "Reusing existing taskId=" + reusableTask.taskId
++                        + " for component=" + component + " targetPanel=" + event.getPanelId());
++            }
++            transaction.reparentTask(reusableTask.taskId, targetPanel.getRootStack().getId(),
++                    /* onTop= */ true);
++            return;
++        }
++        transaction.reparentTask(request.getTriggerTask().token,
++                targetPanel.getRootStack().getId(), /* onTop= */ true);
++    }
+     @Override
+     public void onTransitionConsumed(@NonNull IBinder transition,
+             @NonNull Map<Integer, AutoTaskStackState> changedTaskStacks, boolean aborted,
+diff --git a/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java b/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java
+index 474f24998886d19225f331d9c79e41b1ac73a9c5..e21b8affb97069994dc4f180c44ce668800f0874 100644
+--- a/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java
++++ b/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java
+@@ -152,6 +152,28 @@ public class TaskPanelInfoRepository {
+         return false;
+     }
+ 
++    /**
++     * Finds an already-running task for a component that ScalableUI currently tracks on a panel.
++     */
++    public ActivityManager.RunningTaskInfo findReusableTask(ComponentName componentName,
++            int displayId, int excludedTaskId) {
++        synchronized (mLock) {
++            ActivityManager.RunningTaskInfo match = null;
++            for (String panelId : mPanelTaskMap.keySet()) {
++                for (ActivityManager.RunningTaskInfo taskInfo : mPanelTaskMap.get(panelId).values()) {
++                    if (taskInfo.taskId == excludedTaskId
++                            || taskInfo.displayId != displayId
++                            || !isTaskReusable(taskInfo)
++                            || !matchesComponent(taskInfo, componentName)) {
++                        continue;
++                    }
++                    match = taskInfo;
++                }
++            }
++            return match;
++        }
++    }
++
+     /**
+      * Query if a specific panel is currently visible.
+      */
+@@ -223,6 +245,21 @@ public class TaskPanelInfoRepository {
+         return task.isVisible && task.isRunning && !task.isSleeping;
+     }
+ 
++    private boolean isTaskReusable(ActivityManager.RunningTaskInfo task) {
++        return task.isRunning && !task.isSleeping;
++    }
++
++    private boolean matchesComponent(ActivityManager.RunningTaskInfo task, ComponentName componentName) {
++        if (componentName == null) {
++            return false;
++        }
++        return Objects.equals(task.topActivity, componentName)
++                || Objects.equals(task.realActivity, componentName)
++                || Objects.equals(task.baseActivity, componentName)
++                || (task.baseIntent != null
++                && Objects.equals(task.baseIntent.getComponent(), componentName));
++    }
++
+     public interface TaskPanelChangeListener {
+         /**
+          * Notify the top task on a panel has changed.
+diff --git a/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java b/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
+index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584dcb5a8437 100644
+--- a/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
++++ b/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
+@@ -23,9 +23,13 @@ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventCon
+ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventConstants.SYSTEM_EXIT_SUW_EVENT_ID;
+ 
+ import android.car.user.CarUserManager;
++import android.content.BroadcastReceiver;
+ import android.content.Context;
++import android.content.Intent;
++import android.content.IntentFilter;
+ import android.content.res.TypedArray;
+ import android.os.Build;
++import android.text.TextUtils;
+ import android.util.Log;
+ 
+ import androidx.annotation.NonNull;
+@@ -34,6 +38,7 @@ import com.android.car.scalableui.loader.xml.XmlModelLoader;
+ import com.android.car.scalableui.manager.ActionManager;
+ import com.android.car.scalableui.manager.StateManager;
+ import com.android.car.scalableui.model.Action;
++import com.android.car.scalableui.model.Event;
+ import com.android.car.scalableui.model.PanelState;
+ import com.android.car.scalableui.panel.Panel;
+ import com.android.car.scalableui.panel.PanelPool;
+@@ -67,6 +72,12 @@ public class SystemEventHandler implements CoreStartable,
+         ConfigurationController.ConfigurationListener {
+     private static final String TAG = SystemEventHandler.class.getSimpleName();
+     private static final boolean DEBUG = Build.IS_DEBUGGABLE;
++    private static final String ACTION_PANEL_EVENT =
++            "com.android.car.scalableui.ACTION_PANEL_EVENT";
++    private static final String EXTRA_EVENT_ID =
++            "com.android.car.scalableui.extra.EVENT_ID";
++    private static final String EXTRA_EVENT_TOKENS =
++            "com.android.car.scalableui.extra.EVENT_TOKENS";
+ 
+     private final Context mContext;
+     private final CarServiceProvider mCarServiceProvider;
+@@ -77,9 +88,32 @@ public class SystemEventHandler implements CoreStartable,
+ 
+     private CarUserManager mCarUserManager;
+     private boolean mIsUserSetupInProgress;
++    private boolean mPanelEventReceiverRegistered;
+ 
+     private int mCurrentOrientation;
+ 
++    private final BroadcastReceiver mPanelEventReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            if (!ACTION_PANEL_EVENT.equals(intent.getAction())) {
++                return;
++            }
++            String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
++            if (TextUtils.isEmpty(eventId)) {
++                Log.w(TAG, "Ignore ScalableUI panel event without event id");
++                return;
++            }
++            String eventTokens = intent.getStringExtra(EXTRA_EVENT_TOKENS);
++            Event event = new Event.Builder(eventId)
++                    .addTokensFromString(eventTokens)
++                    .build();
++            if (DEBUG) {
++                Log.d(TAG, "Dispatch ScalableUI panel event from broadcast: " + event);
++            }
++            mEventDispatcher.executeEvent(event);
++        }
++    };
++
+     private final CarUserManager.UserLifecycleListener mUserLifecycleListener =
+             new CarUserManager.UserLifecycleListener() {
+                 @Override
+@@ -156,6 +190,7 @@ public class SystemEventHandler implements CoreStartable,
+     @Override
+     public void start() {
+         if (isScalableUIEnabled()) {
++            registerPanelEventReceiver();
+             registerUserEventListener();
+             registerProvisionedStateListener();
+         }
+@@ -202,6 +237,15 @@ public class SystemEventHandler implements CoreStartable,
+         });
+     }
+ 
++    private void registerPanelEventReceiver() {
++        if (mPanelEventReceiverRegistered) {
++            return;
++        }
++        IntentFilter filter = new IntentFilter(ACTION_PANEL_EVENT);
++        mContext.registerReceiver(mPanelEventReceiver, filter, Context.RECEIVER_EXPORTED);
++        mPanelEventReceiverRegistered = true;
++    }
++
+     private boolean isScalableUIEnabled() {
+         return mContext.getResources().getBoolean(R.bool.config_enableScalableUI);
+     }
 diff --git a/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java b/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java
 index c857dbc59ba9ca8ba9cdb55efc7bf340d2819c00..3d3b359a65e94446eef08aab8e0f3e5948f8f25d 100644
 --- a/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java

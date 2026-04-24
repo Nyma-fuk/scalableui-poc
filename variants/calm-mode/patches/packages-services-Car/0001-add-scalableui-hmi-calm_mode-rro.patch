@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_calm_mode/car_scalableui_hmi_calm_mode.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -219,20 +227,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/map_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="map_panel" defaultVariant="@id/opened" role="@string/map_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/map_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="4%" top="6%" right="96%" bottom="78%"/>
-+<Corner radius="26dp"/>
++        <Corner radius="26dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/map_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/media_mini_panel.xml b/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/media_mini_panel.xml
@@ -240,20 +249,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/media_mini_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="media_mini_panel" defaultVariant="@id/opened" role="@string/media_mini_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/media_mini_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="4%" top="82%" right="58%" bottom="96%"/>
-+<Corner radius="22dp"/>
++        <Corner radius="22dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/media_mini_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/overlays.xml
@@ -303,20 +313,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_calm_mode/rro/CarSystemUIScalableUiHmiCalmModeRRO/res/xml/status_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="status_panel" defaultVariant="@id/opened" role="@string/status_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/status_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="62%" top="82%" right="96%" bottom="96%"/>
-+<Corner radius="22dp"/>
++        <Corner radius="22dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/status_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_calm_mode/rro/rro.mk b/car_product/scalableui_hmi_calm_mode/rro/rro.mk

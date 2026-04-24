@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/car_scalableui_hmi_map_first.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -224,20 +232,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/event_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="event_panel" defaultVariant="@id/opened" role="@string/event_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/event_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="74%" top="3%" right="98%" bottom="31%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/event_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/map_panel.xml b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/map_panel.xml
@@ -245,20 +254,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/map_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="map_panel" defaultVariant="@id/opened" role="@string/map_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/map_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="3%" right="72%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/map_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/media_mini_panel.xml b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/media_mini_panel.xml
@@ -266,20 +276,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/media_mini_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="media_mini_panel" defaultVariant="@id/opened" role="@string/media_mini_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/media_mini_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="74%" top="35%" right="98%" bottom="64%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/media_mini_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/overlays.xml
@@ -329,20 +340,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_map_first/rro/CarSystemUIScalableUiHmiMapFirstRRO/res/xml/status_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="status_panel" defaultVariant="@id/opened" role="@string/status_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/status_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="74%" top="68%" right="98%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/status_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_map_first/rro/rro.mk b/car_product/scalableui_hmi_map_first/rro/rro.mk

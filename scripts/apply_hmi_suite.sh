@@ -76,7 +76,11 @@ apply_one_patch() {
 }
 
 apply_one_patch "device/generic/car" "common/patches/device-generic-car/0001-add-scalableui-hmi-suite-products.patch"
-apply_one_patch "packages/services/Car" "common/patches/packages-services-Car/0001-add-scalableui-hmi-demo-apps.patch"
+
+for patch_path in "$WORKDIR"/common/patches/packages-services-Car/*.patch; do
+  rel="${patch_path#"$WORKDIR/"}"
+  apply_one_patch "packages/services/Car" "$rel"
+done
 
 for entry in "${HMI_VARIANTS[@]}"; do
   IFS="|" read -r slug _product <<<"$entry"

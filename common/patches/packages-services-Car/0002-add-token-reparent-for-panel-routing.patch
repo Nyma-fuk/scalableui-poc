@@ -1,0 +1,72 @@
+diff --git a/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackController.kt b/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackController.kt
+index 58a623a1d7..7b30e67045 100644
+--- a/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackController.kt
++++ b/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackController.kt
+@@ -25,6 +25,7 @@ import android.util.Slog
+ import android.view.SurfaceControl
+ import android.window.TransitionInfo
+ import android.window.TransitionRequestInfo
++import android.window.WindowContainerToken
+ import com.android.wm.shell.shared.annotations.ShellMainThread
+ import com.android.wm.shell.transition.Transitions
+ import com.android.wm.shell.transition.Transitions.TransitionFinishCallback
+@@ -168,6 +169,12 @@ internal sealed class TaskStackOperation {
+         val onTop: Boolean
+     ) : TaskStackOperation()
+ 
++    data class ReparentTaskToken(
++        val taskToken: WindowContainerToken,
++        val parentTaskStackId: Int,
++        val onTop: Boolean
++    ) : TaskStackOperation()
++
+     data class SendPendingIntent(
+         val sender: PendingIntent,
+         val intent: Intent,
+@@ -206,6 +213,16 @@ data class AutoTaskStackTransaction internal constructor(
+         return this
+     }
+ 
++    /** Reparents a task that is present in a transition request before it appears in appTasksMap. */
++    fun reparentTask(
++        taskToken: WindowContainerToken,
++        parentTaskStackId: Int,
++        onTop: Boolean
++    ): AutoTaskStackTransaction {
++        operations.add(TaskStackOperation.ReparentTaskToken(taskToken, parentTaskStackId, onTop))
++        return this
++    }
++
+     /** See [WindowContainerTransaction.sendPendingIntent] for more details. */
+     fun sendPendingIntent(
+         sender: PendingIntent,
+diff --git a/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackControllerImpl.kt b/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackControllerImpl.kt
+index b4b1c194ff..5a60d3fca5 100644
+--- a/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackControllerImpl.kt
++++ b/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive/AutoTaskStackControllerImpl.kt
+@@ -663,6 +663,25 @@ class AutoTaskStackControllerImpl @Inject constructor(
+                     )
+                 }
+ 
++                is TaskStackOperation.ReparentTaskToken -> {
++                    if (!taskStackMap.containsKey(operation.parentTaskStackId)) {
++                        Slog.e(
++                            TAG,
++                            "task stack with id=${operation.parentTaskStackId} not " +
++                                    "found, failed to reparent"
++                        )
++                        return@forEach
++                    }
++                    // The request token is available before ShellTaskOrganizer reports
++                    // onTaskAppeared, so this supports routing freshly launched tasks.
++                    wct.reparent(
++                        operation.taskToken,
++                        (taskStackMap[operation.parentTaskStackId] as RootTaskStack)
++                            .rootTaskInfo.token,
++                        operation.onTop
++                    )
++                }
++
+                 is TaskStackOperation.SendPendingIntent -> wct.sendPendingIntent(
+                     operation.sender,
+                     operation.intent,

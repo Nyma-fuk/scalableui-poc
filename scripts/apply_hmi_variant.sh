@@ -100,7 +100,10 @@ variant_device_rel="${variant_device_patch#"$WORKDIR/"}"
 variant_services_rel="${variant_services_patch#"$WORKDIR/"}"
 
 apply_one_patch "device/generic/car" "$variant_device_rel"
-apply_one_patch "packages/services/Car" "common/patches/packages-services-Car/0001-add-scalableui-hmi-demo-apps.patch"
+for patch_path in "$WORKDIR"/common/patches/packages-services-Car/*.patch; do
+  rel="${patch_path#"$WORKDIR/"}"
+  apply_one_patch "packages/services/Car" "$rel"
+done
 apply_one_patch "packages/services/Car" "$variant_services_rel"
 apply_one_patch "packages/apps/Car/SystemUI" "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch"
 apply_one_patch "packages/apps/Car/Launcher" "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch"

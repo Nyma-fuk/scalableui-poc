@@ -34,3 +34,7 @@ A comparison layout keeps normal, calm, and app-focus concepts visible as separa
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- This variant is a static showcase; interactive mode buttons can be added later.

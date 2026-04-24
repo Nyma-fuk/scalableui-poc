@@ -34,3 +34,7 @@ Debug status, controls, app-under-test, and map/media panels are arranged for Po
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- No special notes.

@@ -14,6 +14,8 @@ HMI_VARIANTS=(
   "dual-display|sdk_car_scalableui_dual_display_x86_64"
   "showcase-modes|sdk_car_scalableui_showcase_modes_x86_64"
   "widget-workspace|sdk_car_scalableui_widget_workspace_x86_64"
+  "editable-home|sdk_car_scalableui_editable_home_x86_64"
+  "widget-layout-lab|sdk_car_scalableui_widget_layout_lab_x86_64"
 )
 
 find_hmi_product() {
@@ -52,16 +54,26 @@ hmi_rro_module_for_slug() {
     dual-display) echo "CarSystemUIScalableUiHmiDualDisplayRRO" ;;
     showcase-modes) echo "CarSystemUIScalableUiHmiShowcaseModesRRO" ;;
     widget-workspace) echo "CarSystemUIScalableUiHmiWidgetWorkspaceRRO" ;;
+    editable-home) echo "CarSystemUIScalableUiHmiEditableHomeRRO" ;;
+    widget-layout-lab) echo "CarSystemUIScalableUiHmiWidgetLayoutLabRRO" ;;
     *) return 1 ;;
   esac
 }
 
 hmi_demo_app_modules() {
   printf '%s\n' \
+    ScalableUiHmiFrameworkConfigRRO \
+    ScalableUiHmiHomeDemoApp \
     ScalableUiHmiMapDemoApp \
     ScalableUiHmiGBallDemoApp \
     ScalableUiHmiWidgetsDemoApp \
+    ScalableUiHmiCalendarDemoApp \
+    ScalableUiHmiWeatherDemoApp \
+    ScalableUiHmiWidgetMenuDemoApp \
+    ScalableUiHmiWidgetMenuButtonDemoApp \
+    ScalableUiHmiWidgetDropZoneDemoApp \
     ScalableUiHmiPanelMenuDemoApp \
+    ScalableUiHmiPanelMenuButtonDemoApp \
     ScalableUiHmiTasksDemoApp \
     ScalableUiHmiPhoneDemoApp \
     ScalableUiHmiMediaDemoApp \

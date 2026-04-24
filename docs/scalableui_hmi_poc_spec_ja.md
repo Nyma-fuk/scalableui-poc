@@ -137,7 +137,8 @@ ScalableUI 側では [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-
 
 加えて [AppItemViewHolder.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java) で起動直後に `AppGridActivity` を閉じることで、overlay が前面に残って「何も表示されない」ように見える状態を避けている。
 
-ただしこの方式は「fullscreen を優先させるヒント」であり、すべての app で常に別 fullscreen task を保証するものではない。特に `singleTask` など既存 task を再利用しやすい activity は、app 側の launch mode 制約を受ける。
+ただしこの方式は「fullscreen を優先させるヒント」であり、別 fullscreen task の増殖を保証するものではない。
+高負荷 app の重複起動を避けるため、現在は `FLAG_ACTIVITY_MULTIPLE_TASK` を使わず、既存 task の再利用と ScalableUI 側の reparent を優先する。
 
 ## 主な修正ファイル
 

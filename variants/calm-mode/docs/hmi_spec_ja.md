@@ -33,3 +33,7 @@ Information density is reduced to map, media mini, and small status surfaces.
 3. Confirm every fixed panel opens.
 4. Open All apps and launch a non-fixed app.
 5. Press Home and confirm overlays close.
+
+## Variant Notes
+
+- No special notes.

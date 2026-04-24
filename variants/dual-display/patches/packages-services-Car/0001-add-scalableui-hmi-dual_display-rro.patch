@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_dual_display/car_scalableui_hmi_dual_display.mk
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,44 @@
 +#
 +# Copyright (C) 2026 The Android Open Source Project
 +#
@@ -25,10 +25,18 @@ index 0000000..1111111
 +
 +PRODUCT_PACKAGES += \
 +    Calendar \
++    ScalableUiHmiFrameworkConfigRRO \
++    ScalableUiHmiHomeDemoApp \
 +    ScalableUiHmiMapDemoApp \
 +    ScalableUiHmiGBallDemoApp \
 +    ScalableUiHmiWidgetsDemoApp \
++    ScalableUiHmiCalendarDemoApp \
++    ScalableUiHmiWeatherDemoApp \
++    ScalableUiHmiWidgetMenuDemoApp \
++    ScalableUiHmiWidgetMenuButtonDemoApp \
++    ScalableUiHmiWidgetDropZoneDemoApp \
 +    ScalableUiHmiPanelMenuDemoApp \
++    ScalableUiHmiPanelMenuButtonDemoApp \
 +    ScalableUiHmiTasksDemoApp \
 +    ScalableUiHmiPhoneDemoApp \
 +    ScalableUiHmiMediaDemoApp \
@@ -219,20 +227,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/driver_map_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="driver_map_panel" defaultVariant="@id/opened" role="@string/driver_map_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/driver_map_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="2%" top="3%" right="72%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/driver_map_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/driver_media_panel.xml b/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/driver_media_panel.xml
@@ -240,20 +249,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/driver_media_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="driver_media_panel" defaultVariant="@id/opened" role="@string/driver_media_panel_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/driver_media_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="74%" top="3%" right="98%" bottom="97%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/driver_media_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/overlays.xml
@@ -303,20 +313,21 @@ new file mode 100644
 index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_dual_display/rro/CarSystemUIScalableUiHmiDualDisplayRRO/res/xml/passenger_app_panel.xml
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="passenger_app_panel" defaultVariant="@id/opened" role="@string/passenger_app_panel_componentName" displayId="1">
 +    <Variant id="@+id/opened">
 +        <Layer layer="@integer/passenger_app_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="0" top="0" right="100%" bottom="100%"/>
-+<Corner radius="18dp"/>
++        <Corner radius="18dp"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
 +        <Layer layer="@integer/passenger_app_panel_layer"/>
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
++
 +</Panel>
 
 diff --git a/car_product/scalableui_hmi_dual_display/rro/rro.mk b/car_product/scalableui_hmi_dual_display/rro/rro.mk

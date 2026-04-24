@@ -1,20 +1,46 @@
 diff --git a/AndroidProducts.mk b/AndroidProducts.mk
-index 8c2cc18904b631994695b2d24cbd4013dc4d8969..1fd986243286f96bb90a4e834f70fd8cfd18722d 100644
+index 8c2cc18904b631994695b2d24cbd4013dc4d8969..ceff9fe24a83f5bd71c9364740cff2ee63e9b519 100644
 --- a/AndroidProducts.mk
 +++ b/AndroidProducts.mk
-@@ -20,6 +20,7 @@ PRODUCT_MAKEFILES := \
+@@ -20,6 +20,20 @@ PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/sdk_car_arm64.mk \
      $(LOCAL_DIR)/sdk_car_md_arm64.mk \
      $(LOCAL_DIR)/sdk_car_md_x86_64.mk \
-+    $(LOCAL_DIR)/sdk_car_scalableui_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_fixed_3zone_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_map_first_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_media_dock_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_productivity_dashboard_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_app_with_rail_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_floating_card_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_app_grid_hub_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_calm_mode_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_parking_mode_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_developer_cockpit_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_dual_display_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_showcase_modes_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_widget_workspace_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_widget_layout_lab_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_cw_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_dewd_x86_64.mk \
-@@ -29,6 +30,7 @@ COMMON_LUNCH_CHOICES := \
+@@ -29,6 +43,20 @@ COMMON_LUNCH_CHOICES := \
      gsi_car_x86_64-trunk_staging-userdebug \
      sdk_car_arm64-trunk_staging-userdebug \
      sdk_car_md_x86_64-trunk_staging-userdebug \
-+    sdk_car_scalableui_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_fixed_3zone_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_media_dock_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_productivity_dashboard_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_app_with_rail_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_floating_card_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_app_grid_hub_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_calm_mode_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_parking_mode_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_developer_cockpit_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_dual_display_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_showcase_modes_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_widget_workspace_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_widget_layout_lab_x86_64-trunk_staging-userdebug \
      sdk_car_cw_x86_64-trunk_staging-userdebug \
      sdk_car_x86_64-trunk_staging-userdebug \
  
