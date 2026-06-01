@@ -63,6 +63,13 @@
 1. `bash workdir/scalableui-poc/scripts/apply_patches.sh`
 2. `lunch sdk_car_scalableui_x86_64-trunk_staging-userdebug`
 3. 通常どおり build する
+4. 挙動変更を入れた場合は、そのターンのうちに必ず emulator で起動評価まで実施する
+
+## 開発ルール
+
+- runtime 挙動に影響する修正を入れたら、build だけで終わらせず同じ作業サイクルで emulator 評価まで行う
+- 評価結果は screenshot、`dumpsys`、簡単な pass/fail を docs か `/tmp/` artifact に残す
+- 「未評価」のまま完了扱いにしない
 
 `apply_patches.sh` の方針:
 - patch が既に適用済みなら skip する

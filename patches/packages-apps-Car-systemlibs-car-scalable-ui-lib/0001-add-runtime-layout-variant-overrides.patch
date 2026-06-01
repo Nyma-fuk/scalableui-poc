@@ -1,0 +1,126 @@
+diff --git a/car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java b/car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java
+index 10f81c4cb3374b1e156b6e7aa3f8504006a5e012..939dc47a4c4ef2c56813074a8c0929c6b0daf430 100644
+--- a/car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java
++++ b/car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java
+@@ -316,6 +316,7 @@ public class PanelStateXmlParser {
+         String id = attrs.getAttributeValue(null, ID_ATTRIBUTE);
+         PanelControllerMetadata.Builder builder = PanelControllerMetadata.builder(id);
+         Log.e(TAG, "init " + id);
++        boolean breakPointsAreHorizontal = false;
+ 
+         while (parser.next() != XmlPullParser.END_TAG) {
+             if (parser.getEventType() == XmlPullParser.END_DOCUMENT) {
+@@ -333,13 +334,18 @@ public class PanelStateXmlParser {
+             String name = parser.getName();
+             switch (name) {
+                 case CONGIF_TAG:
+-                    String key = attrs.getAttributeValue(null, CONGIF_KEY_TAG);
+-                    String value = attrs.getAttributeValue(null, CONGIF_VALUE_TAG);
++                    AttributeSet configAttrs = Xml.asAttributeSet(parser);
++                    String key = configAttrs.getAttributeValue(null, CONGIF_KEY_TAG);
++                    String value = configAttrs.getAttributeValue(null, CONGIF_VALUE_TAG);
+                     builder.addConfiguration(key, value);
++                    if (PanelControllerMetadata.ORIENTATION_TAG.equals(key)) {
++                        breakPointsAreHorizontal = "1".equals(value);
++                    }
+                     parser.next();
+                     break;
+                 case BREAKPOINTS_TAG:
+-                    builder.addBreakPoints(parseBreakPoints(context, parser));
++                    builder.addBreakPoints(parseBreakPoints(context, parser,
++                            breakPointsAreHorizontal));
+                     parser.next();
+                     break;
+                 default:
+@@ -349,14 +355,15 @@ public class PanelStateXmlParser {
+         return builder.build();
+     }
+ 
+-    private static List<BreakPoint> parseBreakPoints(Context context, XmlResourceParser parser)
++    private static List<BreakPoint> parseBreakPoints(Context context, XmlResourceParser parser,
++            boolean isHorizontal)
+             throws IOException, XmlPullParserException {
+         List<BreakPoint> points = new ArrayList<>();
+         while (parser.next() != XmlPullParser.END_TAG) {
+             if (parser.getEventType() != XmlPullParser.START_TAG) continue;
+             String name = parser.getName();
+             if (name.equals(BREAKPOINT_TAG)) {
+-                points.add(parseBreakPoint(context, parser));
++                points.add(parseBreakPoint(context, parser, isHorizontal));
+             } else {
+                 XmlPullParserHelper.skip(parser);
+             }
+@@ -366,10 +373,11 @@ public class PanelStateXmlParser {
+     }
+ 
+     private static BreakPoint parseBreakPoint(@NonNull Context context,
+-            @NonNull XmlPullParser parser) throws XmlPullParserException, IOException {
++            @NonNull XmlPullParser parser, boolean isHorizontal)
++            throws XmlPullParserException, IOException {
+         parser.require(XmlPullParser.START_TAG, null, BREAKPOINT_TAG);
+         AttributeSet attrs = Xml.asAttributeSet(parser);
+-        Integer point = getDimensionPixelSize(context, attrs, BREAKPOINT_POINT_TAG, false);
++        Integer point = getDimensionPixelSize(context, attrs, BREAKPOINT_POINT_TAG, isHorizontal);
+         String eventId = attrs.getAttributeValue(null, BREAKPOINT_EVENT_ID_TAG);
+         parser.nextTag();
+         parser.require(XmlPullParser.END_TAG, null, BREAKPOINT_TAG);
+diff --git a/car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java b/car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java
+index 08984c13c5083a91f6c75d8e568df1929bba8256..1fb4a01eea5759ff2d4eb82f7b71ff32ffddd8e3 100644
+--- a/car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java
++++ b/car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java
+@@ -193,6 +193,13 @@ public class Variant {
+         this.mIsVisible = isVisible;
+     }
+ 
++    /**
++     * Runtime override for visibility updates driven outside XML transitions.
++     */
++    public void setRuntimeVisibility(boolean isVisible) {
++        setVisibility(isVisible);
++    }
++
+     /**
+      * Returns the layer of the variant.
+      *
+@@ -220,6 +227,13 @@ public class Variant {
+         mLayer = layer;
+     }
+ 
++    /**
++     * Runtime override for layer updates driven outside XML transitions.
++     */
++    public void setRuntimeLayer(int layer) {
++        setLayer(layer);
++    }
++
+     /**
+      * Sets focus on transition value
+      *
+@@ -266,6 +280,13 @@ public class Variant {
+         mBounds = bounds;
+     }
+ 
++    /**
++     * Runtime override for bounds updates driven outside XML transitions.
++     */
++    public void setRuntimeBounds(@NonNull Rect bounds) {
++        setBounds(new Rect(bounds));
++    }
++
+     /**
+      * Returns the safe bounds of the variant.
+      *
+@@ -285,6 +306,13 @@ public class Variant {
+         mSafeBounds = safeBounds;
+     }
+ 
++    /**
++     * Runtime override for safe bounds updates driven outside XML transitions.
++     */
++    public void setRuntimeSafeBounds(@NonNull Rect safeBounds) {
++        setSafeBounds(new Rect(safeBounds));
++    }
++
+     /**
+      * Returns the corner radius of the variant.
+      *

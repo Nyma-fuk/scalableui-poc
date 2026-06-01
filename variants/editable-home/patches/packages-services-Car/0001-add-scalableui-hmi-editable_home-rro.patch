@@ -1,6 +1,5 @@
 diff --git a/car_product/scalableui_hmi_editable_home/car_scalableui_hmi_editable_home.mk b/car_product/scalableui_hmi_editable_home/car_scalableui_hmi_editable_home.mk
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/car_scalableui_hmi_editable_home.mk
 @@ -0,0 +1,44 @@
@@ -48,10 +47,8 @@ index 0000000..1111111
 +    ScalableUiHmiDebugDemoApp \
 +    ScalableUiHmiPassengerDemoApp \
 +    ScalableUiHmiCalmDemoApp
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/Android.bp b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/Android.bp
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/Android.bp
 @@ -0,0 +1,36 @@
@@ -91,10 +88,8 @@ index 0000000..1111111
 +        "--no-resource-removal",
 +    ],
 +}
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/AndroidManifest.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/AndroidManifest.xml
 @@ -0,0 +1,10 @@
@@ -108,10 +103,8 @@ index 0000000..1111111
 +        android:priority="143"
 +    />
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/layout/scalableui_hmi_decor_panel.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/layout/scalableui_hmi_decor_panel.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/layout/scalableui_hmi_decor_panel.xml
 @@ -0,0 +1,5 @@
@@ -120,22 +113,26 @@ index 0000000..1111111
 +    android:layout_width="match_parent"
 +    android:layout_height="match_parent"
 +    android:background="#121820" />
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/config.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/config.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/config.xml
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,33 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <bool name="config_enableScalableUI" translatable="false">true</bool>
 +    <bool name="config_enableClearBackStack" translatable="false">false</bool>
 +
 +    <array name="window_states">
++        <item>@xml/home_entry_panel</item>
 +        <item>@xml/home_panel_primary</item>
 +        <item>@xml/home_panel_secondary_top</item>
 +        <item>@xml/home_panel_secondary_bottom</item>
++        <item>@xml/home_panel_primary_header</item>
++        <item>@xml/home_panel_secondary_top_header</item>
++        <item>@xml/home_panel_secondary_bottom_header</item>
++        <item>@xml/home_split_vertical_grip</item>
++        <item>@xml/home_split_horizontal_grip</item>
 +        <item>@xml/home_edit_overlay</item>
 +        <item>@xml/panel_app_grid</item>
 +        <item>@xml/app_panel</item>
@@ -145,14 +142,17 @@ index 0000000..1111111
 +    </string-array>
 +
 +    <string-array name="config_default_activities" translatable="false">
-+
++        <item>home_entry_panel;com.android.car.scalableui.hmi.home/.HomeActivity</item>
++        <item>home_panel_primary_header;com.android.car.scalableui.hmi.home/.PrimaryPanelHeaderActivity</item>
++        <item>home_panel_secondary_top_header;com.android.car.scalableui.hmi.home/.SecondaryTopPanelHeaderActivity</item>
++        <item>home_panel_secondary_bottom_header;com.android.car.scalableui.hmi.home/.SecondaryBottomPanelHeaderActivity</item>
++        <item>home_split_vertical_grip;com.android.car.scalableui.hmi.home/.VerticalSplitGripActivity</item>
++        <item>home_split_horizontal_grip;com.android.car.scalableui.hmi.home/.HorizontalSplitGripActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +    </string-array>
 +</resources>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/dimens.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/dimens.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/dimens.xml
 @@ -0,0 +1,5 @@
@@ -161,33 +161,41 @@ index 0000000..1111111
 +    <dimen name="scalableui_hmi_card_radius">18dp</dimen>
 +    <dimen name="scalableui_hmi_panel_gap">12dp</dimen>
 +</resources>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/integers.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/integers.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/integers.xml
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
++    <integer name="home_entry_panel_layer">150</integer>
 +    <integer name="home_panel_primary_layer">30</integer>
 +    <integer name="home_panel_secondary_top_layer">31</integer>
 +    <integer name="home_panel_secondary_bottom_layer">32</integer>
++    <integer name="home_panel_primary_header_layer">80</integer>
++    <integer name="home_panel_secondary_top_header_layer">81</integer>
++    <integer name="home_panel_secondary_bottom_header_layer">82</integer>
++    <integer name="home_split_vertical_grip_layer">90</integer>
++    <integer name="home_split_horizontal_grip_layer">91</integer>
 +    <integer name="home_edit_overlay_layer">160</integer>
 +    <integer name="app_panel_layer">180</integer>
 +    <integer name="app_grid_panel_layer">200</integer>
 +</resources>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/strings.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/strings.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/strings.xml
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,35 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <string name="default_config" translatable="false">DEFAULT</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
++    <string name="home_componentName" translatable="false">com.android.car.scalableui.hmi.home/.HomeActivity</string>
++    <string name="home_primary_header_componentName" translatable="false">com.android.car.scalableui.hmi.home/.PrimaryPanelHeaderActivity</string>
++    <string name="home_secondary_top_header_componentName" translatable="false">com.android.car.scalableui.hmi.home/.SecondaryTopPanelHeaderActivity</string>
++    <string name="home_secondary_bottom_header_componentName" translatable="false">com.android.car.scalableui.hmi.home/.SecondaryBottomPanelHeaderActivity</string>
++    <string name="home_vertical_grip_componentName" translatable="false">com.android.car.scalableui.hmi.home/.VerticalSplitGripActivity</string>
++    <string name="home_horizontal_grip_componentName" translatable="false">com.android.car.scalableui.hmi.home/.HorizontalSplitGripActivity</string>
 +    <string-array name="home_panel_primary_componentNames" translatable="false">
 +        <item>com.android.car.scalableui.hmi.map/.MapActivity</item>
 +        <item>com.android.car.scalableui.hmi.media/.MediaActivity</item>
@@ -213,10 +221,8 @@ index 0000000..1111111
 +        <item>com.android.car.scalableui.hmi.gball/.GBallActivity</item>
 +    </string-array>
 +</resources>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/app_panel.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/app_panel.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/app_panel.xml
 @@ -0,0 +1,23 @@
@@ -243,10 +249,8 @@ index 0000000..1111111
 +        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
 +    </Transitions>
 +</Panel>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_edit_overlay.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_edit_overlay.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_edit_overlay.xml
 @@ -0,0 +1,26 @@
@@ -276,13 +280,40 @@ index 0000000..1111111
 +        <Transition onEvent="_Custom_HomeApplyRequested" toVariant="@id/closed"/>
 +    </Transitions>
 +</Panel>
-
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_entry_panel.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_entry_panel.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_entry_panel.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_entry_panel" defaultVariant="@id/opened" role="@string/home_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_entry_panel_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="0" top="0" right="1%" bottom="1%"/>
++        <Alpha alpha="0.0"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_entry_panel_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++        <Alpha alpha="0.0"/>
++    </Variant>
++
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_entry_panel" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_entry_panel" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++        <Transition onEvent="_Custom_HomeEditModeEntered" toVariant="@id/closed"/>
++        <Transition onEvent="_Custom_HomeEditModeExited" toVariant="@id/opened"/>
++        <Transition onEvent="_Custom_HomeApplyRequested" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary.xml
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="home_panel_primary" defaultVariant="@id/opened" role="@array/home_panel_primary_componentNames" displayId="0">
 +    <Variant id="@+id/opened">
@@ -296,36 +327,41 @@ index 0000000..1111111
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
-+    <Variant id="@+id/layout_l1">
-+        <Layer layer="@integer/home_panel_primary_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="4%" top="12%" right="48%" bottom="84%"/>
-+        <Corner radius="24dp"/>
-+    </Variant>
-+    <Variant id="@+id/layout_l3">
-+        <Layer layer="@integer/home_panel_primary_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="4%" top="12%" right="96%" bottom="50%"/>
-+        <Corner radius="24dp"/>
-+    </Variant>
 +
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_primary" toVariant="@id/opened"/>
-+        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_primary" toVariant="@id/closed"/>
-+        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
-+        <Transition onEvent="close_home_panel_primary" toVariant="@id/closed"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L1" toVariant="@id/layout_l1"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L2" toVariant="@id/opened"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L3" toVariant="@id/layout_l3"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_primary" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
 +    </Transitions>
 +</Panel>
-
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary_header.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary_header.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary_header.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_panel_primary_header" defaultVariant="@id/opened" role="@string/home_primary_header_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_panel_primary_header_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="5%" top="13%" right="61%" bottom="19%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_panel_primary_header_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_primary_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_primary_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom.xml
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="home_panel_secondary_bottom" defaultVariant="@id/opened" role="@array/home_panel_secondary_bottom_componentNames" displayId="0">
 +    <Variant id="@+id/opened">
@@ -340,38 +376,41 @@ index 0000000..1111111
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +        <Alpha alpha="0.0"/>
 +    </Variant>
-+    <Variant id="@+id/layout_l1">
-+        <Layer layer="@integer/home_panel_secondary_bottom_layer"/>
-+        <Visibility isVisible="false"/>
-+        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
-+        <Corner radius="22dp"/>
-+        <Alpha alpha="0.0"/>
-+    </Variant>
-+    <Variant id="@+id/layout_l3">
-+        <Layer layer="@integer/home_panel_secondary_bottom_layer"/>
-+        <Visibility isVisible="false"/>
-+        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
-+        <Corner radius="22dp"/>
-+        <Alpha alpha="0.0"/>
-+    </Variant>
 +
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_secondary_bottom" toVariant="@id/opened"/>
-+        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_bottom" toVariant="@id/closed"/>
-+        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
-+        <Transition onEvent="close_home_panel_secondary_bottom" toVariant="@id/closed"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L1" toVariant="@id/layout_l1"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L2" toVariant="@id/opened"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L3" toVariant="@id/layout_l3"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_bottom" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
 +    </Transitions>
 +</Panel>
-
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom_header.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom_header.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_bottom_header.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_panel_secondary_bottom_header" defaultVariant="@id/opened" role="@string/home_secondary_bottom_header_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_panel_secondary_bottom_header_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="65%" top="51%" right="95%" bottom="57%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_panel_secondary_bottom_header_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_secondary_bottom_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_bottom_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top.xml
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<Panel id="home_panel_secondary_top" defaultVariant="@id/opened" role="@array/home_panel_secondary_top_componentNames" displayId="0">
 +    <Variant id="@+id/opened">
@@ -385,33 +424,84 @@ index 0000000..1111111
 +        <Visibility isVisible="false"/>
 +        <Bounds left="0" top="100%" right="100%" bottom="200%"/>
 +    </Variant>
-+    <Variant id="@+id/layout_l1">
-+        <Layer layer="@integer/home_panel_secondary_top_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="52%" top="12%" right="96%" bottom="84%"/>
-+        <Corner radius="24dp"/>
-+    </Variant>
-+    <Variant id="@+id/layout_l3">
-+        <Layer layer="@integer/home_panel_secondary_top_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="4%" top="54%" right="96%" bottom="84%"/>
-+        <Corner radius="22dp"/>
-+    </Variant>
 +
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_secondary_top" toVariant="@id/opened"/>
-+        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_top" toVariant="@id/closed"/>
-+        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
-+        <Transition onEvent="close_home_panel_secondary_top" toVariant="@id/closed"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L1" toVariant="@id/layout_l1"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L2" toVariant="@id/opened"/>
-+        <Transition onEvent="_Custom_HomeLayoutChanged" onEventTokens="panelId=home_root;panelToVariantId=L3" toVariant="@id/layout_l3"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_top" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
 +    </Transitions>
 +</Panel>
-
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top_header.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top_header.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_secondary_top_header.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_panel_secondary_top_header" defaultVariant="@id/opened" role="@string/home_secondary_top_header_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_panel_secondary_top_header_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="65%" top="13%" right="95%" bottom="19%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_panel_secondary_top_header_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_panel_secondary_top_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_panel_secondary_top_header" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_horizontal_grip.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_horizontal_grip.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_horizontal_grip.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_split_horizontal_grip" defaultVariant="@id/opened" role="@string/home_horizontal_grip_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_split_horizontal_grip_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="64%" top="44%" right="96%" bottom="48%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_split_horizontal_grip_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_split_horizontal_grip" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_split_horizontal_grip" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_vertical_grip.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_vertical_grip.xml
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_split_vertical_grip.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Panel id="home_split_vertical_grip" defaultVariant="@id/opened" role="@string/home_vertical_grip_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="@integer/home_split_vertical_grip_layer"/>
++        <Visibility isVisible="true"/>
++        <Bounds left="60%" top="12%" right="64%" bottom="84%"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="@integer/home_split_vertical_grip_layer"/>
++        <Visibility isVisible="false"/>
++        <Bounds left="100%" top="100%" right="130%" bottom="130%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=home_split_vertical_grip" toVariant="@id/opened"/>
++        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=home_split_vertical_grip" toVariant="@id/opened"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
++    </Transitions>
++</Panel>
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/overlays.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/overlays.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/overlays.xml
 @@ -0,0 +1,7 @@
@@ -422,10 +512,8 @@ index 0000000..1111111
 +    <item target="array/config_untrimmable_activities" value="@array/config_untrimmable_activities"/>
 +    <item target="array/config_default_activities" value="@array/config_default_activities"/>
 +</overlay>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/panel_app_grid.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/panel_app_grid.xml
 @@ -0,0 +1,21 @@
@@ -450,10 +538,8 @@ index 0000000..1111111
 +        <Transition onEvent="_System_TaskCloseEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed"/>
 +    </Transitions>
 +</Panel>
-
 diff --git a/car_product/scalableui_hmi_editable_home/rro/rro.mk b/car_product/scalableui_hmi_editable_home/rro/rro.mk
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_editable_home/rro/rro.mk
 @@ -0,0 +1,18 @@

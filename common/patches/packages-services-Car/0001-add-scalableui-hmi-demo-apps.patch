@@ -1,6 +1,5 @@
 diff --git a/car_product/scalableui_hmi_demo_apps/Android.bp b/car_product/scalableui_hmi_demo_apps/Android.bp
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/Android.bp
 @@ -0,0 +1,275 @@
@@ -279,10 +278,8 @@ index 0000000..1111111
 +    privileged: true,
 +    static_libs: ["ScalableUiHmiDemoCommon"],
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -303,10 +300,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/src/com/android/car/scalableui/hmi/calendar/CalendarActivity.java b/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/src/com/android/car/scalableui/hmi/calendar/CalendarActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/calendar_demo/src/com/android/car/scalableui/hmi/calendar/CalendarActivity.java
 @@ -0,0 +1,15 @@
@@ -325,10 +320,8 @@ index 0000000..1111111
 +        return "Widget B Calendar";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/calm/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -349,10 +342,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java b/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/calm/src/com/android/car/scalableui/hmi/calm/CalmActivity.java
 @@ -0,0 +1,15 @@
@@ -371,10 +362,8 @@ index 0000000..1111111
 +        return "ScalableUI Calm";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/controls/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -395,10 +384,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/controls/src/com/android/car/scalableui/hmi/controls/ControlsActivity.java
 @@ -0,0 +1,15 @@
@@ -417,10 +404,8 @@ index 0000000..1111111
 +        return "ScalableUI Controls";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/debug/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -441,10 +426,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java b/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/debug/src/com/android/car/scalableui/hmi/debug/DebugActivity.java
 @@ -0,0 +1,15 @@
@@ -463,10 +446,8 @@ index 0000000..1111111
 +        return "ScalableUI Debug";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/energy/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -487,10 +468,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java b/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/energy/src/com/android/car/scalableui/hmi/energy/EnergyActivity.java
 @@ -0,0 +1,15 @@
@@ -509,10 +488,8 @@ index 0000000..1111111
 +        return "ScalableUI Energy";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/gball/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -533,10 +510,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java b/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/gball/src/com/android/car/scalableui/hmi/gball/GBallActivity.java
 @@ -0,0 +1,15 @@
@@ -555,13 +530,11 @@ index 0000000..1111111
 +        return "G Ball";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,96 @@
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +          package="com.android.car.scalableui.hmi.home">
 +    <application
@@ -608,47 +581,322 @@ index 0000000..1111111
 +            android:resizeableActivity="true"
 +            android:stateNotNeeded="true"
 +            android:label="Home layout editor" />
++        <activity
++            android:name=".HomeAppPickerActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Home app picker" />
++        <activity
++            android:name=".PrimaryPanelHeaderActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Primary panel header" />
++        <activity
++            android:name=".SecondaryTopPanelHeaderActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Secondary top panel header" />
++        <activity
++            android:name=".SecondaryBottomPanelHeaderActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Secondary bottom panel header" />
++        <activity
++            android:name=".VerticalSplitGripActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Vertical split grip" />
++        <activity
++            android:name=".HorizontalSplitGripActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Horizontal split grip" />
 +    </application>
 +</manifest>
-
-diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BasePanelHeaderActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BasePanelHeaderActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
-+++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java
-@@ -0,0 +1,203 @@
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BasePanelHeaderActivity.java
+@@ -0,0 +1,106 @@
 +package com.android.car.scalableui.hmi.home;
 +
 +import android.app.Activity;
-+import android.content.ComponentName;
++import android.content.BroadcastReceiver;
++import android.content.Context;
 +import android.content.Intent;
++import android.content.IntentFilter;
 +import android.graphics.Color;
 +import android.graphics.Typeface;
++import android.graphics.drawable.Drawable;
 +import android.graphics.drawable.GradientDrawable;
-+import android.net.Uri;
++import android.os.Bundle;
++import android.view.Gravity;
++import android.view.ViewGroup;
++import android.widget.Button;
++
++abstract class BasePanelHeaderActivity extends Activity {
++    private Button mButton;
++    private boolean mRegistered;
++
++    private final BroadcastReceiver mAssignmentsChangedReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            if (HomeLayoutStore.ACTION_ASSIGNMENTS_CHANGED.equals(intent.getAction())) {
++                refreshChrome();
++            }
++        }
++    };
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        mButton = createButton();
++        mButton.setOnClickListener(v -> HomeRuntimeBridge.launchAppPicker(this, getTargetPanelId()));
++        setContentView(mButton);
++    }
++
++    @Override
++    protected void onStart() {
++        super.onStart();
++        if (!mRegistered) {
++            registerReceiver(mAssignmentsChangedReceiver,
++                    new IntentFilter(HomeLayoutStore.ACTION_ASSIGNMENTS_CHANGED),
++                    Context.RECEIVER_NOT_EXPORTED);
++            mRegistered = true;
++        }
++    }
++
++    @Override
++    protected void onResume() {
++        super.onResume();
++        refreshChrome();
++    }
++
++    @Override
++    protected void onStop() {
++        super.onStop();
++        if (mRegistered) {
++            unregisterReceiver(mAssignmentsChangedReceiver);
++            mRegistered = false;
++        }
++    }
++
++    protected abstract String getTargetPanelId();
++
++    private void refreshChrome() {
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        String component = state.assignments.get(getTargetPanelId());
++        InstalledAppCatalog.AppEntry entry = InstalledAppCatalog.resolveEntry(this, component);
++        String label = entry == null ? HomeLayoutStore.labelForComponent(component) : entry.label;
++        String detail = entry == null ? component : entry.packageName;
++        mButton.setText(HomeLayoutStore.panelLabel(getTargetPanelId()) + "\n" + label);
++        mButton.setContentDescription(HomeLayoutStore.panelLabel(getTargetPanelId())
++                + " current app " + label + " " + detail);
++        setButtonIcon(entry == null ? null : entry.icon);
++    }
++
++    private Button createButton() {
++        Button button = new Button(this);
++        button.setAllCaps(false);
++        button.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
++        button.setTextColor(Color.WHITE);
++        button.setTextSize(14f);
++        button.setTypeface(Typeface.DEFAULT_BOLD);
++        button.setPadding(20, 10, 20, 10);
++        GradientDrawable background = new GradientDrawable();
++        background.setColor(Color.argb(214, 17, 25, 34));
++        background.setCornerRadius(22f);
++        background.setStroke(2, Color.argb(120, 255, 255, 255));
++        button.setBackground(background);
++        button.setLayoutParams(new ViewGroup.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
++        return button;
++    }
++
++    private void setButtonIcon(Drawable drawable) {
++        if (drawable == null) {
++            mButton.setCompoundDrawablesRelative(null, null, null, null);
++            return;
++        }
++        drawable = drawable.mutate();
++        drawable.setBounds(0, 0, 48, 48);
++        mButton.setCompoundDrawablePadding(16);
++        mButton.setCompoundDrawablesRelative(drawable, null, null, null);
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BaseSplitGripActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BaseSplitGripActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BaseSplitGripActivity.java
+@@ -0,0 +1,134 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.content.Context;
++import android.graphics.Color;
++import android.graphics.drawable.GradientDrawable;
++import android.os.Bundle;
++import android.util.DisplayMetrics;
++import android.view.MotionEvent;
++import android.view.View;
++import android.widget.FrameLayout;
++
++abstract class BaseSplitGripActivity extends Activity implements View.OnTouchListener {
++    private static final float GRIP_BODY_CORNER_RADIUS_DP = 22f;
++
++    private float mCurrentSplitX;
++    private float mCurrentSplitY;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        mCurrentSplitX = state.splitRatioX;
++        mCurrentSplitY = state.splitRatioRightY;
++        setContentView(createGripSurface());
++    }
++
++    @Override
++    protected void onResume() {
++        super.onResume();
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        mCurrentSplitX = state.splitRatioX;
++        mCurrentSplitY = state.splitRatioRightY;
++    }
++
++    @Override
++    public boolean onTouch(View view, MotionEvent event) {
++        float[] ratios = computeRatios(event);
++        if (ratios == null) {
++            return false;
++        }
++        mCurrentSplitX = ratios[0];
++        mCurrentSplitY = ratios[1];
++        HomeRuntimeBridge.dispatchLayoutUpdate(this, mCurrentSplitX, mCurrentSplitY);
++        if (event.getAction() == MotionEvent.ACTION_UP
++                || event.getAction() == MotionEvent.ACTION_CANCEL) {
++            HomeLayoutStore.State state = HomeLayoutStore.load(this);
++            state.splitRatioX = mCurrentSplitX;
++            state.splitRatioRightY = mCurrentSplitY;
++            state.lastUpdatedEpochMs = System.currentTimeMillis();
++            HomeLayoutStore.save(this, state);
++        }
++        return true;
++    }
++
++    protected abstract boolean controlsVerticalSplit();
++
++    private float[] computeRatios(MotionEvent event) {
++        DisplayMetrics metrics = getResources().getDisplayMetrics();
++        float density = metrics.density;
++        float contentLeft = metrics.widthPixels * HomeLayoutStore.CONTENT_LEFT_RATIO;
++        float contentRight = metrics.widthPixels * HomeLayoutStore.CONTENT_RIGHT_RATIO;
++        float contentTop = metrics.heightPixels * HomeLayoutStore.CONTENT_TOP_RATIO;
++        float contentBottom = metrics.heightPixels * HomeLayoutStore.CONTENT_BOTTOM_RATIO;
++        float contentWidth = contentRight - contentLeft;
++        float contentHeight = contentBottom - contentTop;
++        if (contentWidth <= 0 || contentHeight <= 0) {
++            return null;
++        }
++
++        if (controlsVerticalSplit()) {
++            float min = (HomeLayoutStore.MIN_PRIMARY_WIDTH_DP * density) / contentWidth;
++            float max = 1f - (HomeLayoutStore.MIN_RIGHT_COLUMN_WIDTH_DP * density) / contentWidth;
++            float splitX = (event.getRawX() - contentLeft) / contentWidth;
++            splitX = clamp(splitX, min, max);
++            return new float[] {splitX, mCurrentSplitY};
++        }
++
++        float min = (HomeLayoutStore.MIN_RIGHT_PANEL_HEIGHT_DP * density) / contentHeight;
++        float max = 1f - (HomeLayoutStore.MIN_RIGHT_PANEL_HEIGHT_DP * density) / contentHeight;
++        float splitY = (event.getRawY() - contentTop) / contentHeight;
++        splitY = clamp(splitY, min, max);
++        return new float[] {mCurrentSplitX, splitY};
++    }
++
++    private View createGripSurface() {
++        FrameLayout root = new FrameLayout(this);
++        root.setOnTouchListener(this);
++
++        GradientDrawable shell = new GradientDrawable();
++        shell.setColor(Color.argb(214, 17, 25, 34));
++        shell.setCornerRadius(dp(this, GRIP_BODY_CORNER_RADIUS_DP));
++        shell.setStroke((int) dp(this, 2f), Color.argb(120, 255, 255, 255));
++        root.setBackground(shell);
++
++        View handle = new View(this);
++        GradientDrawable handleShape = new GradientDrawable();
++        handleShape.setColor(Color.rgb(255, 224, 130));
++        handleShape.setCornerRadius(dp(this, 12f));
++        handle.setBackground(handleShape);
++
++        FrameLayout.LayoutParams params;
++        if (controlsVerticalSplit()) {
++            params = new FrameLayout.LayoutParams(
++                    (int) dp(this, 8f), FrameLayout.LayoutParams.MATCH_PARENT);
++            int margin = (int) dp(this, 12f);
++            params.topMargin = margin;
++            params.bottomMargin = margin;
++        } else {
++            params = new FrameLayout.LayoutParams(
++                    FrameLayout.LayoutParams.MATCH_PARENT, (int) dp(this, 8f));
++            int margin = (int) dp(this, 12f);
++            params.leftMargin = margin;
++            params.rightMargin = margin;
++        }
++        params.gravity = android.view.Gravity.CENTER;
++        root.addView(handle, params);
++        return root;
++    }
++
++    private static float clamp(float value, float min, float max) {
++        if (value < min) {
++            return min;
++        }
++        if (value > max) {
++            return max;
++        }
++        return value;
++    }
++
++    private static float dp(Context context, float value) {
++        return value * context.getResources().getDisplayMetrics().density;
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeActivity.java
+@@ -0,0 +1,107 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.graphics.Color;
 +import android.os.Bundle;
 +import android.os.Handler;
 +import android.os.Looper;
-+import android.view.Gravity;
 +import android.view.View;
-+import android.view.ViewGroup;
-+import android.widget.Button;
 +import android.widget.FrameLayout;
-+import android.widget.TextView;
 +
 +public final class HomeActivity extends Activity {
-+    private static final String ACTION_SCALABLEUI_PANEL_EVENT =
-+            "com.android.car.scalableui.ACTION_PANEL_EVENT";
-+    private static final String EXTRA_SCALABLEUI_EVENT_ID =
-+            "com.android.car.scalableui.extra.EVENT_ID";
-+    private static final String EXTRA_SCALABLEUI_EVENT_TOKENS =
-+            "com.android.car.scalableui.extra.EVENT_TOKENS";
-+    private static final String EXTRA_TARGET_PANEL_ID =
-+            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
-+    private static final String TARGET_PANEL_URI_SCHEME = "scalableui-hmi";
-+    private static final String TARGET_PANEL_URI_HOST = "panel-launch";
-+    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
-+
 +    private final Handler mHandler = new Handler(Looper.getMainLooper());
 +    private final Runnable mApplyRunnable = this::applyCurrentVariantState;
 +
@@ -682,71 +930,15 @@ index 0000000..1111111
 +            surface.setBackgroundColor(Color.rgb(32, 108, 141));
 +            return surface;
 +        }
-+        FrameLayout root = new FrameLayout(this);
-+        root.setBackgroundColor(Color.rgb(18, 28, 40));
-+        TextView title = new TextView(this);
-+        title.setText("ScalableUI Home");
-+        title.setTextColor(Color.WHITE);
-+        title.setTextSize(28f);
-+        title.setTypeface(Typeface.DEFAULT_BOLD);
-+        title.setGravity(Gravity.CENTER);
-+        root.addView(title, new FrameLayout.LayoutParams(
-+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-+        return root;
++        View surface = new View(this);
++        surface.setBackgroundColor(Color.TRANSPARENT);
++        return surface;
 +    }
 +
 +    private View createEditableHomeSurface() {
 +        FrameLayout root = new FrameLayout(this);
-+        root.setBackgroundColor(Color.rgb(15, 30, 44));
-+
-+        TextView title = new TextView(this);
-+        title.setText("Editable multipanel home");
-+        title.setTextColor(Color.WHITE);
-+        title.setTextSize(30f);
-+        title.setTypeface(Typeface.DEFAULT_BOLD);
-+        FrameLayout.LayoutParams titleParams = new FrameLayout.LayoutParams(
-+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-+        titleParams.gravity = Gravity.TOP | Gravity.START;
-+        titleParams.leftMargin = 48;
-+        titleParams.topMargin = 36;
-+        root.addView(title, titleParams);
-+
-+        TextView subtitle = new TextView(this);
-+        subtitle.setText("System bars stay visible. Tap Edit layout to change L1/L2/L3 and panel apps.");
-+        subtitle.setTextColor(Color.rgb(190, 212, 224));
-+        subtitle.setTextSize(16f);
-+        FrameLayout.LayoutParams subtitleParams = new FrameLayout.LayoutParams(
-+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-+        subtitleParams.gravity = Gravity.TOP | Gravity.START;
-+        subtitleParams.leftMargin = 48;
-+        subtitleParams.topMargin = 86;
-+        root.addView(subtitle, subtitleParams);
-+
-+        Button edit = new Button(this);
-+        edit.setText("Edit\nlayout");
-+        edit.setAllCaps(false);
-+        edit.setTextSize(16f);
-+        edit.setTypeface(Typeface.DEFAULT_BOLD);
-+        edit.setTextColor(Color.BLACK);
-+        edit.setGravity(Gravity.CENTER);
-+        GradientDrawable background = new GradientDrawable();
-+        background.setColor(Color.rgb(241, 117, 44));
-+        background.setCornerRadius(24f);
-+        edit.setBackground(background);
-+        edit.setOnClickListener(v -> openHomeEditor());
-+
-+        FrameLayout.LayoutParams editParams = new FrameLayout.LayoutParams(220, 140);
-+        editParams.gravity = Gravity.BOTTOM | Gravity.END;
-+        editParams.rightMargin = 44;
-+        editParams.bottomMargin = 38;
-+        root.addView(edit, editParams);
++        root.setBackgroundColor(Color.TRANSPARENT);
 +        return root;
-+    }
-+
-+    private void openHomeEditor() {
-+        HomeLayoutStore.setEditMode(this, true);
-+        dispatchScalableUiEvent(HomeLayoutStore.EVENT_EDIT_ENTERED, "");
-+        launchToPanel(getPackageName() + "/.HomeEditActivity", "app_panel");
 +    }
 +
 +    private void applyCurrentVariantState() {
@@ -761,9 +953,9 @@ index 0000000..1111111
 +            return;
 +        }
 +        HomeLayoutStore.State state = HomeLayoutStore.load(this);
-+        dispatchScalableUiEvent(HomeLayoutStore.EVENT_EDIT_EXITED, "");
-+        dispatchScalableUiEvent(HomeLayoutStore.EVENT_LAYOUT_CHANGED,
-+                "panelId=home_root;panelToVariantId=" + state.selectedLayout);
++        HomeLayoutStore.setEditMode(this, false);
++        HomeRuntimeBridge.dispatchLayoutUpdate(this, state.splitRatioX, state.splitRatioRightY);
++        HomeRuntimeBridge.notifyAssignmentsChanged(this);
 +        postLaunch(150L, state.assignments.get(HomeLayoutStore.PANEL_PRIMARY),
 +                HomeLayoutStore.PANEL_PRIMARY);
 +        postLaunch(300L, state.assignments.get(HomeLayoutStore.PANEL_SECONDARY_TOP),
@@ -773,12 +965,16 @@ index 0000000..1111111
 +    }
 +
 +    private void applyWidgetLayoutLabDefaults() {
-+        dispatchScalableUiEvent("widget_layout_hide_menu", "");
-+        mHandler.postDelayed(() -> dispatchScalableUiEvent("widget_layout_initial", ""), 50L);
++        HomeRuntimeBridge.dispatchScalableUiEvent(this, "widget_layout_hide_menu", "");
++        mHandler.postDelayed(() ->
++                HomeRuntimeBridge.dispatchScalableUiEvent(this, "widget_layout_initial", ""), 50L);
 +        postLaunch(160L, "com.android.car.scalableui.hmi.map/.MapActivity", "widget_a_panel");
-+        postLaunch(320L, "com.android.car.scalableui.hmi.calendar/.CalendarActivity", "widget_b_panel");
-+        postLaunch(480L, "com.android.car.scalableui.hmi.weather/.WeatherActivity", "widget_c_panel");
-+        postLaunch(640L, "com.android.car.scalableui.hmi.widgetmenubutton/.WidgetMenuButtonActivity", "widget_menu_button_panel");
++        postLaunch(320L, "com.android.car.scalableui.hmi.calendar/.CalendarActivity",
++                "widget_b_panel");
++        postLaunch(480L, "com.android.car.scalableui.hmi.weather/.WeatherActivity",
++                "widget_c_panel");
++        postLaunch(640L, "com.android.car.scalableui.hmi.widgetmenubutton/.WidgetMenuButtonActivity",
++                "widget_menu_button_panel");
 +    }
 +
 +    private void postLaunch(long delayMs, String component, String panelId) {
@@ -789,44 +985,179 @@ index 0000000..1111111
 +            if (isFinishing() || isDestroyed()) {
 +                return;
 +            }
-+            launchToPanel(component, panelId);
++            HomeRuntimeBridge.launchToPanel(this, component, panelId);
 +        }, delayMs);
-+    }
-+
-+    private void launchToPanel(String componentString, String panelId) {
-+        Intent intent = new Intent(Intent.ACTION_MAIN);
-+        intent.setComponent(ComponentName.unflattenFromString(componentString));
-+        intent.putExtra(EXTRA_TARGET_PANEL_ID, panelId);
-+        intent.setData(new Uri.Builder()
-+                .scheme(TARGET_PANEL_URI_SCHEME)
-+                .authority(TARGET_PANEL_URI_HOST)
-+                .appendQueryParameter(TARGET_PANEL_URI_PARAM, panelId)
-+                .build());
-+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
-+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-+        startActivity(intent);
-+    }
-+
-+    private void dispatchScalableUiEvent(String eventId, String tokens) {
-+        Intent intent = new Intent(ACTION_SCALABLEUI_PANEL_EVENT);
-+        intent.putExtra(EXTRA_SCALABLEUI_EVENT_ID, eventId);
-+        intent.putExtra(EXTRA_SCALABLEUI_EVENT_TOKENS, tokens);
-+        intent.setPackage("com.android.systemui");
-+        sendBroadcast(intent);
 +    }
 +
 +    private boolean isWidgetLayoutLabVariant() {
 +        return "sdk_car_scalableui_widget_layout_lab_x86_64".equals(android.os.Build.PRODUCT);
 +    }
 +}
-
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeAppPickerActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeAppPickerActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeAppPickerActivity.java
+@@ -0,0 +1,155 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.Typeface;
++import android.graphics.drawable.Drawable;
++import android.graphics.drawable.GradientDrawable;
++import android.os.Bundle;
++import android.text.TextUtils;
++import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.LinearLayout;
++import android.widget.ScrollView;
++import android.widget.TextView;
++
++import java.util.List;
++
++public final class HomeAppPickerActivity extends Activity {
++    private String mTargetPanelId;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        mTargetPanelId = getIntent().getStringExtra(HomeLayoutStore.EXTRA_HOME_TARGET_PANEL_ID);
++        if (TextUtils.isEmpty(mTargetPanelId)) {
++            finish();
++            return;
++        }
++        setContentView(createContent());
++    }
++
++    private ScrollView createContent() {
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        String currentComponent = state.assignments.get(mTargetPanelId);
++        List<InstalledAppCatalog.AppEntry> apps = InstalledAppCatalog.queryLaunchableApps(this);
++
++        ScrollView scrollView = new ScrollView(this);
++        scrollView.setFillViewport(true);
++        scrollView.setBackgroundColor(Color.rgb(8, 13, 20));
++
++        LinearLayout root = new LinearLayout(this);
++        root.setOrientation(LinearLayout.VERTICAL);
++        root.setPadding(28, 28, 28, 28);
++        scrollView.addView(root, new ViewGroup.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        root.addView(createTitle(HomeLayoutStore.panelLabel(mTargetPanelId)));
++        root.addView(createSubtitle("この panel に表示するアプリを選択します。"));
++
++        for (InstalledAppCatalog.AppEntry app : apps) {
++            Button button = createAppButton(app, app.componentName.equals(currentComponent));
++            button.setOnClickListener(v -> applySelection(app.componentName));
++            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
++                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
++            params.bottomMargin = 10;
++            root.addView(button, params);
++        }
++
++        Button close = createFooterButton("閉じる");
++        close.setOnClickListener(v -> finish());
++        LinearLayout.LayoutParams closeParams = new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
++        closeParams.topMargin = 18;
++        root.addView(close, closeParams);
++        return scrollView;
++    }
++
++    private void applySelection(String componentName) {
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        String currentTargetComponent = state.assignments.get(mTargetPanelId);
++        if (TextUtils.equals(componentName, currentTargetComponent)) {
++            finish();
++            return;
++        }
++
++        String sourcePanelId = HomeLayoutStore.findPanelForAssignedComponent(
++                state, componentName, mTargetPanelId);
++        if (sourcePanelId != null) {
++            state.assignments.put(sourcePanelId, currentTargetComponent);
++        }
++        state.assignments.put(mTargetPanelId, componentName);
++        state.lastUpdatedEpochMs = System.currentTimeMillis();
++        HomeLayoutStore.save(this, state);
++        HomeRuntimeBridge.notifyAssignmentsChanged(this);
++        HomeRuntimeBridge.dispatchLayoutUpdate(this, state.splitRatioX, state.splitRatioRightY);
++
++        if (sourcePanelId != null && !TextUtils.isEmpty(currentTargetComponent)) {
++            HomeRuntimeBridge.launchToPanel(this, currentTargetComponent, sourcePanelId);
++        }
++        HomeRuntimeBridge.launchToPanel(this, componentName, mTargetPanelId);
++        finish();
++    }
++
++    private TextView createTitle(String text) {
++        TextView title = new TextView(this);
++        title.setText(text);
++        title.setTextColor(Color.WHITE);
++        title.setTextSize(28f);
++        title.setTypeface(Typeface.DEFAULT_BOLD);
++        return title;
++    }
++
++    private TextView createSubtitle(String text) {
++        TextView subtitle = new TextView(this);
++        subtitle.setText(text);
++        subtitle.setTextColor(Color.rgb(192, 210, 224));
++        subtitle.setTextSize(15f);
++        subtitle.setPadding(0, 10, 0, 18);
++        return subtitle;
++    }
++
++    private Button createAppButton(InstalledAppCatalog.AppEntry app, boolean selected) {
++        Button button = new Button(this);
++        button.setAllCaps(false);
++        button.setText(app.label + "\n" + app.packageName);
++        button.setGravity(android.view.Gravity.START | android.view.Gravity.CENTER_VERTICAL);
++        button.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START);
++        button.setTextColor(selected ? Color.BLACK : Color.WHITE);
++        button.setTextSize(15f);
++        button.setTypeface(Typeface.DEFAULT_BOLD);
++        button.setPadding(24, 18, 24, 18);
++
++        GradientDrawable background = new GradientDrawable();
++        background.setCornerRadius(22f);
++        background.setStroke(2, Color.argb(90, 255, 255, 255));
++        background.setColor(selected ? Color.rgb(241, 117, 44) : Color.rgb(20, 30, 42));
++        button.setBackground(background);
++        setButtonIcon(button, app.icon);
++        return button;
++    }
++
++    private Button createFooterButton(String text) {
++        Button button = new Button(this);
++        button.setText(text);
++        button.setAllCaps(false);
++        button.setTextColor(Color.WHITE);
++        button.setTextSize(16f);
++        button.setTypeface(Typeface.DEFAULT_BOLD);
++        GradientDrawable background = new GradientDrawable();
++        background.setCornerRadius(22f);
++        background.setColor(Color.rgb(38, 54, 72));
++        button.setBackground(background);
++        return button;
++    }
++
++    private void setButtonIcon(Button button, Drawable drawable) {
++        if (drawable == null) {
++            return;
++        }
++        drawable = drawable.mutate();
++        drawable.setBounds(0, 0, 56, 56);
++        button.setCompoundDrawablePadding(18);
++        button.setCompoundDrawablesRelative(drawable, null, null, null);
++    }
++}
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeEditActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeEditActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeEditActivity.java
-@@ -0,0 +1,324 @@
+@@ -0,0 +1,320 @@
 +package com.android.car.scalableui.hmi.home;
 +
 +import android.app.Activity;
@@ -839,7 +1170,6 @@ index 0000000..1111111
 +import android.os.Bundle;
 +import android.os.Handler;
 +import android.os.Looper;
-+import android.view.Gravity;
 +import android.view.ViewGroup;
 +import android.widget.Button;
 +import android.widget.LinearLayout;
@@ -998,7 +1328,8 @@ index 0000000..1111111
 +    }
 +
 +    private void refreshPanel(String panelId) {
-+        String component = HomeLayoutStore.sanitizeComponent(panelId, mAssignments.get(panelId));
++        String component = HomeLayoutStore.sanitizeStoredComponent(this, panelId,
++                mAssignments.get(panelId));
 +        mAssignments.put(panelId, component);
 +        TextView summary = mPanelSummaries.get(panelId);
 +        if (summary != null) {
@@ -1019,31 +1350,27 @@ index 0000000..1111111
 +            Toast.makeText(this, validationError, Toast.LENGTH_SHORT).show();
 +            return;
 +        }
-+        HomeLayoutStore.State state = new HomeLayoutStore.State();
-+        state.selectedLayout = mSelectedLayout;
++        HomeLayoutStore.State state = HomeLayoutStore.load(this);
++        HomeLayoutStore.applyLayoutPreset(state, mSelectedLayout);
 +        state.editModeEnabled = false;
 +        state.lastUpdatedEpochMs = System.currentTimeMillis();
++        state.assignments.clear();
 +        state.assignments.putAll(mAssignments);
 +        HomeLayoutStore.save(this, state);
-+
-+        dispatchScalableUiEvent(HomeLayoutStore.EVENT_LAYOUT_CHANGED,
-+                "panelId=home_root;panelToVariantId=" + mSelectedLayout);
++        HomeRuntimeBridge.dispatchLayoutUpdate(this, state.splitRatioX, state.splitRatioRightY);
++        HomeRuntimeBridge.notifyAssignmentsChanged(this);
 +
 +        long delay = 140L;
 +        for (String panelId : HomeLayoutStore.PANEL_IDS) {
 +            final String currentPanel = panelId;
 +            final String component = mAssignments.get(panelId);
 +            mHandler.postDelayed(() -> {
-+                dispatchScalableUiEvent(HomeLayoutStore.EVENT_ASSIGNMENTS_CHANGED,
-+                        "panelId=" + currentPanel + ";component=" + component);
-+                launchToPanel(component, currentPanel);
++                HomeRuntimeBridge.launchToPanel(this, component, currentPanel);
 +            }, delay);
 +            delay += 150L;
 +        }
 +
 +        mHandler.postDelayed(() -> {
-+            dispatchScalableUiEvent(HomeLayoutStore.EVENT_APPLY_REQUESTED, "");
-+            dispatchScalableUiEvent(HomeLayoutStore.EVENT_EDIT_EXITED, "");
 +            finish();
 +        }, delay + 80L);
 +    }
@@ -1151,21 +1478,20 @@ index 0000000..1111111
 +        button.setTextColor(selected ? Color.BLACK : Color.WHITE);
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeLayoutStore.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeLayoutStore.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeLayoutStore.java
-@@ -0,0 +1,151 @@
+@@ -0,0 +1,268 @@
 +package com.android.car.scalableui.hmi.home;
 +
++import android.content.ComponentName;
 +import android.content.Context;
 +import android.content.SharedPreferences;
++import android.content.pm.PackageManager;
 +import android.os.Build;
 +
 +import java.util.LinkedHashMap;
-+import java.util.Map;
 +
 +final class HomeLayoutStore {
 +    static final String PRODUCT_NAME = "sdk_car_scalableui_editable_home_x86_64";
@@ -1173,20 +1499,55 @@ index 0000000..1111111
 +    static final String KEY_LAYOUT = "selected_layout";
 +    static final String KEY_EDIT_MODE = "edit_mode_enabled";
 +    static final String KEY_UPDATED = "last_updated_epoch_ms";
++    static final String KEY_SPLIT_RATIO_X = "split_ratio_x";
++    static final String KEY_SPLIT_RATIO_RIGHT_Y = "split_ratio_right_y";
 +
 +    static final String LAYOUT_L1 = "L1";
 +    static final String LAYOUT_L2 = "L2";
 +    static final String LAYOUT_L3 = "L3";
 +
++    static final float CONTENT_LEFT_RATIO = 0.04f;
++    static final float CONTENT_TOP_RATIO = 0.12f;
++    static final float CONTENT_RIGHT_RATIO = 0.96f;
++    static final float CONTENT_BOTTOM_RATIO = 0.84f;
++
++    static final float SPLIT_X_L1 = 0.50f;
++    static final float SPLIT_X_L2 = 0.62f;
++    static final float SPLIT_X_L3 = 0.42f;
++    static final float SPLIT_Y_L1 = 0.50f;
++    static final float SPLIT_Y_L2 = 0.50f;
++    static final float SPLIT_Y_L3 = 0.58f;
++
++    static final float MIN_PRIMARY_WIDTH_DP = 260f;
++    static final float MIN_RIGHT_COLUMN_WIDTH_DP = 260f;
++    static final float MIN_RIGHT_PANEL_HEIGHT_DP = 170f;
++
 +    static final String PANEL_PRIMARY = "home_panel_primary";
 +    static final String PANEL_SECONDARY_TOP = "home_panel_secondary_top";
 +    static final String PANEL_SECONDARY_BOTTOM = "home_panel_secondary_bottom";
 +
++    static final String HEADER_PRIMARY = "home_panel_primary_header";
++    static final String HEADER_SECONDARY_TOP = "home_panel_secondary_top_header";
++    static final String HEADER_SECONDARY_BOTTOM = "home_panel_secondary_bottom_header";
++    static final String VERTICAL_GRIP = "home_split_vertical_grip";
++    static final String HORIZONTAL_GRIP = "home_split_horizontal_grip";
++
 +    static final String EVENT_EDIT_ENTERED = "_Custom_HomeEditModeEntered";
 +    static final String EVENT_EDIT_EXITED = "_Custom_HomeEditModeExited";
-+    static final String EVENT_LAYOUT_CHANGED = "_Custom_HomeLayoutChanged";
 +    static final String EVENT_ASSIGNMENTS_CHANGED = "_Custom_HomeAssignmentsChanged";
 +    static final String EVENT_APPLY_REQUESTED = "_Custom_HomeApplyRequested";
++
++    static final String ACTION_LAYOUT_UPDATE =
++            "com.android.car.scalableui.hmi.home.ACTION_LAYOUT_UPDATE";
++    static final String ACTION_ASSIGNMENTS_CHANGED =
++            "com.android.car.scalableui.hmi.home.ACTION_ASSIGNMENTS_CHANGED";
++
++    static final String EXTRA_SPLIT_RATIO_X =
++            "com.android.car.scalableui.hmi.home.extra.SPLIT_RATIO_X";
++    static final String EXTRA_SPLIT_RATIO_RIGHT_Y =
++            "com.android.car.scalableui.hmi.home.extra.SPLIT_RATIO_RIGHT_Y";
++    static final String EXTRA_HOME_TARGET_PANEL_ID =
++            "com.android.car.scalableui.hmi.home.extra.TARGET_PANEL_ID";
 +
 +    static final String[] PANEL_IDS = new String[] {
 +            PANEL_PRIMARY,
@@ -1215,13 +1576,16 @@ index 0000000..1111111
 +        state.selectedLayout = sanitizeLayout(prefs.getString(KEY_LAYOUT, LAYOUT_L2));
 +        state.editModeEnabled = prefs.getBoolean(KEY_EDIT_MODE, false);
 +        state.lastUpdatedEpochMs = prefs.getLong(KEY_UPDATED, 0L);
++        state.splitRatioX = sanitizeUnitRatio(prefs.getFloat(KEY_SPLIT_RATIO_X,
++                defaultSplitXForLayout(state.selectedLayout)),
++                defaultSplitXForLayout(state.selectedLayout));
++        state.splitRatioRightY = sanitizeUnitRatio(prefs.getFloat(KEY_SPLIT_RATIO_RIGHT_Y,
++                defaultSplitYForLayout(state.selectedLayout)),
++                defaultSplitYForLayout(state.selectedLayout));
 +        for (String panelId : PANEL_IDS) {
 +            String component = prefs.getString(prefKeyForPanel(panelId),
 +                    defaultComponentForPanel(panelId));
-+            if (!isAllowedComponent(component)) {
-+                component = defaultComponentForPanel(panelId);
-+            }
-+            state.assignments.put(panelId, component);
++            state.assignments.put(panelId, sanitizeStoredComponent(context, panelId, component));
 +        }
 +        return state;
 +    }
@@ -1232,9 +1596,13 @@ index 0000000..1111111
 +        editor.putString(KEY_LAYOUT, sanitizeLayout(state.selectedLayout));
 +        editor.putBoolean(KEY_EDIT_MODE, state.editModeEnabled);
 +        editor.putLong(KEY_UPDATED, state.lastUpdatedEpochMs);
++        editor.putFloat(KEY_SPLIT_RATIO_X, sanitizeUnitRatio(state.splitRatioX,
++                defaultSplitXForLayout(state.selectedLayout)));
++        editor.putFloat(KEY_SPLIT_RATIO_RIGHT_Y, sanitizeUnitRatio(state.splitRatioRightY,
++                defaultSplitYForLayout(state.selectedLayout)));
 +        for (String panelId : PANEL_IDS) {
-+            editor.putString(prefKeyForPanel(panelId), sanitizeComponent(panelId,
-+                    state.assignments.get(panelId)));
++            editor.putString(prefKeyForPanel(panelId),
++                    sanitizeStoredComponent(context, panelId, state.assignments.get(panelId)));
 +        }
 +        editor.apply();
 +    }
@@ -1246,11 +1614,40 @@ index 0000000..1111111
 +                .apply();
 +    }
 +
++    static void applyLayoutPreset(State state, String layoutId) {
++        state.selectedLayout = sanitizeLayout(layoutId);
++        state.splitRatioX = defaultSplitXForLayout(state.selectedLayout);
++        state.splitRatioRightY = defaultSplitYForLayout(state.selectedLayout);
++    }
++
 +    static String sanitizeLayout(String layoutId) {
 +        if (LAYOUT_L1.equals(layoutId) || LAYOUT_L2.equals(layoutId) || LAYOUT_L3.equals(layoutId)) {
 +            return layoutId;
 +        }
 +        return LAYOUT_L2;
++    }
++
++    static float sanitizeUnitRatio(float ratio, float fallback) {
++        if (Float.isNaN(ratio) || ratio <= 0f || ratio >= 1f) {
++            return fallback;
++        }
++        return ratio;
++    }
++
++    static float defaultSplitXForLayout(String layoutId) {
++        return switch (sanitizeLayout(layoutId)) {
++            case LAYOUT_L1 -> SPLIT_X_L1;
++            case LAYOUT_L3 -> SPLIT_X_L3;
++            default -> SPLIT_X_L2;
++        };
++    }
++
++    static float defaultSplitYForLayout(String layoutId) {
++        return switch (sanitizeLayout(layoutId)) {
++            case LAYOUT_L1 -> SPLIT_Y_L1;
++            case LAYOUT_L3 -> SPLIT_Y_L3;
++            default -> SPLIT_Y_L2;
++        };
 +    }
 +
 +    static boolean isAllowedComponent(String component) {
@@ -1274,6 +1671,15 @@ index 0000000..1111111
 +        return "Unknown";
 +    }
 +
++    static String panelLabel(String panelId) {
++        return switch (panelId) {
++            case PANEL_PRIMARY -> "Primary panel";
++            case PANEL_SECONDARY_TOP -> "Secondary top panel";
++            case PANEL_SECONDARY_BOTTOM -> "Secondary bottom panel";
++            default -> panelId;
++        };
++    }
++
 +    static String defaultComponentForPanel(String panelId) {
 +        if (PANEL_PRIMARY.equals(panelId)) {
 +            return APP_OPTIONS[0].component;
@@ -1284,8 +1690,42 @@ index 0000000..1111111
 +        return APP_OPTIONS[2].component;
 +    }
 +
-+    static String sanitizeComponent(String panelId, String component) {
-+        return isAllowedComponent(component) ? component : defaultComponentForPanel(panelId);
++    static String sanitizeStoredComponent(Context context, String panelId, String component) {
++        if (isLaunchableComponent(context, component)) {
++            return component;
++        }
++        return defaultComponentForPanel(panelId);
++    }
++
++    static boolean isLaunchableComponent(Context context, String component) {
++        if (component == null || component.isEmpty()) {
++            return false;
++        }
++        ComponentName componentName = ComponentName.unflattenFromString(component);
++        if (componentName == null) {
++            return false;
++        }
++        try {
++            context.getPackageManager().getActivityInfo(componentName, 0);
++            return true;
++        } catch (PackageManager.NameNotFoundException e) {
++            return false;
++        }
++    }
++
++    static String findPanelForAssignedComponent(State state, String component, String excludedPanelId) {
++        if (component == null) {
++            return null;
++        }
++        for (String panelId : PANEL_IDS) {
++            if (panelId.equals(excludedPanelId)) {
++                continue;
++            }
++            if (component.equals(state.assignments.get(panelId))) {
++                return panelId;
++            }
++        }
++        return null;
 +    }
 +
 +    private static String prefKeyForPanel(String panelId) {
@@ -1306,13 +1746,213 @@ index 0000000..1111111
 +        String selectedLayout = LAYOUT_L2;
 +        boolean editModeEnabled;
 +        long lastUpdatedEpochMs;
++        float splitRatioX = SPLIT_X_L2;
++        float splitRatioRightY = SPLIT_Y_L2;
 +        final LinkedHashMap<String, String> assignments = new LinkedHashMap<>();
 +    }
 +}
-
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeRuntimeBridge.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeRuntimeBridge.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeRuntimeBridge.java
+@@ -0,0 +1,81 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.net.Uri;
++
++final class HomeRuntimeBridge {
++    private static final String ACTION_SCALABLEUI_PANEL_EVENT =
++            "com.android.car.scalableui.ACTION_PANEL_EVENT";
++    private static final String EXTRA_SCALABLEUI_EVENT_ID =
++            "com.android.car.scalableui.extra.EVENT_ID";
++    private static final String EXTRA_SCALABLEUI_EVENT_TOKENS =
++            "com.android.car.scalableui.extra.EVENT_TOKENS";
++    private static final String EXTRA_TARGET_PANEL_ID =
++            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++    private static final String TARGET_PANEL_URI_SCHEME = "scalableui-hmi";
++    private static final String TARGET_PANEL_URI_HOST = "panel-launch";
++    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
++
++    private HomeRuntimeBridge() {}
++
++    static void dispatchScalableUiEvent(Context context, String eventId, String tokens) {
++        Intent intent = new Intent(ACTION_SCALABLEUI_PANEL_EVENT);
++        intent.putExtra(EXTRA_SCALABLEUI_EVENT_ID, eventId);
++        intent.putExtra(EXTRA_SCALABLEUI_EVENT_TOKENS, tokens);
++        intent.setPackage("com.android.systemui");
++        context.sendBroadcast(intent);
++    }
++
++    static void dispatchLayoutUpdate(Context context, float splitX, float splitY) {
++        Intent intent = new Intent(HomeLayoutStore.ACTION_LAYOUT_UPDATE);
++        intent.putExtra(HomeLayoutStore.EXTRA_SPLIT_RATIO_X, splitX);
++        intent.putExtra(HomeLayoutStore.EXTRA_SPLIT_RATIO_RIGHT_Y, splitY);
++        intent.setPackage("com.android.systemui");
++        context.sendBroadcast(intent);
++    }
++
++    static void notifyAssignmentsChanged(Context context) {
++        Intent intent = new Intent(HomeLayoutStore.ACTION_ASSIGNMENTS_CHANGED);
++        intent.setPackage(context.getPackageName());
++        context.sendBroadcast(intent);
++    }
++
++    static void launchToPanel(Context context, String componentString, String panelId) {
++        if (componentString == null || componentString.isEmpty()) {
++            return;
++        }
++        Intent intent = new Intent(Intent.ACTION_MAIN);
++        intent.setComponent(ComponentName.unflattenFromString(componentString));
++        intent.putExtra(EXTRA_TARGET_PANEL_ID, panelId);
++        intent.setData(new Uri.Builder()
++                .scheme(TARGET_PANEL_URI_SCHEME)
++                .authority(TARGET_PANEL_URI_HOST)
++                .appendQueryParameter(TARGET_PANEL_URI_PARAM, panelId)
++                .build());
++        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
++                | Intent.FLAG_ACTIVITY_CLEAR_TOP
++                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
++        context.startActivity(intent);
++    }
++
++    static void launchAppPicker(Context context, String targetPanelId) {
++        if (targetPanelId == null || targetPanelId.isEmpty()) {
++            return;
++        }
++        Intent intent = new Intent(Intent.ACTION_MAIN);
++        intent.setComponent(new ComponentName(context, HomeAppPickerActivity.class));
++        intent.putExtra(EXTRA_TARGET_PANEL_ID, "app_panel");
++        intent.putExtra(HomeLayoutStore.EXTRA_HOME_TARGET_PANEL_ID, targetPanelId);
++        intent.setData(new Uri.Builder()
++                .scheme(TARGET_PANEL_URI_SCHEME)
++                .authority(TARGET_PANEL_URI_HOST)
++                .appendQueryParameter(TARGET_PANEL_URI_PARAM, "app_panel")
++                .build());
++        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
++                | Intent.FLAG_ACTIVITY_CLEAR_TOP
++                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
++        context.startActivity(intent);
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HorizontalSplitGripActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HorizontalSplitGripActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HorizontalSplitGripActivity.java
+@@ -0,0 +1,8 @@
++package com.android.car.scalableui.hmi.home;
++
++public final class HorizontalSplitGripActivity extends BaseSplitGripActivity {
++    @Override
++    protected boolean controlsVerticalSplit() {
++        return false;
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/InstalledAppCatalog.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/InstalledAppCatalog.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/InstalledAppCatalog.java
+@@ -0,0 +1,96 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.content.pm.PackageManager;
++import android.content.pm.ResolveInfo;
++import android.graphics.drawable.Drawable;
++
++import java.util.ArrayList;
++import java.util.Comparator;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Locale;
++import java.util.Set;
++
++final class InstalledAppCatalog {
++    private InstalledAppCatalog() {}
++
++    static List<AppEntry> queryLaunchableApps(Context context) {
++        PackageManager packageManager = context.getPackageManager();
++        Intent intent = new Intent(Intent.ACTION_MAIN);
++        intent.addCategory(Intent.CATEGORY_LAUNCHER);
++
++        List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(intent, 0);
++        ArrayList<AppEntry> entries = new ArrayList<>();
++        Set<String> seenComponents = new HashSet<>();
++        for (ResolveInfo resolveInfo : resolveInfos) {
++            if (resolveInfo.activityInfo == null) {
++                continue;
++            }
++            ComponentName componentName = new ComponentName(
++                    resolveInfo.activityInfo.packageName, resolveInfo.activityInfo.name);
++            String component = componentName.flattenToShortString();
++            if (!seenComponents.add(component)) {
++                continue;
++            }
++            if (context.getPackageName().equals(resolveInfo.activityInfo.packageName)) {
++                continue;
++            }
++            CharSequence label = resolveInfo.loadLabel(packageManager);
++            Drawable icon = resolveInfo.loadIcon(packageManager);
++            entries.add(new AppEntry(
++                    label == null ? component : label.toString(),
++                    resolveInfo.activityInfo.packageName,
++                    component,
++                    icon));
++        }
++        entries.sort(Comparator
++                .comparing((AppEntry entry) -> entry.label.toLowerCase(Locale.ROOT))
++                .thenComparing(entry -> entry.packageName)
++                .thenComparing(entry -> entry.componentName));
++        return entries;
++    }
++
++    static AppEntry resolveEntry(Context context, String componentString) {
++        if (componentString == null || componentString.isEmpty()) {
++            return null;
++        }
++        PackageManager packageManager = context.getPackageManager();
++        ComponentName componentName = ComponentName.unflattenFromString(componentString);
++        if (componentName == null) {
++            return null;
++        }
++        try {
++            ResolveInfo resolveInfo = packageManager.resolveActivity(
++                    new Intent(Intent.ACTION_MAIN).setComponent(componentName), 0);
++            if (resolveInfo != null && resolveInfo.activityInfo != null) {
++                CharSequence label = resolveInfo.loadLabel(packageManager);
++                Drawable icon = resolveInfo.loadIcon(packageManager);
++                return new AppEntry(
++                        label == null ? componentString : label.toString(),
++                        componentName.getPackageName(),
++                        componentString,
++                        icon);
++            }
++        } catch (RuntimeException ignored) {
++            // Fall through to null.
++        }
++        return null;
++    }
++
++    static final class AppEntry {
++        final String label;
++        final String packageName;
++        final String componentName;
++        final Drawable icon;
++
++        AppEntry(String label, String packageName, String componentName, Drawable icon) {
++            this.label = label;
++            this.packageName = packageName;
++            this.componentName = componentName;
++            this.icon = icon;
++        }
++    }
++}
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpQuickStepService.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpQuickStepService.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpQuickStepService.java
 @@ -0,0 +1,86 @@
@@ -1402,10 +2042,8 @@ index 0000000..1111111
 +        };
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpRecentsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpRecentsActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/NoOpRecentsActivity.java
 @@ -0,0 +1,16 @@
@@ -1425,10 +2063,60 @@ index 0000000..1111111
 +        setContentView(view);
 +    }
 +}
-
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/PrimaryPanelHeaderActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/PrimaryPanelHeaderActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/PrimaryPanelHeaderActivity.java
+@@ -0,0 +1,8 @@
++package com.android.car.scalableui.hmi.home;
++
++public final class PrimaryPanelHeaderActivity extends BasePanelHeaderActivity {
++    @Override
++    protected String getTargetPanelId() {
++        return HomeLayoutStore.PANEL_PRIMARY;
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryBottomPanelHeaderActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryBottomPanelHeaderActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryBottomPanelHeaderActivity.java
+@@ -0,0 +1,8 @@
++package com.android.car.scalableui.hmi.home;
++
++public final class SecondaryBottomPanelHeaderActivity extends BasePanelHeaderActivity {
++    @Override
++    protected String getTargetPanelId() {
++        return HomeLayoutStore.PANEL_SECONDARY_BOTTOM;
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryTopPanelHeaderActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryTopPanelHeaderActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/SecondaryTopPanelHeaderActivity.java
+@@ -0,0 +1,8 @@
++package com.android.car.scalableui.hmi.home;
++
++public final class SecondaryTopPanelHeaderActivity extends BasePanelHeaderActivity {
++    @Override
++    protected String getTargetPanelId() {
++        return HomeLayoutStore.PANEL_SECONDARY_TOP;
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/VerticalSplitGripActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/VerticalSplitGripActivity.java
+new file mode 100644
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/VerticalSplitGripActivity.java
+@@ -0,0 +1,8 @@
++package com.android.car.scalableui.hmi.home;
++
++public final class VerticalSplitGripActivity extends BaseSplitGripActivity {
++    @Override
++    protected boolean controlsVerticalSplit() {
++        return true;
++    }
++}
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/map/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1449,10 +2137,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java b/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/map/src/com/android/car/scalableui/hmi/map/MapActivity.java
 @@ -0,0 +1,15 @@
@@ -1471,10 +2157,8 @@ index 0000000..1111111
 +        return "ScalableUI Map";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/media/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1495,10 +2179,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java b/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/media/src/com/android/car/scalableui/hmi/media/MediaActivity.java
 @@ -0,0 +1,15 @@
@@ -1517,10 +2199,8 @@ index 0000000..1111111
 +        return "ScalableUI Media";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1541,10 +2221,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu/src/com/android/car/scalableui/hmi/panelmenu/PanelMenuActivity.java
 @@ -0,0 +1,15 @@
@@ -1563,10 +2241,8 @@ index 0000000..1111111
 +        return "ScalableUI Panel Menu";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1587,10 +2263,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/src/com/android/car/scalableui/hmi/panelmenubutton/PanelMenuButtonActivity.java b/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/src/com/android/car/scalableui/hmi/panelmenubutton/PanelMenuButtonActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/panel_menu_button/src/com/android/car/scalableui/hmi/panelmenubutton/PanelMenuButtonActivity.java
 @@ -0,0 +1,15 @@
@@ -1609,10 +2283,8 @@ index 0000000..1111111
 +        return "Panel Control";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/passenger/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1633,10 +2305,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java b/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/passenger/src/com/android/car/scalableui/hmi/passenger/PassengerActivity.java
 @@ -0,0 +1,15 @@
@@ -1655,10 +2325,8 @@ index 0000000..1111111
 +        return "ScalableUI Passenger";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/phone/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1679,10 +2347,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java b/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/phone/src/com/android/car/scalableui/hmi/phone/PhoneActivity.java
 @@ -0,0 +1,15 @@
@@ -1701,10 +2367,8 @@ index 0000000..1111111
 +        return "ScalableUI Phone";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/settings/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1725,10 +2389,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/settings/src/com/android/car/scalableui/hmi/settings/SettingsActivity.java
 @@ -0,0 +1,15 @@
@@ -1747,10 +2409,8 @@ index 0000000..1111111
 +        return "ScalableUI Settings";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1771,10 +2431,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/shortcuts/src/com/android/car/scalableui/hmi/shortcuts/ShortcutsActivity.java
 @@ -0,0 +1,15 @@
@@ -1793,10 +2451,8 @@ index 0000000..1111111
 +        return "ScalableUI Shortcuts";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/status/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1817,10 +2473,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java b/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/status/src/com/android/car/scalableui/hmi/status/StatusActivity.java
 @@ -0,0 +1,15 @@
@@ -1839,10 +2493,8 @@ index 0000000..1111111
 +        return "ScalableUI Status";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/tasks/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1863,10 +2515,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java b/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/tasks/src/com/android/car/scalableui/hmi/tasks/TaskActivity.java
 @@ -0,0 +1,15 @@
@@ -1885,10 +2535,8 @@ index 0000000..1111111
 +        return "ScalableUI Tasks";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/weather_demo/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/weather_demo/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/weather_demo/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1909,10 +2557,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/weather_demo/src/com/android/car/scalableui/hmi/weather/WeatherActivity.java b/car_product/scalableui_hmi_demo_apps/apps/weather_demo/src/com/android/car/scalableui/hmi/weather/WeatherActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/weather_demo/src/com/android/car/scalableui/hmi/weather/WeatherActivity.java
 @@ -0,0 +1,15 @@
@@ -1931,10 +2577,8 @@ index 0000000..1111111
 +        return "Widget C Weather";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -1955,10 +2599,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/src/com/android/car/scalableui/hmi/widgetdropzone/WidgetDropZoneActivity.java b/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/src/com/android/car/scalableui/hmi/widgetdropzone/WidgetDropZoneActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_dropzone/src/com/android/car/scalableui/hmi/widgetdropzone/WidgetDropZoneActivity.java
 @@ -0,0 +1,15 @@
@@ -1977,10 +2619,8 @@ index 0000000..1111111
 +        return "Widget Drop Zone";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_menu/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/widget_menu/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_menu/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -2001,10 +2641,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_menu/src/com/android/car/scalableui/hmi/widgetmenu/WidgetMenuActivity.java b/car_product/scalableui_hmi_demo_apps/apps/widget_menu/src/com/android/car/scalableui/hmi/widgetmenu/WidgetMenuActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_menu/src/com/android/car/scalableui/hmi/widgetmenu/WidgetMenuActivity.java
 @@ -0,0 +1,15 @@
@@ -2023,10 +2661,8 @@ index 0000000..1111111
 +        return "Widget Layout Menu";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -2047,10 +2683,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/src/com/android/car/scalableui/hmi/widgetmenubutton/WidgetMenuButtonActivity.java b/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/src/com/android/car/scalableui/hmi/widgetmenubutton/WidgetMenuButtonActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widget_menu_button/src/com/android/car/scalableui/hmi/widgetmenubutton/WidgetMenuButtonActivity.java
 @@ -0,0 +1,15 @@
@@ -2069,10 +2703,8 @@ index 0000000..1111111
 +        return "Widget Layout";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widgets/AndroidManifest.xml
 @@ -0,0 +1,17 @@
@@ -2093,10 +2725,8 @@ index 0000000..1111111
 +        </activity>
 +    </application>
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java b/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/apps/widgets/src/com/android/car/scalableui/hmi/widgets/WidgetActivity.java
 @@ -0,0 +1,15 @@
@@ -2115,10 +2745,8 @@ index 0000000..1111111
 +        return "ScalableUI Widgets";
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java b/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/common/src/com/android/car/scalableui/hmi/demo/common/DemoBaseActivity.java
 @@ -0,0 +1,827 @@
@@ -2949,10 +3577,8 @@ index 0000000..1111111
 +        }
 +    }
 +}
-
 diff --git a/car_product/scalableui_hmi_demo_apps/framework_rro/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/framework_rro/AndroidManifest.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/framework_rro/AndroidManifest.xml
 @@ -0,0 +1,8 @@
@@ -2964,10 +3590,8 @@ index 0000000..1111111
 +        android:isStatic="true"
 +        android:priority="900" />
 +</manifest>
-
 diff --git a/car_product/scalableui_hmi_demo_apps/framework_rro/res/values/config.xml b/car_product/scalableui_hmi_demo_apps/framework_rro/res/values/config.xml
 new file mode 100644
-index 0000000..1111111
 --- /dev/null
 +++ b/car_product/scalableui_hmi_demo_apps/framework_rro/res/values/config.xml
 @@ -0,0 +1,4 @@

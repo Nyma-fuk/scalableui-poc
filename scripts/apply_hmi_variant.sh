@@ -105,6 +105,8 @@ for patch_path in "$WORKDIR"/common/patches/packages-services-Car/*.patch; do
   apply_one_patch "packages/services/Car" "$rel"
 done
 apply_one_patch "packages/services/Car" "$variant_services_rel"
+apply_one_patch "packages/apps/Car/systemlibs/car-scalable-ui-lib" \
+  "patches/packages-apps-Car-systemlibs-car-scalable-ui-lib/0001-add-runtime-layout-variant-overrides.patch"
 apply_one_patch "packages/apps/Car/SystemUI" "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch"
 apply_one_patch "packages/apps/Car/Launcher" "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch"
 

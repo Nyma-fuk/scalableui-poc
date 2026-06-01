@@ -100,29 +100,38 @@ index 0000000000000000000000000000000000000000..1e2f76200e8fd3aa996b1be351e30646
 +</manifest>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..2621b8d1652388b4193fb24ed851a018a11f0220
+index 0000000000000000000000000000000000000000..9d032973c1b12741cd633376271d16a691955825
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,31 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 +    <item>
 +        <shape>
-+            <solid android:color="#CC11161B" />
++            <gradient
++                android:angle="0"
++                android:endColor="#C2181C22"
++                android:startColor="#E6262C34" />
 +            <corners android:radius="@dimen/poc_grip_corner_radius" />
 +            <stroke
 +                android:width="@dimen/poc_grip_stroke_width"
-+                android:color="#80FFFFFF" />
++                android:color="#33FFFFFF" />
 +        </shape>
 +    </item>
 +
 +    <item android:gravity="center">
 +        <shape>
-+            <solid android:color="#FFE082" />
++            <gradient
++                android:angle="0"
++                android:endColor="#FFB8C7DB"
++                android:startColor="#FFF4F8FF" />
 +            <corners android:radius="@dimen/poc_grip_corner_radius" />
 +            <size
-+                android:width="@dimen/poc_grip_handle_width"
++                android:width="40dp"
 +                android:height="@dimen/poc_grip_handle_height" />
++            <stroke
++                android:width="1dp"
++                android:color="#66FFFFFF" />
 +        </shape>
 +    </item>
 +</layer-list>
@@ -845,10 +854,10 @@ index 0000000000000000000000000000000000000000..2be2cd995a60d46a988f20c31c4c544b
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..b9d9bbc30582717168489e3a1c853674e27a5d0b
+index 0000000000000000000000000000000000000000..c51f16391f798f8c5e39837e5060efab4df776b1
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,23 @@
 +<!--
 +  ~ Copyright (C) 2026 The Android Open Source Project
 +  ~
@@ -870,6 +879,7 @@ index 0000000000000000000000000000000000000000..b9d9bbc30582717168489e3a1c853674
 +    <item target="array/window_states" value="@array/window_states"/>
 +    <item target="array/config_untrimmable_activities" value="@array/config_untrimmable_activities"/>
 +    <item target="array/config_default_activities" value="@array/config_default_activities"/>
++    <item target="drawable/grip_bar_background" value="@drawable/poc_grip_bar_background"/>
 +</overlay>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/panel_app_grid.xml
 new file mode 100644
