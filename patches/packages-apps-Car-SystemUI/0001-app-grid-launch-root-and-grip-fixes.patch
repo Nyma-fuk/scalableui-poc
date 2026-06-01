@@ -1,5 +1,36 @@
+diff --git a/src/com/android/systemui/car/wm/scalableui/EventDispatcher.java b/src/com/android/systemui/car/wm/scalableui/EventDispatcher.java
+index b0feaa4ba5897ff25486de3049f16d142f40ce12..2b42f6d7327661cafc3cbc631c9407be5f1ed2d9 100644
+--- a/src/com/android/systemui/car/wm/scalableui/EventDispatcher.java
++++ b/src/com/android/systemui/car/wm/scalableui/EventDispatcher.java
+@@ -37,11 +37,14 @@ public class EventDispatcher {
+ 
+     private final Context mContext;
+     private final PanelTransitionCoordinator mPanelTransitionCoordinator;
++    private final Lazy<ScalableUiPocRuntimeLayoutController> mScalableUiPocRuntimeLayoutController;
+ 
+     @Inject
+     public EventDispatcher(Context context,
+-            Lazy<PanelTransitionCoordinator> panelTransitionCoordinator) {
++            Lazy<PanelTransitionCoordinator> panelTransitionCoordinator,
++            Lazy<ScalableUiPocRuntimeLayoutController> scalableUiPocRuntimeLayoutController) {
+         mContext = context;
++        mScalableUiPocRuntimeLayoutController = scalableUiPocRuntimeLayoutController;
+         if (isScalableUIEnabled()) {
+             mPanelTransitionCoordinator = panelTransitionCoordinator.get();
+         } else {
+@@ -78,6 +81,10 @@ public class EventDispatcher {
+         if (!isScalableUIEnabled()) {
+             throw new IllegalStateException("ScalableUI disabled - cannot execute transaction");
+         }
++        if (mScalableUiPocRuntimeLayoutController.get().handleEvent(event)) {
++            ActionManager.handleEvent(mContext, event);
++            return;
++        }
+         mPanelTransitionCoordinator.startTransition(getTransaction(event));
+         ActionManager.handleEvent(mContext, event);
+     }
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5361a473d 100644
+index 837ab0eec707eb9b3e27656185c473aa17530cc5..27b1555ea2484ef2f349ecccf438eb4284fd09bd 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 @@ -23,9 +23,11 @@ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventCon
@@ -14,7 +45,15 @@ index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5
  import android.os.Build;
  import android.os.IBinder;
  import android.util.Log;
-@@ -63,6 +65,13 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -53,6 +55,7 @@ import com.android.wm.shell.shared.TransitionUtil;
+ import com.android.wm.shell.transition.Transitions;
+ 
+ import java.util.Map;
++import java.util.Objects;
+ 
+ import javax.inject.Inject;
+ 
+@@ -63,6 +66,13 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
          AutoTaskStackTransitionHandlerDelegate {
      private static final String TAG =
              PanelAutoTaskStackTransitionHandlerDelegate.class.getSimpleName();
@@ -28,7 +67,7 @@ index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5
  
      private static final Event EMPTY_EVENT = new Event.Builder(EMPTY_EVENT_ID).build();
      private static final boolean DEBUG = Build.IS_DEBUGGABLE;
-@@ -116,6 +125,7 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -116,6 +126,7 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
              AutoTaskStackTransaction wct =
                      mPanelTransitionCoordinator.createAutoTaskStackTransaction(transition,
                              panelTransaction, event);
@@ -36,7 +75,27 @@ index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5
              mPanelTransitionCoordinator.resetUnpreparedDecorPanel(panelTransaction);
              if (DEBUG) {
                  Log.d(TAG, "handleRequest: COMPLETED " + wct);
-@@ -199,8 +209,11 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -134,6 +145,8 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+             return false;
+         }
+         return mPanelUtils.handles(request.getTriggerTask().parentTaskId)
++                || shouldLaunchInAppPanel(request)
++                || getExplicitTargetPanel(request) != null
+                 || request.getTriggerTask().topActivityType == ACTIVITY_TYPE_HOME;
+     }
+ 
+@@ -173,9 +186,7 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+             return EMPTY_EVENT;
+         }
+ 
+-        if (request.getTriggerTask().baseIntent.getCategories() != null
+-                && request.getTriggerTask().baseIntent.getCategories().contains(
+-                Intent.CATEGORY_HOME)) {
++        if (isHomeTask(request.getTriggerTask())) {
+             ComponentName component = request.getTriggerTask().baseActivity;
+             String packageString = component != null ? component.getPackageName() : null;
+             // Multiple SUW activities have home as categories. Panels should treat them the same.
+@@ -199,8 +210,11 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
          }
          String componentString = component != null ? component.flattenToString() : null;
          String panelId;
@@ -50,16 +109,29 @@ index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5
              panel = mPanelUtils.getTaskPanel(tp -> tp.handles(component));
          }
          if (panel == null) {
-@@ -230,7 +243,68 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -230,7 +244,82 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
              return EMPTY_EVENT;
          }
      }
--
 +    private boolean shouldLaunchInAppPanel(@NonNull TransitionRequestInfo request) {
 +        return request.getTriggerTask() != null
 +                && request.getTriggerTask().baseIntent != null
 +                && request.getTriggerTask().baseIntent.getBooleanExtra(
 +                EXTRA_LAUNCH_IN_APP_PANEL, /* defaultValue= */ false);
++    }
+ 
++    private boolean isHomeTask(@NonNull ActivityManager.RunningTaskInfo taskInfo) {
++        if (taskInfo.topActivityType != ACTIVITY_TYPE_HOME
++                || taskInfo.baseIntent == null
++                || taskInfo.baseIntent.getCategories() == null
++                || !taskInfo.baseIntent.getCategories().contains(Intent.CATEGORY_HOME)) {
++            return false;
++        }
++        ComponentName activeComponent = mPanelUtils.getTaskComponentName(taskInfo);
++        ComponentName baseComponent = taskInfo.baseActivity != null
++                ? taskInfo.baseActivity
++                : taskInfo.baseIntent.getComponent();
++        return baseComponent == null || Objects.equals(activeComponent, baseComponent);
 +    }
 +    @Nullable
 +    private TaskPanel getExplicitTargetPanel(@NonNull TransitionRequestInfo request) {
@@ -120,6 +192,36 @@ index 837ab0eec707eb9b3e27656185c473aa17530cc5..0bb60c5f48f5a08b4ec039ceeb21f5d5
      @Override
      public void onTransitionConsumed(@NonNull IBinder transition,
              @NonNull Map<Integer, AutoTaskStackState> changedTaskStacks, boolean aborted,
+diff --git a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
+index 10b19487decc44bda534b44a9e8b6227f3406c96..baf080041b0642153282c67bfaa001827d076ea6 100644
+--- a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
++++ b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
+@@ -28,20 +28,24 @@ public class ScalableUIWMInitializer {
+     private final PanelConfigReader mPanelConfigReader;
+     private final PanelAutoTaskStackTransitionHandlerDelegate
+             mPanelAutoTaskStackTransitionHandlerDelegate;
++    private final ScalableUiPocRuntimeLayoutController mScalableUiPocRuntimeLayoutController;
+ 
+     public ScalableUIWMInitializer(ShellInit shellInit,
+             ActionConfigReader actionConfigReader,
+             PanelConfigReader panelConfigReader,
+-            PanelAutoTaskStackTransitionHandlerDelegate delegate) {
++            PanelAutoTaskStackTransitionHandlerDelegate delegate,
++            ScalableUiPocRuntimeLayoutController scalableUiPocRuntimeLayoutController) {
+         shellInit.addInitCallback(this::onInit, this);
+         mActionConfigReader = actionConfigReader;
+         mPanelConfigReader = panelConfigReader;
+         mPanelAutoTaskStackTransitionHandlerDelegate = delegate;
++        mScalableUiPocRuntimeLayoutController = scalableUiPocRuntimeLayoutController;
+     }
+ 
+     private void onInit() {
+         mPanelAutoTaskStackTransitionHandlerDelegate.init();
+         mPanelConfigReader.init();
+         mActionConfigReader.init();
++        mScalableUiPocRuntimeLayoutController.init();
+     }
+ }
 diff --git a/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java b/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java
 index 474f24998886d19225f331d9c79e41b1ac73a9c5..e21b8affb97069994dc4f180c44ce668800f0874 100644
 --- a/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java
@@ -176,7 +278,7 @@ index 474f24998886d19225f331d9c79e41b1ac73a9c5..e21b8affb97069994dc4f180c44ce668
          /**
           * Notify the top task on a panel has changed.
 diff --git a/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java b/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
-index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584dcb5a8437 100644
+index 1ebf1187a615b380beda6e042fb7615f615062fc..cc4db38c3d935a5c8238318a27ba8cb5332c40d6 100644
 --- a/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
 +++ b/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java
 @@ -23,9 +23,13 @@ import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventCon
@@ -201,7 +303,15 @@ index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584d
  import com.android.car.scalableui.model.PanelState;
  import com.android.car.scalableui.panel.Panel;
  import com.android.car.scalableui.panel.PanelPool;
-@@ -67,6 +72,12 @@ public class SystemEventHandler implements CoreStartable,
+@@ -42,6 +47,7 @@ import com.android.systemui.R;
+ import com.android.systemui.car.CarDeviceProvisionedController;
+ import com.android.systemui.car.CarDeviceProvisionedListener;
+ import com.android.systemui.car.CarServiceProvider;
++import com.android.systemui.car.wm.scalableui.EditableHomeRuntimeLayoutController;
+ import com.android.systemui.car.wm.scalableui.EventDispatcher;
+ import com.android.systemui.dagger.SysUISingleton;
+ import com.android.systemui.dagger.qualifiers.Background;
+@@ -67,6 +73,18 @@ public class SystemEventHandler implements CoreStartable,
          ConfigurationController.ConfigurationListener {
      private static final String TAG = SystemEventHandler.class.getSimpleName();
      private static final boolean DEBUG = Build.IS_DEBUGGABLE;
@@ -211,14 +321,25 @@ index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584d
 +            "com.android.car.scalableui.extra.EVENT_ID";
 +    private static final String EXTRA_EVENT_TOKENS =
 +            "com.android.car.scalableui.extra.EVENT_TOKENS";
++    private static final String ACTION_LAYOUT_UPDATE =
++            "com.android.car.scalableui.hmi.home.ACTION_LAYOUT_UPDATE";
++    private static final String EXTRA_SPLIT_RATIO_X =
++            "com.android.car.scalableui.hmi.home.extra.SPLIT_RATIO_X";
++    private static final String EXTRA_SPLIT_RATIO_RIGHT_Y =
++            "com.android.car.scalableui.hmi.home.extra.SPLIT_RATIO_RIGHT_Y";
  
      private final Context mContext;
      private final CarServiceProvider mCarServiceProvider;
-@@ -77,9 +88,32 @@ public class SystemEventHandler implements CoreStartable,
+@@ -74,12 +92,49 @@ public class SystemEventHandler implements CoreStartable,
+     private final Executor mBackgroundExecutor;
+     private final CarDeviceProvisionedController mCarDeviceProvisionedController;
+     private final EventDispatcher mEventDispatcher;
++    private final EditableHomeRuntimeLayoutController mEditableHomeRuntimeLayoutController;
  
      private CarUserManager mCarUserManager;
      private boolean mIsUserSetupInProgress;
 +    private boolean mPanelEventReceiverRegistered;
++    private boolean mLayoutUpdateReceiverRegistered;
  
      private int mCurrentOrientation;
  
@@ -244,18 +365,49 @@ index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584d
 +        }
 +    };
 +
++    private final BroadcastReceiver mLayoutUpdateReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            if (!ACTION_LAYOUT_UPDATE.equals(intent.getAction())) {
++                return;
++            }
++            float splitRatioX = intent.getFloatExtra(EXTRA_SPLIT_RATIO_X, Float.NaN);
++            float splitRatioRightY = intent.getFloatExtra(EXTRA_SPLIT_RATIO_RIGHT_Y, Float.NaN);
++            mEditableHomeRuntimeLayoutController.applySplit(splitRatioX, splitRatioRightY);
++        }
++    };
++
      private final CarUserManager.UserLifecycleListener mUserLifecycleListener =
              new CarUserManager.UserLifecycleListener() {
                  @Override
-@@ -156,6 +190,7 @@ public class SystemEventHandler implements CoreStartable,
+@@ -129,7 +184,8 @@ public class SystemEventHandler implements CoreStartable,
+             CarServiceProvider carServiceProvider,
+             UserTracker userTracker,
+             CarDeviceProvisionedController carDeviceProvisionedController,
+-            EventDispatcher dispatcher
++            EventDispatcher dispatcher,
++            EditableHomeRuntimeLayoutController editableHomeRuntimeLayoutController
+     ) {
+         mContext = context;
+         mBackgroundExecutor = bgExecutor;
+@@ -137,6 +193,7 @@ public class SystemEventHandler implements CoreStartable,
+         mUserTracker = userTracker;
+         mCarDeviceProvisionedController = carDeviceProvisionedController;
+         mEventDispatcher = dispatcher;
++        mEditableHomeRuntimeLayoutController = editableHomeRuntimeLayoutController;
+         mCurrentOrientation = mContext.getResources().getConfiguration().orientation;
+     }
+ 
+@@ -156,6 +213,8 @@ public class SystemEventHandler implements CoreStartable,
      @Override
      public void start() {
          if (isScalableUIEnabled()) {
 +            registerPanelEventReceiver();
++            registerLayoutUpdateReceiver();
              registerUserEventListener();
              registerProvisionedStateListener();
          }
-@@ -202,6 +237,15 @@ public class SystemEventHandler implements CoreStartable,
+@@ -202,6 +261,24 @@ public class SystemEventHandler implements CoreStartable,
          });
      }
  
@@ -268,11 +420,20 @@ index 1ebf1187a615b380beda6e042fb7615f615062fc..3a333c1eed1696ec3089db5db702584d
 +        mPanelEventReceiverRegistered = true;
 +    }
 +
++    private void registerLayoutUpdateReceiver() {
++        if (mLayoutUpdateReceiverRegistered) {
++            return;
++        }
++        IntentFilter filter = new IntentFilter(ACTION_LAYOUT_UPDATE);
++        mContext.registerReceiver(mLayoutUpdateReceiver, filter, Context.RECEIVER_EXPORTED);
++        mLayoutUpdateReceiverRegistered = true;
++    }
++
      private boolean isScalableUIEnabled() {
          return mContext.getResources().getBoolean(R.bool.config_enableScalableUI);
      }
 diff --git a/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java b/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java
-index c857dbc59ba9ca8ba9cdb55efc7bf340d2819c00..3d3b359a65e94446eef08aab8e0f3e5948f8f25d 100644
+index c857dbc59ba9ca8ba9cdb55efc7bf340d2819c00..adee98db9ed4431f76b76ac9d5bf10722296633d 100644
 --- a/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java
 +++ b/src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java
 @@ -65,17 +65,14 @@ public class GripBarViewController extends DecorPanelControllerBase implements
@@ -296,11 +457,111 @@ index c857dbc59ba9ca8ba9cdb55efc7bf340d2819c00..3d3b359a65e94446eef08aab8e0f3e59
      }
  
      /**
+@@ -128,6 +125,13 @@ public class GripBarViewController extends DecorPanelControllerBase implements
+         mEventDispatcher.executeEvent(event);
+     }
+ 
++    private void dispatchKeyFrameEvent(@Nullable String eventId, float progress) {
++        if (eventId == null || eventId.isEmpty()) {
++            return;
++        }
++        dispatchEvent(new KeyFrameEvent.Builder(eventId, progress).build());
++    }
++
+     private float getDistance(BreakPoint breakPoint, float value) {
+         return Math.abs(value - breakPoint.getPoint());
+     }
+@@ -161,26 +165,23 @@ public class GripBarViewController extends DecorPanelControllerBase implements
+             value = closest.getPoint();
+         }
+ 
+-        float progress = (value - min) / (max - min);
++        float progress = clamp((value - min) / (max - min), 0f, 1f);
+         logIfDebuggable("progress " + progress);
+-        if (progress < 0 || progress > 1) {
+-            dispatchEvent(new Event.Builder(closest.getEventId()).build());
+-            return;
+-        }
+ 
+         switch (event.getAction()) {
+             case MotionEvent.ACTION_DOWN:
+                 mDragStart = mIsHorizontal ? event.getRawX() : event.getRawY();
+                 return;
+             case MotionEvent.ACTION_MOVE:
+-                dispatchEvent(new KeyFrameEvent.Builder(mDragEventId,
+-                        progress).build());
++                dispatchKeyFrameEvent(mDragEventId, progress);
+                 if (mDragDecreaseEventId != null && value < mDragStart) {
+-                    dispatchEvent(new KeyFrameEvent.Builder(mDragDecreaseEventId,
+-                            progress).build());
++                    if (!mDragDecreaseEventId.equals(mDragEventId)) {
++                        dispatchKeyFrameEvent(mDragDecreaseEventId, progress);
++                    }
+                 } else if (mDragIncreaseEventId != null) {
+-                    dispatchEvent(new KeyFrameEvent.Builder(mDragIncreaseEventId,
+-                            progress).build());
++                    if (!mDragIncreaseEventId.equals(mDragEventId)) {
++                        dispatchKeyFrameEvent(mDragIncreaseEventId, progress);
++                    }
+                 }
+                 break;
+             case MotionEvent.ACTION_CANCEL:
+@@ -193,6 +194,10 @@ public class GripBarViewController extends DecorPanelControllerBase implements
+         return;
+     }
+ 
++    private static float clamp(float value, float min, float max) {
++        return Math.max(min, Math.min(max, value));
++    }
++
+     @Override
+     public String toString() {
+         String breakpointsString = (mBreakPoints == null) ? "null" :
+diff --git a/src/com/android/systemui/wmshell/CarWMShellModule.java b/src/com/android/systemui/wmshell/CarWMShellModule.java
+index 7eb5a9dd1bc1a29b3a22bfd8763464cb279ebdb8..0ae13fbcbd3f586536c0373b81e4d979bed57c79 100644
+--- a/src/com/android/systemui/wmshell/CarWMShellModule.java
++++ b/src/com/android/systemui/wmshell/CarWMShellModule.java
+@@ -28,6 +28,7 @@ import com.android.systemui.car.wm.scalableui.ActionConfigReader;
+ import com.android.systemui.car.wm.scalableui.PanelAutoTaskStackTransitionHandlerDelegate;
+ import com.android.systemui.car.wm.scalableui.PanelConfigReader;
+ import com.android.systemui.car.wm.scalableui.ScalableUIWMInitializer;
++import com.android.systemui.car.wm.scalableui.ScalableUiPocRuntimeLayoutController;
+ import com.android.systemui.car.wm.scalableui.panel.DecorPanel;
+ import com.android.systemui.car.wm.scalableui.panel.TaskPanel;
+ import com.android.systemui.dagger.qualifiers.Main;
+@@ -143,11 +144,13 @@ public abstract class CarWMShellModule {
+             Context context,
+             Optional<ActionConfigReader> actionConfigReaderOptional,
+             Optional<PanelConfigReader> panelConfigReaderOptional,
+-            PanelAutoTaskStackTransitionHandlerDelegate delegate) {
++            PanelAutoTaskStackTransitionHandlerDelegate delegate,
++            ScalableUiPocRuntimeLayoutController scalableUiPocRuntimeLayoutController) {
+         if (isScalableUIEnabled(context) && panelConfigReaderOptional.isPresent()) {
+             return Optional.of(
+                     new ScalableUIWMInitializer(shellInit, actionConfigReaderOptional.get(),
+-                            panelConfigReaderOptional.get(), delegate));
++                            panelConfigReaderOptional.get(), delegate,
++                            scalableUiPocRuntimeLayoutController));
+         }
+         return Optional.empty();
+     }
 diff --git a/tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java b/tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java
-index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d951e3427 100644
+index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..2e6b3073d24a3baab8675263af7e18372d17d7a1 100644
 --- a/tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java
 +++ b/tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java
-@@ -26,6 +26,7 @@ import static org.mockito.Mockito.verify;
+@@ -16,9 +16,11 @@
+ package com.android.systemui.car.wm.scalableui;
+ 
+ import static android.app.WindowConfiguration.ACTIVITY_TYPE_HOME;
++import static android.app.WindowConfiguration.ACTIVITY_TYPE_STANDARD;
+ import static android.view.WindowManager.TRANSIT_OPEN;
+ 
+ import static com.google.common.truth.Truth.assertThat;
++import static com.android.systemui.car.wm.scalableui.systemevents.SystemEventConstants.SYSTEM_TASK_OPEN_EVENT_ID;
+ 
+ import static org.mockito.ArgumentMatchers.any;
+ import static org.mockito.Mockito.mock;
+@@ -26,6 +28,7 @@ import static org.mockito.Mockito.verify;
  import static org.mockito.Mockito.when;
  
  import android.app.ActivityManager;
@@ -308,7 +569,11 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
  import android.content.Intent;
  import android.os.IBinder;
  import android.view.SurfaceControl;
-@@ -38,6 +39,7 @@ import androidx.test.filters.SmallTest;
+@@ -35,9 +38,11 @@ import android.window.TransitionRequestInfo;
+ import androidx.test.ext.junit.runners.AndroidJUnit4;
+ import androidx.test.filters.SmallTest;
+ 
++import com.android.car.scalableui.model.Event;
  import com.android.systemui.SysuiTestCase;
  import com.android.systemui.car.CarSystemUiTest;
  import com.android.systemui.car.wm.scalableui.panel.PanelUtils;
@@ -316,7 +581,15 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
  import com.android.systemui.car.wm.scalableui.panel.TaskPanelInfoRepository;
  import com.android.wm.shell.automotive.AutoLayoutManager;
  import com.android.wm.shell.automotive.AutoTaskStackController;
-@@ -58,6 +60,8 @@ import java.util.Map;
+@@ -48,6 +53,7 @@ import com.android.wm.shell.transition.Transitions;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.junit.runner.RunWith;
++import org.mockito.ArgumentCaptor;
+ import org.mockito.Mock;
+ import org.mockito.MockitoAnnotations;
+ 
+@@ -58,6 +64,8 @@ import java.util.Map;
  @RunWith(AndroidJUnit4.class)
  @SmallTest
  public class PanelAutoTaskStackTransitionHandlerDelegateTest extends SysuiTestCase {
@@ -325,7 +598,7 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
  
      private PanelAutoTaskStackTransitionHandlerDelegate mDelegate;
  
-@@ -73,6 +77,8 @@ public class PanelAutoTaskStackTransitionHandlerDelegateTest extends SysuiTestCa
+@@ -73,6 +81,8 @@ public class PanelAutoTaskStackTransitionHandlerDelegateTest extends SysuiTestCa
      private TaskPanelInfoRepository mTaskPanelInfoRepository;
      @Mock
      private AutoLayoutManager mAutoLayoutManager;
@@ -334,7 +607,7 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
  
      @Before
      public void setUp() {
-@@ -173,4 +179,23 @@ public class PanelAutoTaskStackTransitionHandlerDelegateTest extends SysuiTestCa
+@@ -173,4 +183,51 @@ public class PanelAutoTaskStackTransitionHandlerDelegateTest extends SysuiTestCa
  
          verify(mPanelTransitionCoordinator).mergeAnimation(any(), any());
      }
@@ -345,10 +618,10 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
 +        ActivityManager.RunningTaskInfo taskInfo = new ActivityManager.RunningTaskInfo();
 +        taskInfo.baseIntent = new Intent().putExtra(EXTRA_LAUNCH_IN_APP_PANEL, true);
 +        taskInfo.topActivity = new ComponentName("pkg", "cls");
++        taskInfo.topActivityType = ACTIVITY_TYPE_STANDARD;
 +        taskInfo.parentTaskId = 10;
 +        when(request.getType()).thenReturn(TRANSIT_OPEN);
 +        when(request.getTriggerTask()).thenReturn(taskInfo);
-+        when(mPanelUtils.handles(taskInfo.parentTaskId)).thenReturn(true);
 +        when(mPanelUtils.getTaskPanel(any())).thenReturn(mLaunchRootPanel);
 +        when(mLaunchRootPanel.getPanelId()).thenReturn("app_panel");
 +
@@ -356,5 +629,375 @@ index bc0e0adbaa5e7b0e67847fe591f1540dfb4980af..9e1155289c7305e7144c24f87839c58d
 +                mock(IBinder.class), request);
 +
 +        assertThat(autoTaskStackTransaction).isNotNull();
++        verify(mPanelTransitionCoordinator).createAutoTaskStackTransaction(any(), any(), any());
++    }
++
++    @Test
++    public void testHandleRequest_homeRootTaskWithDifferentTopActivityLaunchesIntoPanel() {
++        TransitionRequestInfo request = mock(TransitionRequestInfo.class);
++        ActivityManager.RunningTaskInfo taskInfo = new ActivityManager.RunningTaskInfo();
++        taskInfo.baseIntent = new Intent()
++                .addCategory(Intent.CATEGORY_HOME)
++                .putExtra(EXTRA_LAUNCH_IN_APP_PANEL, true);
++        taskInfo.baseActivity = new ComponentName("com.android.car.settings",
++                "com.android.car.settings.FallbackHome");
++        taskInfo.topActivity = new ComponentName("com.android.car.settings",
++                "com.android.car.settings.CarSettingActivities$HomepageActivity");
++        taskInfo.topActivityType = ACTIVITY_TYPE_HOME;
++        taskInfo.parentTaskId = 10;
++        when(request.getType()).thenReturn(TRANSIT_OPEN);
++        when(request.getTriggerTask()).thenReturn(taskInfo);
++        when(mPanelUtils.getTaskPanel(any())).thenReturn(mLaunchRootPanel);
++        when(mLaunchRootPanel.getPanelId()).thenReturn("app_panel");
++
++        mDelegate.handleRequest(mock(IBinder.class), request);
++
++        ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
++        verify(mPanelTransitionCoordinator).createAutoTaskStackTransaction(any(), any(),
++                eventCaptor.capture());
++        assertThat(eventCaptor.getValue().getId()).isEqualTo(SYSTEM_TASK_OPEN_EVENT_ID);
++        assertThat(eventCaptor.getValue().getPanelId()).isEqualTo("app_panel");
 +    }
  }
+diff --git a/src/com/android/systemui/car/wm/scalableui/ScalableUiPocRuntimeLayoutController.java b/src/com/android/systemui/car/wm/scalableui/ScalableUiPocRuntimeLayoutController.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..8c027b0c6a7b733ce2ce6b3a42479c93cf5a4e2f
+--- /dev/null
++++ b/src/com/android/systemui/car/wm/scalableui/ScalableUiPocRuntimeLayoutController.java
+@@ -0,0 +1,336 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.systemui.car.wm.scalableui;
++
++import android.content.Context;
++import android.graphics.Rect;
++import android.os.Build;
++import android.util.DisplayMetrics;
++import android.util.Log;
++import android.view.SurfaceControl;
++
++import com.android.car.scalableui.manager.StateManager;
++import com.android.car.scalableui.model.Event;
++import com.android.car.scalableui.model.KeyFrameEvent;
++import com.android.car.scalableui.model.PanelState;
++import com.android.car.scalableui.model.Variant;
++import com.android.systemui.R;
++import com.android.systemui.car.wm.scalableui.panel.BasePanel;
++import com.android.systemui.car.wm.scalableui.panel.PanelUtils;
++import com.android.systemui.car.wm.scalableui.panel.TaskPanel;
++import com.android.wm.shell.automotive.AutoSurfaceTransaction;
++import com.android.wm.shell.automotive.AutoSurfaceTransactionFactory;
++import com.android.wm.shell.automotive.AutoTaskStackController;
++import com.android.wm.shell.automotive.AutoTaskStackState;
++import com.android.wm.shell.automotive.AutoTaskStackTransaction;
++import com.android.wm.shell.common.ShellExecutor;
++import com.android.wm.shell.dagger.WMSingleton;
++import com.android.wm.shell.shared.annotations.ShellMainThread;
++
++import javax.inject.Inject;
++
++/**
++ * Applies deterministic split-layout updates for the small-start ScalableUI PoC product.
++ *
++ * <p>The root PoC uses three fixed task panels and two grip decor panels. The original
++ * XML transition path is good enough for initial rendering, but width drag updates have proven
++ * flaky on emulator. This controller keeps one runtime width ratio and one runtime height ratio
++ * and updates the task stacks and decor surfaces directly when grip events arrive.
++ */
++@WMSingleton
++public class ScalableUiPocRuntimeLayoutController {
++    private static final String TAG = "ScalableUiPocLayout";
++    private static final boolean DEBUG = Build.IS_DEBUGGABLE;
++
++    private static final String PRODUCT_NAME = "sdk_car_scalableui_x86_64";
++
++    private static final String PANEL_LEFT_BACKGROUND = "decor_left_background_panel";
++    private static final String PANEL_MAP = "map_panel";
++    private static final String PANEL_CALENDAR = "calendar_panel";
++    private static final String PANEL_RADIO = "radio_panel";
++    private static final String PANEL_VERTICAL_GRIP = "decor_vertical_grip_panel";
++    private static final String PANEL_HORIZONTAL_GRIP = "decor_horizontal_grip_panel";
++
++    private static final String EVENT_WIDTH_DRAG = "layout_width_drag";
++    private static final String EVENT_WIDTH_NARROW = "layout_width_left_narrow";
++    private static final String EVENT_WIDTH_BALANCED = "layout_width_balanced";
++    private static final String EVENT_WIDTH_WIDE = "layout_width_left_wide";
++    private static final String EVENT_HEIGHT_DRAG = "layout_height_drag";
++    private static final String EVENT_HEIGHT_COMPACT = "layout_height_map_compact";
++    private static final String EVENT_HEIGHT_BALANCED = "layout_height_balanced";
++    private static final String EVENT_HEIGHT_TALL = "layout_height_map_tall";
++
++    private static final float WIDTH_NARROW_RATIO = 0.40f;
++    private static final float WIDTH_BALANCED_RATIO = 0.50f;
++    private static final float WIDTH_WIDE_RATIO = 0.60f;
++    private static final float HEIGHT_COMPACT_RATIO = 0.35f;
++    private static final float HEIGHT_BALANCED_RATIO = 0.50f;
++    private static final float HEIGHT_TALL_RATIO = 0.65f;
++
++    private static final float MAP_MARGIN_DP = 24f;
++    private static final float MAP_SPLIT_GAP_DP = 36f;
++    private static final float RIGHT_PANEL_GAP_DP = 12f;
++    private static final float VERTICAL_GRIP_WIDTH_DP = 48f;
++    private static final float HORIZONTAL_GRIP_HEIGHT_DP = 48f;
++
++    private final Context mContext;
++    private final AutoTaskStackController mAutoTaskStackController;
++    private final AutoSurfaceTransactionFactory mAutoSurfaceTransactionFactory;
++    private final PanelUtils mPanelUtils;
++    private final ShellExecutor mMainExecutor;
++
++    private float mWidthRatio = WIDTH_BALANCED_RATIO;
++    private float mHeightRatio = HEIGHT_BALANCED_RATIO;
++
++    @Inject
++    public ScalableUiPocRuntimeLayoutController(
++            Context context,
++            AutoTaskStackController autoTaskStackController,
++            AutoSurfaceTransactionFactory autoSurfaceTransactionFactory,
++            PanelUtils panelUtils,
++            @ShellMainThread ShellExecutor mainExecutor) {
++        mContext = context;
++        mAutoTaskStackController = autoTaskStackController;
++        mAutoSurfaceTransactionFactory = autoSurfaceTransactionFactory;
++        mPanelUtils = panelUtils;
++        mMainExecutor = mainExecutor;
++    }
++
++    /**
++     * Applies the default safe-area-aware layout during startup so root PoC panels do not overlap
++     * the persistent system bars before the first grip interaction.
++     */
++    public void init() {
++        if (!isScalableUiPocProduct()) {
++            return;
++        }
++        float widthRatio = mWidthRatio;
++        float heightRatio = mHeightRatio;
++        mMainExecutor.execute(() -> applyLayoutOnMain(widthRatio, heightRatio));
++    }
++
++    /**
++     * Returns true when the event was consumed by the fixed three-panel PoC controller.
++     */
++    public boolean handleEvent(Event event) {
++        if (!isScalableUiPocProduct() || event == null) {
++            return false;
++        }
++
++        float newWidthRatio = mWidthRatio;
++        float newHeightRatio = mHeightRatio;
++        boolean handled = false;
++        String eventId = event.getId();
++        if (EVENT_WIDTH_DRAG.equals(eventId) && event instanceof KeyFrameEvent keyFrameEvent) {
++            newWidthRatio = lerp(WIDTH_NARROW_RATIO, WIDTH_WIDE_RATIO,
++                    keyFrameEvent.getFraction());
++            handled = true;
++        } else if (EVENT_WIDTH_NARROW.equals(eventId)) {
++            newWidthRatio = WIDTH_NARROW_RATIO;
++            handled = true;
++        } else if (EVENT_WIDTH_BALANCED.equals(eventId)) {
++            newWidthRatio = WIDTH_BALANCED_RATIO;
++            handled = true;
++        } else if (EVENT_WIDTH_WIDE.equals(eventId)) {
++            newWidthRatio = WIDTH_WIDE_RATIO;
++            handled = true;
++        } else if (EVENT_HEIGHT_DRAG.equals(eventId) && event instanceof KeyFrameEvent keyFrameEvent) {
++            newHeightRatio = lerp(HEIGHT_COMPACT_RATIO, HEIGHT_TALL_RATIO,
++                    keyFrameEvent.getFraction());
++            handled = true;
++        } else if (EVENT_HEIGHT_COMPACT.equals(eventId)) {
++            newHeightRatio = HEIGHT_COMPACT_RATIO;
++            handled = true;
++        } else if (EVENT_HEIGHT_BALANCED.equals(eventId)) {
++            newHeightRatio = HEIGHT_BALANCED_RATIO;
++            handled = true;
++        } else if (EVENT_HEIGHT_TALL.equals(eventId)) {
++            newHeightRatio = HEIGHT_TALL_RATIO;
++            handled = true;
++        }
++
++        if (!handled) {
++            return false;
++        }
++
++        if (approximatelyEqual(mWidthRatio, newWidthRatio)
++                && approximatelyEqual(mHeightRatio, newHeightRatio)) {
++            return true;
++        }
++
++        mWidthRatio = newWidthRatio;
++        mHeightRatio = newHeightRatio;
++
++        float widthRatio = mWidthRatio;
++        float heightRatio = mHeightRatio;
++        mMainExecutor.execute(() -> applyLayoutOnMain(widthRatio, heightRatio));
++        return true;
++    }
++
++    private void applyLayoutOnMain(float widthRatio, float heightRatio) {
++        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
++        int displayWidth = metrics.widthPixels;
++        int displayHeight = metrics.heightPixels;
++        if (displayWidth <= 0 || displayHeight <= 0) {
++            return;
++        }
++        int contentTop = mContext.getResources().getDimensionPixelSize(
++                R.dimen.car_top_system_bar_height);
++        int contentBottom = displayHeight - mContext.getResources().getDimensionPixelSize(
++                R.dimen.car_bottom_system_bar_height);
++        if (contentBottom <= contentTop) {
++            contentTop = 0;
++            contentBottom = displayHeight;
++        }
++        int contentHeight = contentBottom - contentTop;
++
++        int mapMarginPx = dpToPx(MAP_MARGIN_DP);
++        int mapSplitGapPx = dpToPx(MAP_SPLIT_GAP_DP);
++        int rightPanelGapPx = dpToPx(RIGHT_PANEL_GAP_DP);
++        int verticalGripWidthPx = dpToPx(VERTICAL_GRIP_WIDTH_DP);
++        int horizontalGripHeightPx = dpToPx(HORIZONTAL_GRIP_HEIGHT_DP);
++        int halfVerticalGripWidthPx = verticalGripWidthPx / 2;
++        int halfHorizontalGripHeightPx = horizontalGripHeightPx / 2;
++
++        int splitX = Math.round(displayWidth * widthRatio);
++        int splitY = contentTop + Math.round(contentHeight * heightRatio);
++
++        Rect leftBackgroundBounds = new Rect(0, contentTop, splitX, contentBottom);
++        Rect mapBounds = new Rect(
++                mapMarginPx,
++                contentTop + mapMarginPx,
++                Math.max(mapMarginPx, splitX - mapSplitGapPx),
++                Math.max(contentTop + mapMarginPx, contentBottom - mapMarginPx));
++        Rect calendarBounds = new Rect(
++                splitX + rightPanelGapPx,
++                contentTop,
++                displayWidth,
++                Math.max(contentTop + rightPanelGapPx, splitY - rightPanelGapPx));
++        Rect radioBounds = new Rect(
++                splitX + rightPanelGapPx,
++                splitY + rightPanelGapPx,
++                displayWidth,
++                contentBottom);
++        Rect verticalGripBounds = new Rect(
++                splitX - halfVerticalGripWidthPx,
++                contentTop,
++                splitX + halfVerticalGripWidthPx,
++                contentBottom);
++        Rect horizontalGripBounds = new Rect(
++                splitX + rightPanelGapPx,
++                splitY - halfHorizontalGripHeightPx,
++                displayWidth,
++                splitY + halfHorizontalGripHeightPx);
++
++        AutoTaskStackTransaction transaction = new AutoTaskStackTransaction();
++        boolean hasTaskChanges = false;
++        hasTaskChanges |= updatePanel(PANEL_MAP, mapBounds, transaction);
++        hasTaskChanges |= updatePanel(PANEL_CALENDAR, calendarBounds, transaction);
++        hasTaskChanges |= updatePanel(PANEL_RADIO, radioBounds, transaction);
++        updatePanel(PANEL_LEFT_BACKGROUND, leftBackgroundBounds, null);
++        updatePanel(PANEL_VERTICAL_GRIP, verticalGripBounds, null);
++        updatePanel(PANEL_HORIZONTAL_GRIP, horizontalGripBounds, null);
++
++        updateSurfaceStates(
++                PANEL_LEFT_BACKGROUND,
++                PANEL_MAP,
++                PANEL_CALENDAR,
++                PANEL_RADIO,
++                PANEL_VERTICAL_GRIP,
++                PANEL_HORIZONTAL_GRIP);
++        if (hasTaskChanges) {
++            mAutoTaskStackController.startTransition(transaction);
++        }
++        if (DEBUG) {
++            Log.d(TAG, "Applied root PoC layout widthRatio=" + widthRatio
++                    + " heightRatio=" + heightRatio);
++        }
++    }
++
++    private boolean updatePanel(String panelId, Rect bounds, AutoTaskStackTransaction transaction) {
++        PanelState panelState = StateManager.getPanelState(panelId);
++        if (panelState == null) {
++            return false;
++        }
++        Variant currentVariant = panelState.getCurrentVariant();
++        if (currentVariant == null) {
++            return false;
++        }
++        Rect safeBounds = new Rect(bounds);
++        currentVariant.setRuntimeBounds(bounds);
++        currentVariant.setRuntimeSafeBounds(safeBounds);
++        currentVariant.setRuntimeVisibility(true);
++        StateManager.applyState(panelState);
++
++        if (transaction == null) {
++            return false;
++        }
++        TaskPanel taskPanel = mPanelUtils.getTaskPanel(
++                panel -> panelId.equals(panel.getPanelId()) && panel.getRootStack() != null);
++        if (taskPanel == null) {
++            return false;
++        }
++        AutoTaskStackState taskStackState = new AutoTaskStackState(
++                new Rect(bounds), true, taskPanel.getLayer());
++        transaction.setTaskStackState(taskPanel.getRootStack().getId(), taskStackState);
++        transaction.setSafeRegionBounds(taskPanel.getRootStack().getId(), safeBounds);
++        if (taskPanel.isRootTaskEmpty() && mPanelUtils.isUserUnlocked()) {
++            taskPanel.setBaseIntent(transaction);
++        }
++        return true;
++    }
++
++    private void updateSurfaceStates(String... panelIds) {
++        AutoSurfaceTransaction autoSurfaceTransaction =
++                mAutoSurfaceTransactionFactory.createTransaction("SCALABLE_UI_POC_LAYOUT");
++        SurfaceControl.Transaction tx = new SurfaceControl.Transaction();
++        for (String panelId : panelIds) {
++            BasePanel basePanel = mPanelUtils.getBasePanel(
++                    panel -> panelId.equals(panel.getPanelId()));
++            if (basePanel == null) {
++                continue;
++            }
++            PanelState panelState = StateManager.getPanelState(panelId);
++            Variant currentVariant = panelState == null ? null : panelState.getCurrentVariant();
++            basePanel.update(autoSurfaceTransaction, tx, currentVariant);
++        }
++        tx.apply();
++        autoSurfaceTransaction.apply();
++    }
++
++    private boolean isScalableUiPocProduct() {
++        return PRODUCT_NAME.equals(Build.PRODUCT);
++    }
++
++    private int dpToPx(float valueDp) {
++        return Math.round(valueDp * mContext.getResources().getDisplayMetrics().density);
++    }
++
++    private static float lerp(float start, float end, float fraction) {
++        return start + ((end - start) * clamp(fraction, 0f, 1f));
++    }
++
++    private static float clamp(float value, float min, float max) {
++        if (Float.isNaN(value)) {
++            return (min + max) / 2f;
++        }
++        return Math.max(min, Math.min(max, value));
++    }
++
++    private static boolean approximatelyEqual(float value1, float value2) {
++        return Math.abs(value1 - value2) < 0.001f;
++    }
++}

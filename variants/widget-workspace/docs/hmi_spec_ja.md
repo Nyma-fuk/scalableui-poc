@@ -12,7 +12,7 @@ A compact Panel Control button reveals a hidden runtime menu. Users choose a des
 
 | Panel | Label | Component | Left | Top | Right | Bottom | Display |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `panel_menu_button` | Panel Control Button | `com.android.car.scalableui.hmi.panelmenubutton/.PanelMenuButtonActivity` | `2%` | `3%` | `11%` | `12%` | `0` |
+| `panel_menu_button` | Panel Control Button | `com.android.car.scalableui.hmi.panelmenubutton/.PanelMenuButtonActivity` | `2%` | `3%` | `16%` | `15%` | `0` |
 | `panel_menu` | Hidden Panel Menu | `com.android.car.scalableui.hmi.panelmenu/.PanelMenuActivity` | `2%` | `14%` | `34%` | `88%` | `0` |
 | `workspace_panel` | Interactive Workspace | `com.android.car.scalableui.hmi.widgets/.WidgetActivity` | `13%` | `3%` | `98%` | `68%` | `0` |
 | `widget_controls_panel` | Widget Controls | `com.android.car.scalableui.hmi.controls/.ControlsActivity` | `13%` | `72%` | `55%` | `97%` | `0` |
@@ -39,5 +39,6 @@ A compact Panel Control button reveals a hidden runtime menu. Users choose a des
 ## Variant Notes
 
 - Panel Control opens the hidden menu only when the user asks for it.
+- Panel Control button is intentionally anchored at the top-left corner and enlarged so the hidden menu entry point is easier to discover on emulator.
 - Panel Menu adds a target panel extra so SystemUI can route the selected app to the requested panel.
 - All Apps launches are kept separate and should open in the fullscreen app_panel.
