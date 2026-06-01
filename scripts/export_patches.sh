@@ -84,11 +84,22 @@ generate_patch \
 generate_patch \
   "packages/apps/Car/SystemUI" \
   "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch" \
+  "src/com/android/systemui/car/wm/scalableui/EventDispatcher.java" \
   "src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java" \
+  "src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java" \
   "src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java" \
   "src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java" \
   "src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java" \
-  "tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java"
+  "src/com/android/systemui/wmshell/CarWMShellModule.java" \
+  "tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java" \
+  --new-files \
+  "src/com/android/systemui/car/wm/scalableui/ScalableUiPocRuntimeLayoutController.java"
+
+generate_patch \
+  "packages/apps/Car/systemlibs" \
+  "patches/packages-apps-Car-systemlibs-car-scalable-ui-lib/0001-add-runtime-layout-variant-overrides.patch" \
+  "car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java" \
+  "car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java"
 
 generate_patch \
   "packages/apps/Car/Launcher" \

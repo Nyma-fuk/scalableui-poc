@@ -19,7 +19,7 @@ A compact Panel Control button reveals a hidden runtime menu. Users choose a des
 
 ## Panels
 
-- `panel_menu_button`: Panel Control Button, `2%,3% - 11%,12%`
+- `panel_menu_button`: Panel Control Button, `2%,3% - 16%,15%`
 - `panel_menu`: Hidden Panel Menu, `2%,14% - 34%,88%`
 - `workspace_panel`: Interactive Workspace, `13%,3% - 98%,68%`
 - `widget_controls_panel`: Widget Controls, `13%,72% - 55%,97%`
