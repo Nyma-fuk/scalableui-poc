@@ -1,0 +1,634 @@
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml b/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml
+--- a/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/AndroidManifest.xml
+@@ -20,6 +20,24 @@
+                 <category android:name="android.intent.category.DEFAULT" />
+             </intent-filter>
+         </activity>
++        <activity
++            android:name=".WorkspaceHomeActivity"
++            android:clearTaskOnLaunch="true"
++            android:exported="true"
++            android:excludeFromRecents="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:label="ScalableUI Workspace" />
++        <activity
++            android:name=".WorkspaceEmptyPanelActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Choose workspace app" />
+         <service
+             android:name=".NoOpQuickStepService"
+             android:permission="android.permission.STATUS_BAR_SERVICE"
+@@ -62,6 +80,14 @@
+             android:resizeableActivity="true"
+             android:stateNotNeeded="true"
+             android:label="Home app picker" />
++        <activity
++            android:name=".WorkspaceAppPickerActivity"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:stateNotNeeded="true"
++            android:label="Workspace app picker" />
+         <activity
+             android:name=".PrimaryPanelHeaderActivity"
+             android:excludeFromRecents="true"
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceAppPickerActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceAppPickerActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..8d24bdcc315d1fa336050cbdc27158b5cd958199
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceAppPickerActivity.java
+@@ -0,0 +1,184 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.Typeface;
++import android.graphics.drawable.GradientDrawable;
++import android.os.Bundle;
++import android.text.TextUtils;
++import android.view.Gravity;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.LinearLayout;
++import android.widget.ScrollView;
++import android.widget.TextView;
++
++import java.util.List;
++
++public final class WorkspaceAppPickerActivity extends Activity {
++    private String mTargetPanelId;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        mTargetPanelId = getIntent().getStringExtra(WorkspaceRuntimeBridge.EXTRA_PANEL_ID);
++        if (TextUtils.isEmpty(mTargetPanelId)) {
++            finish();
++            return;
++        }
++        setContentView(createContent());
++    }
++
++    private View createContent() {
++        WorkspaceModelStore.Model model = WorkspaceModelStore.load(this);
++        String currentComponent = findCurrentComponent(model, mTargetPanelId);
++        List<InstalledAppCatalog.AppEntry> apps = InstalledAppCatalog.queryLaunchableApps(this);
++
++        LinearLayout shell = new LinearLayout(this);
++        shell.setOrientation(LinearLayout.VERTICAL);
++        shell.setBackgroundColor(Color.rgb(10, 14, 20));
++
++        shell.addView(createTopBar(),
++                new LinearLayout.LayoutParams(
++                        ViewGroup.LayoutParams.MATCH_PARENT,
++                        (int) (76 * getResources().getDisplayMetrics().density)));
++
++        ScrollView scrollView = new ScrollView(this);
++        scrollView.setFillViewport(true);
++        LinearLayout list = new LinearLayout(this);
++        list.setOrientation(LinearLayout.VERTICAL);
++        int pad = (int) (24 * getResources().getDisplayMetrics().density);
++        list.setPadding(pad, pad, pad, pad);
++        scrollView.addView(list, new ViewGroup.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++
++        list.addView(createHeadline("Choose app for " + mTargetPanelId));
++        list.addView(createSubline("This picker writes the workspace model and relaunches the"
++                + " target panel."));
++
++        Button emptyPanel = createAppButton(
++                "Empty panel",
++                "Placeholder panel with add-app affordance",
++                currentComponent.equals(WorkspaceModelStore.emptyPanelComponent()),
++                null);
++        emptyPanel.setOnClickListener(v -> applySelection(WorkspaceModelStore.emptyPanelComponent()));
++        LinearLayout.LayoutParams emptyParams = new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT,
++                ViewGroup.LayoutParams.WRAP_CONTENT);
++        emptyParams.bottomMargin = (int) (10 * getResources().getDisplayMetrics().density);
++        list.addView(emptyPanel, emptyParams);
++
++        for (InstalledAppCatalog.AppEntry app : apps) {
++            Button button = createAppButton(app.label, app.packageName,
++                    app.componentName.equals(currentComponent), app.icon);
++            button.setOnClickListener(v -> applySelection(app.componentName));
++            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
++                    ViewGroup.LayoutParams.MATCH_PARENT,
++                    ViewGroup.LayoutParams.WRAP_CONTENT);
++            params.bottomMargin = (int) (10 * getResources().getDisplayMetrics().density);
++            list.addView(button, params);
++        }
++
++        shell.addView(scrollView, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
++        return shell;
++    }
++
++    private View createTopBar() {
++        LinearLayout bar = new LinearLayout(this);
++        bar.setOrientation(LinearLayout.HORIZONTAL);
++        bar.setGravity(Gravity.CENTER_VERTICAL);
++        int pad = (int) (20 * getResources().getDisplayMetrics().density);
++        bar.setPadding(pad, pad / 2, pad, pad / 2);
++        bar.setBackgroundColor(Color.rgb(18, 24, 32));
++
++        TextView title = new TextView(this);
++        title.setText("Panel app picker");
++        title.setTextColor(Color.WHITE);
++        title.setTextSize(20f);
++        title.setTypeface(Typeface.DEFAULT_BOLD);
++        LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(
++                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
++        bar.addView(title, titleParams);
++
++        Button close = createTonalButton("Close");
++        close.setOnClickListener(v -> finish());
++        bar.addView(close, new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
++        return bar;
++    }
++
++    private TextView createHeadline(String text) {
++        TextView view = new TextView(this);
++        view.setText(text);
++        view.setTextColor(Color.WHITE);
++        view.setTextSize(26f);
++        view.setTypeface(Typeface.DEFAULT_BOLD);
++        return view;
++    }
++
++    private TextView createSubline(String text) {
++        TextView view = new TextView(this);
++        view.setText(text);
++        view.setTextColor(Color.rgb(183, 197, 210));
++        view.setTextSize(14f);
++        view.setPadding(0, dp(8), 0, dp(20));
++        return view;
++    }
++
++    private Button createAppButton(String title, String subtitle, boolean selected,
++            android.graphics.drawable.Drawable iconDrawable) {
++        Button button = new Button(this);
++        button.setAllCaps(false);
++        button.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
++        button.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
++        button.setText(title + "\n" + subtitle);
++        button.setTextColor(selected ? Color.BLACK : Color.WHITE);
++        button.setTextSize(15f);
++        button.setTypeface(Typeface.DEFAULT_BOLD);
++        button.setPadding(dp(20), dp(16), dp(20), dp(16));
++        GradientDrawable background = new GradientDrawable();
++        background.setCornerRadius(dp(24));
++        background.setStroke(dp(1), Color.argb(60, 255, 255, 255));
++        background.setColor(selected ? Color.rgb(129, 199, 132) : Color.rgb(26, 35, 44));
++        button.setBackground(background);
++        if (iconDrawable != null) {
++            android.graphics.drawable.Drawable icon = iconDrawable.mutate();
++            icon.setBounds(0, 0, dp(28), dp(28));
++            button.setCompoundDrawablePadding(dp(14));
++            button.setCompoundDrawablesRelative(icon, null, null, null);
++        }
++        return button;
++    }
++
++    private Button createTonalButton(String text) {
++        Button button = new Button(this);
++        button.setText(text);
++        button.setAllCaps(false);
++        button.setTextColor(Color.WHITE);
++        GradientDrawable background = new GradientDrawable();
++        background.setCornerRadius(dp(20));
++        background.setColor(Color.rgb(43, 57, 75));
++        button.setBackground(background);
++        return button;
++    }
++
++    private void applySelection(String componentName) {
++        WorkspaceRuntimeBridge.assignComponent(this, mTargetPanelId, componentName);
++        finish();
++    }
++
++    private static String findCurrentComponent(WorkspaceModelStore.Model model, String panelId) {
++        for (WorkspaceModelStore.PanelRecord panel : model.panels) {
++            if (panelId.equals(panel.id)) {
++                return panel.componentName;
++            }
++        }
++        return "";
++    }
++
++    private int dp(int value) {
++        return Math.round(value * getResources().getDisplayMetrics().density);
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceEmptyPanelActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceEmptyPanelActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..680a5856e83f13ec2e195a9b02dc7b80cc324d75
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceEmptyPanelActivity.java
+@@ -0,0 +1,86 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.Typeface;
++import android.graphics.drawable.GradientDrawable;
++import android.os.Bundle;
++import android.text.TextUtils;
++import android.view.Gravity;
++import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.FrameLayout;
++import android.widget.LinearLayout;
++import android.widget.TextView;
++
++public final class WorkspaceEmptyPanelActivity extends Activity {
++    private String mPanelId;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        mPanelId = getIntent().getStringExtra(WorkspaceRuntimeBridge.EXTRA_PANEL_ID);
++        setContentView(createContent());
++    }
++
++    private FrameLayout createContent() {
++        FrameLayout root = new FrameLayout(this);
++        root.setBackgroundColor(Color.rgb(14, 20, 28));
++
++        LinearLayout card = new LinearLayout(this);
++        card.setOrientation(LinearLayout.VERTICAL);
++        card.setGravity(Gravity.CENTER_HORIZONTAL);
++        int pad = dp(28);
++        card.setPadding(pad, pad, pad, pad);
++
++        GradientDrawable bg = new GradientDrawable();
++        bg.setColor(Color.argb(242, 27, 36, 48));
++        bg.setCornerRadius(dp(32));
++        bg.setStroke(dp(1), Color.argb(56, 255, 255, 255));
++        card.setBackground(bg);
++
++        TextView title = new TextView(this);
++        title.setText("Empty panel");
++        title.setTextColor(Color.rgb(244, 247, 251));
++        title.setTextSize(24f);
++        title.setTypeface(Typeface.DEFAULT_BOLD);
++        card.addView(title);
++
++        TextView body = new TextView(this);
++        body.setText("Choose any installed app for this panel. You can add, move, resize, or remove panels at any time.");
++        body.setTextColor(Color.rgb(191, 201, 214));
++        body.setTextSize(14f);
++        body.setGravity(Gravity.CENTER_HORIZONTAL);
++        body.setPadding(0, dp(10), 0, dp(22));
++        card.addView(body);
++
++        Button choose = new Button(this);
++        choose.setAllCaps(false);
++        choose.setText("Choose app");
++        choose.setTextColor(Color.rgb(15, 23, 32));
++        GradientDrawable chooseBg = new GradientDrawable();
++        chooseBg.setColor(Color.rgb(167, 214, 255));
++        chooseBg.setCornerRadius(dp(22));
++        choose.setBackground(chooseBg);
++        choose.setPadding(dp(24), dp(14), dp(24), dp(14));
++        choose.setOnClickListener(v -> {
++            if (!TextUtils.isEmpty(mPanelId)) {
++                WorkspaceRuntimeBridge.launchPickerFullscreen(this, mPanelId);
++            }
++        });
++        card.addView(choose);
++
++        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT,
++                ViewGroup.LayoutParams.WRAP_CONTENT,
++                Gravity.CENTER);
++        params.leftMargin = dp(24);
++        params.rightMargin = dp(24);
++        root.addView(card, params);
++        return root;
++    }
++
++    private int dp(int value) {
++        return Math.round(value * getResources().getDisplayMetrics().density);
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceHomeActivity.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceHomeActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..c72b82b984c1fb5272f3fd75c04819f6cfe08aa2
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceHomeActivity.java
+@@ -0,0 +1,66 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.LinearGradient;
++import android.graphics.Paint;
++import android.graphics.Shader;
++import android.os.Bundle;
++import android.view.View;
++
++public final class WorkspaceHomeActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(new WorkspaceBackdropView(this));
++    }
++
++    @Override
++    protected void onResume() {
++        super.onResume();
++        WorkspaceRuntimeBridge.requestSync(this);
++    }
++
++    private static final class WorkspaceBackdropView extends View {
++        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
++
++        WorkspaceBackdropView(Activity activity) {
++            super(activity);
++        }
++
++        @Override
++        protected void onDraw(android.graphics.Canvas canvas) {
++            super.onDraw(canvas);
++            int width = getWidth();
++            int height = getHeight();
++            if (width <= 0 || height <= 0) {
++                return;
++            }
++            mPaint.setShader(new LinearGradient(
++                    0, 0, width, height,
++                    Color.rgb(16, 22, 30),
++                    Color.rgb(28, 40, 56),
++                    Shader.TileMode.CLAMP));
++            canvas.drawRect(0, 0, width, height, mPaint);
++
++            Paint glow = new Paint(Paint.ANTI_ALIAS_FLAG);
++            glow.setShader(new LinearGradient(
++                    width * 0.1f, height * 0.1f, width * 0.8f, height * 0.8f,
++                    Color.argb(90, 33, 150, 243),
++                    Color.argb(20, 255, 193, 7),
++                    Shader.TileMode.CLAMP));
++            canvas.drawCircle(width * 0.75f, height * 0.22f, width * 0.32f, glow);
++
++            Paint text = new Paint(Paint.ANTI_ALIAS_FLAG);
++            text.setColor(Color.rgb(240, 244, 249));
++            text.setTextSize(getResources().getDisplayMetrics().density * 24f);
++            text.setFakeBoldText(true);
++            canvas.drawText("Workspace", width * 0.06f, height * 0.11f, text);
++            text.setFakeBoldText(false);
++            text.setTextSize(getResources().getDisplayMetrics().density * 12f);
++            text.setColor(Color.argb(190, 220, 228, 239));
++            canvas.drawText("Add panels, drag headers to reorder, and resize with the rails.",
++                    width * 0.06f, height * 0.145f, text);
++        }
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceModelStore.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceModelStore.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..89253c043c664c8b604e5f30083dd81a2d80cce3
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceModelStore.java
+@@ -0,0 +1,140 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.content.ContentResolver;
++import android.content.Context;
++import android.os.SystemProperties;
++import android.os.UserHandle;
++import android.provider.Settings;
++import android.text.TextUtils;
++
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++import java.util.List;
++
++final class WorkspaceModelStore {
++    static final String PRODUCT_NAME = "sdk_car_scalableui_dynamic_workspace_x86_64";
++    private static final String SETTINGS_KEY = "scalableui_dynamic_workspace_model_v2";
++
++    private static final String KEY_VERSION = "version";
++    private static final String KEY_NEXT_PANEL_INDEX = "next_panel_index";
++    private static final String KEY_VIEWPORT_OFFSET_DP = "viewport_offset_dp";
++    private static final String KEY_PANELS = "panels";
++
++    private static final String KEY_PANEL_ID = "id";
++    private static final String KEY_COMPONENT = "component";
++    private static final String KEY_WIDTH_DP = "width_dp";
++
++    private static final int VERSION = 2;
++    private static final int DEFAULT_PANEL_WIDTH_DP = 460;
++    private static final String EMPTY_PANEL_COMPONENT =
++            "com.android.car.scalableui.hmi.home/.WorkspaceEmptyPanelActivity";
++
++    private WorkspaceModelStore() {}
++
++    static boolean isDynamicWorkspaceVariant() {
++        return PRODUCT_NAME.equals(android.os.Build.PRODUCT)
++                || PRODUCT_NAME.equals(SystemProperties.get("ro.product.name", ""))
++                || PRODUCT_NAME.equals(SystemProperties.get("ro.product.product.name", ""));
++    }
++
++    static Model load(Context context) {
++        ContentResolver resolver = context.getContentResolver();
++        String raw = Settings.Secure.getStringForUser(
++                resolver, SETTINGS_KEY, UserHandle.myUserId());
++        if (TextUtils.isEmpty(raw)) {
++            return createDefaultModel();
++        }
++        try {
++            JSONObject root = new JSONObject(raw);
++            Model model = new Model();
++            model.nextPanelIndex = Math.max(1, root.optInt(KEY_NEXT_PANEL_INDEX, 1));
++            model.viewportOffsetDp = Math.max(0, root.optInt(KEY_VIEWPORT_OFFSET_DP, 0));
++            JSONArray panels = root.optJSONArray(KEY_PANELS);
++            if (panels != null) {
++                for (int i = 0; i < panels.length(); i++) {
++                    JSONObject item = panels.optJSONObject(i);
++                    if (item == null) {
++                        continue;
++                    }
++                    String id = item.optString(KEY_PANEL_ID, "");
++                    String component = item.optString(KEY_COMPONENT, "");
++                    int widthDp = Math.max(280, item.optInt(KEY_WIDTH_DP, DEFAULT_PANEL_WIDTH_DP));
++                    if (id.isEmpty() || component.isEmpty()) {
++                        continue;
++                    }
++                    model.panels.add(new PanelRecord(id, component, widthDp));
++                }
++            }
++            if (model.panels.isEmpty()) {
++                return createDefaultModel();
++            }
++            return model;
++        } catch (JSONException e) {
++            return createDefaultModel();
++        }
++    }
++
++    static void save(Context context, Model model) {
++        Settings.Secure.putStringForUser(
++                context.getContentResolver(), SETTINGS_KEY, toJson(model), UserHandle.myUserId());
++    }
++
++    static Model createDefaultModel() {
++        Model model = new Model();
++        model.nextPanelIndex = 1;
++        model.viewportOffsetDp = 0;
++        return model;
++    }
++
++    static String emptyPanelComponent() {
++        return EMPTY_PANEL_COMPONENT;
++    }
++
++    static String nextPanelId(Model model) {
++        String id = "workspace_panel_" + model.nextPanelIndex;
++        model.nextPanelIndex++;
++        return id;
++    }
++
++    private static String toJson(Model model) {
++        JSONObject root = new JSONObject();
++        JSONArray panels = new JSONArray();
++        try {
++            root.put(KEY_VERSION, VERSION);
++            root.put(KEY_NEXT_PANEL_INDEX, Math.max(1, model.nextPanelIndex));
++            root.put(KEY_VIEWPORT_OFFSET_DP, Math.max(0, model.viewportOffsetDp));
++            for (PanelRecord record : model.panels) {
++                JSONObject item = new JSONObject();
++                item.put(KEY_PANEL_ID, record.id);
++                item.put(KEY_COMPONENT, record.componentName);
++                item.put(KEY_WIDTH_DP, record.widthDp);
++                panels.put(item);
++            }
++            root.put(KEY_PANELS, panels);
++        } catch (JSONException ignored) {
++            // JSONObject writes above are safe for primitive/string payloads.
++        }
++        return root.toString();
++    }
++
++    static final class Model {
++        final List<PanelRecord> panels = new ArrayList<>();
++        int nextPanelIndex;
++        int viewportOffsetDp;
++    }
++
++    static final class PanelRecord {
++        final String id;
++        String componentName;
++        int widthDp;
++
++        PanelRecord(String id, String componentName, int widthDp) {
++            this.id = id;
++            this.componentName = componentName;
++            this.widthDp = widthDp;
++        }
++    }
++}
+diff --git a/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceRuntimeBridge.java b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceRuntimeBridge.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..b8b5cbf7b306ccb66e03059da51c2c311bbf3e2e
+--- /dev/null
++++ b/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/WorkspaceRuntimeBridge.java
+@@ -0,0 +1,85 @@
++package com.android.car.scalableui.hmi.home;
++
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.net.Uri;
++
++final class WorkspaceRuntimeBridge {
++    static final String ACTION_WORKSPACE_COMMAND =
++            "com.android.car.scalableui.hmi.workspace.ACTION_COMMAND";
++    static final String ACTION_WORKSPACE_SYNC =
++            "com.android.car.scalableui.hmi.workspace.ACTION_SYNC";
++    static final String EXTRA_COMMAND = "com.android.car.scalableui.hmi.workspace.extra.COMMAND";
++    static final String EXTRA_PANEL_ID = "com.android.car.scalableui.hmi.workspace.extra.PANEL_ID";
++    static final String EXTRA_COMPONENT =
++            "com.android.car.scalableui.hmi.workspace.extra.COMPONENT";
++    static final String COMMAND_ASSIGN_COMPONENT = "assign_component";
++
++    private static final String EXTRA_TARGET_PANEL_ID =
++            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++    private static final String TARGET_PANEL_URI_SCHEME = "scalableui-hmi";
++    private static final String TARGET_PANEL_URI_HOST = "panel-launch";
++    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
++
++    private WorkspaceRuntimeBridge() {}
++
++    static void requestSync(Context context) {
++        Intent intent = new Intent(ACTION_WORKSPACE_SYNC);
++        intent.setPackage("com.android.systemui");
++        context.sendBroadcast(intent);
++    }
++
++    static void sendCommand(Context context, String command, String panelId) {
++        Intent intent = new Intent(ACTION_WORKSPACE_COMMAND);
++        intent.putExtra(EXTRA_COMMAND, command);
++        if (panelId != null) {
++            intent.putExtra(EXTRA_PANEL_ID, panelId);
++        }
++        intent.setPackage("com.android.systemui");
++        context.sendBroadcast(intent);
++    }
++
++    static void assignComponent(Context context, String panelId, String componentName) {
++        if (panelId == null || panelId.isEmpty() || componentName == null
++                || componentName.isEmpty()) {
++            return;
++        }
++        Intent intent = new Intent(ACTION_WORKSPACE_COMMAND);
++        intent.putExtra(EXTRA_COMMAND, COMMAND_ASSIGN_COMPONENT);
++        intent.putExtra(EXTRA_PANEL_ID, panelId);
++        intent.putExtra(EXTRA_COMPONENT, componentName);
++        intent.setPackage("com.android.systemui");
++        context.sendBroadcast(intent);
++    }
++
++    static void launchToPanel(Context context, String componentString, String panelId) {
++        if (componentString == null || componentString.isEmpty() || panelId == null
++                || panelId.isEmpty()) {
++            return;
++        }
++        Intent intent = new Intent(Intent.ACTION_MAIN);
++        intent.setComponent(ComponentName.unflattenFromString(componentString));
++        intent.putExtra(EXTRA_TARGET_PANEL_ID, panelId);
++        intent.putExtra(EXTRA_PANEL_ID, panelId);
++        intent.setData(new Uri.Builder()
++                .scheme(TARGET_PANEL_URI_SCHEME)
++                .authority(TARGET_PANEL_URI_HOST)
++                .appendQueryParameter(TARGET_PANEL_URI_PARAM, panelId)
++                .build());
++        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
++                | Intent.FLAG_ACTIVITY_CLEAR_TOP
++                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
++        context.startActivity(intent);
++    }
++
++    static void launchPickerFullscreen(Context context, String panelId) {
++        Intent intent = new Intent(Intent.ACTION_MAIN);
++        intent.setComponent(new ComponentName(context, WorkspaceAppPickerActivity.class));
++        intent.putExtra(EXTRA_PANEL_ID, panelId);
++        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
++                | Intent.FLAG_ACTIVITY_CLEAR_TOP
++                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
++        context.startActivity(intent);
++    }
++}
