@@ -55,6 +55,7 @@
 | `widget-workspace` | `sdk_car_scalableui_widget_workspace_x86_64` | menu 操作で workspace panel の app を入れ替える widget cockpit |
 | `editable-home` | `sdk_car_scalableui_editable_home_x86_64` | system bar を避けた multipanel home と保存可能な panel assignment |
 | `widget-layout-lab` | `sdk_car_scalableui_widget_layout_lab_x86_64` | 右側 Widget picker と配置パターン切替を試す layout lab |
+| `dynamic-workspace` | `sdk_car_scalableui_dynamic_workspace_x86_64` | 固定スロットを持たず、空の workspace から panel を追加・削除・移動・横幅変更する動的 HMI |
 
 ## すべての HMI を適用する
 
