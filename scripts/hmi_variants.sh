@@ -16,6 +16,7 @@ HMI_VARIANTS=(
   "widget-workspace|sdk_car_scalableui_widget_workspace_x86_64"
   "editable-home|sdk_car_scalableui_editable_home_x86_64"
   "widget-layout-lab|sdk_car_scalableui_widget_layout_lab_x86_64"
+  "dynamic-workspace|sdk_car_scalableui_dynamic_workspace_x86_64"
 )
 
 find_hmi_product() {
@@ -56,6 +57,7 @@ hmi_rro_module_for_slug() {
     widget-workspace) echo "CarSystemUIScalableUiHmiWidgetWorkspaceRRO" ;;
     editable-home) echo "CarSystemUIScalableUiHmiEditableHomeRRO" ;;
     widget-layout-lab) echo "CarSystemUIScalableUiHmiWidgetLayoutLabRRO" ;;
+    dynamic-workspace) echo "CarSystemUIScalableUiHmiDynamicWorkspaceRRO" ;;
     *) return 1 ;;
   esac
 }

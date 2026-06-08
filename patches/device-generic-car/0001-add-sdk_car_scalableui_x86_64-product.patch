@@ -1,8 +1,8 @@
 diff --git a/AndroidProducts.mk b/AndroidProducts.mk
-index 8c2cc18904b631994695b2d24cbd4013dc4d8969..8f5e932e7618bde915e87615c35d8825aa6640c3 100644
+index 8c2cc18904b631994695b2d24cbd4013dc4d8969..8fcdb1f6beafd77a24b6b186d0f63fd472225d8e 100644
 --- a/AndroidProducts.mk
 +++ b/AndroidProducts.mk
-@@ -20,6 +20,22 @@ PRODUCT_MAKEFILES := \
+@@ -20,6 +20,23 @@ PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/sdk_car_arm64.mk \
      $(LOCAL_DIR)/sdk_car_md_arm64.mk \
      $(LOCAL_DIR)/sdk_car_md_x86_64.mk \
@@ -21,11 +21,12 @@ index 8c2cc18904b631994695b2d24cbd4013dc4d8969..8f5e932e7618bde915e87615c35d8825
 +    $(LOCAL_DIR)/sdk_car_scalableui_widget_workspace_x86_64.mk \
 +    $(LOCAL_DIR)/sdk_car_scalableui_widget_layout_lab_x86_64.mk \
 +    $(LOCAL_DIR)/sdk_car_scalableui_editable_home_x86_64.mk \
++    $(LOCAL_DIR)/sdk_car_scalableui_dynamic_workspace_x86_64.mk \
 +    $(LOCAL_DIR)/sdk_car_scalableui_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_cw_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_x86_64.mk \
      $(LOCAL_DIR)/sdk_car_dewd_x86_64.mk \
-@@ -29,6 +45,22 @@ COMMON_LUNCH_CHOICES := \
+@@ -29,6 +46,23 @@ COMMON_LUNCH_CHOICES := \
      gsi_car_x86_64-trunk_staging-userdebug \
      sdk_car_arm64-trunk_staging-userdebug \
      sdk_car_md_x86_64-trunk_staging-userdebug \
@@ -44,6 +45,7 @@ index 8c2cc18904b631994695b2d24cbd4013dc4d8969..8f5e932e7618bde915e87615c35d8825
 +    sdk_car_scalableui_widget_workspace_x86_64-trunk_staging-userdebug \
 +    sdk_car_scalableui_widget_layout_lab_x86_64-trunk_staging-userdebug \
 +    sdk_car_scalableui_editable_home_x86_64-trunk_staging-userdebug \
++    sdk_car_scalableui_dynamic_workspace_x86_64-trunk_staging-userdebug \
 +    sdk_car_scalableui_x86_64-trunk_staging-userdebug \
      sdk_car_cw_x86_64-trunk_staging-userdebug \
      sdk_car_x86_64-trunk_staging-userdebug \
