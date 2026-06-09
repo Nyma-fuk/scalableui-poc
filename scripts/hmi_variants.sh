@@ -17,6 +17,7 @@ HMI_VARIANTS=(
   "editable-home|sdk_car_scalableui_editable_home_x86_64"
   "widget-layout-lab|sdk_car_scalableui_widget_layout_lab_x86_64"
   "dynamic-workspace|sdk_car_scalableui_dynamic_workspace_x86_64"
+  "declarative-multipanel|sdk_car_scalableui_declarative_multipanel_x86_64"
 )
 
 find_hmi_product() {
@@ -58,7 +59,15 @@ hmi_rro_module_for_slug() {
     editable-home) echo "CarSystemUIScalableUiHmiEditableHomeRRO" ;;
     widget-layout-lab) echo "CarSystemUIScalableUiHmiWidgetLayoutLabRRO" ;;
     dynamic-workspace) echo "CarSystemUIScalableUiHmiDynamicWorkspaceRRO" ;;
+    declarative-multipanel) echo "CarSystemUIScalableUiDeclarativeMultipanelRRO" ;;
     *) return 1 ;;
+  esac
+}
+
+hmi_variant_uses_common_runtime_patches() {
+  case "$1" in
+    declarative-multipanel) return 1 ;;
+    *) return 0 ;;
   esac
 }
 
@@ -87,4 +96,20 @@ hmi_demo_app_modules() {
     ScalableUiHmiDebugDemoApp \
     ScalableUiHmiPassengerDemoApp \
     ScalableUiHmiCalmDemoApp
+}
+
+hmi_build_modules_for_slug() {
+  local slug="$1"
+  if [[ "$slug" == "declarative-multipanel" ]]; then
+    printf '%s\n' \
+      CarSystemUI \
+      CarFrameworkScalableUiDeclarativeMultipanelRRO \
+      CarServiceScalableUiDeclarativeMultipanelRRO \
+      CarSystemUIScalableUiDeclarativeMultipanelRRO \
+      StubCarLauncher
+  fi
+  if hmi_variant_uses_common_runtime_patches "$slug"; then
+    hmi_demo_app_modules
+  fi
+  hmi_rro_module_for_slug "$slug"
 }

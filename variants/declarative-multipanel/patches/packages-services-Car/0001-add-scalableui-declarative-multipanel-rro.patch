@@ -1,0 +1,1468 @@
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp
+new file mode 100644
+index 0000000000000000000000000000000000000000..4507e0ac45c99b8cd10aa41037298038f00d2ef3
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp
+@@ -0,0 +1,35 @@
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++android_app {
++    name: "StubCarLauncher",
++    srcs: ["src/**/*.java"],
++    resource_dirs: ["res"],
++    manifest: "AndroidManifest.xml",
++    certificate: "platform",
++    platform_apis: true,
++    privileged: true,
++    system_ext_specific: true,
++    overrides: [
++        "CarLauncher",
++        "Launcher2",
++        "Launcher3",
++        "Launcher3QuickStep",
++    ],
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..bdc9ebc3c342761363146e22bf334c480dac4203
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
+@@ -0,0 +1,127 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.carlauncher">
++
++    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
++
++    <application
++        android:label="@string/app_name"
++        android:theme="@style/Theme.StubCarLauncher"
++        android:supportsRtl="true">
++        <activity
++            android:name=".CarLauncher"
++            android:theme="@style/Theme.StubCarLauncher.Home"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:clearTaskOnLaunch="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.home">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN"/>
++                <category android:name="android.intent.category.HOME"/>
++                <category android:name="android.intent.category.SECONDARY_HOME"/>
++                <category android:name="android.intent.category.DEFAULT"/>
++                <category android:name="android.intent.category.LAUNCHER_APP"/>
++            </intent-filter>
++        </activity>
++
++        <activity
++            android:name=".ControlBarActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleInstance"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.controlbar">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++
++        <activity
++            android:name=".SettingsPanelActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleInstance"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.settingspanel">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++
++        <activity
++            android:name=".EmptySlotActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleInstance"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.emptyslot">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++
++        <activity
++            android:name=".CameraStubActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleInstance"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.camera">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++
++        <activity
++            android:name=".AppGridActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleTask"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:taskAffinity="com.android.car.carlauncher.appgrid">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <action android:name="com.android.car.carlauncher.ACTION_APP_GRID"/>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++    </application>
++</manifest>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..c740786b0930d67f61bd2c425ea652542beae852
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <color name="stub_background">#05070A</color>
++    <color name="stub_surface">#111820</color>
++    <color name="stub_surface_high">#1B2733</color>
++    <color name="stub_primary">#7DD3FC</color>
++    <color name="stub_on_surface">#E5EEF7</color>
++    <color name="stub_on_surface_variant">#A8B7C7</color>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..0872ca9633154aadf8b5f7c7b516513ac7334ab5
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="app_name">Stub Car Launcher</string>
++    <string name="home_title">ScalableUI Home Host</string>
++    <string name="home_message">Empty host. Panels are orchestrated by CarSystemUI ScalableUI.</string>
++    <string name="media_title">Media Placeholder</string>
++    <string name="media_message">Stub panel used by the declarative multipanel baseline.</string>
++    <string name="app_grid_title">Apps</string>
++    <string name="app_grid_assign_title">Choose app</string>
++    <string name="app_grid_assign_message">Target panel: %1$s</string>
++    <string name="settings_panel_title">Vehicle Controls</string>
++    <string name="settings_panel_message">Open Settings from Apps to show it in the fullscreen app panel.</string>
++    <string name="empty_slot_title">Customizable Slot</string>
++    <string name="empty_slot_message">Choose an installed app and ScalableUI will place it in this panel.</string>
++    <string name="empty_slot_button">Choose app</string>
++    <string name="camera_stub_title">Rear Camera</string>
++    <string name="camera_stub_message">Camera override placeholder. This panel is full-screen while reverse is active.</string>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..923bc02052ab233d2843c7cd867c4d1ddca770eb
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <style name="Theme.StubCarLauncher" parent="@android:style/Theme.Material.NoActionBar">
++        <item name="android:windowNoTitle">true</item>
++        <item name="android:windowActionBar">false</item>
++        <item name="android:windowFullscreen">false</item>
++        <item name="android:windowLightStatusBar">false</item>
++        <item name="android:windowLightNavigationBar">false</item>
++        <item name="android:colorAccent">@color/stub_primary</item>
++        <item name="android:fontFamily">sans</item>
++        <item name="android:windowBackground">@color/stub_background</item>
++    </style>
++
++    <style name="Theme.StubCarLauncher.Home" parent="@style/Theme.StubCarLauncher">
++        <item name="android:windowIsTranslucent">true</item>
++        <item name="android:windowBackground">@android:color/transparent</item>
++        <item name="android:colorBackgroundCacheHint">@null</item>
++        <item name="android:windowDisablePreview">true</item>
++    </style>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..232c309574e821a33360dbca2e9a5077a612f393
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java
+@@ -0,0 +1,148 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.content.ComponentName;
++import android.content.Intent;
++import android.content.pm.ActivityInfo;
++import android.content.pm.PackageManager;
++import android.content.pm.ResolveInfo;
++import android.graphics.Color;
++import android.os.Bundle;
++import android.view.Gravity;
++import android.view.View;
++import android.widget.LinearLayout;
++import android.widget.ScrollView;
++import android.widget.TextView;
++
++import java.util.Collections;
++import java.util.List;
++
++/** Minimal app grid kept under the original CarLauncher package for system bar compatibility. */
++public final class AppGridActivity extends Activity {
++    static final String EXTRA_TARGET_PANEL_ID =
++            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++
++    private static final int CONTENT_PADDING_DP = 32;
++    private static final int ROW_PADDING_DP = 18;
++    private String mTargetPanelId;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        mTargetPanelId = getIntent().getStringExtra(EXTRA_TARGET_PANEL_ID);
++        setContentView(createAppGrid());
++    }
++
++    private View createAppGrid() {
++        LinearLayout content = new LinearLayout(this);
++        content.setOrientation(LinearLayout.VERTICAL);
++        content.setPadding(dp(CONTENT_PADDING_DP), dp(CONTENT_PADDING_DP),
++                dp(CONTENT_PADDING_DP), dp(CONTENT_PADDING_DP));
++        content.setBackgroundColor(getColor(R.color.stub_background));
++
++        TextView title = new TextView(this);
++        title.setText(mTargetPanelId == null
++                ? getString(R.string.app_grid_title)
++                : getString(R.string.app_grid_assign_title));
++        title.setTextColor(getColor(R.color.stub_on_surface));
++        title.setTextSize(32);
++        title.setGravity(Gravity.CENTER_VERTICAL);
++        content.addView(title, new LinearLayout.LayoutParams(
++                LinearLayout.LayoutParams.MATCH_PARENT, dp(64)));
++
++        if (mTargetPanelId != null) {
++            TextView subtitle = new TextView(this);
++            subtitle.setText(getString(R.string.app_grid_assign_message, mTargetPanelId));
++            subtitle.setTextColor(getColor(R.color.stub_on_surface_variant));
++            subtitle.setTextSize(16);
++            content.addView(subtitle, new LinearLayout.LayoutParams(
++                    LinearLayout.LayoutParams.MATCH_PARENT, dp(48)));
++        }
++
++        List<ResolveInfo> apps = getLaunchableApps();
++        for (ResolveInfo app : apps) {
++            content.addView(createAppRow(app));
++        }
++
++        ScrollView scrollView = new ScrollView(this);
++        scrollView.setFillViewport(true);
++        scrollView.addView(content);
++        return scrollView;
++    }
++
++    private List<ResolveInfo> getLaunchableApps() {
++        Intent queryIntent = new Intent(Intent.ACTION_MAIN);
++        queryIntent.addCategory(Intent.CATEGORY_LAUNCHER);
++        PackageManager packageManager = getPackageManager();
++        List<ResolveInfo> apps = packageManager.queryIntentActivities(queryIntent, 0);
++        Collections.sort(apps, new ResolveInfo.DisplayNameComparator(packageManager));
++        return apps;
++    }
++
++    private View createAppRow(ResolveInfo app) {
++        PackageManager packageManager = getPackageManager();
++        ActivityInfo activityInfo = app.activityInfo;
++        String label = String.valueOf(app.loadLabel(packageManager));
++        String component = activityInfo.packageName + "/" + activityInfo.name;
++
++        LinearLayout row = new LinearLayout(this);
++        row.setOrientation(LinearLayout.VERTICAL);
++        row.setGravity(Gravity.CENTER_VERTICAL);
++        row.setPadding(dp(ROW_PADDING_DP), dp(12), dp(ROW_PADDING_DP), dp(12));
++        row.setBackgroundColor(getColor(R.color.stub_surface));
++
++        TextView title = new TextView(this);
++        title.setText(label);
++        title.setTextColor(getColor(R.color.stub_on_surface));
++        title.setTextSize(22);
++        row.addView(title);
++
++        TextView subtitle = new TextView(this);
++        subtitle.setText(component);
++        subtitle.setTextColor(getColor(R.color.stub_on_surface_variant));
++        subtitle.setTextSize(13);
++        row.addView(subtitle);
++
++        row.setOnClickListener(v -> launchApp(activityInfo));
++
++        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
++                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
++        params.setMargins(0, dp(10), 0, 0);
++        row.setLayoutParams(params);
++        return row;
++    }
++
++    private void launchApp(ActivityInfo activityInfo) {
++        ComponentName componentName = new ComponentName(activityInfo.packageName, activityInfo.name);
++        Intent launchIntent = Intent.makeMainActivity(componentName);
++        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
++                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
++                | Intent.FLAG_ACTIVITY_CLEAR_TOP
++                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
++        if (mTargetPanelId != null) {
++            launchIntent.putExtra(EXTRA_TARGET_PANEL_ID, mTargetPanelId);
++        }
++        startActivity(launchIntent);
++        finishAndRemoveTask();
++    }
++
++    private int dp(int value) {
++        return Math.round(value * getResources().getDisplayMetrics().density);
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2ea097dd90c6a5ae0808a783af4f7da87773095
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.graphics.Color;
++import android.graphics.drawable.ColorDrawable;
++import android.os.Bundle;
++import android.view.View;
++
++/** Empty HOME host used so ScalableUI owns the visible HMI surface. */
++public final class CarLauncher extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
++        View emptyView = new View(this);
++        emptyView.setBackgroundColor(Color.TRANSPARENT);
++        setContentView(emptyView);
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..8b7471d93b29139d937d066283a0b2e1de9314df
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java
+@@ -0,0 +1,32 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.os.Bundle;
++
++/** Lightweight replacement for the real launcher control bar panel. */
++public final class ControlBarActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(StubViews.createMessageView(
++                this,
++                getString(R.string.media_title),
++                getString(R.string.media_message)));
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..4bf962a2c8f5cc3bd344cd1f7bb87b20b05f625d
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java
+@@ -0,0 +1,32 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.os.Bundle;
++
++/** Static right-bottom panel used to avoid capturing the real Settings app route. */
++public final class SettingsPanelActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(StubViews.createMessageView(
++                this,
++                getString(R.string.settings_panel_title),
++                getString(R.string.settings_panel_message)));
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..03f078676ccb8279393eaed651db6ef6e15f9666
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java
+@@ -0,0 +1,90 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.content.Context;
++import android.graphics.drawable.GradientDrawable;
++import android.view.Gravity;
++import android.view.View;
++import android.widget.Button;
++import android.widget.LinearLayout;
++import android.widget.TextView;
++
++final class StubViews {
++    private StubViews() {}
++
++    static View createMessageView(Context context, String title, String message) {
++        return createMessageView(context, title, message, null, null);
++    }
++
++    static View createMessageView(Context context, String title, String message,
++            String buttonText, Runnable buttonAction) {
++        LinearLayout root = new LinearLayout(context);
++        root.setGravity(Gravity.CENTER);
++        root.setPadding(dp(context, 32), dp(context, 32), dp(context, 32), dp(context, 32));
++        root.setBackgroundColor(context.getColor(R.color.stub_background));
++
++        LinearLayout card = new LinearLayout(context);
++        card.setOrientation(LinearLayout.VERTICAL);
++        card.setGravity(Gravity.CENTER);
++        card.setPadding(dp(context, 32), dp(context, 28), dp(context, 32), dp(context, 28));
++        card.setBackground(createRoundedSurface(context));
++
++        TextView titleView = new TextView(context);
++        titleView.setText(title);
++        titleView.setTextColor(context.getColor(R.color.stub_on_surface));
++        titleView.setTextSize(26);
++        titleView.setGravity(Gravity.CENTER);
++        card.addView(titleView);
++
++        TextView messageView = new TextView(context);
++        messageView.setText(message);
++        messageView.setTextColor(context.getColor(R.color.stub_on_surface_variant));
++        messageView.setTextSize(15);
++        messageView.setGravity(Gravity.CENTER);
++        LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
++                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
++        messageParams.setMargins(0, dp(context, 12), 0, 0);
++        card.addView(messageView, messageParams);
++
++        if (buttonText != null && buttonAction != null) {
++            Button button = new Button(context);
++            button.setText(buttonText);
++            button.setAllCaps(false);
++            button.setOnClickListener(v -> buttonAction.run());
++            LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
++                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
++            buttonParams.setMargins(0, dp(context, 20), 0, 0);
++            card.addView(button, buttonParams);
++        }
++
++        root.addView(card, new LinearLayout.LayoutParams(
++                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
++        return root;
++    }
++
++    private static GradientDrawable createRoundedSurface(Context context) {
++        GradientDrawable drawable = new GradientDrawable();
++        drawable.setColor(context.getColor(R.color.stub_surface_high));
++        drawable.setCornerRadius(dp(context, 24));
++        return drawable;
++    }
++
++    private static int dp(Context context, int value) {
++        return Math.round(value * context.getResources().getDisplayMetrics().density);
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk b/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk
+new file mode 100644
+index 0000000000000000000000000000000000000000..1155f56f67d5013a0eb9fbd7aa0b369a6ff2c966
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk
+@@ -0,0 +1,20 @@
++#
++# Copyright (C) 2026 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++PRODUCT_PACKAGES += \
++    CarServiceScalableUiDeclarativeMultipanelRRO \
++    CarFrameworkScalableUiDeclarativeMultipanelRRO \
++    CarSystemUIScalableUiDeclarativeMultipanelRRO \
++    StubCarLauncher
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp
+new file mode 100644
+index 0000000000000000000000000000000000000000..37a16af2970fe4c7c4e1a1030e4ceb995f82df1d
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp
+@@ -0,0 +1,26 @@
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++runtime_resource_overlay {
++    name: "CarFrameworkScalableUiDeclarativeMultipanelRRO",
++    resource_dirs: ["res"],
++    certificate: "platform",
++    manifest: "AndroidManifest.xml",
++    system_ext_specific: true,
++}
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..f7396ac4ced7731cfc8e9bdd556206217b30485a
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="android.car.config.rro.scalableui.declarative.multipanel">
++    <application android:hasCode="false" />
++    <overlay
++        android:targetPackage="android"
++        android:isStatic="true"
++        android:priority="20"/>
++</manifest>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..07b3c26bfbb415d9d2f8abb5d4964226f79de9c4
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<resources>
++    <bool name="config_remoteInsetsControllerControlsSystemBars">true</bool>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp
+new file mode 100644
+index 0000000000000000000000000000000000000000..f9d6c532163d8da7e48683c26bd08fcd5a6f7fda
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp
+@@ -0,0 +1,31 @@
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++android_app {
++    name: "CarSystemUIScalableUiDeclarativeMultipanelRRO",
++    resource_dirs: ["res"],
++    certificate: "platform",
++    sdk_version: "current",
++    manifest: "AndroidManifest.xml",
++    system_ext_specific: true,
++    aaptflags: [
++        "--no-resource-deduping",
++        "--no-resource-removal",
++    ],
++}
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..c619cb71305d0799a67c6838c14d424b70787761
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+@@ -0,0 +1,26 @@
++<!--
++  ~ Copyright (C) 2026 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License.
++  -->
++
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.systemui.rro.scalableui.declarative.multipanel">
++    <application android:hasCode="false" />
++    <overlay
++        android:targetPackage="com.android.systemui"
++        android:isStatic="true"
++        android:resourcesMap="@xml/overlays"
++        android:priority="100"
++    />
++</manifest>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..793fab8b2cd6dbfede5cf955c5ac97b40534cffa
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <bool name="config_enableScalableUI" translatable="false">true</bool>
++    <bool name="config_enableClearBackStack" translatable="false">false</bool>
++    <bool name="config_enableSafeAreaAndToolbarPerDisplay" translatable="false">false</bool>
++
++    <array name="window_states">
++        <item>@xml/top_bar_panel</item>
++        <item>@xml/bottom_bar_panel</item>
++        <item>@xml/hvac_panel</item>
++        <item>@xml/nav_panel</item>
++        <item>@xml/media_panel</item>
++        <item>@xml/user_slot_panel</item>
++        <item>@xml/empty_slot_hint_panel</item>
++        <item>@xml/camera_priority_panel</item>
++        <item>@xml/edit_overlay_panel</item>
++        <item>@xml/panel_app_grid</item>
++        <item>@xml/app_panel</item>
++    </array>
++
++    <string-array name="config_default_activities" translatable="false">
++        <item>nav_panel;com.android.car.mapsplaceholder/.MapsPlaceholderActivity</item>
++        <item>media_panel;com.android.car.carlauncher/.ControlBarActivity</item>
++        <item>user_slot_panel;com.android.car.carlauncher/.EmptySlotActivity</item>
++        <item>camera_priority_panel;com.android.car.carlauncher/.CameraStubActivity</item>
++        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
++    </string-array>
++
++    <string name="system_bar_app_drawer_intent" translatable="false">intent:#Intent;action=com.android.car.carlauncher.ACTION_APP_GRID;package=com.android.car.carlauncher;launchFlags=0x24000000;end</string>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..ee614516378f695f04b7b70e8c3f4220baded21d
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <dimen name="panel_corner_radius">22dp</dimen>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..a4b782d5a8fdf93edd844051fb00492acdc39e60
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="media_panel_role" translatable="false">com.android.car.carlauncher/.ControlBarActivity</string>
++    <string name="nav_panel_role" translatable="false">com.android.car.mapsplaceholder/.MapsPlaceholderActivity</string>
++    <string name="user_slot_panel_role" translatable="false">com.android.car.carlauncher/.EmptySlotActivity</string>
++    <string name="camera_panel_role" translatable="false">com.android.car.carlauncher/.CameraStubActivity</string>
++    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
++    <string name="config_appGridComponentName" translatable="false">@string/appgrid_componentName</string>
++    <string name="default_panel_role" translatable="false">DEFAULT</string>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..710b950149c0f84e055cccd88fe4825d2b9e1320
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
+@@ -0,0 +1,25 @@
++<Panel id="app_panel" defaultVariant="@id/closed" role="@string/default_panel_role" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="30"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="2%" top="5%" right="98%" bottom="95%"/>
++        <Focus onTransition="true"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="30"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="100%" top="5%" right="158%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/opened" duration="450" interpolator="@android:anim/overshoot_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/closed" duration="220" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="enter_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="exit_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed" duration="300" interpolator="@android:anim/accelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..21f8565a2104cafc5083d8ff29e06255895b7bda
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
+@@ -0,0 +1,51 @@
++<Panel id="media_panel" defaultVariant="@id/workspace_default" role="@string/media_panel_role" displayId="0">
++    <Variant id="@+id/workspace_default">
++        <Layer layer="5"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="60%" top="5%" right="98%" bottom="47%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/narrow">
++        <Layer layer="5"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="70%" top="5%" right="98%" bottom="47%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/swapped">
++        <Layer layer="5"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="2%" top="5%" right="58%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/page_2">
++        <Layer layer="5"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="50%" top="5%" right="98%" bottom="47%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="5"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="100%" top="5%" right="138%" bottom="47%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_1" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/narrow" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_balanced" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="swap_panel_position_nav_media" toVariant="@id/swapped" duration="240" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/workspace_default" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..9d2770b6426513f55ad112f7dbb46b145f5e277a
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<overlay>
++    <item target="bool/config_enableScalableUI" value="@bool/config_enableScalableUI"/>
++    <item target="bool/config_enableClearBackStack" value="@bool/config_enableClearBackStack"/>
++    <item target="bool/config_enableSafeAreaAndToolbarPerDisplay" value="@bool/config_enableSafeAreaAndToolbarPerDisplay"/>
++    <item target="array/window_states" value="@array/window_states"/>
++    <item target="array/config_default_activities" value="@array/config_default_activities"/>
++    <item target="string/config_appGridComponentName" value="@string/config_appGridComponentName"/>
++    <item target="string/system_bar_app_drawer_intent" value="@string/system_bar_app_drawer_intent"/>
++</overlay>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..3369f3a9138932c1a3c905e616ab0eeeb59725e4
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
+@@ -0,0 +1,25 @@
++<Panel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="20"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="8%" top="18%" right="92%" bottom="92%"/>
++        <Focus onTransition="true"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="20"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="8%" top="100%" right="92%" bottom="174%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/opened" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed" duration="200" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/closed" duration="200" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="enter_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..036cd72402360a072c7a19386259374fe3d80742
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java
+@@ -0,0 +1,31 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.os.Bundle;
++
++/** Camera placeholder used to validate ScalableUI camera override orchestration. */
++public final class CameraStubActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(StubViews.createMessageView(this,
++                getString(R.string.camera_stub_title),
++                getString(R.string.camera_stub_message)));
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..2bd6bedac705d1d7574bf573310114e345b23240
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java
+@@ -0,0 +1,44 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++
++/** Empty customizable workspace slot. */
++public final class EmptySlotActivity extends Activity {
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        View view = StubViews.createMessageView(this,
++                getString(R.string.empty_slot_title),
++                getString(R.string.empty_slot_message),
++                getString(R.string.empty_slot_button),
++                this::openPicker);
++        setContentView(view);
++    }
++
++    private void openPicker() {
++        Intent intent = new Intent("com.android.car.carlauncher.ACTION_APP_GRID");
++        intent.setPackage(getPackageName());
++        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++        intent.putExtra(AppGridActivity.EXTRA_TARGET_PANEL_ID, "user_slot_panel");
++        startActivity(intent);
++    }
++}
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp
+new file mode 100644
+index 0000000000000000000000000000000000000000..28c385bc57dab6ec3a637fc3bb4aaba3eb6f8d84
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp
+@@ -0,0 +1,26 @@
++//
++// Copyright (C) 2026 The Android Open Source Project
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//      http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++runtime_resource_overlay {
++    name: "CarServiceScalableUiDeclarativeMultipanelRRO",
++    resource_dirs: ["res"],
++    manifest: "AndroidManifest.xml",
++    sdk_version: "current",
++    product_specific: true,
++}
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..da8fc01f89e3a04042753d01639def82fab2cdee
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++          package="com.android.car.resources.scalableui.declarative.multipanel">
++    <application android:hasCode="false"/>
++    <overlay
++        android:targetPackage="com.android.car.updatable"
++        android:targetName="CarServiceCustomization"
++        android:resourcesMap="@xml/overlays"
++        android:isStatic="true"
++        android:priority="20"/>
++</manifest>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..75129124ba94e517f6a97fa0815b1ee4d7e7ecc9
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<resources>
++    <!-- Disable the demo KitchenSink user notice so the HMI workspace is the first visible UI. -->
++    <string name="config_userNoticeUiService" translatable="false"></string>
++</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..3a7158e669e548db22b4960311f81359bcd3fbc2
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2026 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++-->
++<overlay>
++    <item target="string/config_userNoticeUiService" value="@string/config_userNoticeUiService"/>
++</overlay>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..58124d97fdd809ba0b704f29bf88a96b6c318488
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<TextView xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:gravity="center"
++    android:padding="20dp"
++    android:text="Layout edit mode"
++    android:textColor="#FFFFFF"
++    android:textSize="24sp"
++    android:background="#AA1E293B"
++    android:clickable="false"
++    android:focusable="false" />
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..ca97cda5c664217b09b81db7e7419243bf80bb92
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<TextView xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:gravity="center"
++    android:padding="16dp"
++    android:text="Empty user slot: choose an app"
++    android:textColor="#EAF1FF"
++    android:textSize="18sp"
++    android:background="#33000000"
++    android:clickable="false"
++    android:focusable="false" />
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..d9f8299bbf332ab5e2880fbcd5014c078fcdd4e7
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:importantForAccessibility="no"
++    android:clickable="false"
++    android:focusable="false" />
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..38ac37b852062d699a50e08fac7c37799c72afd8
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml
+@@ -0,0 +1,8 @@
++<Panel id="bottom_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++    <Variant id="@+id/workspace_default">
++        <Layer layer="1"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Bounds left="0%" top="95%" right="100%" bottom="100%"/>
++    </Variant>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..e23e403961f17a4c1d6f8c7e52b97d7de4fab9c4
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml
+@@ -0,0 +1,23 @@
++<Panel id="camera_priority_panel" defaultVariant="@id/hidden" role="@string/camera_panel_role" displayId="0">
++    <Variant id="@+id/camera_fullscreen">
++        <Layer layer="50"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="50"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="100%" right="100%" bottom="200%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="enter_camera_override" toVariant="@id/camera_fullscreen" duration="140" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="exit_camera_override" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..04331672a0de64bf364c3771693469949bbd391f
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml
+@@ -0,0 +1,22 @@
++<Panel id="edit_overlay_panel" defaultVariant="@id/hidden" role="@layout/scalableui_edit_overlay" displayId="0">
++    <Variant id="@+id/editing">
++        <Layer layer="40"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="22%" top="24%" right="78%" bottom="76%"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="40"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="22%" top="100%" right="78%" bottom="152%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="enter_layout_edit" toVariant="@id/editing" duration="200" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="exit_layout_edit" toVariant="@id/hidden" duration="180" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="enter_camera_override" toVariant="@id/hidden" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..c7d9d5b5e7ea550856f0829ebee2ea0ff65399f6
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml
+@@ -0,0 +1,22 @@
++<Panel id="empty_slot_hint_panel" defaultVariant="@id/hidden" role="@layout/scalableui_empty_slot_hint" displayId="0">
++    <Variant id="@+id/visible">
++        <Layer layer="7"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="0.88"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="68%" top="76%" right="90%" bottom="88%"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="7"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="68%" top="96%" right="90%" bottom="108%"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/hidden" duration="180" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="180" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="enter_camera_override" toVariant="@id/hidden" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="remove_panel_app_user_slot" toVariant="@id/visible" duration="180" interpolator="@android:anim/decelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..d5964e3649c6d7280507ec217e84ea31753bf17e
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml
+@@ -0,0 +1,8 @@
++<Panel id="hvac_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++    <Variant id="@+id/workspace_default">
++        <Layer layer="1"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Bounds left="0%" top="95%" right="100%" bottom="100%"/>
++    </Variant>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..aa20c25945c4cb60af64f3d980663513a2633a49
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
+@@ -0,0 +1,51 @@
++<Panel id="nav_panel" defaultVariant="@id/workspace_default" role="@string/nav_panel_role" displayId="0">
++    <Variant id="@+id/workspace_default">
++        <Layer layer="4"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="2%" top="5%" right="58%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/wide">
++        <Layer layer="4"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="2%" top="5%" right="68%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/swapped">
++        <Layer layer="4"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="60%" top="5%" right="98%" bottom="47%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/page_2">
++        <Layer layer="4"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="2%" top="5%" right="48%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="4"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="-58%" top="5%" right="-2%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_1" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/wide" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_balanced" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="swap_panel_position_nav_media" toVariant="@id/swapped" duration="240" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/workspace_default" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++    </Transitions>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..e3adeba0afa5cfccb23abbfec6499ac7cc6b9762
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml
+@@ -0,0 +1,8 @@
++<Panel id="top_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++    <Variant id="@+id/workspace_default">
++        <Layer layer="1"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="5%"/>
++    </Variant>
++</Panel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..da93b0b23424a4bdb6f4e59750dc83702516850d
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
+@@ -0,0 +1,42 @@
++<Panel id="user_slot_panel" defaultVariant="@id/empty" role="@string/user_slot_panel_role" displayId="0">
++    <Variant id="@+id/empty">
++        <Layer layer="6"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="60%" top="53%" right="98%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/narrow">
++        <Layer layer="6"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="70%" top="53%" right="98%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/page_2">
++        <Layer layer="6"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="50%" top="53%" right="98%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/hidden">
++        <Layer layer="6"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="@dimen/panel_corner_radius"/>
++        <Bounds left="100%" top="53%" right="138%" bottom="95%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_1" toVariant="@id/empty" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/narrow" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="resize_panel_balanced" toVariant="@id/empty" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/empty" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
++    </Transitions>
++</Panel>
