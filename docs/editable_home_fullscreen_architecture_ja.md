@@ -1,5 +1,7 @@
 # Editable Home Fullscreen / Architecture 整理
 
+> Source verification: この文書は `editable-home` PoC の設計メモです。AOSP 標準機能と PoC custom / historical patch を分けて読んでください。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 目的
 
 このメモは 2 つを整理するためのものです。
@@ -35,7 +37,7 @@
 
 1. All apps 側は「この launch は panel 固定ではなく fullscreen 優先」として起動する
 2. SystemUI は launch 先 panel を `app_panel` に決める
-3. もし同じ `Map` task が panel 内で動いていたら、新規起動せず既存 task を `app_panel` に reparent する
+3. もし同じ `Map` task が panel 内で動いていたら、新規起動を避け、既存 task の再利用または task migration を検討する
 4. その結果、`Map` は fullscreen 表示になる
 5. ユーザーが Home に戻ったら、`HomeActivity` が保存済み assignment に従って再度 panel 群を復元する
 
@@ -44,7 +46,7 @@
 - 任意 app に対して比較的一貫して動かしやすい
 - heavy app を無駄に複製しない
 - 「同じ app は 1 task」という現在の `editable-home` ポリシーと整合する
-- ScalableUI の panel routing と task reparent をそのまま使える
+- ScalableUI の panel routing と AOSP task migration API を組み合わせる設計にできる
 
 ### この方式の弱点
 
@@ -111,6 +113,8 @@ SystemUI では次の順で panel を決めます。
 
 同一 component の既存 task がすでに panel 上にあれば、新規起動せずそれを target panel に移します。
 
+検証注記: AOSP の `WindowContainerTransaction.reparent(...)` / `reparentTasks(...)` は存在します。ただし現在の live ScalableUI source だけでは、既存 task を Panel A から `app_panel` へ直接 reparent する標準実装は未確認です。この節は PoC custom routing / custom policy として扱います。
+
 関係箇所:
 
 - [TaskPanelInfoRepository.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java)
@@ -133,7 +137,7 @@ flowchart TD
     B --> C[Intent with LAUNCH_IN_APP_PANEL=true]
     C --> D[PanelAutoTaskStackTransitionHandlerDelegate]
     D --> E{existing task for same component?}
-    E -- yes --> F[reparent existing task to app_panel]
+    E -- yes --> F[reuse or migrate existing task to app_panel]
     E -- no --> G[start new task into app_panel]
     F --> H[app_panel opened fullscreen]
     G --> H
@@ -154,7 +158,7 @@ flowchart TD
 - launch root panel の定義
 - event / transition による panel の open/close
 - task をどの panel に入れるかの routing 補助
-- task の reparent による panel 間移動
+- task の panel placement 方針を SystemUI routing に寄せること
 
 ### ScalableUI だけでは足りないこと
 
@@ -260,13 +264,14 @@ flowchart LR
 - `window_states`
 - launch root `app_panel`
 - `panel_app_grid`
-- task reparent / routing の土台
+- task placement / routing の土台
 
 ### ScalableUI を拡張して使っているもの
 
 - runtime geometry 更新
 - `Variant` の runtime override
 - Home 専用 split controller
+- 既存 task relocation を行う場合の reparent / migration policy
 
 ### ScalableUI の外で実装しているもの
 

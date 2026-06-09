@@ -1,5 +1,7 @@
 # root PoC 修正評価メモ 2026-06-01
 
+> Source verification: この文書は 2026-06-01 時点の runtime 評価記録です。AOSP source 上の責務分担と未確認事項は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 対象
 
 - Product: `sdk_car_scalableui_x86_64`
@@ -147,8 +149,10 @@ ScalableUI だけでできること:
 - fixed panel の構成
 - fullscreen launch-root panel の用意
 - event による panel transition
-- panel 内 task の reparent
+- panel 内 task placement の土台
 - grip event をきっかけにした bounds 更新
+
+注記: AOSP の `WindowContainerTransaction.reparent(...)` は存在しますが、現在の live ScalableUI source だけでは Panel 間既存 task reparent を標準機能として確認していません。reparent は PoC custom / custom policy として再検証してください。
 
 custom 実装が必要だったこと:
 

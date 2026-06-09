@@ -1,5 +1,7 @@
 # ScalableUI Phase 評価メモ 2026-05-31
 
+> Source verification: この文書は 2026-05-31 時点の runtime 評価記録です。現在のAOSP source照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 注記:
 
 - この時点では `Phase 2` の root PoC は「部分合格」だった

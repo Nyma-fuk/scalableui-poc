@@ -1,5 +1,7 @@
 # root PoC runtime-owner 整理と評価 2026-06-07
 
+> Source verification: この文書は root PoC の runtime owner 評価記録です。AOSP source 上の正確な ScalableUI / WM / ATM 責務分担は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 対象
 
 - Product: `sdk_car_scalableui_x86_64`

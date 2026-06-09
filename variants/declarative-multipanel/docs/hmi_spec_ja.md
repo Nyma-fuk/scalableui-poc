@@ -1,10 +1,23 @@
 # declarative-multipanel HMI 仕様
 
+> Source verification: この baseline は AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](../../../docs/aosp_source_verification_ja.md) を参照してください。
+
 ## 位置づけ
 
 `declarative-multipanel` は、`aaos-scalable-ui-specs` の初期 scope を AAOS15 LTS3 で検証するための baseline です。
 
 目的は、まず ScalableUI の本来の責務である「panel 宣言、variant、transition、task placement」を AAOS 上で成立させ、どこから先が custom runtime 実装になるかを切り分けることです。
+
+実装上の基本モデル:
+
+```text
+Panel
+  -> TaskPanel
+  -> RootTaskStack / Task
+  -> Activity
+```
+
+`RemoteCarTaskView` / `TaskView` は AAOS に存在しますが、この baseline の ScalableUI `TaskPanel` 表示経路の実体ではありません。
 
 ## 採用方針
 
@@ -282,6 +295,18 @@ com.android.car.carlauncher/.AppGridActivity
 
 この関係により、Launcher は HMI の表示主体ではなくなります。表示主体は `CarSystemUI` の ScalableUI runtime と WindowManager / ActivityTaskManager であり、各アプリは panel bounds に配置された独立 Activity task として表示されます。
 
+Launcher の責務:
+
+- HOME host として空背景を提供する
+- `AppGridActivity` から target panel ID 付きで app launch する
+- placeholder Activity を提供する
+
+Panel 管理の主体:
+
+- `CarSystemUI` の ScalableUI runtime
+- `PanelConfigReader` / `StateManager` / `PanelTransitionCoordinator`
+- WindowManager Shell / ActivityTaskManager の task placement
+
 ## ScalableUI だけで実現している範囲
 
 - panel の宣言
@@ -293,6 +318,8 @@ com.android.car.carlauncher/.AppGridActivity
 - user slot への target panel routing
 - generic app launch 用 `app_panel`
 - camera / layout edit の overlay 的 transition
+
+注記: AOSP には `WindowContainerTransaction.reparent(...)` が存在しますが、この baseline では任意の既存 task を Panel A から Panel B へ移す機能は対象外です。runtime panel 追加 / delete / move / persistence は custom 実装範囲です。
 
 ## custom 実装が必要な範囲
 

@@ -1,5 +1,7 @@
 # ScalableUI PoC HMI 仕様メモ
 
+> Source verification: この文書は root PoC の仕様メモです。AOSP 実装と照合した境界は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。`TaskPanel` は Activity を直接保持せず、root task stack / task を介して Activity を表示します。
+
 ## 目的
 
 `sdk_car_scalableui_x86_64` 上で、ScalableUI の panel 制御だけで成立する固定 HMI を作る。
@@ -150,7 +152,7 @@ ScalableUI 側では [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-
 加えて [AppItemViewHolder.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/recyclerview/AppItemViewHolder.java) で起動直後に `AppGridActivity` を閉じることで、overlay が前面に残って「何も表示されない」ように見える状態を避けている。
 
 ただしこの方式は「fullscreen を優先させるヒント」であり、別 fullscreen task の増殖を保証するものではない。
-高負荷 app の重複起動を避けるため、現在は `FLAG_ACTIVITY_MULTIPLE_TASK` を使わず、既存 task の再利用と ScalableUI 側の reparent を優先する。
+高負荷 app の重複起動を避けるため、現在は `FLAG_ACTIVITY_MULTIPLE_TASK` を使わず、既存 task / Activity の再利用を優先する。既存 task relocation / reparent を行う場合は PoC custom policy として live source の `WindowContainerTransaction` 適用箇所を再確認する。
 
 ## 主な修正ファイル
 
