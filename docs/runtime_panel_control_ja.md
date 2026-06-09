@@ -1,5 +1,7 @@
 # Runtime Panel Control
 
+> Source verification: この文書は `widget-workspace` の historical PoC メモです。AAOS/AOSP live source で確認できる標準機能と、過去 patch / PoC custom 実装を分けて読んでください。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 目的
 
 `widget-workspace` は、ユーザーが実行時に「どのアプリを、どの Panel に表示するか」を選べる HMI として更新しています。
@@ -26,12 +28,19 @@ scalableui-hmi://panel-launch?target_panel=<panel_id>
 ```
 
 SystemUI 側の `PanelAutoTaskStackTransitionHandlerDelegate` は extra を優先し、extra が `TaskInfo.baseIntent` で落ちる場合は data URI を fallback として使います。
-該当する `TaskPanel` が決まったら、`WindowContainerToken` ベースで起動タスクを reparent します。
+該当する `TaskPanel` が決まったら、その panel を対象にした `_System_TaskOpenEvent` / launch-root / task placement 方針へ渡します。
 これにより、同じアプリでもユーザーが選んだ Panel に表示できます。
 
 All Apps から起動されたアプリは `com.android.car.carlauncher.extra.LAUNCH_IN_APP_PANEL=true` を持つため、固定 Panel ではなく fullscreen の `app_panel` を優先します。
 この経路でも `FLAG_ACTIVITY_MULTIPLE_TASK` は付けず、`FLAG_ACTIVITY_CLEAR_TOP` と `FLAG_ACTIVITY_SINGLE_TOP` で既存 task / Activity の再利用を優先します。
-同じ component の task がすでに ScalableUI panel 上にある場合は、新規 instance を増やすのではなく、既存 task を選択された Panel へ reparent する方針です。
+同じ component の task がすでに ScalableUI panel 上にある場合は、新規 instance を増やさず既存 task を活用する方針です。
+
+検証注記:
+
+- AOSP の `WindowContainerTransaction` には `reparent()` / `reparentTasks()` が存在する
+- この文書の `WindowContainerToken` ベース reparent は `widget-workspace` 実験時の PoC / patch 方針である
+- 現在の live ScalableUI source だけでは、Panel 間既存 task reparent を標準機能として確認できない
+- 「Panel にアプリを表示」は実装上 `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` である
 
 ## Launcher が背後で動く理由
 

@@ -1,8 +1,12 @@
 # ScalableUI PoC Architecture
 
+> Source verification: この文書は Dynamic Workspace PoC の構成メモです。AAOS/AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を正とします。現在の live `declarative-multipanel` baseline には、任意数 runtime panel を生成する `WorkspaceRuntimeLayoutController` 系の実装は含まれていません。
+
 この文書は、今回の ScalableUI PoC が AAOS のどこに何を追加し、どこまでを ScalableUI 標準で扱い、どこからを custom 実装しているかを整理するための全体図です。
 
 ## 1. 全体像
+
+この図は `dynamic-workspace` patch 適用後の概念図です。clean baseline の `declarative-multipanel` では、中心は RRO XML と `CarSystemUI` の ScalableUI runtime routing であり、Dynamic Workspace runtime は未適用です。
 
 ```text
 AAOS product
@@ -71,6 +75,12 @@ CarSystemUIScalableUiHmiDynamicWorkspaceRRO
 - user panel は SystemUI runtime が `StateManager.addState(...)` で作る
 - RRO は ScalableUI を有効化し、Home と fullscreen fallback の最低限だけを定義する
 
+検証結果:
+
+- `StateManager.addState(...)` は AOSP source に存在する
+- ただし任意数 panel 生成、geometry、永続化、picker は ScalableUI 標準初期化経路ではない
+- `PanelConfigReader` の標準初期化は `R.array.window_states` に列挙された XML を読む
+
 ## 4. Demo app layer
 
 `packages/services/Car/car_product/scalableui_hmi_demo_apps` に HMI 用 demo app 群がある。
@@ -99,6 +109,8 @@ ScalableUiHmiHomeDemoApp
 ## 5. SystemUI layer
 
 Dynamic Workspace runtime は `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/workspace` にある。
+
+注記: この path は `dynamic-workspace` patch 適用後の想定です。現在の live `declarative-multipanel` tree では確認できないため、AOSP 標準機能ではなく PoC custom 実装として扱います。
 
 ```text
 WorkspaceRuntimeLayoutController
@@ -133,7 +145,13 @@ Intent data URI:
   scalableui-hmi://panel-launch?target_panel=<panelId>
 ```
 
-`PanelAutoTaskStackTransitionHandlerDelegate` はこの情報を見て、対象 task を target panel へ route / reparent する。
+`PanelAutoTaskStackTransitionHandlerDelegate` はこの情報を見て、対象 task の target panel routing 方針を決める。既存 task の reparent は historical patch / PoC custom policy として扱う。
+
+検証結果:
+
+- `TARGET_PANEL_ID` / data URI を読む処理は live `PanelAutoTaskStackTransitionHandlerDelegate` に存在する
+- AOSP の `WindowContainerTransaction.reparent(...)` は存在する
+- ただし live ScalableUI source だけでは、既存 task を Panel A から Panel B へ直接 reparent する標準実装は未確認
 
 All Apps からの通常起動は fullscreen `app_panel` を優先する。panel header / picker 経由の assignment は target panel を明示する。
 
@@ -241,6 +259,12 @@ PoC custom:
 - app picker
 - drag preview optimization
 - All Apps と panel assignment の routing 分離
+
+追加の実装上の境界:
+
+- `TaskPanel` は Activity を直接保持せず、root task stack / task を介して Activity を表示する
+- `RemoteCarTaskView` / `TaskView` は ScalableUI `TaskPanel` の実体ではない
+- `Workspace` は AOSP の `TaskDisplayArea` ではなく、PoC HMI 側の概念である
 
 ## 11. 移植時に壊れやすい場所
 

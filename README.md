@@ -2,6 +2,8 @@
 
 この repository は、AAOS15 の ScalableUI を使った HMI PoC を別 checkout に再適用できるようにするための patch / docs / workflow 集です。
 
+重要: docs は設計メモと評価記録を含みます。ScalableUI / WindowManager / ActivityTaskManager の正は AAOS/AOSP ソースコードで確認してください。2026-06-09 時点の照合結果は `docs/aosp_source_verification_ja.md` にまとめています。
+
 現在は、いったん `declarative-multipanel` を再出発用 baseline として扱います。これは `sdk_car_x86_64.mk` を土台に、`aaos-scalable-ui-specs` の初期 workspace を ScalableUI の panel / variant / transition / task placement として確認する構成です。
 
 `dynamic-workspace` は、ユーザー操作で panel を追加・削除・移動・resize し、panel ごとに任意の app を割り当てる方向の大きな PoC として残しています。ただし、現在の開発方針では、まず `declarative-multipanel` で ScalableUI 標準の責務を確認してから、必要な custom 実装を段階的に足します。
@@ -11,13 +13,14 @@
 人が全体を理解する場合は、次の順で読むのが一番迷いません。
 
 1. `README.md`
-2. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
-3. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
-4. `docs/scalableui_window_manager_flow_ja.md`
-5. `docs/scalableui_poc_architecture_ja.md`
-6. `docs/dynamic_workspace_notes_ja.md`
-7. `docs/ai_implementation_guide_ja.md`
-8. `docs/hmi_variant_suite_ja.md`
+2. `docs/aosp_source_verification_ja.md`
+3. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
+4. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
+5. `docs/scalableui_window_manager_flow_ja.md`
+6. `docs/scalableui_poc_architecture_ja.md`
+7. `docs/dynamic_workspace_notes_ja.md`
+8. `docs/ai_implementation_guide_ja.md`
+9. `docs/hmi_variant_suite_ja.md`
 
 AI agent に実装を任せる場合は、最初に `AGENTS.md` と `docs/ai_implementation_guide_ja.md` を読ませてください。
 
@@ -36,6 +39,13 @@ AI agent に実装を任せる場合は、最初に `AGENTS.md` と `docs/ai_imp
 - AppGrid から選択した Calendar を `user_slot_panel` に表示できる
 - workspace page / resize / swap / layout edit / camera override event を評価できる
 - Windows host emulator で起動し、event dispatch 後も SystemUI PID が維持される
+
+実装上の重要な読み替え:
+
+- 「Panel にアプリを表示する」は、実装上は `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` である
+- `RemoteCarTaskView` / `TaskView` は AAOS に存在するが、ScalableUI `TaskPanel` の実体ではない
+- runtime panel 生成、任意 panel 移動、永続化、picker は PoC / OEM custom 領域である
+- `WindowContainerTransaction.reparent()` は AOSP に存在するが、現在の live ScalableUI source だけでは Panel 間 task reparent 標準機能とは判断しない
 
 直近の評価 artifact:
 
@@ -63,6 +73,8 @@ AI agent に実装を任せる場合は、最初に `AGENTS.md` と `docs/ai_imp
 - 画面幅を超える panel 群を viewport offset で横スクロールできる
 - drag 中は app task surface を逐次更新せず、操作中 grip preview を優先する
 - Windows host emulator で build image を起動し、2回連続 resize 操作後も SystemUI が落ちないことを確認済み
+
+注記: `dynamic-workspace` は historical / experimental PoC です。現在の live `declarative-multipanel` baseline には、任意数 runtime panel 生成を行う `WorkspaceRuntimeLayoutController` 系の実装は含まれていません。必要な runtime 実装は patch 適用後に AOSP tree で再検証してください。
 
 直近の評価 artifact:
 

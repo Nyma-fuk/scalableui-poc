@@ -1,5 +1,7 @@
 # Dynamic Workspace Notes
 
+> Source verification: この文書は `dynamic-workspace` の historical / experimental PoC メモです。現在の live `declarative-multipanel` baseline には Dynamic Workspace runtime は含まれていません。AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 `dynamic-workspace` は、固定スロットを前提にしない ScalableUI PoC です。
 
 ## 目標
@@ -18,6 +20,12 @@
 - 実際の panel 群は `WorkspaceRuntimeLayoutController` が runtime で `PanelState` を追加する
 - panel 本体は task panel、header / grip / toolbar / viewport handle は decor panel
 - workspace model は `Settings.Secure` に JSON で保存する
+
+実装分類:
+
+- `StateManager.addState(...)` は ScalableUI library に存在する
+- 任意数 panel の生成、geometry、永続化、picker、drag preview は ScalableUI 標準初期化ではなく PoC custom 実装である
+- `WorkspaceRuntimeLayoutController` / `WorkspacePanelStateController` は patch 適用後の実装として扱い、live source で再確認してから量産判断する
 
 ## 現在の動的モデル
 
@@ -40,6 +48,12 @@
   `WorkspaceRuntimeLayoutController` が `StateManager.addState(...)` を使って補っている
 - app を複数 panel にどう複製するか、同一 task をどう移動するかは product policy 次第
 - 現在の PoC は 1 panel = 1 foreground task を基本としている
+
+追加境界:
+
+- `Panel` は Activity そのものではなく、`TaskPanel` の場合は root task stack / task を介して Activity を表示する
+- `Workspace` は AOSP の `TaskDisplayArea` と同義ではない
+- `RemoteCarTaskView` / `TaskView` は ScalableUI `TaskPanel` の実体ではない
 
 ## 2026-06-09 評価メモ: emulator resource と grip resize
 

@@ -1,5 +1,7 @@
 # Widget Workspace Build Notes
 
+> Source verification: この文書は `widget-workspace` の historical build / runtime note です。token reparent や task move の記述は PoC patch の検証記録であり、現在の live ScalableUI 標準機能としては未確認です。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 目的
 
 `widget-workspace` は、ScalableUI の panel routing を使って、ユーザー操作で panel 内の app を入れ替えられることを検証する HMI variant です。
@@ -59,10 +61,16 @@ menu では表示先 Panel を選んでから、次の個別 APK component を e
 加えて、`TaskInfo.baseIntent` で extra が落ちる環境でも routing できるように、`scalableui-hmi://panel-launch?target_panel=<panel_id>` の data URI も付けます。
 
 SystemUI の `PanelAutoTaskStackTransitionHandlerDelegate` は extra を優先し、なければ data URI を読んで表示先 Panel を決めます。
-新規起動直後の task は `AutoTaskStackController` の `appTasksMap` にまだ存在しないことがあるため、`WindowContainerToken` ベースの reparent を追加し、transition request 内で直接ユーザー選択 Panel に移します。
+新規起動直後の task は `AutoTaskStackController` の `appTasksMap` にまだ存在しないことがあるため、この historical PoC では `WindowContainerToken` ベースの reparent 追加を検証しました。
 
 All Apps から起動された app は fullscreen `app_panel` を優先します。
 これにより、Panel Control 経由の「選択したPanelへ表示」と、All Apps 経由の「通常のfullscreen起動」を分離しています。
+
+現在の分類:
+
+- `TARGET_PANEL_ID` / target URI を読む routing は live `PanelAutoTaskStackTransitionHandlerDelegate` で確認できる
+- AOSP の `WindowContainerTransaction.reparent(...)` は存在する
+- `ReparentTaskToken` / Panel 間既存 task reparent は historical patch の検証項目であり、live source で再確認するまで標準機能として扱わない
 
 ## Task 再利用ポリシー
 
@@ -73,11 +81,11 @@ All Apps から起動された app は fullscreen `app_panel` を優先します
 
 - `PanelMenuActivity` と `PanelMenuButtonActivity` の起動 Intent から `FLAG_ACTIVITY_MULTIPLE_TASK` を外し、`FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP` にする
 - All Apps の `AppLaunchProvider` からも `FLAG_ACTIVITY_MULTIPLE_TASK` を外し、fullscreen `app_panel` への通常起動でも task / Activity 再利用を優先する
-- `TaskPanelInfoRepository` に既存 component task の検索を追加し、ScalableUI panel 上に同じ component の task があれば `PanelAutoTaskStackTransitionHandlerDelegate` が既存 task を選択 Panel に reparent する
+- `TaskPanelInfoRepository` に既存 component task の検索を追加し、ScalableUI panel 上に同じ component の task があれば `PanelAutoTaskStackTransitionHandlerDelegate` が既存 task の再利用 / relocation を試みる
 
 期待する挙動:
 
-- 初回起動時は新規 task を作成し、指定 Panel に reparent する
+- 初回起動時は新規 task を作成し、指定 Panel への placement を試みる
 - 同じ app を別 Panel に表示したい場合は、既存 task を新しい Panel へ移動する
 - 同じ task 内に同じ Activity instance を積み増さず、既存 top Activity へ戻す
 - 同じ重い app が複数 instance として残り続ける状態を避ける
@@ -166,7 +174,7 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=10 workdir/scalableui-poc/scripts/build_
 
 - `PanelMenuActivity` が `scalableui-hmi://panel-launch?target_panel=<panel_id>` を `Intent.setData()` で付与
 - SystemUI が extra fallback として data URI を読む
-- `Car-WindowManager-Shell` に `ReparentTaskToken` を追加し、`TransitionRequestInfo.getTriggerTask().token` で新規taskを直接reparent
+- `Car-WindowManager-Shell` に `ReparentTaskToken` を追加し、`TransitionRequestInfo.getTriggerTask().token` で新規taskを直接 reparent する historical patch を検証
 
 確認:
 

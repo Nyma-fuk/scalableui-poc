@@ -1,5 +1,7 @@
 # AAOS ScalableUI / WindowManager 表示フロー
 
+> Source verification: この文書は 2026-06-09 に AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 このドキュメントは、`aaos-scalable-ui-specs` と `declarative-multipanel` PoC を前提に、AAOS における ScalableUI、SystemUI、WindowManager、Launcher、各 panel、各アプリ Activity の関係を整理したものです。
 
 目的は、ScalableUI を「Launcher 内の widget 実装」ではなく、「SystemUI が WindowManager / ActivityTaskManager と連携して複数アプリ Activity を panel として orchestrate する仕組み」として理解することです。
@@ -72,7 +74,7 @@ CarSystemUI
   RRO から panel XML を読み、WindowManager / ActivityTaskManager に task 配置を依頼する。
 
 WindowManager / Shell
-  panel bounds に対応する task container / display area を管理する。
+  panel bounds に対応する root task stack / task surface を管理する。
 
 各アプリ
   Launcher の widget ではなく、独立した Activity task として panel に載る。
@@ -106,6 +108,164 @@ sequenceDiagram
     App->>Screen: 各 panel 内に描画
     Launcher->>Screen: 空の HOME 背景を提供
 ```
+
+## アプリ起動から Panel 表示までの流れ
+
+ここが ScalableUI を理解する上で一番大事です。アプリ起動そのものは `ActivityTaskManager` が扱い、ScalableUI は「起動された task をどの panel に収めるか」を決めます。
+
+```mermaid
+sequenceDiagram
+    participant User as User
+    participant Entry as Entry point<br/>System Bar Apps / AppGrid / HOME event
+    participant Launcher as StubCarLauncher<br/>AppGridActivity
+    participant ATM as ActivityTaskManager
+    participant Delegate as PanelAutoTaskStackTransitionHandlerDelegate
+    participant State as ScalableUI StateManager
+    participant WCT as WindowContainerTransaction
+    participant Shell as WindowManager / Shell
+    participant Panel as TaskPanel
+    participant App as App Activity task
+    participant Screen as Display
+
+    User->>Entry: app 起動操作
+    Entry->>Launcher: AppGrid を開く or target panel 付き intent を作る
+    Launcher->>ATM: startActivity(intent)
+    ATM->>Delegate: task open transition を通知
+    Delegate->>Delegate: component / TARGET_PANEL_ID / launch-root を評価
+    Delegate->>Panel: 対象 TaskPanel を選ぶ
+    Delegate->>State: _System_TaskOpenEvent(panelId=...)
+    State->>Panel: panel variant を opened / closed / hidden へ更新
+    Delegate->>WCT: panel root / bounds / launch-root 方針を transaction 化
+    WCT->>Shell: transaction 適用
+    Shell->>App: task bounds / layer / visibility を反映
+    App->>Screen: panel 内に描画
+```
+
+同じ流れを責務で分けるとこうなります。
+
+```text
+1. ユーザー操作
+   System Bar Apps、AppGrid、panel assignment UI などから app 起動要求が出る。
+
+2. ActivityTaskManager
+   Activity を起動する。
+   既存 task を再利用するか、新しい task を作る。
+   task lifecycle を管理する。
+
+3. ScalableUI routing
+   PanelAutoTaskStackTransitionHandlerDelegate が起動された task を見る。
+   TARGET_PANEL_ID があれば、その panel を優先する。
+   component を扱う固定 panel があれば、その panel を候補にする。
+   どれにも当てはまらない場合は launch-root の app_panel を使う。
+
+4. ScalableUI StateManager
+   _System_TaskOpenEvent や custom event を dispatch する。
+   panel XML の Transition に従って各 panel の variant を切り替える。
+
+5. WindowManager / Shell
+   WindowContainerTransaction を受け取る。
+   TaskPanel の root task stack と task surface の bounds / layer / visibility を反映する。
+   Surface / layer / focus / visibility を実画面へ反映する。
+
+6. App Activity
+   アプリ自身は通常の Activity として描画する。
+   アプリは「自分が panel にいる」ことを基本的には知らなくてもよい。
+```
+
+このため、ScalableUI では `RemoteTaskView` 的に「View の中へ Activity を埋め込む」のではなく、Android platform 側の task を `TaskPanel` として配置します。
+
+実装上の最短モデル:
+
+```text
+Panel
+  -> TaskPanel
+  -> RootTaskStack / Task
+  -> Activity
+```
+
+`RemoteCarTaskView` / `TaskView` は AAOS に別経路として存在しますが、この ScalableUI `TaskPanel` 表示経路の実体ではありません。
+
+## 起動経路ごとの Panel Routing
+
+同じ app 起動でも、入口によって routing policy が変わります。ここを分けておかないと「Settings が Home の後ろに出る」「Calendar が意図しない panel に出る」といった不整合が起きます。
+
+```mermaid
+flowchart TB
+    Launch[App launch request]
+    HasTarget{TARGET_PANEL_ID<br/>or target panel URI?}
+    TargetPanel[Route to requested TaskPanel<br/>ex: user_slot_panel]
+    FixedRole{Component handled by<br/>fixed TaskPanel?}
+    FixedPanel[Route to fixed panel<br/>ex: nav_panel default app]
+    LaunchRoot{Launch-root panel exists?}
+    AppPanel[Route to app_panel<br/>generic fullscreen app]
+    Fallback[Fallback to platform default launch]
+    Event[Dispatch _System_TaskOpenEvent<br/>panelId=selected panel]
+    Wm[Apply WCT through<br/>WindowManager / Shell]
+    Screen[Activity appears in panel]
+
+    Launch --> HasTarget
+    HasTarget -- yes --> TargetPanel
+    HasTarget -- no --> FixedRole
+    FixedRole -- yes --> FixedPanel
+    FixedRole -- no --> LaunchRoot
+    LaunchRoot -- yes --> AppPanel
+    LaunchRoot -- no --> Fallback
+    TargetPanel --> Event
+    FixedPanel --> Event
+    AppPanel --> Event
+    Fallback --> Wm
+    Event --> Wm
+    Wm --> Screen
+```
+
+`declarative-multipanel` の smoke で確認している代表例:
+
+```text
+AppGrid から Calendar を選ぶ
+  -> intent に user_slot_panel target を付ける
+  -> ActivityTaskManager が Calendar task を起動
+  -> ScalableUI が user_slot_panel を選ぶ
+  -> Calendar task が user_slot_panel bounds に表示される
+
+System Bar Apps を開く
+  -> panel_app_grid を fullscreen-ish overlay として開く
+  -> workspace panel は維持
+  -> AppGrid は panel_app_grid bounds に表示される
+
+未割当の通常 app を generic 起動する
+  -> fixed panel に紐づかない
+  -> launch-root の app_panel を使う
+  -> app_panel が開き、workspace panel は hidden になる
+
+camera override
+  -> camera_priority_panel を fullscreen high-layer に出す
+  -> workspace panel 自体は hidden にしない
+  -> exit_camera_override で camera panel だけ hidden に戻す
+```
+
+## ActivityTaskManager / WindowManager / ScalableUI の立ち位置
+
+```text
+ActivityTaskManager
+  Activity の起動、task 作成、既存 task 再利用、task lifecycle を担当する。
+  「どの Activity が生きているか」の管理者。
+
+WindowManager / Shell
+  task container、bounds、layer、focus、Surface の適用を担当する。
+  「task を画面上のどこにどう置くか」の実行者。
+
+CarSystemUI ScalableUI
+  panel XML、variant、transition、routing policy を担当する。
+  「HMI としてどの panel 状態にするか」の設計図兼オーケストレーター。
+
+StubCarLauncher
+  空の HOME host と AppGrid entrypoint を提供する。
+  HMI の主表示主体ではなく、ScalableUI が前面で成立するための土台。
+```
+
+短く言うと、`ActivityTaskManager` が task を生み、`WindowManager / Shell` が配置し、`ScalableUI` が HMI としての panel 方針を決めます。
+
+注意: AOSP の `WindowContainerTransaction` には `reparent()` / `reparentTasks()` が存在します。ただし、現在の live ScalableUI source だけでは「既存 task を Panel A から Panel B へ直接 reparent する」標準実装は確認できていません。panel assignment / relocation を説明するときは、標準 ScalableUI と PoC custom routing を分けて扱います。
 
 ## Panel と Activity の対応
 
