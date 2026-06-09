@@ -1,5 +1,7 @@
 # declarative-multipanel 評価記録 2026-06-09
 
+> Source verification: この評価記録は runtime smoke の観測結果です。AAOS/AOSP source に基づく責務分担と claim 判定は [AOSP Source Verification](../../../docs/aosp_source_verification_ja.md) を参照してください。
+
 ## 評価対象
 
 - product: `sdk_car_scalableui_declarative_multipanel_x86_64`
