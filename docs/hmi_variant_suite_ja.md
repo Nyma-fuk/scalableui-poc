@@ -56,6 +56,9 @@
 | `editable-home` | `sdk_car_scalableui_editable_home_x86_64` | system bar を避けた multipanel home と保存可能な panel assignment |
 | `widget-layout-lab` | `sdk_car_scalableui_widget_layout_lab_x86_64` | 右側 Widget picker と配置パターン切替を試す layout lab |
 | `dynamic-workspace` | `sdk_car_scalableui_dynamic_workspace_x86_64` | 固定スロットを持たず、空の workspace から panel を追加・削除・移動・横幅変更する動的 HMI |
+| `declarative-multipanel` | `sdk_car_scalableui_declarative_multipanel_x86_64` | clean `sdk_car_x86_64` から RRO だけで ScalableUI panel / transition / task placement を確認する再出発 baseline |
+
+`declarative-multipanel` は既存 suite とは少し位置づけが異なります。demo app や SystemUI / Launcher runtime patch を適用せず、AAOS15 LTS3 の ScalableUI 標準機能だけでどこまで作れるかを切り分けるための baseline です。詳細は `variants/declarative-multipanel/docs/hmi_spec_ja.md` を参照してください。
 
 ## すべての HMI を適用する
 
