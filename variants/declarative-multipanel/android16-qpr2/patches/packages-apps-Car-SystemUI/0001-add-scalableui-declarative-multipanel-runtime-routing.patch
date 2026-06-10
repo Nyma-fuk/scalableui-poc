@@ -1,18 +1,26 @@
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-index aa36ba2b..824f31ab 100644
+index aa36ba2b..6b90c008 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-@@ -72,6 +72,9 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -72,6 +72,17 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
  
      private static final Event EMPTY_EVENT = new Event.Builder(EMPTY_EVENT_ID).build();
      private static final boolean DEBUG = Build.IS_DEBUGGABLE;
 +    private static final String EXTRA_TARGET_PANEL_ID =
 +            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++    private static final String EXTRA_LAUNCHED_FROM_APP_GRID =
++            "com.android.car.scalableui.extra.LAUNCHED_FROM_APP_GRID";
 +    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
++    private static final String PANEL_APP_GRID = "panel_app_grid";
++    private static final String ACTION_TOKEN_ID = "action";
++    private static final String ACTION_OPEN = "open";
++    private static final String ACTION_CLOSE = "close";
++    private static final String SOURCE_TOKEN_ID = "source";
++    private static final String SOURCE_APP_GRID = "app_grid";
  
      private final AutoTaskStackController mAutoTaskStackController;
      private final PanelTransitionCoordinator mPanelTransitionCoordinator;
-@@ -151,6 +154,9 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -151,6 +162,9 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
          if (mIgnoredActivities.contains(component)) {
              return false;
          }
@@ -22,7 +30,7 @@ index aa36ba2b..824f31ab 100644
          return mPanelUtils.handles(request.getTriggerTask().parentTaskId)
                  || request.getTriggerTask().topActivityType == ACTIVITY_TYPE_HOME;
      }
-@@ -226,8 +232,18 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -226,8 +240,18 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
          }
  
          String componentString = component != null ? component.flattenToString() : null;
@@ -43,10 +51,35 @@ index aa36ba2b..824f31ab 100644
          if (panel == null) {
              // There is no panel ready to handle this event
              // TODO(b/392694590): determine if/how this case should be handled
-@@ -246,6 +262,24 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+@@ -243,9 +267,49 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+         if (componentString != null) {
+             builder.setComponentName(componentString);
+         }
++        if (PANEL_APP_GRID.equals(panelId) && TransitionUtil.isOpeningType(request.getType())) {
++            builder.addToken(ACTION_TOKEN_ID, isPanelVisible(PANEL_APP_GRID)
++                    ? ACTION_CLOSE : ACTION_OPEN);
++        }
++        if (TransitionUtil.isOpeningType(request.getType())
++                && isLaunchedFromAppGrid(request.getTriggerTask().baseIntent)) {
++            builder.addToken(SOURCE_TOKEN_ID, SOURCE_APP_GRID);
++        }
          return builder.build();
      }
  
++    private boolean isLaunchedFromAppGrid(@Nullable Intent intent) {
++        if (intent != null && intent.getBooleanExtra(EXTRA_LAUNCHED_FROM_APP_GRID, false)) {
++            return true;
++        }
++        TaskPanel appGridPanel = mPanelUtils.getTaskPanel(
++                tp -> PANEL_APP_GRID.equals(tp.getPanelId()));
++        return appGridPanel != null && appGridPanel.isVisible();
++    }
++
++    private boolean isPanelVisible(@NonNull String panelId) {
++        TaskPanel panel = mPanelUtils.getTaskPanel(tp -> panelId.equals(tp.getPanelId()));
++        return panel != null && panel.isVisible();
++    }
++
 +    @Nullable
 +    private static String getTargetPanelId(@Nullable Intent intent) {
 +        if (intent == null) {

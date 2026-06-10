@@ -13,8 +13,10 @@
 評価: Correct / PoC 要求範囲の主要導線は動作確認済み
 
 Android16 QPR2 の ScalableUI runtime に PoC patch を適用し、image build、
-Windows emulator boot、初期 TaskPanel 表示、既存 AAOS AppGrid の floating panel
-表示、customizable slot 用 picker panel、選択アプリの customizable slot 表示まで確認した。
+Windows emulator boot、初期 TaskPanel 表示、既存 AAOS AppGrid の centered floating
+panel 表示、All Apps の close affordance、customizable slot 用 picker panel、
+選択アプリの customizable slot 表示、既存 panel アプリ再起動時の fullscreen 化、
+Home 復帰まで確認した。
 
 ## 確認済み
 
@@ -32,12 +34,21 @@ Windows emulator boot、初期 TaskPanel 表示、既存 AAOS AppGrid の floati
   - `user_slot_panel`: `com.android.car.carlauncher/.EmptySlotActivity`
 - All Apps
   - 下部 All Apps ボタンで既存 AAOS `com.android.car.carlauncher/.AppGridActivity` を表示
+  - `panel_app_grid` は layer 90、中央 bounds `16%,12%,84%,88%` で表示
+  - `app_grid_scrim_panel` は layer 89、fullscreen transparent panel として背面に表示
   - `dumpsys activity activities` で `AppGridActivity` が `panel_app_grid` 配下であることを確認
   - `app_panel` は空のまま
+  - All Apps アイコン再タップ相当の `ACTION_SHOW_PANEL` 再実行で `action=close` が発生し閉じる
+  - AppGrid 外側 tap で `AppGridScrimActivity` が `close_app_grid` event を送信し閉じる
 - customizable slot
   - `Choose app` で `com.android.car.carlauncher/.AppPickerActivity` を `app_picker_panel` に表示
   - Calendar 選択後、`com.android.calendar/.AllInOneActivity` が `user_slot_panel` 配下に表示
   - `app_picker_panel` は選択後に閉じ、`app_panel` は空のまま
+- 既存 panel アプリの再起動
+  - Calendar が `user_slot_panel` に存在する状態で All Apps から Calendar を再起動
+  - `_System_TaskOpenEvent` は `panelId=user_slot_panel, source=app_grid` として dispatch
+  - `user_slot_panel` は fullscreen variant へ遷移し、`nav_panel` / `media_panel` は画面外へ退避
+  - Home 操作で `user_slot_panel` は元の右下位置に戻り、直前まで存在していた Calendar が復帰
 - 右上 panel
   - `media_panel` は launcher のスタブではなく `com.android.car.media/.MediaDispatcherActivity`
     を表示
@@ -46,8 +57,13 @@ Windows emulator boot、初期 TaskPanel 表示、既存 AAOS AppGrid の floati
 
 - `system_bar_app_drawer_intent` は `PanelTriggerActivity` を起動する。
   `PanelTriggerActivity` 自体はすぐ終了し、target panel event だけを ScalableUI に渡す。
+  `PanelAutoTaskStackTransitionHandlerDelegate` は `panel_app_grid` の可視状態に基づき
+  `action=open` / `action=close` token を付ける。
 - 実体の `AppGridActivity` は `panel_app_grid` の default activity として
   `TaskPanel.setBaseIntent()` / `ActivityOptions.setLaunchRootTask()` 経由で起動する。
+- 外側 tap close は、`AppGridActivity` とは別の `app_grid_scrim_panel` に
+  `AppGridScrimActivity` を置き、ScalableUI broadcast bridge に `close_app_grid`
+  event を送ることで実現している。
 - `Choose app` も同じ trigger 経路で `app_picker_panel` を開き、実体の
   `AppPickerActivity` は panel default activity として起動する。
 - 選択されたアプリは `EmptySlotActivity` へブロードキャストで通知し、
@@ -60,19 +76,21 @@ Windows emulator boot、初期 TaskPanel 表示、既存 AAOS AppGrid の floati
 
 runtime log / dump / screenshot:
 
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\initial-home.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\floating-all-apps.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\app-picker-panel-retry.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\selected-user-slot.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\dumpsys-activities-all-apps.txt`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\dumpsys-activities-picker-retry.txt`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\dumpsys-activities-selected.txt`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_panel_trigger_fix\logcat-selected-full.txt`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\01_appgrid_open.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\02_appgrid_closed_by_retrigger.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\04_appgrid_closed_by_outside_tap.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\01_picker_open.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\02_calendar_in_user_slot.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\03_all_apps_open.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\04_calendar_fullscreen.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\05_home_restored.png`
+- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\summary.txt`
 
 `dumpsys activity activities` で確認した root task:
 
 ```text
 Task name=panel_app_grid  -> AppGridActivity
+Task name=app_grid_scrim_panel -> AppGridScrimActivity
 Task name=app_picker_panel -> AppPickerActivity
 Task name=user_slot_panel -> EmptySlotActivity + Calendar AllInOneActivity
 Task name=app_panel       -> empty after these flows
@@ -84,6 +102,19 @@ Task name=app_panel       -> empty after these flows
 CarLaunchParamsModifierUpdatableImpl: Applying root task behavior, preferred root task=Task{... name=user_slot_panel ...}
 ActivityTaskManager: START ... cmp=com.android.calendar/.AllInOneActivity ...
 StateManager: handleEvent Event{mId='_System_TaskOpenEvent' mTokens='panelId=user_slot_panel , component=com.android.calendar/com.android.calendar.AllInOneActivity' ...}
+```
+
+All Apps close 時の logcat:
+
+```text
+StateManager: handleEvent Event{mId='_System_TaskOpenEvent' mTokens='action=close , panelId=panel_app_grid ...}
+ScalableUIWMInitializer: Dispatch ScalableUI panel event: close_app_grid
+```
+
+All Apps から既存 panel アプリを再起動した時の logcat:
+
+```text
+StateManager: handleEvent Event{mId='_System_TaskOpenEvent' mTokens='panelId=user_slot_panel , component=com.android.calendar/com.android.calendar.AllInOneActivity , source=app_grid' ...}
 ```
 
 ## 残課題
