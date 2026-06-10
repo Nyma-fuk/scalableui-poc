@@ -66,7 +66,8 @@ m -j8 \
 ## 実機能確認
 
 2026-06-10 に `emu_img_zip` の full image build、Windows emulator boot、
-初期パネル表示、AppGrid 起動を確認した。
+初期パネル表示、既存 AAOS AppGrid の floating panel 表示、app picker panel、
+customizable slot への選択アプリ配置を確認した。
 
 詳細は [docs/evaluation_2026-06-10_ja.md](docs/evaluation_2026-06-10_ja.md) を参照。
 
@@ -76,7 +77,8 @@ m -j8 \
   `<TaskPanel>` / `<DecorPanel>` を要求する。
 - 旧 `bool/config_enableScalableUI` は Android16 の `Flag.ScalableUIEnabled`
   fallback resource ではないため、PoC RRO では `bool/scalable_ui` を overlay する。
-- AppGrid の下部ボタン操作は、現在 `panel_app_grid` ではなく fullscreen の
-  `app_panel` へ開く挙動として確認した。これは本PoCのデモ導線としては動作するが、
-  右側小パネル内に AppGrid を固定表示したい場合は、launcher intent の target panel
-  指定を追加検証する。
+- 下部 All Apps ボタンは `PanelTriggerActivity` で target panel event を発生させ、
+  実体の `AppGridActivity` は `panel_app_grid` の default activity として起動する。
+- customizable slot の `Choose app` は `app_picker_panel` を開き、選択結果は
+  `user_slot_panel` から起動する。`user_slot_panel` には `TaskBehavior
+  newTaskLaunchPolicy="REPARENT_TO_SOURCE"` を設定している。
