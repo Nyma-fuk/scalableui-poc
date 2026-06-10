@@ -1,5 +1,5 @@
 diff --git a/AndroidProducts.mk b/AndroidProducts.mk
-index 8c2cc18..87e713d 100644
+index 8c2cc18904b631994695b2d24cbd4013dc4d8969..87e713da93a8fb601615818404625df970e39920 100644
 --- a/AndroidProducts.mk
 +++ b/AndroidProducts.mk
 @@ -22,6 +22,7 @@ PRODUCT_MAKEFILES := \
@@ -19,7 +19,7 @@ index 8c2cc18..87e713d 100644
  EMULATOR_VENDOR_NO_SOUND_TRIGGER := false
 diff --git a/sdk_car_scalableui_declarative_multipanel_x86_64.mk b/sdk_car_scalableui_declarative_multipanel_x86_64.mk
 new file mode 100644
-index 0000000..901c8c4
+index 0000000000000000000000000000000000000000..901c8c42a49eefb9c1d914419d6865a07ad83908
 --- /dev/null
 +++ b/sdk_car_scalableui_declarative_multipanel_x86_64.mk
 @@ -0,0 +1,24 @@
