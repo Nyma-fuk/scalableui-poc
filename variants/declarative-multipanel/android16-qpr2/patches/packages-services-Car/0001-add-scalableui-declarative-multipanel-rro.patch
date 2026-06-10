@@ -59,10 +59,10 @@ index 0000000000..ebb9895448
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
 new file mode 100644
-index 0000000000..82cbcd4edd
+index 0000000000..ac24ffb890
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
-@@ -0,0 +1,152 @@
+@@ -0,0 +1,169 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
 +  Copyright (C) 2026 The Android Open Source Project
@@ -198,6 +198,23 @@ index 0000000000..82cbcd4edd
 +        </activity>
 +
 +        <activity
++            android:name=".AppGridScrimActivity"
++            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
++            android:excludeFromRecents="true"
++            android:exported="true"
++            android:launchMode="singleInstance"
++            android:resizeableActivity="true"
++            android:resumeWhilePausing="true"
++            android:stateNotNeeded="true"
++            android:taskAffinity="com.android.car.carlauncher.appgridscrim"
++            android:theme="@style/Theme.StubCarLauncher.Transparent">
++            <meta-data android:name="distractionOptimized" android:value="true"/>
++            <intent-filter>
++                <category android:name="android.intent.category.DEFAULT"/>
++            </intent-filter>
++        </activity>
++
++        <activity
 +            android:name=".CameraStubActivity"
 +            android:configChanges="density|keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 +            android:excludeFromRecents="true"
@@ -289,10 +306,10 @@ index 0000000000..38201051f1
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
 new file mode 100644
-index 0000000000..923bc02052
+index 0000000000..2560c9ea5e
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,29 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <style name="Theme.StubCarLauncher" parent="@android:style/Theme.Material.NoActionBar">
@@ -312,7 +329,71 @@ index 0000000000..923bc02052
 +        <item name="android:colorBackgroundCacheHint">@null</item>
 +        <item name="android:windowDisablePreview">true</item>
 +    </style>
++
++    <style name="Theme.StubCarLauncher.Transparent" parent="@android:style/Theme.Material.NoActionBar">
++        <item name="android:windowIsTranslucent">true</item>
++        <item name="android:windowBackground">@android:color/transparent</item>
++        <item name="android:colorBackgroundCacheHint">@null</item>
++        <item name="android:windowDisablePreview">true</item>
++        <item name="android:windowNoTitle">true</item>
++        <item name="android:windowActionBar">false</item>
++    </style>
 +</resources>
+diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridScrimActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridScrimActivity.java
+new file mode 100644
+index 0000000000..e3dd14575d
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridScrimActivity.java
+@@ -0,0 +1,49 @@
++/*
++ * Copyright (C) 2026 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.car.carlauncher;
++
++import android.app.Activity;
++import android.content.Intent;
++import android.graphics.Color;
++import android.os.Bundle;
++import android.view.View;
++
++/** Transparent click target behind the floating AppGrid panel. */
++public final class AppGridScrimActivity extends Activity {
++    private static final String ACTION_PANEL_EVENT =
++            "com.android.car.scalableui.ACTION_PANEL_EVENT";
++    private static final String EXTRA_EVENT_ID = "event_id";
++    private static final String EVENT_CLOSE_APP_GRID = "close_app_grid";
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++
++        View scrim = new View(this);
++        scrim.setBackgroundColor(Color.TRANSPARENT);
++        scrim.setClickable(true);
++        scrim.setFocusable(true);
++        scrim.setOnClickListener(view -> closeAppGrid());
++        setContentView(scrim);
++    }
++
++    private void closeAppGrid() {
++        Intent intent = new Intent(ACTION_PANEL_EVENT);
++        intent.putExtra(EXTRA_EVENT_ID, EVENT_CLOSE_APP_GRID);
++        sendBroadcast(intent);
++    }
++}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppPickerActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppPickerActivity.java
 new file mode 100644
 index 0000000000..8517fca50f
@@ -1310,10 +1391,10 @@ index 0000000000..d9f8299bbf
 +    android:focusable="false" />
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 new file mode 100644
-index 0000000000..d6237f6b55
+index 0000000000..2b9f5b2f62
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
-@@ -0,0 +1,32 @@
+@@ -0,0 +1,34 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <bool name="scalable_ui" translatable="false">true</bool>
@@ -1330,6 +1411,7 @@ index 0000000000..d6237f6b55
 +        <item>@xml/empty_slot_hint_panel</item>
 +        <item>@xml/camera_priority_panel</item>
 +        <item>@xml/edit_overlay_panel</item>
++        <item>@xml/app_grid_scrim_panel</item>
 +        <item>@xml/panel_app_grid</item>
 +        <item>@xml/app_picker_panel</item>
 +        <item>@xml/app_panel</item>
@@ -1340,6 +1422,7 @@ index 0000000000..d6237f6b55
 +        <item>media_panel;com.android.car.media/.MediaDispatcherActivity</item>
 +        <item>user_slot_panel;com.android.car.carlauncher/.EmptySlotActivity</item>
 +        <item>camera_priority_panel;com.android.car.carlauncher/.CameraStubActivity</item>
++        <item>app_grid_scrim_panel;com.android.car.carlauncher/.AppGridScrimActivity</item>
 +        <item>panel_app_grid;com.android.car.carlauncher/.AppGridActivity</item>
 +        <item>app_picker_panel;com.android.car.carlauncher/.AppPickerActivity</item>
 +    </string-array>
@@ -1358,10 +1441,10 @@ index 0000000000..ee61451637
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
 new file mode 100644
-index 0000000000..7ebde47dc5
+index 0000000000..e9493981c7
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
-@@ -0,0 +1,11 @@
+@@ -0,0 +1,12 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
 +    <string name="media_panel_role" translatable="false">com.android.car.media/.MediaDispatcherActivity</string>
@@ -1369,36 +1452,69 @@ index 0000000000..7ebde47dc5
 +    <string name="user_slot_panel_role" translatable="false">com.android.car.carlauncher/.EmptySlotActivity</string>
 +    <string name="camera_panel_role" translatable="false">com.android.car.carlauncher/.CameraStubActivity</string>
 +    <string name="appgrid_componentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
++    <string name="app_grid_scrim_componentName" translatable="false">com.android.car.carlauncher/.AppGridScrimActivity</string>
 +    <string name="app_picker_componentName" translatable="false">com.android.car.carlauncher/.AppPickerActivity</string>
 +    <string name="config_appGridComponentName" translatable="false">@string/appgrid_componentName</string>
 +    <string name="default_panel_role" translatable="false">DEFAULT</string>
 +</resources>
-diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_grid_scrim_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_grid_scrim_panel.xml
 new file mode 100644
-index 0000000000..a6c0a9794a
+index 0000000000..a23647f1fa
 --- /dev/null
-+++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_grid_scrim_panel.xml
 @@ -0,0 +1,27 @@
-+<TaskPanel id="app_panel" defaultVariant="@id/closed" role="@string/default_panel_role" displayId="0">
++<TaskPanel id="app_grid_scrim_panel" defaultVariant="@id/closed" role="@string/app_grid_scrim_componentName" displayId="0">
 +    <Variant id="@+id/opened">
-+        <Layer layer="30"/>
++        <Layer layer="89"/>
 +        <Visibility isVisible="true"/>
 +        <Alpha alpha="1.0"/>
-+        <Corner radius="@dimen/panel_corner_radius"/>
-+        <Bounds left="2%" top="5%" right="98%" bottom="95%"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Variant id="@+id/closed">
++        <Layer layer="1"/>
++        <Visibility isVisible="false"/>
++        <Alpha alpha="0.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="100%" right="100%" bottom="200%"/>
++        <Focus onTransition="false"/>
++    </Variant>
++    <Transitions>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid;action=open" toVariant="@id/opened" duration="180" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid;action=close" toVariant="@id/closed" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="close_app_grid" toVariant="@id/closed" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_picker_panel" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
++    </Transitions>
++</TaskPanel>
+diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
+new file mode 100644
+index 0000000000..95795d04b0
+--- /dev/null
++++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
+@@ -0,0 +1,26 @@
++<TaskPanel id="app_panel" defaultVariant="@id/closed" role="@string/default_panel_role" displayId="0">
++    <Variant id="@+id/opened">
++        <Layer layer="40"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
 +        <Focus onTransition="true"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
-+        <Layer layer="30"/>
++        <Layer layer="40"/>
 +        <Visibility isVisible="false"/>
 +        <Alpha alpha="1.0"/>
-+        <Corner radius="@dimen/panel_corner_radius"/>
-+        <Bounds left="100%" top="5%" right="158%" bottom="95%"/>
++        <Corner radius="0dp"/>
++        <Bounds left="100%" top="0%" right="200%" bottom="100%"/>
 +        <Focus onTransition="false"/>
 +    </Variant>
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/opened" duration="450" interpolator="@android:anim/overshoot_interpolator"/>
-+        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/closed" duration="220" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_picker_panel" toVariant="@id/closed" duration="220" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/closed" duration="220" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="enter_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
@@ -1408,13 +1524,13 @@ index 0000000000..a6c0a9794a
 +</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_picker_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_picker_panel.xml
 new file mode 100644
-index 0000000000..d00e121504
+index 0000000000..3d2d5d3c87
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_picker_panel.xml
 @@ -0,0 +1,26 @@
 +<TaskPanel id="app_picker_panel" defaultVariant="@id/closed" role="@string/app_picker_componentName" displayId="0">
 +    <Variant id="@+id/opened">
-+        <Layer layer="26"/>
++        <Layer layer="80"/>
 +        <Visibility isVisible="true"/>
 +        <Alpha alpha="1.0"/>
 +        <Corner radius="@dimen/panel_corner_radius"/>
@@ -1422,7 +1538,7 @@ index 0000000000..d00e121504
 +        <Focus onTransition="true"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
-+        <Layer layer="26"/>
++        <Layer layer="80"/>
 +        <Visibility isVisible="false"/>
 +        <Alpha alpha="1.0"/>
 +        <Corner radius="@dimen/panel_corner_radius"/>
@@ -1553,10 +1669,10 @@ index 0000000000..77b57f573a
 +</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
 new file mode 100644
-index 0000000000..3e24274568
+index 0000000000..28ef6fcba1
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,62 @@
 +<TaskPanel id="media_panel" defaultVariant="@id/workspace_default" role="@string/media_panel_role" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="5"/>
@@ -1598,8 +1714,19 @@ index 0000000000..3e24274568
 +        <Bounds left="100%" top="5%" right="138%" bottom="47%"/>
 +        <Focus onTransition="false"/>
 +    </Variant>
++    <Variant id="@+id/fullscreen">
++        <Layer layer="40"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=media_panel;source=app_grid" toVariant="@id/fullscreen" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=nav_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_1" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/narrow" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
@@ -1610,10 +1737,10 @@ index 0000000000..3e24274568
 +</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
 new file mode 100644
-index 0000000000..af3a611a68
+index 0000000000..36f2992835
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,62 @@
 +<TaskPanel id="nav_panel" defaultVariant="@id/workspace_default" role="@string/nav_panel_role" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="4"/>
@@ -1655,8 +1782,19 @@ index 0000000000..af3a611a68
 +        <Bounds left="-58%" top="5%" right="-2%" bottom="95%"/>
 +        <Focus onTransition="false"/>
 +    </Variant>
++    <Variant id="@+id/fullscreen">
++        <Layer layer="40"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=nav_panel;source=app_grid" toVariant="@id/fullscreen" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=media_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_1" toVariant="@id/workspace_default" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/wide" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
@@ -1683,30 +1821,32 @@ index 0000000000..4cc5d851e3
 +</overlay>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
 new file mode 100644
-index 0000000000..df3c2d46c3
+index 0000000000..7478db0eff
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,28 @@
 +<TaskPanel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
 +    <Variant id="@+id/opened">
-+        <Layer layer="20"/>
++        <Layer layer="90"/>
 +        <Visibility isVisible="true"/>
 +        <Alpha alpha="1.0"/>
 +        <Corner radius="@dimen/panel_corner_radius"/>
-+        <Bounds left="8%" top="18%" right="92%" bottom="92%"/>
++        <Bounds left="16%" top="12%" right="84%" bottom="88%"/>
 +        <Focus onTransition="true"/>
 +    </Variant>
 +    <Variant id="@+id/closed">
-+        <Layer layer="20"/>
++        <Layer layer="1"/>
 +        <Visibility isVisible="false"/>
-+        <Alpha alpha="1.0"/>
++        <Alpha alpha="0.0"/>
 +        <Corner radius="@dimen/panel_corner_radius"/>
-+        <Bounds left="8%" top="100%" right="92%" bottom="174%"/>
++        <Bounds left="16%" top="12%" right="84%" bottom="88%"/>
 +        <Focus onTransition="false"/>
 +    </Variant>
 +    <Transitions>
-+        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid" toVariant="@id/opened" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
-+        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed" duration="200" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid;action=open" toVariant="@id/opened" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=panel_app_grid;action=close" toVariant="@id/closed" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="close_app_grid" toVariant="@id/closed" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_picker_panel" toVariant="@id/closed" duration="200" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel" toVariant="@id/closed" duration="200" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="enter_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
@@ -1729,10 +1869,10 @@ index 0000000000..3679af2f0b
 +</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
 new file mode 100644
-index 0000000000..5c749a8484
+index 0000000000..a2b0b49212
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,54 @@
 +<TaskPanel id="user_slot_panel" defaultVariant="@id/empty" role="@string/user_slot_panel_role" displayId="0">
 +    <TaskBehavior newTaskLaunchPolicy="REPARENT_TO_SOURCE"/>
 +    <Variant id="@+id/empty">
@@ -1767,8 +1907,19 @@ index 0000000000..5c749a8484
 +        <Bounds left="100%" top="53%" right="138%" bottom="95%"/>
 +        <Focus onTransition="false"/>
 +    </Variant>
++    <Variant id="@+id/fullscreen">
++        <Layer layer="40"/>
++        <Visibility isVisible="true"/>
++        <Alpha alpha="1.0"/>
++        <Corner radius="0dp"/>
++        <Bounds left="0%" top="0%" right="100%" bottom="100%"/>
++        <Focus onTransition="true"/>
++    </Variant>
 +    <Transitions>
 +        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/hidden" duration="250" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=user_slot_panel;source=app_grid" toVariant="@id/fullscreen" duration="320" interpolator="@android:anim/decelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=nav_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
++        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=media_panel;source=app_grid" toVariant="@id/hidden" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_1" toVariant="@id/empty" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="switch_workspace_page_2" toVariant="@id/page_2" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="resize_panel_nav_wide" toVariant="@id/narrow" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>

@@ -1,0 +1,23 @@
+diff --git a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
+index 7c78b801..8ad68db3 100644
+--- a/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
++++ b/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt
+@@ -39,6 +39,10 @@ import java.net.URISyntaxException
+  * @see MirroringAppLaunchProvider
+  */
+ sealed class AppLaunchProvider {
++    companion object {
++        private const val EXTRA_LAUNCHED_FROM_APP_GRID =
++            "com.android.car.scalableui.extra.LAUNCHED_FROM_APP_GRID"
++    }
+ 
+     /**
+      *  Launches the app associated with the given ComponentName. This is the core
+@@ -73,6 +77,7 @@ sealed class AppLaunchProvider {
+                 context,
+                 Intent(Intent.ACTION_MAIN).setComponent(componentName)
+                     .addCategory(Intent.CATEGORY_LAUNCHER).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
++                    .putExtra(EXTRA_LAUNCHED_FROM_APP_GRID, true)
+             )
+         }
+     }
