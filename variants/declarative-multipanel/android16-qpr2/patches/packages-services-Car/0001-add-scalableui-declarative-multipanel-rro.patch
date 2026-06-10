@@ -1,6 +1,6 @@
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp
 new file mode 100644
-index 0000000000..e5ed8f9557
+index 0000000000000000000000000000000000000000..e5ed8f955728e93e64906ae9ac45b2d32e34bcd3
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/Android.bp
 @@ -0,0 +1,35 @@
@@ -41,7 +41,7 @@ index 0000000000..e5ed8f9557
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
 new file mode 100644
-index 0000000000..bdc9ebc3c3
+index 0000000000000000000000000000000000000000..bdc9ebc3c342761363146e22bf334c480dac4203
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/AndroidManifest.xml
 @@ -0,0 +1,127 @@
@@ -174,7 +174,7 @@ index 0000000000..bdc9ebc3c3
 +</manifest>
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml
 new file mode 100644
-index 0000000000..c740786b09
+index 0000000000000000000000000000000000000000..c740786b0930d67f61bd2c425ea652542beae852
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/colors.xml
 @@ -0,0 +1,9 @@
@@ -189,7 +189,7 @@ index 0000000000..c740786b09
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml
 new file mode 100644
-index 0000000000..0872ca9633
+index 0000000000000000000000000000000000000000..0872ca9633154aadf8b5f7c7b516513ac7334ab5
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/strings.xml
 @@ -0,0 +1,18 @@
@@ -213,7 +213,7 @@ index 0000000000..0872ca9633
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
 new file mode 100644
-index 0000000000..923bc02052
+index 0000000000000000000000000000000000000000..923bc02052ab233d2843c7cd867c4d1ddca770eb
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/res/values/styles.xml
 @@ -0,0 +1,20 @@
@@ -239,7 +239,7 @@ index 0000000000..923bc02052
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java
 new file mode 100644
-index 0000000000..232c309574
+index 0000000000000000000000000000000000000000..232c309574e821a33360dbca2e9a5077a612f393
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/AppGridActivity.java
 @@ -0,0 +1,148 @@
@@ -393,7 +393,7 @@ index 0000000000..232c309574
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java
 new file mode 100644
-index 0000000000..036cd72402
+index 0000000000000000000000000000000000000000..036cd72402360a072c7a19386259374fe3d80742
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CameraStubActivity.java
 @@ -0,0 +1,31 @@
@@ -430,7 +430,7 @@ index 0000000000..036cd72402
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java
 new file mode 100644
-index 0000000000..e2ea097dd9
+index 0000000000000000000000000000000000000000..e2ea097dd90c6a5ae0808a783af4f7da87773095
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/CarLauncher.java
 @@ -0,0 +1,35 @@
@@ -471,7 +471,7 @@ index 0000000000..e2ea097dd9
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java
 new file mode 100644
-index 0000000000..8b7471d93b
+index 0000000000000000000000000000000000000000..8b7471d93b29139d937d066283a0b2e1de9314df
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/ControlBarActivity.java
 @@ -0,0 +1,32 @@
@@ -509,7 +509,7 @@ index 0000000000..8b7471d93b
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java
 new file mode 100644
-index 0000000000..2bd6bedac7
+index 0000000000000000000000000000000000000000..2bd6bedac705d1d7574bf573310114e345b23240
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/EmptySlotActivity.java
 @@ -0,0 +1,44 @@
@@ -559,7 +559,7 @@ index 0000000000..2bd6bedac7
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java
 new file mode 100644
-index 0000000000..4bf962a2c8
+index 0000000000000000000000000000000000000000..4bf962a2c8f5cc3bd344cd1f7bb87b20b05f625d
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/SettingsPanelActivity.java
 @@ -0,0 +1,32 @@
@@ -597,7 +597,7 @@ index 0000000000..4bf962a2c8
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java
 new file mode 100644
-index 0000000000..03f078676c
+index 0000000000000000000000000000000000000000..03f078676ccb8279393eaed651db6ef6e15f9666
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/apps/StubCarLauncher/src/com/android/car/carlauncher/StubViews.java
 @@ -0,0 +1,90 @@
@@ -693,7 +693,7 @@ index 0000000000..03f078676c
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk b/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk
 new file mode 100644
-index 0000000000..3264c7dd2c
+index 0000000000000000000000000000000000000000..3264c7dd2cde7c54d40a00e02844d0989b686153
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/car_scalableui_declarative_multipanel.mk
 @@ -0,0 +1,20 @@
@@ -719,7 +719,7 @@ index 0000000000..3264c7dd2c
 +    ScalableUiDeclarativeMultipanelStubCarLauncher
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp
 new file mode 100644
-index 0000000000..37a16af297
+index 0000000000000000000000000000000000000000..37a16af2970fe4c7c4e1a1030e4ceb995f82df1d
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/Android.bp
 @@ -0,0 +1,26 @@
@@ -751,7 +751,7 @@ index 0000000000..37a16af297
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 new file mode 100644
-index 0000000000..f7396ac4ce
+index 0000000000000000000000000000000000000000..f7396ac4ced7731cfc8e9bdd556206217b30485a
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 @@ -0,0 +1,24 @@
@@ -781,7 +781,7 @@ index 0000000000..f7396ac4ce
 +</manifest>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 new file mode 100644
-index 0000000000..07b3c26bfb
+index 0000000000000000000000000000000000000000..07b3c26bfbb415d9d2f8abb5d4964226f79de9c4
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 @@ -0,0 +1,19 @@
@@ -806,7 +806,7 @@ index 0000000000..07b3c26bfb
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp
 new file mode 100644
-index 0000000000..28c385bc57
+index 0000000000000000000000000000000000000000..28c385bc57dab6ec3a637fc3bb4aaba3eb6f8d84
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/Android.bp
 @@ -0,0 +1,26 @@
@@ -838,7 +838,7 @@ index 0000000000..28c385bc57
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 new file mode 100644
-index 0000000000..da8fc01f89
+index 0000000000000000000000000000000000000000..da8fc01f89e3a04042753d01639def82fab2cdee
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 @@ -0,0 +1,26 @@
@@ -870,7 +870,7 @@ index 0000000000..da8fc01f89
 +</manifest>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 new file mode 100644
-index 0000000000..75129124ba
+index 0000000000000000000000000000000000000000..75129124ba94e517f6a97fa0815b1ee4d7e7ecc9
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 @@ -0,0 +1,20 @@
@@ -896,7 +896,7 @@ index 0000000000..75129124ba
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
 new file mode 100644
-index 0000000000..3a7158e669
+index 0000000000000000000000000000000000000000..3a7158e669e548db22b4960311f81359bcd3fbc2
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarServiceScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
 @@ -0,0 +1,19 @@
@@ -921,7 +921,7 @@ index 0000000000..3a7158e669
 +</overlay>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp
 new file mode 100644
-index 0000000000..f9d6c53216
+index 0000000000000000000000000000000000000000..f9d6c532163d8da7e48683c26bd08fcd5a6f7fda
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/Android.bp
 @@ -0,0 +1,31 @@
@@ -958,7 +958,7 @@ index 0000000000..f9d6c53216
 +}
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 new file mode 100644
-index 0000000000..c619cb7130
+index 0000000000000000000000000000000000000000..c619cb71305d0799a67c6838c14d424b70787761
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/AndroidManifest.xml
 @@ -0,0 +1,26 @@
@@ -990,7 +990,7 @@ index 0000000000..c619cb7130
 +</manifest>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml
 new file mode 100644
-index 0000000000..58124d97fd
+index 0000000000000000000000000000000000000000..58124d97fdd809ba0b704f29bf88a96b6c318488
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_edit_overlay.xml
 @@ -0,0 +1,12 @@
@@ -1008,7 +1008,7 @@ index 0000000000..58124d97fd
 +    android:focusable="false" />
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml
 new file mode 100644
-index 0000000000..ca97cda5c6
+index 0000000000000000000000000000000000000000..ca97cda5c664217b09b81db7e7419243bf80bb92
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_empty_slot_hint.xml
 @@ -0,0 +1,12 @@
@@ -1026,7 +1026,7 @@ index 0000000000..ca97cda5c6
 +    android:focusable="false" />
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml
 new file mode 100644
-index 0000000000..d9f8299bbf
+index 0000000000000000000000000000000000000000..d9f8299bbf332ab5e2880fbcd5014c078fcdd4e7
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/layout/scalableui_transparent_decor.xml
 @@ -0,0 +1,7 @@
@@ -1039,13 +1039,13 @@ index 0000000000..d9f8299bbf
 +    android:focusable="false" />
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 new file mode 100644
-index 0000000000..793fab8b2c
+index 0000000000000000000000000000000000000000..b564fe0e8587e6612380a3309a712f211e6add96
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/config.xml
 @@ -0,0 +1,30 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<resources>
-+    <bool name="config_enableScalableUI" translatable="false">true</bool>
++    <bool name="scalable_ui" translatable="false">true</bool>
 +    <bool name="config_enableClearBackStack" translatable="false">false</bool>
 +    <bool name="config_enableSafeAreaAndToolbarPerDisplay" translatable="false">false</bool>
 +
@@ -1075,7 +1075,7 @@ index 0000000000..793fab8b2c
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml
 new file mode 100644
-index 0000000000..ee61451637
+index 0000000000000000000000000000000000000000..ee614516378f695f04b7b70e8c3f4220baded21d
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/dimens.xml
 @@ -0,0 +1,4 @@
@@ -1085,7 +1085,7 @@ index 0000000000..ee61451637
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
 new file mode 100644
-index 0000000000..a4b782d5a8
+index 0000000000000000000000000000000000000000..a4b782d5a8fdf93edd844051fb00492acdc39e60
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/values/strings.xml
 @@ -0,0 +1,10 @@
@@ -1101,11 +1101,11 @@ index 0000000000..a4b782d5a8
 +</resources>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
 new file mode 100644
-index 0000000000..710b950149
+index 0000000000000000000000000000000000000000..4a6a609211638688aded687ab6aa692a32284fa9
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/app_panel.xml
 @@ -0,0 +1,25 @@
-+<Panel id="app_panel" defaultVariant="@id/closed" role="@string/default_panel_role" displayId="0">
++<TaskPanel id="app_panel" defaultVariant="@id/closed" role="@string/default_panel_role" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="30"/>
 +        <Visibility isVisible="true"/>
@@ -1129,28 +1129,28 @@ index 0000000000..710b950149
 +        <Transition onEvent="exit_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed" duration="300" interpolator="@android:anim/accelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml
 new file mode 100644
-index 0000000000..38ac37b852
+index 0000000000000000000000000000000000000000..058e568226d076855dfc1ed8e6117f605ea9c89c
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/bottom_bar_panel.xml
 @@ -0,0 +1,8 @@
-+<Panel id="bottom_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++<DecorPanel id="bottom_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="1"/>
 +        <Visibility isVisible="false"/>
 +        <Alpha alpha="0.0"/>
 +        <Bounds left="0%" top="95%" right="100%" bottom="100%"/>
 +    </Variant>
-+</Panel>
++</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml
 new file mode 100644
-index 0000000000..e23e403961
+index 0000000000000000000000000000000000000000..510511bd46e285ed33cc6f19496513771f461d7e
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/camera_priority_panel.xml
 @@ -0,0 +1,23 @@
-+<Panel id="camera_priority_panel" defaultVariant="@id/hidden" role="@string/camera_panel_role" displayId="0">
++<TaskPanel id="camera_priority_panel" defaultVariant="@id/hidden" role="@string/camera_panel_role" displayId="0">
 +    <Variant id="@+id/camera_fullscreen">
 +        <Layer layer="50"/>
 +        <Visibility isVisible="true"/>
@@ -1172,14 +1172,14 @@ index 0000000000..e23e403961
 +        <Transition onEvent="exit_camera_override" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml
 new file mode 100644
-index 0000000000..04331672a0
+index 0000000000000000000000000000000000000000..99abd983ea30ac900e828508d186bfaa32751d1d
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/edit_overlay_panel.xml
 @@ -0,0 +1,22 @@
-+<Panel id="edit_overlay_panel" defaultVariant="@id/hidden" role="@layout/scalableui_edit_overlay" displayId="0">
++<DecorPanel id="edit_overlay_panel" defaultVariant="@id/hidden" role="@layout/scalableui_edit_overlay" displayId="0">
 +    <Variant id="@+id/editing">
 +        <Layer layer="40"/>
 +        <Visibility isVisible="true"/>
@@ -1200,14 +1200,14 @@ index 0000000000..04331672a0
 +        <Transition onEvent="enter_camera_override" toVariant="@id/hidden" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/hidden" duration="160" interpolator="@android:anim/accelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml
 new file mode 100644
-index 0000000000..c7d9d5b5e7
+index 0000000000000000000000000000000000000000..4651f9d665148624179bd0d277f3d95a9525655b
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/empty_slot_hint_panel.xml
 @@ -0,0 +1,22 @@
-+<Panel id="empty_slot_hint_panel" defaultVariant="@id/hidden" role="@layout/scalableui_empty_slot_hint" displayId="0">
++<DecorPanel id="empty_slot_hint_panel" defaultVariant="@id/hidden" role="@layout/scalableui_empty_slot_hint" displayId="0">
 +    <Variant id="@+id/visible">
 +        <Layer layer="7"/>
 +        <Visibility isVisible="true"/>
@@ -1228,28 +1228,28 @@ index 0000000000..c7d9d5b5e7
 +        <Transition onEvent="enter_camera_override" toVariant="@id/hidden" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="remove_panel_app_user_slot" toVariant="@id/visible" duration="180" interpolator="@android:anim/decelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml
 new file mode 100644
-index 0000000000..d5964e3649
+index 0000000000000000000000000000000000000000..77b57f573a2e29d674b627028ce097a6fbab3007
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/hvac_panel.xml
 @@ -0,0 +1,8 @@
-+<Panel id="hvac_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++<DecorPanel id="hvac_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="1"/>
 +        <Visibility isVisible="false"/>
 +        <Alpha alpha="0.0"/>
 +        <Bounds left="0%" top="95%" right="100%" bottom="100%"/>
 +    </Variant>
-+</Panel>
++</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
 new file mode 100644
-index 0000000000..21f8565a21
+index 0000000000000000000000000000000000000000..3e2427456820e4c38ee86a490f83660beb71f0d9
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/media_panel.xml
 @@ -0,0 +1,51 @@
-+<Panel id="media_panel" defaultVariant="@id/workspace_default" role="@string/media_panel_role" displayId="0">
++<TaskPanel id="media_panel" defaultVariant="@id/workspace_default" role="@string/media_panel_role" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="5"/>
 +        <Visibility isVisible="true"/>
@@ -1299,14 +1299,14 @@ index 0000000000..21f8565a21
 +        <Transition onEvent="swap_panel_position_nav_media" toVariant="@id/swapped" duration="240" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/workspace_default" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
 new file mode 100644
-index 0000000000..aa20c25945
+index 0000000000000000000000000000000000000000..af3a611a6864d20ac4f3e71e6d2e1f05f1a3b8f7
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/nav_panel.xml
 @@ -0,0 +1,51 @@
-+<Panel id="nav_panel" defaultVariant="@id/workspace_default" role="@string/nav_panel_role" displayId="0">
++<TaskPanel id="nav_panel" defaultVariant="@id/workspace_default" role="@string/nav_panel_role" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="4"/>
 +        <Visibility isVisible="true"/>
@@ -1356,16 +1356,16 @@ index 0000000000..aa20c25945
 +        <Transition onEvent="swap_panel_position_nav_media" toVariant="@id/swapped" duration="240" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/workspace_default" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
 new file mode 100644
-index 0000000000..9d2770b642
+index 0000000000000000000000000000000000000000..4cc5d851e37a5af158ab520e8f9ddf8e8b191034
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/overlays.xml
 @@ -0,0 +1,10 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<overlay>
-+    <item target="bool/config_enableScalableUI" value="@bool/config_enableScalableUI"/>
++    <item target="bool/scalable_ui" value="@bool/scalable_ui"/>
 +    <item target="bool/config_enableClearBackStack" value="@bool/config_enableClearBackStack"/>
 +    <item target="bool/config_enableSafeAreaAndToolbarPerDisplay" value="@bool/config_enableSafeAreaAndToolbarPerDisplay"/>
 +    <item target="array/window_states" value="@array/window_states"/>
@@ -1375,11 +1375,11 @@ index 0000000000..9d2770b642
 +</overlay>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
 new file mode 100644
-index 0000000000..3369f3a913
+index 0000000000000000000000000000000000000000..275763d5ac4164544301dbf9c8cfe674e2c7c01d
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/panel_app_grid.xml
 @@ -0,0 +1,25 @@
-+<Panel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
++<TaskPanel id="panel_app_grid" defaultVariant="@id/closed" role="@string/appgrid_componentName" displayId="0">
 +    <Variant id="@+id/opened">
 +        <Layer layer="20"/>
 +        <Visibility isVisible="true"/>
@@ -1403,28 +1403,28 @@ index 0000000000..3369f3a913
 +        <Transition onEvent="enter_camera_override" toVariant="@id/closed" duration="120" interpolator="@android:anim/accelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed" duration="260" interpolator="@android:anim/accelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml
 new file mode 100644
-index 0000000000..e3adeba0af
+index 0000000000000000000000000000000000000000..3679af2f0bf83c7f0b2a21e4142830e201615660
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/top_bar_panel.xml
 @@ -0,0 +1,8 @@
-+<Panel id="top_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
++<DecorPanel id="top_bar_panel" defaultVariant="@id/workspace_default" role="@layout/scalableui_transparent_decor" displayId="0">
 +    <Variant id="@+id/workspace_default">
 +        <Layer layer="1"/>
 +        <Visibility isVisible="false"/>
 +        <Alpha alpha="0.0"/>
 +        <Bounds left="0%" top="0%" right="100%" bottom="5%"/>
 +    </Variant>
-+</Panel>
++</DecorPanel>
 diff --git a/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
 new file mode 100644
-index 0000000000..da93b0b234
+index 0000000000000000000000000000000000000000..f9fa5d48b402ecd474790b20643826601e172d1f
 --- /dev/null
 +++ b/car_product/scalableui_declarative_multipanel/rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/res/xml/user_slot_panel.xml
 @@ -0,0 +1,42 @@
-+<Panel id="user_slot_panel" defaultVariant="@id/empty" role="@string/user_slot_panel_role" displayId="0">
++<TaskPanel id="user_slot_panel" defaultVariant="@id/empty" role="@string/user_slot_panel_role" displayId="0">
 +    <Variant id="@+id/empty">
 +        <Layer layer="6"/>
 +        <Visibility isVisible="true"/>
@@ -1465,4 +1465,4 @@ index 0000000000..da93b0b234
 +        <Transition onEvent="resize_panel_balanced" toVariant="@id/empty" duration="220" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +        <Transition onEvent="_System_OnHomeEvent" toVariant="@id/empty" duration="300" interpolator="@android:anim/accelerate_decelerate_interpolator"/>
 +    </Transitions>
-+</Panel>
++</TaskPanel>

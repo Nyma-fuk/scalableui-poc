@@ -63,9 +63,20 @@ m -j8 \
 #### build completed successfully (53:44 (mm:ss)) ####
 ```
 
-## 未確認事項
+## 実機能確認
 
-- emulator boot と実機 runtime 動作
-- target panel extra / URI 指定による TaskPanel ルーティングの end-to-end 動作
-- Decor-only transition の見た目と SurfaceControl 更新順
-- full image build と SDK system image packaging
+2026-06-10 に `emu_img_zip` の full image build、Windows emulator boot、
+初期パネル表示、AppGrid 起動を確認した。
+
+詳細は [docs/evaluation_2026-06-10_ja.md](docs/evaluation_2026-06-10_ja.md) を参照。
+
+注意:
+
+- Android16 QPR2 の ScalableUI XML parser は `<Panel>` ではなく
+  `<TaskPanel>` / `<DecorPanel>` を要求する。
+- 旧 `bool/config_enableScalableUI` は Android16 の `Flag.ScalableUIEnabled`
+  fallback resource ではないため、PoC RRO では `bool/scalable_ui` を overlay する。
+- AppGrid の下部ボタン操作は、現在 `panel_app_grid` ではなく fullscreen の
+  `app_panel` へ開く挙動として確認した。これは本PoCのデモ導線としては動作するが、
+  右側小パネル内に AppGrid を固定表示したい場合は、launcher intent の target panel
+  指定を追加検証する。

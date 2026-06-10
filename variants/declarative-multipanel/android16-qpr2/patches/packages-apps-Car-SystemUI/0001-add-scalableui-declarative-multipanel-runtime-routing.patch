@@ -1,5 +1,5 @@
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
-index aa36ba2b..824f31ab 100644
+index aa36ba2b67991710147bc9f62efc273a3482bef7..824f31ab90e35d0f504eaa736804ef7155ed748b 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
 @@ -72,6 +72,9 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
@@ -69,7 +69,7 @@ index aa36ba2b..824f31ab 100644
      public void onTransitionConsumed(@NonNull IBinder transition,
              @NonNull Map<Integer, AutoTaskStackState> changedTaskStacks, boolean aborted,
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java b/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
-index 1a1435d3..fc10d02d 100644
+index 1a1435d374df98a8462d25c7bdc6d959b9cad18e..fc10d02dc59874dc3ac2adebc4fa33633230086c 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
 @@ -67,7 +67,7 @@ public class PanelConfigReader {
@@ -95,7 +95,7 @@ index 1a1435d3..fc10d02d 100644
 +    }
  }
 diff --git a/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java b/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
-index 665d2d48..2c38cf5f 100644
+index 665d2d486f7ac003b7b210f0c3cb609267f37962..2c38cf5fedeefc8175e72362f20c339d3162df6c 100644
 --- a/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
 +++ b/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
 @@ -125,7 +125,7 @@ public class PanelTransitionCoordinator {
@@ -162,7 +162,7 @@ index 665d2d48..2c38cf5f 100644
  
      private void updatePanelSurface(PanelTransaction panelTransaction) {
 diff --git a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
-index 98309bd8..d2ca5932 100644
+index 98309bd806b2eb27f03d182f1b0b438b1ca1396c..d2ca593237d35117e44cadc9543f263d39ac24a3 100644
 --- a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
 +++ b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
 @@ -16,6 +16,13 @@
@@ -255,7 +255,7 @@ index 98309bd8..d2ca5932 100644
      }
  }
 diff --git a/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java b/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
-index 545d1563..f52ead89 100644
+index 545d1563168491fae0ae91f02bb87f3ee50be560..f52ead8968aae0030f7adf0da61f86f1549a1946 100644
 --- a/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
 +++ b/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
 @@ -186,7 +186,6 @@ public final class DecorPanel extends BasePanel {
@@ -275,7 +275,7 @@ index 545d1563..f52ead89 100644
              });
          }
 diff --git a/src/com/android/systemui/wmshell/CarWMShellModule.java b/src/com/android/systemui/wmshell/CarWMShellModule.java
-index bec0897c..1b99f65b 100644
+index bec0897ce61f75a1224a682d8a6b5a34ea445e4e..1b99f65b174533cb4a8cc3504941931a34db9b36 100644
 --- a/src/com/android/systemui/wmshell/CarWMShellModule.java
 +++ b/src/com/android/systemui/wmshell/CarWMShellModule.java
 @@ -221,14 +221,16 @@ public abstract class CarWMShellModule {
