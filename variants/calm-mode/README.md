@@ -27,7 +27,7 @@ Information density is reduced to map, media mini, and small status surfaces.
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh calm-mode
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh calm-mode
 lunch sdk_car_scalableui_calm_mode_x86_64-trunk_staging-userdebug
 ```
 

@@ -61,7 +61,7 @@ A ScalableUI-based multipanel home keeps system bars outside the managed area, k
 2. module build
 3. 必要に応じて `emu_img_zip`
 4. boot 済み emulator 上で `scripts/verify_editable_home_acceptance.sh`
-5. `/tmp/editable-home-acceptance/acceptance_report.md` と screenshot / dumpsys artifact を保管
+5. `<EVIDENCE_DIR>/editable-home-acceptance/acceptance_report.md` と screenshot / dumpsys artifact を保管
 
 自動検証 script / 手動確認が見る項目:
 

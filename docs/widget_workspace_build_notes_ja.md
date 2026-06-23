@@ -107,9 +107,9 @@ All Apps から起動された app は fullscreen `app_panel` を優先します
 実行した確認:
 
 ```bash
-JOBS=10 workdir/scalableui-poc/scripts/build_hmi_modules.sh widget-workspace
+JOBS=10 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh widget-workspace
 set +u; source build/envsetup.sh >/dev/null; lunch sdk_car_scalableui_widget_workspace_x86_64-trunk_staging-userdebug >/dev/null; set -u; m -j10 Car-WindowManager-Shell CarSystemUI CarLauncher
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=10 workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh widget-workspace
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> JOBS=10 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh widget-workspace
 ```
 
 結果:
@@ -118,7 +118,7 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=10 workdir/scalableui-poc/scripts/build_
 - `CarSystemUIScalableUiHmiWidgetWorkspaceRRO` build 成功
 - `Car-WindowManager-Shell` / `CarSystemUI` / `CarLauncher` build 成功
 - `m emu_img_zip` 成功
-- `/mnt/f/aaos_images/widget-workspace/sdk-repo-linux-system-images.zip` 生成済み
+- `<AAOS_IMAGE_ROOT>/widget-workspace/sdk-repo-linux-system-images.zip` 生成済み
 - 生成日時: `2026-04-23T09:05:24+09:00`
 - 生成 zip sha256: `a0a3608c1d10160f35f7ade7e6abcac6c7d88683cb87b8efa61e651532823b63`
 - 生成 zip sha1: `0ae508f6c4133828959ff6a8297359c21a14be26`
@@ -137,7 +137,7 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=10 workdir/scalableui-poc/scripts/build_
 生成 artifact:
 
 ```text
-/mnt/f/aaos_images/widget-workspace/
+<AAOS_IMAGE_ROOT>/widget-workspace/
   manifest.txt
   run.sh
   sdk-repo-linux-system-images.zip

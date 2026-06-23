@@ -28,7 +28,7 @@ Parking and charging use cases get a dense dashboard with energy, media, setting
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh parking-mode
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh parking-mode
 lunch sdk_car_scalableui_parking_mode_x86_64-trunk_staging-userdebug
 ```
 

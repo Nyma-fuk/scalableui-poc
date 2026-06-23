@@ -27,7 +27,7 @@ Driver and passenger panels are split by displayId for multi-display exploration
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh dual-display
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh dual-display
 lunch sdk_car_scalableui_dual_display_x86_64-trunk_staging-userdebug
 ```
 

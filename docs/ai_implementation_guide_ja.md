@@ -224,10 +224,10 @@ JSON:
 AAOS root で実行:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh dynamic-workspace
-JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh dynamic-workspace
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=8 \
-  workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh dynamic-workspace
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh dynamic-workspace
+JOBS=8 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh dynamic-workspace
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> JOBS=8 \
+  <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh dynamic-workspace
 ```
 
 単体で SystemUI を確認する場合:
@@ -245,7 +245,7 @@ m -j8 CarSystemUI
 ```powershell
 Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
   -ArgumentList '-avd','Y-Fuk-dynamic-workspace-eval3',
-                '-sysdir','F:\aaos_images\dynamic-workspace\extracted\x86_64',
+                '-sysdir','<AAOS_IMAGE_ROOT>\dynamic-workspace\extracted\x86_64',
                 '-wipe-data','-no-snapshot-load',
                 '-ports','5562,5563',
                 '-memory','6144',
@@ -256,10 +256,10 @@ Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
 boot wait:
 
 ```bash
-ADB=/mnt/f/Android/Sdk/platform-tools/adb.exe
+ADB=<ADB_BIN>
 for i in $(seq 1 120); do
-  boot="$($ADB -s emulator-5562 shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
-  anim="$($ADB -s emulator-5562 shell getprop init.svc.bootanim 2>/dev/null | tr -d '\r')"
+  boot="$($ADB -s <DEVICE_SERIAL> shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
+  anim="$($ADB -s <DEVICE_SERIAL> shell getprop init.svc.bootanim 2>/dev/null | tr -d '\r')"
   echo "attempt=$i boot=${boot:-?} anim=${anim:-?}"
   [ "$boot" = "1" ] && [ "$anim" = "stopped" ] && break
   sleep 5

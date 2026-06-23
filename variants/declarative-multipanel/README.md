@@ -34,10 +34,10 @@ variants/declarative-multipanel/patches/
 ## Build
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh declarative-multipanel
-JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh declarative-multipanel
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=4 \
-  workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh declarative-multipanel
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh declarative-multipanel
+JOBS=8 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh declarative-multipanel
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> JOBS=4 \
+  <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh declarative-multipanel
 ```
 
 手動で build する場合:

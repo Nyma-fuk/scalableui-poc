@@ -3,6 +3,21 @@
 このdocs配下には、ScalableUIそのものの調査、PoC仕様、Android17移植、過去variantの実験記録が含まれる。
 読むときは、必ず以下の区分を意識する。
 
+## サプライヤー提示時の表記ルール
+
+サプライヤーや社外関係者へ提示する文書では、個人PC上の絶対パス、一時ディレクトリ、emulator serial、WSL/Windows固有のdrive pathをそのまま載せない。
+
+| 目的 | 表記 |
+| --- | --- |
+| Android checkout root | `<AAOS17_ROOT>` |
+| この repository の checkout root | `<SCALABLEUI_POC_ROOT>` |
+| emulator image 出力先 | `<AAOS_IMAGE_ROOT>` |
+| adb binary | `<ADB_BIN>` |
+| adb serial | `<DEVICE_SERIAL>` |
+| 検証証跡の保存先 | `<EVIDENCE_DIR>` |
+
+`Source-Verified / ScalableUI General`、`Active PoC Baseline`、`Android17 Porting`、`自社/サプライヤー分担`に分類される文書は、上記 placeholder 表記を使う。`Historical / Experimental` の評価ログには当時の作業メモ由来のローカル artifact path が残る場合があるため、そのまま提示資料に使わず、必要箇所だけを抽出・再検証して使う。
+
 ## Source-Verified / ScalableUI General
 
 AAOS/AOSP sourceを正としてScalableUIの責務境界を説明する資料。
@@ -50,6 +65,7 @@ Android17移植・開発フローに関する資料。
 | [widget_workspace_build_notes_ja.md](widget_workspace_build_notes_ja.md) | widget-workspace build note |
 | [hmi_variant_suite_ja.md](hmi_variant_suite_ja.md) | generated variant suite案 |
 | [variant_status_ja.md](variant_status_ja.md) | variantごとの現行/過去/生成案ステータス |
+| [poc_repository_cleanup_plan_ja.md](poc_repository_cleanup_plan_ja.md) | repository整理方針と今後の棚卸し計画 |
 | [phase_evaluation_2026-05-31_ja.md](phase_evaluation_2026-05-31_ja.md) | 過去phase評価 |
 | [root_poc_fix_evaluation_2026-06-01_ja.md](root_poc_fix_evaluation_2026-06-01_ja.md) | 過去fix評価 |
 | [root_poc_runtime_owner_validation_2026-06-07_ja.md](root_poc_runtime_owner_validation_2026-06-07_ja.md) | 過去runtime owner検証 |

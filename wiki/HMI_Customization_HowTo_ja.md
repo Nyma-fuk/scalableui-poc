@@ -1,230 +1,162 @@
 # HMI Customization HowTo
 
-## 1. 何を変えたいかを先に決める
+このページは、現行 `declarative-multipanel` baseline を起点に HMI を変更するための手順です。
 
-HMI カスタマイズは、最初に「どの種類の変更か」を決めると迷いにくいです。
+## 1. まず変更の種類を決める
 
-主な変更種類:
-- panel の数を変える
-- panel の位置や大きさを変える
-- 固定 panel に出す app を変える
-- `All apps` や fullscreen overlay の挙動を変える
-- grip を追加する / 外す
-- product を増やして別 variant として持つ
+| 変更したいこと | 主な担当 | まず見る場所 |
+| --- | --- | --- |
+| 固定 panel の app を変える | RRO/XML | `config_default_activities`, `strings.xml` |
+| panel の位置や大きさを変える | RRO/XML | `res/xml/*_panel.xml` |
+| All Apps の出方を変える | RRO/XML + Launcher/SystemUI | `panel_app_grid`, AppGrid, routing |
+| 通常 app の fullscreen 表示を変える | RRO/XML + SystemUI | `app_panel`, TaskPanel routing |
+| Home 復帰や最大化を変える | SystemUI controller / event | `PanelTransitionCoordinator`, `EventDispatcher` |
+| runtime panel 追加や app assignment | PoC/OEM custom | controller, store, picker |
 
-## 2. どの variant をベースにするか決める
+## 2. ベースラインを間違えない
 
-この repo には 2 つのベースがあります。
+現行 baseline:
 
-- grip あり
-  - root 配下
-  - split を drag で動かせる
-- grip なし
-  - `variants/no-grip/`
-  - 固定 3 分割
+```text
+variants/declarative-multipanel
+```
 
-迷ったら:
-- まず layout の正解を探したいなら `no-grip`
-- 後で split を調整したいなら `grip`
+AAOS17 では、次の標準 target を維持します。
 
-## 3. HMI を変えるときの基本ディレクトリ
+```bash
+cd <AAOS17_ROOT>
+source build/envsetup.sh
+lunch sdk_car_x86_64-trunk_staging-userdebug
+```
 
-主に見る場所:
-- `patches/device-generic-car/`
-  - product を追加する patch
-- `patches/packages-services-Car/`
-  - RRO と panel XML の本体
-- `patches/packages-apps-Car-SystemUI/`
-  - ScalableUI 側の routing や grip の共通ロジック
-- `patches/packages-apps-Car-Launcher/`
-  - `All apps` 起動時の launch ヒント
-- `docs/`
-  - variant の仕様メモ
-- `variants/`
-  - 派生版
+古い `dynamic-workspace` や generated variant suite は、設計案や実験記録として参照できます。ただし、現行 PoC や Android17 移植の根拠にする場合は、必ず source / build / runtime で再検証します。
 
-RRO 側で一番重要なのは `packages/services/Car` 向け patch です。
-panel の見た目や配置は、ほぼここで決まります。
+## 3. 触る場所
 
-## 4. まず最小変更で 1 つだけ触る
+現行 baseline の主な編集対象:
 
-おすすめの順番:
-1. app を入れ替える
-2. panel の bounds を変える
-3. fullscreen routing を変える
-4. panel 数を増減する
-5. grip / animation / keyframe を触る
+```text
+variants/declarative-multipanel/
+  README.md
+  docs/hmi_spec_ja.md
+  patches/
+    device-generic-car/
+    packages-services-Car/
+    packages-apps-Car-SystemUI/
+```
 
-最初から全部変えると原因が分からなくなりやすいです。
+Android17 workspace 側の主な対応先:
 
-## 5. panel に app を割り当てる
+```text
+<AAOS17_ROOT>/
+  device/generic/car/sdk_car_x86_64.mk
+  packages/services/Car/car_product/scalableui_declarative_multipanel/
+  packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/
+```
 
-固定 panel の app 割り当ては、主に `config_default_activities` と panel の `role` で決まります。
+## 4. 小さく変更する順番
 
-見る file:
-- `res/values/config.xml`
-- `res/values/strings.xml`
+1. RRO/XML だけでできる変更から始める。
+2. Launcher / AppGrid の導線を変える。
+3. SystemUI event / routing を最小限足す。
+4. image を作って emulator smoke を取る。
+5. docs と patch を同期する。
 
-考え方:
-- panel XML には `id` がある
-- `config_default_activities` に `panelId;component` を書く
-- component は `package/.ActivityName` 形式か完全修飾の component を使う
+最初から runtime panel 追加、永続化、reparent、drag resize まで入れると、ScalableUI 標準の問題か PoC custom の問題か切り分けにくくなります。
+
+## 5. panel と app の割り当て
+
+固定 panel の app 割り当ては、主に `config_default_activities` と panel role で決まります。
 
 例:
+
 ```xml
 <string-array name="config_default_activities" translatable="false">
-    <item>calendar_panel;com.android.calendar/.AllInOneActivity</item>
+    <item>map_panel;com.android.car.mapsplaceholder/.MapsPlaceholderActivity</item>
+    <item>media_panel;com.android.car.carlauncher/.ControlBarActivity</item>
 </string-array>
 ```
 
-## 6. panel の位置と大きさを変える
+注意:
 
-panel 配置は、各 panel XML の `Variant` と `Bounds` で決まります。
+- Settings など、ユーザーが集中操作したい app は固定 panel ではなく `app_panel` に逃がす設計も検討する。
+- 既に panel 内にいる app を再度起動した場合、単純な多重起動ではなく最大化 / focus へつなげる設計が必要になる。
 
-まず見る file:
-- `map_panel.xml`
-- `calendar_panel.xml`
-- `radio_panel.xml`
-- `decor_left_background_panel.xml`
+## 6. panel の位置と大きさ
 
-重要な属性:
+panel XML の `Variant` と `Bounds` を変更します。
+
+見る値:
+
 - `left`
 - `top`
 - `right`
 - `bottom`
-- `width`
-- `height`
 - `leftOffset`
 - `topOffset`
 - `rightOffset`
 - `bottomOffset`
+- `Layer`
+- `Visibility`
+- `Corner`
 
-考え方:
-- `%` は画面全体に対する割合
-- `dp` の offset は隙間や margin に使う
-- 右側 2 段構成は、`calendar_panel` と `radio_panel` の `top` / `bottom` で分ける
+実装モデルは次の通りです。
 
-例:
-```xml
-<Bounds left="50%" leftOffset="12dp" top="0" right="100%" bottom="50%" bottomOffset="12dp"/>
+```text
+Panel XML
+  -> PanelState / Variant
+  -> StateManager
+  -> TaskPanel
+  -> RootTaskStack / Task
+  -> Activity
 ```
 
-## 7. panel を増やす
+## 7. All Apps / app_panel
 
-4 つ以上の panel にしたい場合の基本手順:
-1. 新しい panel XML を追加
-2. `window_states` に追加
-3. layer を必要なら追加
-4. `config_default_activities` に割り当てを追加
-5. fullscreen overlay と重なったときの閉じ方を必要に応じて調整
+`panel_app_grid` は All Apps 用の panel、`app_panel` は固定 panel 以外の通常 app を表示する launch-root 的な panel として扱います。
 
-増やしやすい例:
-- 右下をさらに 2 分割
-- 左下に navigation 以外の固定 panel を追加
-- 常駐 media panel を追加
+確認すること:
 
-## 8. fullscreen overlay を変える
+- All Apps が他 panel より前面に出るか
+- All Apps を再タップまたは外側タップで閉じられるか
+- All Apps から app 起動後、All Apps 自体が残らないか
+- 通常 app が固定 panel を壊さず `app_panel` へ出るか
 
-fullscreen 関連は 2 種類あります。
+## 8. controller / task event
 
-- `panel_app_grid`
-  - `All apps` overlay
-- `app_panel`
-  - 固定 panel 以外の一般 app 起動先
-
-見る file:
-- `panel_app_grid.xml`
-- `app_panel.xml`
-- `PanelAutoTaskStackTransitionHandlerDelegate.java`
-- `AppLaunchProvider.kt`
-- `AppItemViewHolder.java`
-
-考え方:
-- `All apps` は overlay なので、起動後に閉じないと「前面に残って見える」ことがある
-- `app_panel` は launch root panel
-- `All apps` 起動時の extra により `app_panel` 優先ルートを作っている
-
-## 9. grip を追加または削除する
-
-grip を使うなら:
-- `window_states` に grip panel を入れる
-- grip panel XML を追加する
-- controller XML を追加する
-- target panel 側に event transition を追加する
-
-grip を外すなら:
-- `window_states` から grip panel を外す
-- grip panel XML を使わない
-- target panel を固定 variant のみにする
-
-一番分かりやすい比較:
-- grip あり: root variant
-- grip なし: `variants/no-grip`
-
-## 10. 自分専用 variant を増やす
-
-variant の増やし方:
-1. 既存 variant を 1 つ選ぶ
-2. `variants/<new-name>/` を作る
-3. `README` と `docs` を置く
-4. `patches/device-generic-car/` に product patch を置く
-5. `patches/packages-services-Car/` に RRO patch を置く
-6. 必要なら apply/export script を置く
-
-variant 名の例:
-- `no-grip`
-- `media-right`
-- `four-panel`
-- `calendar-fullscreen`
-
-## 11. product を分ける
-
-他人が再現しやすくするには、product 名を分けるのが安全です。
-
-理由:
-- 既存 product を上書きしない
-- variant ごとに `lunch` で切り替えられる
-- build artifact の比較がしやすい
-
-最低限必要:
-- `device/generic/car/AndroidProducts.mk` に追加
-- `sdk_car_<variant>_x86_64.mk` を新設
-- `packages/services/Car/car_product/<variant>/...` を作る
-
-## 12. patch を安全に配る
-
-この repo の script 方針:
-- すでに当たっていれば skip
-- 対象 file にローカル変更があれば abort
-- `git apply --check` に失敗したら abort
-
-これにより、他の人の checkout を壊しにくくしています。
-
-## 13. tag の切り方
-
-variant と tag は役割を分けます。
-
-おすすめ:
-- variant
-  - どんな構成か
-- tag
-  - その構成のどの時点か
+XML だけで表現しづらいものは controller / event で扱います。
 
 例:
-- `grip-v1`
-- `grip-v2`
-- `no-grip-v1`
-- `four-panel-v1`
 
-## 14. 困ったときの見方
+- All Apps outside tap dismiss
+- 既存 app 再選択時の最大化
+- Home 復帰時の直前 layout restore
+- user / display / focus 条件による分岐
+- telemetry の event start / end 計測
 
-「どこを見ればいいか」が分からないときは次の順で追います。
+Android17 では `PanelTransitionCoordinator` が Window State と Surface animation を分けて扱うため、変更が WM transition を必要とするかを先に分類します。
 
-1. `README`
-2. variant の `docs/*spec*.md`
-3. `config.xml`
-4. 対象 panel XML
-5. `app_panel.xml` / `panel_app_grid.xml`
-6. `SystemUI` / `Launcher` patch
+## 9. Build / validation
 
-最初の 1 回は、既存 variant の `map_panel.xml` と `calendar_panel.xml` を見比べるのが一番理解しやすいです。
+推奨:
+
+```bash
+SOONG_NINJA=ninja SOONG_INCREMENTAL_ANALYSIS=false m -j1 nothing
+
+SOONG_NINJA=ninja m -j4 \
+  ScalableUiStubCarLauncher \
+  CarServiceScalableUiDeclarativeMultipanelRRO \
+  CarFrameworkScalableUiDeclarativeMultipanelRRO \
+  CarSystemUIScalableUiDeclarativeMultipanelRRO
+
+SOONG_NINJA=ninja m -j6 emu_img_zip
+```
+
+runtime 変更後は、screenshot、overlay state、package state、`dumpsys activity top`、`dumpsys window displays`、logcat fatal check を残します。
+
+## 10. 迷ったときの参照先
+
+- [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_source_verification_ja.md)
+- [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/scalableui_window_manager_flow_ja.md)
+- [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_development_flow_ja.md)
+- [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/variant_status_ja.md)

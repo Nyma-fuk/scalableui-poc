@@ -34,7 +34,7 @@ Android 17 `android-17.0.0_r1` の `sdk_car_x86_64-trunk_staging-userdebug`
 証跡:
 
 ```text
-/tmp/android17-r1-runtime-20260623-202045/
+<EVIDENCE_DIR>/android17-r1-runtime-20260623-202045/
 ```
 
 主な証跡:
@@ -141,7 +141,7 @@ screenshot / overlay / package / dumpsys / smoke test
 標準targetを選択する。
 
 ```bash
-cd ~/work/android17-r1
+cd <AAOS17_ROOT>
 source build/envsetup.sh
 lunch sdk_car_x86_64-trunk_staging-userdebug
 ```

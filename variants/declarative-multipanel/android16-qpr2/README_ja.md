@@ -9,7 +9,7 @@
 - lunch target:
   `sdk_car_scalableui_declarative_multipanel_x86_64-trunk_staging-userdebug`
 - checkout path used during verification:
-  `/home/y-fuk/work/android16-qpr2-release`
+  `<ANDROID16_QPR2_ROOT>`
 
 ## パッチ
 
@@ -17,16 +17,16 @@
 
 ```sh
 git -C device/generic/car apply \
-  /home/y-fuk/work/scalableui-poc/variants/declarative-multipanel/android16-qpr2/patches/device-generic-car/0001-add-sdk-car-scalableui-declarative-multipanel-x86-64-product.patch
+  <SCALABLEUI_POC_ROOT>/variants/declarative-multipanel/android16-qpr2/patches/device-generic-car/0001-add-sdk-car-scalableui-declarative-multipanel-x86-64-product.patch
 
 git -C packages/services/Car apply \
-  /home/y-fuk/work/scalableui-poc/variants/declarative-multipanel/android16-qpr2/patches/packages-services-Car/0001-add-scalableui-declarative-multipanel-rro.patch
+  <SCALABLEUI_POC_ROOT>/variants/declarative-multipanel/android16-qpr2/patches/packages-services-Car/0001-add-scalableui-declarative-multipanel-rro.patch
 
 git -C packages/apps/Car/SystemUI apply \
-  /home/y-fuk/work/scalableui-poc/variants/declarative-multipanel/android16-qpr2/patches/packages-apps-Car-SystemUI/0001-add-scalableui-declarative-multipanel-runtime-routing.patch
+  <SCALABLEUI_POC_ROOT>/variants/declarative-multipanel/android16-qpr2/patches/packages-apps-Car-SystemUI/0001-add-scalableui-declarative-multipanel-runtime-routing.patch
 
 git -C packages/apps/Car/Launcher apply \
-  /home/y-fuk/work/scalableui-poc/variants/declarative-multipanel/android16-qpr2/patches/packages-apps-Car-Launcher/0001-mark-appgrid-launch-source.patch
+  <SCALABLEUI_POC_ROOT>/variants/declarative-multipanel/android16-qpr2/patches/packages-apps-Car-Launcher/0001-mark-appgrid-launch-source.patch
 ```
 
 ## Android 15 版からの主な追従点

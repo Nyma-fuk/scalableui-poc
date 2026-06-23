@@ -27,7 +27,7 @@ A full-screen map/background is combined with floating rounded cards.
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh floating-card
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh floating-card
 lunch sdk_car_scalableui_floating_card_x86_64-trunk_staging-userdebug
 ```
 

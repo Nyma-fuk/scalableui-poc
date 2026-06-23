@@ -291,7 +291,7 @@ AAOS15 LTS5 / AAOS17 へ移植するときに優先して確認する場所:
 - product: `sdk_car_scalableui_dynamic_workspace_x86_64`
 - AVD: `Y-Fuk-dynamic-workspace-eval3`
 - emulator args: `-memory 6144 -cores 6 -gpu angle_indirect`
-- artifact: `/tmp/dw-eval-20260609-solid-refactor`
+- artifact: `<EVIDENCE_DIR>/dw-eval-20260609-solid-refactor`
 
 結果:
 

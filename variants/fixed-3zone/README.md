@@ -27,7 +27,7 @@ Map, calendar, and radio are always visible in a stable 3-zone layout.
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh fixed-3zone
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh fixed-3zone
 lunch sdk_car_scalableui_fixed_3zone_x86_64-trunk_staging-userdebug
 ```
 
