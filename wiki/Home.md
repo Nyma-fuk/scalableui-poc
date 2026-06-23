@@ -13,8 +13,8 @@
 
 1. [Repository README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/README.md)
 2. [Docs Index](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/README_ja.md)
-3. [AAOS17 ScalableUI Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_source_verification_ja.md)
-4. [AAOS ScalableUI / WindowManager 表示フロー](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/scalableui_window_manager_flow_ja.md)
+3. [AAOS17 ScalableUI Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
+4. [AAOS ScalableUI / WindowManager 表示フロー](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)
 5. [declarative-multipanel README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
 
 ## Wiki Pages
@@ -88,7 +88,7 @@ AAOS17:
 | Historical / experimental | `dynamic-workspace`, `editable-home`, `widget-workspace`, `widget-layout-lab`, `no-grip` | 正しい実験記録として残す |
 | Generated idea | `fixed-3zone`, `map-first`, `media-dock` など | 再利用する場合は source / build / runtime で再検証 |
 
-詳細は [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/variant_status_ja.md) を参照してください。
+詳細は [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) を参照してください。
 
 ## 変更時のルール
 

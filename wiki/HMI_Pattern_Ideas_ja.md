@@ -46,7 +46,7 @@ Status:
 参照:
 
 - [declarative-multipanel](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
-- [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_development_flow_ja.md)
+- [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/android17/aaos17_scalableui_development_flow_ja.md)
 
 ## Pattern 2: Map-first Navigation
 
@@ -327,8 +327,8 @@ Status:
 
 参照:
 
-- [dynamic-workspace notes](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/dynamic_workspace_notes_ja.md)
-- [runtime panel control](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/runtime_panel_control_ja.md)
+- [dynamic-workspace notes](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/historical/dynamic_workspace_notes_ja.md)
+- [runtime panel control](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/runtime_panel_control_ja.md)
 
 ## Pattern を実装候補へ進める条件
 
@@ -336,4 +336,4 @@ Status:
 2. PoC custom が必要な範囲を明確にする。
 3. AAOS17 source で関連 class を確認する。
 4. module build / image build / emulator smoke を取る。
-5. `docs/variant_status_ja.md` を更新する。
+5. `docs/workflows/variant_status_ja.md` を更新する。

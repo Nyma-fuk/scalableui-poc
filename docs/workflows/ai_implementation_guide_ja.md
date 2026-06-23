@@ -1,9 +1,9 @@
 # AI 実装ガイド: ScalableUI PoC
 
-> Source verification: 実装前に必ず [AOSP Source Verification](./aosp_source_verification_ja.md) を読むこと。
+> Source verification: 実装前に必ず [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を読むこと。
 > 現在の現行baselineは `declarative-multipanel` である。
 > この文書には Dynamic Workspace 時代の実装知見も含まれるが、Dynamic Workspace は historical / experimental として扱う。
-> docsの分類は [Docs Index](./README_ja.md) と [Variant Status](./variant_status_ja.md) を正とする。
+> docsの分類は [Docs Index](../README_ja.md) と [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) を正とする。
 
 この文書は、AI agent がこの repository だけを入口にして、ScalableUI と今回の PoC を理解し、実装・build・評価まで進めるための実装ガイドです。
 
@@ -13,7 +13,7 @@
 
 - 以前の状態: 情報は多いが、AI が迷わず実装を継続するには不足があった。
 - 主な不足: `dynamic-workspace` の patch / variant directory / demo app 追補 / 読む順番 / ScalableUI 標準と custom 実装の境界が分散していた。
-- 補填後の状態: `README.md`、`AGENTS.md`、本ファイル、`docs/scalableui_poc_architecture_ja.md`、`docs/dynamic_workspace_notes_ja.md` を読めば、AI が実装・build・Windows emulator 評価まで進められる情報量を持つ。
+- 補填後の状態: `README.md`、`AGENTS.md`、本ファイル、`docs/historical/scalableui_poc_architecture_ja.md`、`docs/historical/dynamic_workspace_notes_ja.md` を読めば、AI が実装・build・Windows emulator 評価まで進められる情報量を持つ。
 
 ただし、AAOS15 LTS5 / AAOS17 へ移植する場合は API 差分が出る可能性があるため、patch apply 後の build error はその版の source に合わせて解釈する。
 

@@ -1,6 +1,6 @@
 # root PoC 修正評価メモ 2026-06-01
 
-> Source verification: この文書は 2026-06-01 時点の runtime 評価記録です。AOSP source 上の責務分担と未確認事項は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は 2026-06-01 時点の runtime 評価記録です。AOSP source 上の責務分担と未確認事項は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 対象
 

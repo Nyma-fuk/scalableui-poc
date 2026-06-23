@@ -6,4 +6,4 @@ Historical / experimental variant.
 
 It is not the current baseline. Use `declarative-multipanel` for current PoC work and treat this variant as a source of experiments for runtime panel generation, assignment, resize, and persistence.
 
-See `docs/hmi_spec_ja.md` and the top-level `docs/dynamic_workspace_notes_ja.md` for architecture, constraints, and validation history.
+See `docs/hmi_spec_ja.md` and the top-level `docs/historical/dynamic_workspace_notes_ja.md` for architecture, constraints, and validation history.

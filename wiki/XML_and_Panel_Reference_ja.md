@@ -179,6 +179,6 @@ Android17 source には `StateManager.addState(...)` と `reloadPanelState(...)`
 
 ## 12. 参照
 
-- [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_source_verification_ja.md)
-- [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aosp_source_verification_ja.md)
-- [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/scalableui_window_manager_flow_ja.md)
+- [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
+- [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md)
+- [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)

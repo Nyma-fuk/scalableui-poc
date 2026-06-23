@@ -1,6 +1,6 @@
 # Dynamic Workspace Notes
 
-> Source verification: この文書は `dynamic-workspace` の historical / experimental PoC メモです。現在の live `declarative-multipanel` baseline には Dynamic Workspace runtime は含まれていません。AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `dynamic-workspace` の historical / experimental PoC メモです。現在の live `declarative-multipanel` baseline には Dynamic Workspace runtime は含まれていません。AOSP 実装との照合結果は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 `dynamic-workspace` は、固定スロットを前提にしない ScalableUI PoC です。
 

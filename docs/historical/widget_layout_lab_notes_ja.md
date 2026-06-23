@@ -1,6 +1,6 @@
 # Widget Layout Lab Notes
 
-> Source verification: この文書は `widget-layout-lab` の variant note です。ScalableUI 標準 / PoC custom / 未確認事項の境界は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `widget-layout-lab` の variant note です。ScalableUI 標準 / PoC custom / 未確認事項の境界は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 目的
 

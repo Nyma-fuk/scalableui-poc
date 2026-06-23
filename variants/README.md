@@ -10,7 +10,7 @@
 | Historical / experimental | `dynamic-workspace`, `editable-home`, `widget-workspace`, `widget-layout-lab`, `no-grip` | 正しい実験記録として残すが、現行 baseline ではない |
 | Generated idea | `fixed-3zone`, `map-first`, `media-dock`, `productivity-dashboard`, `app-with-rail`, `floating-card`, `app-grid-hub`, `calm-mode`, `parking-mode`, `developer-cockpit`, `dual-display`, `showcase-modes` | HMI 案として残す。再利用時は source / build / runtime で再検証する |
 
-詳細な status は [../docs/variant_status_ja.md](../docs/variant_status_ja.md) を参照する。
+詳細な status は [../docs/workflows/variant_status_ja.md](../docs/workflows/variant_status_ja.md) を参照する。
 
 ## Android17 方針
 

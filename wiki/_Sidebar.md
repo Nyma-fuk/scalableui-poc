@@ -10,15 +10,15 @@
 
 - [Repository README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/README.md)
 - [Docs Index](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/README_ja.md)
-- [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_source_verification_ja.md)
-- [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/scalableui_window_manager_flow_ja.md)
+- [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
+- [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)
 
 ### Active PoC
 
 - [declarative-multipanel](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
-- [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/variant_status_ja.md)
-- [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_development_flow_ja.md)
-- [PoC Cleanup Plan](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/poc_repository_cleanup_plan_ja.md)
+- [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md)
+- [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/android17/aaos17_scalableui_development_flow_ja.md)
+- [PoC Cleanup Plan](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/poc_repository_cleanup_plan_ja.md)
 
 ### Legacy / Reference
 

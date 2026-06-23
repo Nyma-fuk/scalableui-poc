@@ -1,6 +1,6 @@
 # Widget Workspace Build Notes
 
-> Source verification: この文書は `widget-workspace` の historical build / runtime note です。token reparent や task move の記述は PoC patch の検証記録であり、現在の live ScalableUI 標準機能としては未確認です。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `widget-workspace` の historical build / runtime note です。token reparent や task move の記述は PoC patch の検証記録であり、現在の live ScalableUI 標準機能としては未確認です。詳細は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 目的
 

@@ -1,8 +1,8 @@
 # ScalableUI HMI Variant Suite
 
-> Source verification: この文書は variant suite の運用メモです。各 variant の挙動は patch 適用後の AAOS source と build artifact で再確認してください。AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は variant suite の運用メモです。各 variant の挙動は patch 適用後の AAOS source と build artifact で再確認してください。AOSP 実装との照合結果は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 >
-> 現在の扱い: historical / generated idea。現行baselineは `declarative-multipanel` です。Android17移植では、このsuiteのようにvariantごとの専用productを増やすのではなく、標準 `sdk_car_x86_64` へPoC差分を追加する方針を優先します。variantの状態は [variant_status_ja.md](./variant_status_ja.md) を参照してください。
+> 現在の扱い: historical / generated idea。現行baselineは `declarative-multipanel` です。Android17移植では、このsuiteのようにvariantごとの専用productを増やすのではなく、標準 `sdk_car_x86_64` へPoC差分を追加する方針を優先します。variantの状態は [variant_status_ja.md](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) を参照してください。
 
 この文書は、ScalableUI で検討した HMI 案を AAOS15 checkout に適用し、ビルド時の product / lunch target で切り替えるための手順です。
 

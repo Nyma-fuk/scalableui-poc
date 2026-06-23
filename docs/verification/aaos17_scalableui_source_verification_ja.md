@@ -269,7 +269,7 @@ Correct
 
 - `README.md`
 - `docs/README_ja.md`
-- `docs/android17_scalableui_delta_ja.md`
-- `docs/android17_as_is_scalableui_migration_plan_ja.md`
-- `docs/aaos_app_layer_scalableui_scope_ja.md`
-- `docs/scalableui_window_manager_flow_ja.md`
+- `docs/android17/android17_scalableui_delta_ja.md`
+- `docs/android17/android17_as_is_scalableui_migration_plan_ja.md`
+- `docs/architecture/aaos_app_layer_scalableui_scope_ja.md`
+- `docs/architecture/scalableui_window_manager_flow_ja.md`

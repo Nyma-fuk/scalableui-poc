@@ -1,6 +1,6 @@
 # ScalableUI PoC HMI 仕様メモ
 
-> Source verification: この文書は root PoC の仕様メモです。AOSP 実装と照合した境界は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。`TaskPanel` は Activity を直接保持せず、root task stack / task を介して Activity を表示します。
+> Source verification: この文書は root PoC の仕様メモです。AOSP 実装と照合した境界は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。`TaskPanel` は Activity を直接保持せず、root task stack / task を介して Activity を表示します。
 
 ## 目的
 

@@ -1,6 +1,6 @@
 # AAOS ScalableUI / WindowManager 表示フロー
 
-> Source verification: この文書は 2026-06-09 に AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](./aosp_source_verification_ja.md)、Android17 固有の照合結果は [AAOS17 ScalableUI Source Verification](./aaos17_scalableui_source_verification_ja.md) を参照してください。
+> Source verification: この文書は 2026-06-09 に AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md)、Android17 固有の照合結果は [AAOS17 ScalableUI Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md) を参照してください。
 
 > Integration-facing note: この文書では、個人PC上の絶対パスや一時ファイルパスを使わず、AOSP source relative path または `<AAOS17_ROOT>` / `<SCALABLEUI_POC_ROOT>` のような placeholder で表記します。
 

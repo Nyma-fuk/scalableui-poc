@@ -1,6 +1,6 @@
 # Editable Home Fullscreen / Architecture 整理
 
-> Source verification: この文書は `editable-home` PoC の設計メモです。AOSP 標準機能と PoC custom / historical patch を分けて読んでください。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `editable-home` PoC の設計メモです。AOSP 標準機能と PoC custom / historical patch を分けて読んでください。詳細は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 目的
 

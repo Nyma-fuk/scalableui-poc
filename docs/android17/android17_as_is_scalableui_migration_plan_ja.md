@@ -12,7 +12,7 @@ Android 17 AAOSのAs-Is画面構成と画面遷移を壊さずに、既存の
 詳細な開発フローは以下に分離して整理する。
 
 ```text
-docs/aaos17_scalableui_development_flow_ja.md
+docs/android17/aaos17_scalableui_development_flow_ja.md
 ```
 
 ## As-Is基準

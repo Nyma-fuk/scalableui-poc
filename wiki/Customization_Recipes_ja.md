@@ -134,7 +134,7 @@ XML だけで足りない場合は、outside tap を event に変換する contr
 3. active にする場合だけ patch を整える。
 4. Android17 では専用 product を増やさず、標準 target への差分として評価する。
 
-variant の状態は [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/variant_status_ja.md) に追記します。
+variant の状態は [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) に追記します。
 
 ## Recipe 9: 対象環境へ渡す成果物を整える
 
