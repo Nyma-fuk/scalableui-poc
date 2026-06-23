@@ -944,6 +944,265 @@ ScalableUI は CarSystemUI / WMShell / WindowManager と接続するため、通
 | task lifecycle を制御する | platform privileged 領域 | focus、user、display、process death を確認する |
 | 通常アプリの UI を作る | app APK | Panel 内表示に適した responsive UI は作れるが、TaskPanel 自体は制御しない |
 
+## 指定 Gitiles URL との照合
+
+指定された Android 17 tag の Gitiles URL と、ローカル `android-17.0.0_r1` source の内容を照合した。
+
+| URL | 対応する source path | 確認結果 | 現状資料への反映 |
+| --- | --- | --- | --- |
+| `src/com/android/systemui/car/wm/scalableui/` | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui` | ScalableUI runtime 本体。README、panel、systemevents、systemwindow、view、configuration を含む | 本資料の中心対象。既存の Panel / Event / Controller / Transition 説明と整合 |
+| `src/com/android/systemui/car/wm/` | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm` | ScalableUI だけでなく、activity、cluster、taskview、caption、display compat、CarSystemUI proxy も含む上位 WM package | ScalableUI 周辺境界として追記が必要 |
+| `samples/` | `packages/apps/Car/SystemUI/samples` | AAOS SystemUI RRO samples。System bar、DEWD、MinimizedControls などを含む。ScalableUI codelab は別 path の `packages/apps/Car/References/scalable-ui/codelab` | samples は ScalableUI 専用 sample ではないが、DEWD/MinimizedControls 系に ScalableUI XML 実例が含まれる |
+
+Gitiles 上の `wm/scalableui/` は tree として以下を持つ。
+
+```text
+configuration/
+panel/
+systemevents/
+systemwindow/
+view/
+ActionConfigReader.java
+AutoTaskStackHelper.java
+EventDispatcher.java
+PanelAutoTaskStackTransitionHandlerDelegate.java
+PanelConfigReader.java
+PanelTransitionCoordinator.java
+README.md
+ScalableUIDumpsys.java
+ScalableUIExtensions.kt
+ScalableUIUtils.java
+ScalableUIWMInitializer.java
+```
+
+この構成は、本資料で整理した「config を読む」「event を dispatch する」「panel state を transition する」「TaskPanel / DecorPanel を表示する」「system window と接続する」という理解と一致する。
+
+## `wm/` 上位 package の意味
+
+`src/com/android/systemui/car/wm/` は ScalableUI だけの directory ではない。AAOS CarSystemUI の WindowManager 連携全体を含む。
+
+| 領域 | 主な source | ScalableUI との関係 |
+| --- | --- | --- |
+| `scalableui/` | `PanelConfigReader`, `PanelTransitionCoordinator`, `TaskPanel`, `DecorPanel`, `SystemEventHandler` | ScalableUI 本体 |
+| `taskview/` | `RemoteCarTaskViewServerImpl`, `RemoteCarTaskViewTransitions`, `RootTaskMediator` | RemoteCarTaskView 用の別経路。TaskPanel の実体ではない |
+| `activity/` | `ActivityBlockingActivity`, `ContinuousBlankActivity`, `LaunchOnPrivateDisplayRouterActivity`, `ActivityWindowController` | Activity 表示や private display routing などの補助 |
+| `cluster/` | `ClusterDisplayController` | cluster display 向け制御 |
+| root files | `CarFullscreenTaskMonitorListener`, `CarSystemUIProxyImpl`, `CarWMUserHelper`, `AutoCaptionBarViewControllerImpl` | task lifecycle、CarSystemUI proxy、multi-user / display、caption / display compat など |
+
+### `taskview/` は ScalableUI TaskPanel とは別
+
+`wm/taskview` には `RemoteCarTaskViewServerImpl`、`RemoteCarTaskViewTransitions`、`RootTaskMediator` が存在する。これは `RemoteCarTaskView` の server side 実装である。
+
+確認できる責務:
+
+- `RemoteCarTaskViewServerImpl` は `CarTaskViewHost` を実装し、host 側から surface created / destroyed、bounds、start activity、root task 作成を受ける。
+- `RootTaskMediator` は `TaskCreationParams` を使って `ShellTaskOrganizer.createTask(...)` を呼び、TaskView 用 root task を作る。
+- `RemoteCarTaskViewTransitions` は Home が開くときに embedded task を上へ reorder するなど、TaskView 特有の transition 補助を行う。
+- `CarSystemUIProxyImpl` は `CarSystemUIProxy` として `createCarTaskView(...)` / `createControlledCarTaskView(...)` を提供し、`RemoteCarTaskViewServerImpl` を管理する。
+
+これらは task を扱う点では ScalableUI と近いが、実装経路は別である。
+
+```text
+RemoteCarTaskView path:
+  App / client
+    -> CarSystemUIProxy
+    -> RemoteCarTaskViewServerImpl
+    -> TaskViewTaskController / RootTaskMediator
+    -> ShellTaskOrganizer
+
+ScalableUI TaskPanel path:
+  CarSystemUI ScalableUI
+    -> TaskPanel
+    -> AutoTaskStackController
+    -> ShellTaskOrganizer
+```
+
+したがって、`wm/` 上位 package に `taskview/` が存在することは、`TaskPanel == RemoteCarTaskView` を意味しない。むしろ AAOS17 source では、TaskPanel と RemoteCarTaskView が同じ WM package 内の別経路として並んでいる。
+
+### task lifecycle / multi-user / display 境界
+
+`CarFullscreenTaskMonitorListener` は fullscreen / multi-window task lifecycle を `AutoTaskRepository` に伝える。taskview 関連 task は除外される。
+
+`CarWMUserHelper` は display と user の対応を扱う。MUMD 構成では `CarOccupantZoneManager` から display に割り当てられた user を取得する。
+
+このため、ScalableUI の panel 設計では、panel XML だけでなく以下も確認対象になる。
+
+- task lifecycle と repository
+- taskview task と non-taskview task の切り分け
+- displayId と userId の対応
+- occupant zone 変更
+- display compat / caption bar
+
+## `samples/` の位置づけ
+
+`packages/apps/Car/SystemUI/samples` は、AAOS SystemUI の config override を試すための RRO samples である。Gitiles の README でも、各 sample は AAOS SystemUI の config override 効果を示すものと説明されている。
+
+README が示す運用:
+
+- sample RRO を build する。
+- APK として install する。
+- `cmd overlay enable --user 0 ...` で overlay を有効化する。
+- system bar persistency 系は user 0 と user 10 の両方に適用する例がある。
+- `dumpsys window | grep mRemoteInsetsControllerControlsSystemBars` で remote insets controller 設定を確認する。
+- 必要に応じて SystemUI を restart する。
+
+### `samples/` の分類
+
+| Sample group | 主な module | 内容 | ScalableUI との関係 |
+| --- | --- | --- | --- |
+| System bar position | `CarSystemUIBottomRRO`, `CarSystemUIBottomRoundedRRO`, `CarSystemUILeftRRO`, `CarSystemUIRightRRO` | top/left/right/bottom system bar の enable、type、z-order、HUN position、Home/AppGrid component を override | ScalableUI そのものではないが、panel bounds / inset / layer 設計に影響する |
+| System bar transparency | `CarSystemUIStatusBarTranslucent`, `CarSystemUINavBarTranslucent` | status bar / navigation bar background を translucent にする | panel と system bar の重なり方に影響する |
+| System bar persistency | `CarSystemUISystemBarPersistcyImmersive`, `...ImmersiveWithNav`, `...NonImmersive`, `...BarPolicy` | immersive request 時の system bar 表示 policy を変える | ScalableUI の immersive transition と合わせて確認が必要 |
+| Remote insets control | `CarSystemUIControllsSystemBarInsetsRRO` | `config_remoteInsetsControllerControlsSystemBars=true` | system bar を app ではなく CarSystemUI 側で制御する方向。panel safe bounds と関係する |
+| DEWD | `DewdDynamicAospRRO`, `DewdLandAospRRO`, `DewdPortAospRRO`, `DewdSplitAospRRO` | ScalableUI XML を使った dynamic / land / port / split 表示構成 | ScalableUI の実例として重要 |
+| Minimized controls | `MinimizedControlsDynamicRRO` | minimized media / dialer controls と dynamic panel 構成 | ScalableUI panel + decor panel + system bar 非表示の実例 |
+
+## `samples/DEWD*` の ScalableUI 構成
+
+`samples/DEWD*` は `samples/` 配下にあるが、内容としては ScalableUI XML を多く含む。`packages/apps/Car/References/scalable-ui/codelab` の sample と合わせて、AAOS17 source 内の ScalableUI 実例として見る価値がある。
+
+### `DEWDDynamic`
+
+`DEWDDynamic` は dynamic 表示向けの window state list を持つ。
+
+`res/values/config.xml`:
+
+- `app_panel`
+- `map_panel`
+- `widget_panel`
+- `assistant_panel`
+- `suw_panel`
+- `unreactive_panel`
+- `status_bar`
+- `nav_bar`
+- `hun_panel`
+- `projected_panel`
+
+`res/values-port/config.xml` では portrait 向けに以下も追加される。
+
+- `app_drawer_panel`
+- `app_grip_bar_panel`
+- `app_grid_panel`
+- `app_grid_grip_bar_panel`
+- `background_map_panel`
+- `widget_bar_panel`
+- `calm_mode_panel`
+- `app_styled_view_panel`
+- `app_styled_view_scrim`
+- `app_styled_view_background`
+- `camera_panel`
+
+設定として以下も持つ。
+
+- `config_homePanelVisibilities`
+- `config_appGridPanelVisibilities`
+- `config_appGridSelectedClickEvent`
+
+これは、Home 状態と AppGrid 状態でどの panel を表示するかを文字列 config と window states で切り替える例である。
+
+### `DEWDPort`
+
+`DEWDPort` は portrait 向けの panel 群を持つ。
+
+主な panel:
+
+| XML | Panel | defaultVariant | Controller |
+| --- | --- | --- | --- |
+| `app_drawer_panel.xml` | `TaskPanel app_panel` | `closed` | なし |
+| `background_map_panel.xml` | `TaskPanel map_panel` | `opened` | `map_panel_controller` |
+| `app_grid_panel.xml` | `TaskPanel panel_app_grid` | `closed` | `app_grid_panel_controller` |
+| `app_grid_grip_bar_panel.xml` | `DecorPanel decor_grip_app` | `closed` | `app_grid_grip_bar_controller` |
+| `app_grip_bar_panel.xml` | `DecorPanel decor_grip` | `closed` | `app_grip_bar_controller` |
+| `widget_bar_panel.xml` | `TaskPanel widget_panel` | `opened` | `widget_panel_controller` |
+| `calm_mode_panel.xml` | `TaskPanel panel_calm_mode` | `closed` | `calm_mode_panel_controller` |
+| `app_styled_view_panel.xml` | `TaskPanel panel_app_styled_view` | `closed` | `app_styled_view_panel_controller` |
+| `app_styled_view_scrim.xml` | `DecorPanel decor_app_styled_view_scrim` | `closed` | `app_styled_view_scrim_controller` |
+| `app_styled_view_background.xml` | `DecorPanel decor_app_styled_view_background` | `closed` | `app_styled_view_background_controller` |
+
+この sample は、portrait HMI で map、widget、app drawer、app grid、grip bar、styled view、scrim を ScalableUI panel として分ける実例である。
+
+### `DEWDLand`
+
+`DEWDLand` は landscape 向けの小さめの構成である。
+
+主な panel:
+
+- `TaskPanel app_panel`
+- `TaskPanel map_panel`
+- `TaskPanel widget_panel`
+
+portrait より panel 数を抑え、landscape 表示に合わせた map / widget / app の基本構成を示している。
+
+### `DEWDSplit`
+
+`DEWDSplit` は split 表示向けの構成である。
+
+主な panel:
+
+| XML | Panel | defaultVariant | 役割 |
+| --- | --- | --- | --- |
+| `app_panel.xml` | `TaskPanel app_panel` | `closed` | split 右側の app panel |
+| `map_panel.xml` | `TaskPanel map_panel` | `expanded` | map panel |
+| `grip_bar.xml` | `DecorPanel grip_bar` | `closed` | drag handle |
+| `map_panel_overlay.xml` | `DecorPanel map_panel_overlay` | `expanded_hidden` | map overlay |
+
+`app_panel.xml` では以下の variant / transition が確認できる。
+
+- `opened`
+- `immersive`
+- `closed`
+- `KeyFrameVariant drag`
+- `_System_TaskOpenEvent`
+- `_System_TaskPanelEmptyEvent`
+- `_System_OnHomeEvent`
+- `_Drag_PanelDragEvent`
+- `_Drag_PanelOpenEvent`
+- `_Drag_PanelCloseEvent`
+- `_System_EnterImmersiveMode`
+- `_System_ExitImmersiveMode`
+
+`grip_bar.xml` は `DecorPanel` として drag event を受け、app panel と連動する。これは、ScalableUI の drag / keyframe / immersive transition の実例として重要である。
+
+### `MinimizedControlsDynamic`
+
+`MinimizedControlsDynamic` は minimized media / dialer controls を ScalableUI panel として扱う sample である。
+
+主な特徴:
+
+- feature flag `com.android.car.scalableui.enable_ext_panel_updates` 付きの `window_states`
+- top / bottom / left / right system bar を無効化する config
+- `floating_app_panel`
+- `background_map_panel`
+- `widget_panel`
+- `minimized_media_controls_panel`
+- `minimized_dialer_controls_panel`
+- `top_bar_left_panel` / `top_bar_right_panel`
+- `bottom_bar_left_panel` / `bottom_bar_center_panel` / `bottom_bar_right_panel`
+- `hun_panel`
+
+これは、従来の system bar 領域に相当するものも ScalableUI panel / DecorPanel として再構成する方向を示す sample である。
+
+## `samples/` と `References/scalable-ui/codelab` の違い
+
+| Path | 目的 | 内容 |
+| --- | --- | --- |
+| `packages/apps/Car/SystemUI/samples` | AAOS SystemUI config override sample | System bar、DEWD、MinimizedControls、remote insets、immersive policy |
+| `packages/apps/Car/References/scalable-ui/codelab` | ScalableUI codelab RRO sample | OnePanel、TwoPanel、SplitPanel、BoundsExample など、ScalableUI XML 学習用 |
+
+`samples/` は ScalableUI 専用 directory ではない。ただし `DEWD*` と `MinimizedControlsDynamic` は、AAOS17 source 内で ScalableUI XML を使った現実的な system UI layout example として扱える。
+
+## 現状資料との差分
+
+今回の照合で、現状資料に対して追加で明確化すべき点は以下である。
+
+| 観点 | これまでの整理 | 追加で明確化した点 |
+| --- | --- | --- |
+| ScalableUI README | README の存在と責務は整理済み | Gitiles の `wm/scalableui/` directory が README と各 subpackage を含むことを確認 |
+| `wm/` 上位 package | ScalableUI / TaskView の違いを整理済み | `wm/` は ScalableUI だけでなく taskview、activity、cluster、task monitor、user/display helper を含む |
+| RemoteCarTaskView | TaskPanel とは別経路と整理済み | `CarSystemUIProxyImpl -> RemoteCarTaskViewServerImpl -> RootTaskMediator` の具体経路を追加 |
+| `samples/` | 未整理 | SystemUI sample RRO 集であり、system bar / DEWD / minimized controls / remote insets を含むことを追加 |
+| ScalableUI sample | `References/scalable-ui/codelab` を整理済み | `samples/DEWD*` と `MinimizedControlsDynamic` も ScalableUI XML 実例として追加 |
+
 ## HowTo: XML を作るときの最小手順
 
 1. `res/values/config.xml` に `window_states` を定義する。
