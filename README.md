@@ -1,210 +1,145 @@
 # ScalableUI AAOS HMI PoC
 
-この repository は、AAOS15 の ScalableUI を使った HMI PoC を別 checkout に再適用できるようにするための patch / docs / workflow 集です。
+この repository は、AAOS の ScalableUI を使った HMI 検証を、AOSP/AAOS source に基づいて整理・再現するための patch / docs / workflow 集です。
 
-重要: docs は設計メモと評価記録を含みます。ScalableUI / WindowManager / ActivityTaskManager の正は AAOS/AOSP ソースコードで確認してください。2026-06-09 時点の照合結果は `docs/aosp_source_verification_ja.md` にまとめています。
+重要:
 
-現在は、いったん `declarative-multipanel` を再出発用 baseline として扱います。これは `sdk_car_x86_64.mk` を土台に、`aaos-scalable-ui-specs` の初期 workspace を ScalableUI の panel / variant / transition / task placement として確認する構成です。
+- ScalableUI / WindowManager / ActivityTaskManager の正は、この repository の docs ではなく AAOS/AOSP source code です。
+- source 照合結果は [docs/aosp_source_verification_ja.md](docs/aosp_source_verification_ja.md) と [docs/aaos17_scalableui_source_verification_ja.md](docs/aaos17_scalableui_source_verification_ja.md) を正とします。
+- この repository には、現行PoC、Android17移植メモ、過去variantの実験記録が混在していました。現在は下記の区分で読む前提に整理しています。
 
-`dynamic-workspace` は、ユーザー操作で panel を追加・削除・移動・resize し、panel ごとに任意の app を割り当てる方向の大きな PoC として残しています。ただし、現在の開発方針では、まず `declarative-multipanel` で ScalableUI 標準の責務を確認してから、必要な custom 実装を段階的に足します。
+## 情報の区分
 
-## まず読むもの
+| 区分 | 内容 | 主な参照先 |
+| --- | --- | --- |
+| ScalableUIそのもの | AAOS/AOSP上のScalableUI、TaskPanel、StateManager、WindowManager連携の説明 | [docs/aosp_source_verification_ja.md](docs/aosp_source_verification_ja.md), [docs/aaos17_scalableui_source_verification_ja.md](docs/aaos17_scalableui_source_verification_ja.md), [docs/scalableui_window_manager_flow_ja.md](docs/scalableui_window_manager_flow_ja.md) |
+| 現行PoC baseline | `declarative-multipanel` の仕様、評価、patch | [variants/declarative-multipanel/README.md](variants/declarative-multipanel/README.md), [variants/declarative-multipanel/docs/hmi_spec_ja.md](variants/declarative-multipanel/docs/hmi_spec_ja.md) |
+| Android17移植 | Android17 as-isを壊さずPoC差分を載せる開発フロー | [docs/aaos17_scalableui_source_verification_ja.md](docs/aaos17_scalableui_source_verification_ja.md), [docs/aaos17_scalableui_development_flow_ja.md](docs/aaos17_scalableui_development_flow_ja.md), [docs/android17_as_is_scalableui_migration_plan_ja.md](docs/android17_as_is_scalableui_migration_plan_ja.md) |
+| 自社/サプライヤー分担 | アプリレイヤー、RRO/XML、controller、task eventの担当境界 | [docs/aaos_app_layer_scalableui_scope_ja.md](docs/aaos_app_layer_scalableui_scope_ja.md) |
+| historical / experimental | 過去のdynamic workspace、editable home、widget系variant | [docs/README_ja.md](docs/README_ja.md) の分類表 |
+| variant status | 各variantの現行/過去/生成案の扱い | [docs/variant_status_ja.md](docs/variant_status_ja.md) |
 
-人が全体を理解する場合は、次の順で読むのが一番迷いません。
+docs全体の読み分けは [docs/README_ja.md](docs/README_ja.md) を参照してください。
 
-1. `README.md`
-2. `docs/aosp_source_verification_ja.md`
-3. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
-4. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
-5. `docs/scalableui_window_manager_flow_ja.md`
-6. `docs/scalableui_poc_architecture_ja.md`
-7. `docs/dynamic_workspace_notes_ja.md`
-8. `docs/ai_implementation_guide_ja.md`
-9. `docs/hmi_variant_suite_ja.md`
+## 現行baseline
 
-AI agent に実装を任せる場合は、最初に `AGENTS.md` と `docs/ai_implementation_guide_ja.md` を読ませてください。
+現在の実装・評価の基準は `declarative-multipanel` です。
 
-## 現在の到達点: declarative-multipanel
+目的:
 
-`declarative-multipanel` で確認済みのこと:
-
-- clean `sdk_car_x86_64.mk` ベースの専用 product を build できる
-- `CarSystemUI` RRO で `config_enableScalableUI=true` にできる
-- Framework RRO で `config_remoteInsetsControllerControlsSystemBars=true` にできる
-- CarService RRO を product overlay として入れられる
-- 標準 `CarLauncher` を透明 HOME host の `StubCarLauncher` に置き換えられる
-- `window_states` に定義した spec panel が SystemUI に読み込まれる
-- `config_default_activities` で既存 app activity を panel に配置できる
-- AppGrid を `panel_app_grid` として表示できる
-- AppGrid から選択した Calendar を `user_slot_panel` に表示できる
-- workspace page / resize / swap / layout edit / camera override event を評価できる
-- Windows host emulator で起動し、event dispatch 後も SystemUI PID が維持される
+- RRO/XMLでScalableUI panel、variant、transitionを宣言する
+- Framework / CarService / CarSystemUI RROでScalableUIを有効化する
+- 標準CarLauncherをPoC用の空HOME hostで分離する
+- AppGridをpanelとして扱い、選択アプリを指定panelへroutingする
+- 固定panel構成から、All Apps、最大化、Home復帰などのPoC挙動へ段階的に拡張する
 
 実装上の重要な読み替え:
 
-- 「Panel にアプリを表示する」は、実装上は `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` である
-- `RemoteCarTaskView` / `TaskView` は AAOS に存在するが、ScalableUI `TaskPanel` の実体ではない
-- runtime panel 生成、任意 panel 移動、永続化、picker は PoC / OEM custom 領域である
-- `WindowContainerTransaction.reparent()` は AOSP に存在するが、現在の live ScalableUI source だけでは Panel 間 task reparent 標準機能とは判断しない
+- 「Panelにアプリを表示する」は、実装上は `Panel -> TaskPanel -> task/root task -> Activity` です。
+- `RemoteCarTaskView` / `TaskView` はAAOSに存在しますが、ScalableUI `TaskPanel` の実体として扱いません。
+- runtime panel生成、任意panel移動、永続化、pickerは、ScalableUI標準だけでは完結せずPoC/OEM custom領域です。
+- `WindowContainerTransaction.reparent()` はAOSPに存在しますが、現在確認したScalableUI sourceだけでは、Panel間task reparentの標準機能とは判断しません。
 
-直近の評価 artifact:
+## Android17での開発方針
 
-- `/tmp/aaos-spec-workspace-smoke-20260609-163618`
-
-重要な発見:
-
-- AAOS15 LTS3 の ScalableUI panel XML root は `<Panel>` が必要
-- Passenger6 / Android 16 系 sample の `<TaskPanel>` をそのまま使うと SystemUI が restart loop になる
-- AppGrid など Stub 内 Activity は HOME task と task affinity を分離する必要がある
-- DecorPanel-only transition は AAOS15 LTS3 では WM transition ではなく直接 surface update へ流す必要がある
-- camera override は workspace panel を hidden にせず、fullscreen high-layer の camera panel を重ねる方が復帰が安定する
-
-## 既存 PoC: dynamic-workspace
-
-`dynamic-workspace` で確認済みのこと:
-
-- ScalableUI を有効化した専用 product を build できる
-- Home を `WorkspaceHomeActivity` に置き換えられる
-- runtime model から panel を動的生成できる
-- panel を追加・削除できる
-- panel header から app picker を開ける
-- launchable app を panel に割り当てられる
-- 隣接 panel 間の grip drag で panel 幅を変更できる
-- 画面幅を超える panel 群を viewport offset で横スクロールできる
-- drag 中は app task surface を逐次更新せず、操作中 grip preview を優先する
-- Windows host emulator で build image を起動し、2回連続 resize 操作後も SystemUI が落ちないことを確認済み
-
-注記: `dynamic-workspace` は historical / experimental PoC です。現在の live `declarative-multipanel` baseline には、任意数 runtime panel 生成を行う `WorkspaceRuntimeLayoutController` 系の実装は含まれていません。必要な runtime 実装は patch 適用後に AOSP tree で再検証してください。
-
-直近の評価 artifact:
-
-- `/tmp/dw-eval-20260609-solid-refactor`
-
-## ScalableUI と custom 実装の境界
-
-ScalableUI 標準で扱いやすい範囲:
-
-- RRO XML による panel 宣言
-- panel の variant / transition / layer / bounds 定義
-- task activity を panel に載せること
-- decor panel を重ねること
-- grip / controller から event を出すこと
-- launch-root panel や fullscreen fallback panel を用意すること
-- 未割当 app を launch-root panel へ routing すること
-
-`declarative-multipanel` で custom 実装している範囲:
-
-- 標準 CarLauncher を ScalableUI HMI の邪魔をしない Stub HOME に置き換えること
-- Stub AppGrid から target panel ID を付けて Activity を起動すること
-- AAOS15 LTS3 で DecorPanel-only transition と target panel routing を安定させること
-
-`dynamic-workspace` で実験した custom 実装の範囲:
-
-- runtime model から任意数 panel を生成すること
-- panel 幅、順序、viewport offset、割り当て component を保存・復元すること
-- drag 中の軽量 preview と drag end 後の final surface commit
-- panel header / toolbar / viewport handle など Dynamic Workspace 固有 UI
-- All Apps と panel assignment の routing policy
-
-この境界を崩さないことが、AAOS15 LTS5 / AAOS17 へ移植するときの重要な方針です。
-
-## Repository 構成
+Android17移植では、PoC専用productを増やさず、build実績のある標準AAOS17 emulator targetを維持します。
 
 ```text
-workdir/scalableui-poc/
+sdk_car_x86_64-trunk_staging-userdebug
+  + ScalableUI PoC RRO
+  + ScalableUiStubCarLauncher
+  + 必要最小限のCarSystemUI差分
+```
+
+この方針により、「素のAAOS17 emulatorへの追加差分」として開発・説明できます。
+
+推奨コマンド:
+
+```bash
+cd ~/work/android17-r1
+source build/envsetup.sh
+lunch sdk_car_x86_64-trunk_staging-userdebug
+
+SOONG_NINJA=ninja SOONG_INCREMENTAL_ANALYSIS=false m -j1 nothing
+
+SOONG_NINJA=ninja m -j4 \
+  ScalableUiStubCarLauncher \
+  CarServiceScalableUiDeclarativeMultipanelRRO \
+  CarFrameworkScalableUiDeclarativeMultipanelRRO \
+  CarSystemUIScalableUiDeclarativeMultipanelRRO
+
+SOONG_NINJA=ninja m -j6 emu_img_zip
+```
+
+詳細は [docs/aaos17_scalableui_development_flow_ja.md](docs/aaos17_scalableui_development_flow_ja.md) を参照してください。
+
+## AAOS15/Android16系の扱い
+
+AAOS15 LTS3 / Android16 QPR2向けの既存patchや評価記録は残します。
+
+ただし、それらはAndroid17の正ではありません。Android17ではScalableUI core、WMShell、TaskView周辺が更新されているため、Android15/16向けpatchをそのまま適用するのではなく、[docs/aaos17_scalableui_source_verification_ja.md](docs/aaos17_scalableui_source_verification_ja.md) と source 差分を確認して移植します。
+
+## Historical / experimental variant
+
+以下は正しい実験記録を含みますが、現行baselineではありません。
+
+- `dynamic-workspace`
+- `editable-home`
+- `widget-workspace`
+- `widget-layout-lab`
+- generated HMI variant suite
+- `no-grip`
+
+これらの情報は削除せず、historical / experimental として扱います。量産設計やAndroid17移植の根拠にする場合は、必ず [docs/aosp_source_verification_ja.md](docs/aosp_source_verification_ja.md) と対象AAOS branchのsourceで再照合してください。
+
+## Repository構成
+
+```text
+scalableui-poc/
   README.md
   AGENTS.md
-  common/patches/
-    device-generic-car/
-    packages-services-Car/
+  docs/
+    README_ja.md
+    aosp_source_verification_ja.md
+    scalableui_window_manager_flow_ja.md
+    aaos17_scalableui_source_verification_ja.md
+    aaos17_scalableui_development_flow_ja.md
+    android17_as_is_scalableui_migration_plan_ja.md
+    aaos_app_layer_scalableui_scope_ja.md
   variants/
     declarative-multipanel/
-    dynamic-workspace/
-    widget-workspace/
-    editable-home/
-    ...
-  patches/
-    packages-apps-Car-SystemUI/
-    packages-apps-Car-Launcher/
-    packages-apps-Car-systemlibs-car-scalable-ui-lib/
-    packages-services-Car/
-    device-generic-car/
+      docs/
+      patches/
+    dynamic-workspace/        # historical / experimental
+    editable-home/            # historical / experimental
+    widget-workspace/         # historical / experimental
+    widget-layout-lab/        # historical / experimental
   scripts/
+    aaos17_scalableui_build_action.sh
     apply_hmi_variant.sh
     build_hmi_modules.sh
     build_hmi_emulator_images.sh
-    export_patches.sh
-  docs/
+    verify_declarative_multipanel_smoke.sh
   wiki/
 ```
 
-## declarative-multipanel の主要 patch
+## 評価ルール
 
-clean AAOS checkout へ最小 baseline を適用するには、次の patch だけを使います。
+runtime挙動に影響する変更を入れたら、buildだけで完了にしません。
 
-- `variants/declarative-multipanel/patches/device-generic-car/0001-add-sdk_car_scalableui_declarative_multipanel_x86_64-product.patch`
-- `variants/declarative-multipanel/patches/packages-services-Car/0001-add-scalableui-declarative-multipanel-rro.patch`
-- `variants/declarative-multipanel/patches/packages-apps-Car-SystemUI/0001-add-scalableui-declarative-multipanel-runtime-routing.patch`
+最低限確認すること:
 
-`scripts/apply_hmi_variant.sh declarative-multipanel` は、従来の common demo apps / dynamic workspace / Launcher / scalable-ui-lib patch を適用しません。
+- 対象module build
+- `emu_img_zip`
+- Windows host emulator起動
+- overlay state
+- package install state
+- `dumpsys activity top`
+- `dumpsys window displays`
+- screenshot
+- logcat fatal確認
 
-## Dynamic Workspace の主要 patch
-
-`dynamic-workspace` を clean AAOS checkout へ適用するには、概念上次の patch 群が必要です。
-
-- `common/patches/device-generic-car/0001-add-scalableui-hmi-suite-products.patch`
-- `common/patches/packages-services-Car/0001-add-scalableui-hmi-demo-apps.patch`
-- `common/patches/packages-services-Car/0002-add-token-reparent-for-panel-routing.patch`
-- `common/patches/packages-services-Car/0003-add-dynamic-workspace-demo-home.patch`
-- `variants/dynamic-workspace/patches/device-generic-car/0001-add-sdk_car_scalableui_dynamic_workspace_x86_64-product.patch`
-- `variants/dynamic-workspace/patches/packages-services-Car/0001-add-scalableui-hmi-dynamic_workspace-rro.patch`
-- `patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch`
-- `patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch`
-- `patches/packages-apps-Car-systemlibs-car-scalable-ui-lib/0001-add-runtime-layout-variant-overrides.patch`
-
-`scripts/apply_hmi_variant.sh dynamic-workspace` はこれらを順に適用する入口です。
-
-## Quick Start
-
-前提:
-
-- AAOS15 checkout の root にいる
-- この repository が `workdir/scalableui-poc` にある
-- `device/generic/car`、`packages/services/Car`、`packages/apps/Car/SystemUI`、`packages/apps/Car/Launcher` が存在する
-
-適用:
-
-```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh declarative-multipanel
-```
-
-module build:
-
-```bash
-JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh declarative-multipanel
-```
-
-emulator image build:
-
-```bash
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=8 \
-  workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh declarative-multipanel
-```
-
-Windows host emulator で評価する場合:
-
-```powershell
-Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
-  -ArgumentList '-avd','Y-Fuk-dynamic-workspace-clean2',
-                '-sysdir','F:\aaos_images\declarative-multipanel\extracted\x86_64',
-                '-wipe-data','-no-snapshot-load',
-                '-ports','5564,5565',
-                '-memory','6144',
-                '-cores','6',
-                '-gpu','angle_indirect'
-```
-
-起動済み emulator に対する smoke:
+`declarative-multipanel` のsmoke script:
 
 ```bash
 ADB_BIN=/mnt/f/Android/Sdk/platform-tools/adb.exe \
@@ -212,117 +147,16 @@ OUT_DIR=/tmp/declarative-multipanel-smoke-$(date +%Y%m%d-%H%M%S) \
   workdir/scalableui-poc/scripts/verify_declarative_multipanel_smoke.sh emulator-5564
 ```
 
-この smoke は、StubCarLauncher / RRO 有効化 / spec workspace panel / user slot app assignment / workspace event / layout edit / camera override / System Bar Apps / process 維持を確認します。
+Android17 build前の手動action:
 
-## declarative-multipanel の重要ファイル
-
-AAOS tree に patch 適用後、現在の clean baseline の中心は以下です。
-
-```text
-device/generic/car/
-  sdk_car_scalableui_declarative_multipanel_x86_64.mk
-
-packages/services/Car/car_product/scalableui_declarative_multipanel/
-  car_scalableui_declarative_multipanel.mk
-  apps/StubCarLauncher/
-    Android.bp
-    AndroidManifest.xml
-    src/com/android/car/carlauncher/CarLauncher.java
-    src/com/android/car/carlauncher/AppGridActivity.java
-    src/com/android/car/carlauncher/ControlBarActivity.java
-    src/com/android/car/carlauncher/EmptySlotActivity.java
-    src/com/android/car/carlauncher/CameraStubActivity.java
-  rro/CarFrameworkScalableUiDeclarativeMultipanelRRO/
-  rro/CarServiceScalableUiDeclarativeMultipanelRRO/
-  rro/CarSystemUIScalableUiDeclarativeMultipanelRRO/
-    res/values/config.xml
-    res/xml/top_bar_panel.xml
-    res/xml/bottom_bar_panel.xml
-    res/xml/hvac_panel.xml
-    res/xml/nav_panel.xml
-    res/xml/media_panel.xml
-    res/xml/user_slot_panel.xml
-    res/xml/empty_slot_hint_panel.xml
-    res/xml/camera_priority_panel.xml
-    res/xml/edit_overlay_panel.xml
-    res/xml/panel_app_grid.xml
-    res/xml/app_panel.xml
-
-packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/
-  PanelAutoTaskStackTransitionHandlerDelegate.java
-  PanelConfigReader.java
-  PanelTransitionCoordinator.java
-  ScalableUIWMInitializer.java
-  panel/DecorPanel.java
+```bash
+workdir/scalableui-poc/scripts/aaos17_scalableui_build_action.sh status
+workdir/scalableui-poc/scripts/aaos17_scalableui_build_action.sh commands
 ```
-
-## Dynamic Workspace の重要ファイル
-
-AAOS tree に patch 適用後、Dynamic Workspace の中心は以下です。
-
-```text
-packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/workspace/
-  WorkspaceRuntimeLayoutController.java
-  WorkspaceGeometry.java
-  WorkspacePanelStateController.java
-  WorkspaceTaskRouter.java
-  WorkspaceModelStore.java
-  WorkspaceHeaderView.java
-  WorkspaceGripView.java
-  WorkspaceToolbarView.java
-  WorkspaceViewportHandleView.java
-
-packages/services/Car/car_product/scalableui_hmi_dynamic_workspace/
-  car_scalableui_hmi_dynamic_workspace.mk
-  rro/CarSystemUIScalableUiHmiDynamicWorkspaceRRO/...
-
-packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/
-  AndroidManifest.xml
-  src/.../WorkspaceHomeActivity.java
-  src/.../WorkspaceEmptyPanelActivity.java
-  src/.../WorkspaceAppPickerActivity.java
-  src/.../WorkspaceRuntimeBridge.java
-```
-
-## 評価ルール
-
-runtime 挙動に影響する変更を入れたら、build だけで完了にしないでください。
-
-`declarative-multipanel` の最低限必要な確認:
-
-- 対象 module build
-- `declarative-multipanel` emulator image zip build
-- Windows host emulator 起動
-- `verify_declarative_multipanel_smoke.sh` 実行
-- System Bar Apps から AppGrid が表示されること
-- AppGrid から Calendar を起動すると `user_slot_panel` に表示されること
-- workspace page / resize / swap event で bounds が変わること
-- layout edit overlay が表示されること
-- camera override が fullscreen 表示され、解除後に workspace が復帰すること
-- `SystemUI` PID 維持
-- `FATAL EXCEPTION` / `AndroidRuntime` / `IllegalStateException` が出ていないこと
-- screenshot と logcat summary を `/tmp/<評価名>/` に保存
-
-`dynamic-workspace` を触る場合は追加で以下を確認します。
-
-- panel add / app assignment / grip resize / second resize 操作
-- drag 中の UI 重さ、surface 更新頻度、viewport 横スクロール
 
 ## 既知の注意点
 
-- `-gpu host` はこの Windows 環境では emulator process が消えることがあったため、現時点では `-gpu angle_indirect` を優先します。
-- guest RAM 2GB の AVD は複数 panel / 複数 activity / SurfaceControl 更新の評価には重いため、評価時は `-memory 6144 -cores 6` を使います。
-- `.patch` ファイルに対する `git diff --check` は `+ ` の空行を warning として拾うことがあります。必ず AAOS ソース本体の whitespace と分けて判断してください。
-- `dynamic-workspace` は ScalableUI の標準 XML だけで完結していません。runtime panel 生成と persistence は PoC custom 実装です。
-
-## その他の variant
-
-`docs/hmi_variant_suite_ja.md` に HMI variant 一覧があります。
-
-代表例:
-
-- `fixed-3zone`: 固定 3 panel の baseline
-- `widget-workspace`: Panel Control 経由の app routing 検証
-- `editable-home`: 保存可能な 3 panel home の実験
-- `widget-layout-lab`: widget 配置案の UI 実験
-- `dynamic-workspace`: 過去の動的 workspace 実験
+- `-gpu host` はこのWindows環境ではemulator processが消えることがあったため、`-gpu angle_indirect` を優先します。
+- `.patch` ファイルに対する `git diff --check` は、patch contextの `+ ` 空行をwarningとして拾うことがあります。
+- Android17では、PoC専用productを作るより標準 `sdk_car_x86_64` に差分を載せる方針を優先します。
+- ScalableUI標準機能とPoC custom実装を混ぜて説明しないでください。

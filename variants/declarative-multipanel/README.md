@@ -1,6 +1,8 @@
 # declarative-multipanel
 
-`declarative-multipanel` は、`aaos-scalable-ui-specs` の初期 scope を AAOS15 LTS3 上で評価するための baseline です。
+`declarative-multipanel` は、`aaos-scalable-ui-specs` の初期 scope を評価するための現行 baseline です。
+
+AAOS15 LTS3では専用product patchとして評価しました。Android17では専用productを作らず、標準 `sdk_car_x86_64-trunk_staging-userdebug` にPoC差分を追加する方針へ変更しています。
 
 以前の `dynamic-workspace` は、任意 panel 追加、移動、resize、app picker、永続化まで一気に扱うため PoC として重くなっていました。この variant はそこをいったんリセットし、Passenger6 / MultiPanelLandscapeRRO に近い「RRO で panel と transition を宣言し、AAOS 側の ScalableUI orchestration に任せる」構成へ戻しています。
 
@@ -40,6 +42,8 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=4 \
 
 手動で build する場合:
 
+AAOS15 LTS3:
+
 ```bash
 set +u
 source build/envsetup.sh
@@ -47,6 +51,16 @@ lunch sdk_car_scalableui_declarative_multipanel_x86_64-trunk_staging-userdebug
 set -u
 m -j8 CarSystemUI CarFrameworkScalableUiDeclarativeMultipanelRRO CarServiceScalableUiDeclarativeMultipanelRRO CarSystemUIScalableUiDeclarativeMultipanelRRO StubCarLauncher
 m -j4 emu_img_zip
+```
+
+Android17:
+
+```bash
+source build/envsetup.sh
+lunch sdk_car_x86_64-trunk_staging-userdebug
+SOONG_NINJA=ninja SOONG_INCREMENTAL_ANALYSIS=false m -j1 nothing
+SOONG_NINJA=ninja m -j4 ScalableUiStubCarLauncher CarFrameworkScalableUiDeclarativeMultipanelRRO CarServiceScalableUiDeclarativeMultipanelRRO CarSystemUIScalableUiDeclarativeMultipanelRRO
+SOONG_NINJA=ninja m -j6 emu_img_zip
 ```
 
 ## 評価

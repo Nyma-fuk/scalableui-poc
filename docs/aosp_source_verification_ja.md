@@ -1,6 +1,7 @@
 # AOSP Source Verification
 
 この文書は、ScalableUI PoC の docs を前提にせず、AAOS15 LTS3 / AOSP ソースコードを正として確認した結果をまとめる。
+Android17 固有の確認結果は [aaos17_scalableui_source_verification_ja.md](aaos17_scalableui_source_verification_ja.md) を参照する。
 
 対象は主に次の実装である。
 
@@ -38,7 +39,7 @@
 | docs concept | AOSP / AAOS 実装との対応 | Evaluation | 根拠 |
 | --- | --- | --- | --- |
 | Panel | `com.android.car.scalableui.panel.Panel` interface。bounds / layer / visibility / alpha / focus を持つ矩形管理単位。 | Correct | `packages/apps/Car/systemlibs/car-scalable-ui-lib/src/com/android/car/scalableui/panel/Panel.java` |
-| TaskPanel | `TaskPanel extends BasePanel`。`RootTaskStack` based implementation。Activity 直接ではなく root task stack / task を扱う。 | Correct | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanel.java` |
+| TaskPanel | AAOS15 LTS3 では `BasePanel` 系、Android17 では `SysUIPanel` 系。いずれも root task stack / task を扱い、Activity 直接ではない。 | Correct | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanel.java`, `docs/aaos17_scalableui_source_verification_ja.md` |
 | DecorPanel | `AutoDecor` based implementation。layout / controller view を display に attach する。 | Correct | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java` |
 | Variant | Panel の bounds / visibility / layer / alpha / focus / corner / insets などの状態。 | Correct | `packages/apps/Car/systemlibs/car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java` |
 | Transition | event と toVariant を結び、StateManager が PanelTransaction を作る。 | Correct | `packages/apps/Car/systemlibs/car-scalable-ui-lib/src/com/android/car/scalableui/model/Transition.java`, `StateManager.java` |

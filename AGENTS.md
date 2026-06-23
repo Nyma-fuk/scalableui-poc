@@ -8,6 +8,8 @@ The main active PoC is `declarative-multipanel`.
 
 Use this target when the user asks about the current ScalableUI HMI PoC unless they explicitly ask for an older dynamic workspace variant or comparison.
 
+For Android 17 work, keep the build target on `sdk_car_x86_64-trunk_staging-userdebug` and layer the PoC RRO / launcher / SystemUI deltas onto that standard target. Do not create or revive a separate `sdk_car_scalableui_declarative_multipanel_x86_64` Android 17 product unless the user explicitly asks for a separate product.
+
 ```bash
 bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh declarative-multipanel
 JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh declarative-multipanel
@@ -20,16 +22,22 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=4 \
 Before implementation work, read:
 
 1. `README.md`
-2. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
-3. `docs/scalableui_window_manager_flow_ja.md`
-4. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
+2. `docs/README_ja.md`
+3. `docs/aosp_source_verification_ja.md`
+4. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
+5. `docs/scalableui_window_manager_flow_ja.md`
+6. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
+7. For Android 17 work: `docs/aaos17_scalableui_development_flow_ja.md`
 
 ## Source Of Truth
 
 - `scripts/hmi_variants.sh` is the variant/product/module mapping used by build scripts.
+- `docs/README_ja.md` owns the document classification. Use it to separate ScalableUI general facts, active PoC docs, Android 17 porting docs, and historical experiments.
+- `docs/variant_status_ja.md` owns the current/historical/generated status of each variant.
 - `variants/declarative-multipanel/` owns the current clean product/RRO/StubCarLauncher patch.
 - `variants/declarative-multipanel/docs/hmi_spec_ja.md` owns the active HMI specification.
 - `docs/scalableui_window_manager_flow_ja.md` owns ScalableUI / WindowManager / Launcher relationship diagrams.
+- `docs/aaos17_scalableui_development_flow_ja.md` owns the Android 17 standard-target development flow.
 - `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md` owns current runtime evaluation history.
 - `scripts/verify_declarative_multipanel_smoke.sh` owns the baseline runtime smoke.
 
@@ -38,6 +46,8 @@ Before implementation work, read:
 ## Implementation Rules
 
 - Keep the clean baseline small: product mk, SystemUI RRO, Framework RRO, and `StubCarLauncher`.
+- Keep ScalableUI general information separate from PoC implementation details. Do not move source-verified ScalableUI facts into PoC-only docs without preserving the distinction.
+- Do not delete correct historical findings. Reclassify them as historical / experimental when they are not the current baseline.
 - Do not add SystemUI / Launcher runtime Java changes to the baseline unless the user explicitly moves to a dynamic phase.
 - Do not assign real `CarSettings` to the fixed `settings_panel`; fixed panel uses `SettingsPanelActivity` stub so All Apps Settings can route to `app_panel`.
 - Keep ScalableUI responsibilities separate from custom workspace responsibilities:

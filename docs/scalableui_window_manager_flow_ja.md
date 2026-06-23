@@ -1,6 +1,6 @@
 # AAOS ScalableUI / WindowManager 表示フロー
 
-> Source verification: この文書は 2026-06-09 に AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は 2026-06-09 に AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](./aosp_source_verification_ja.md)、Android17 固有の照合結果は [AAOS17 ScalableUI Source Verification](./aaos17_scalableui_source_verification_ja.md) を参照してください。
 
 このドキュメントは、`aaos-scalable-ui-specs` と `declarative-multipanel` PoC を前提に、AAOS における ScalableUI、SystemUI、WindowManager、Launcher、各 panel、各アプリ Activity の関係を整理したものです。
 
@@ -10,7 +10,7 @@
 
 ```mermaid
 flowchart TB
-    Product[AAOS Product<br/>sdk_car_scalableui_declarative_multipanel_x86_64]
+    Product[AAOS Product<br/>AAOS15: dedicated PoC product<br/>AAOS17: sdk_car_x86_64 + PoC deltas]
     FrameworkRRO[Framework RRO<br/>remote inset / system bar control]
     CarServiceRRO[CarService RRO<br/>PoC product overlay]
     SystemUIRRO[SystemUI RRO<br/>config_enableScalableUI<br/>window_states<br/>default_activities]
