@@ -46,8 +46,8 @@ out/target/product/emulator_car64_x86_64/sdk-repo-linux-system-images.zip
 ## 起動方法
 
 ```powershell
-Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
-  -ArgumentList '-avd','Y-Fuk-dynamic-workspace-clean2',
+Start-Process -FilePath '<WINDOWS_ANDROID_SDK>\emulator\emulator.exe' `
+  -ArgumentList '-avd','<AVD_NAME>',
                 '-sysdir','<AAOS_IMAGE_ROOT>\declarative-multipanel\extracted\x86_64',
                 '-wipe-data','-no-snapshot-load',
                 '-ports','5564,5565',

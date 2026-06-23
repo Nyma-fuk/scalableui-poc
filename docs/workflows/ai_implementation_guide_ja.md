@@ -243,8 +243,8 @@ m -j8 CarSystemUI
 推奨起動:
 
 ```powershell
-Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
-  -ArgumentList '-avd','Y-Fuk-dynamic-workspace-eval3',
+Start-Process -FilePath '<WINDOWS_ANDROID_SDK>\emulator\emulator.exe' `
+  -ArgumentList '-avd','<AVD_NAME>',
                 '-sysdir','<AAOS_IMAGE_ROOT>\dynamic-workspace\extracted\x86_64',
                 '-wipe-data','-no-snapshot-load',
                 '-ports','5562,5563',

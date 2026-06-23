@@ -6,7 +6,7 @@
 
 - Product: `sdk_car_scalableui_x86_64`
 - AVD: `Y-Fuk-root-grip-clean`
-- image source: `F:\\aaos_images\\root-grip-fix\\x86_64`
+- image source: `<AAOS_IMAGE_ROOT>\\root-grip-fix\\x86_64`
 
 ## 今回の目的
 
