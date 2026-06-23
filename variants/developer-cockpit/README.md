@@ -28,7 +28,7 @@ Debug status, controls, app-under-test, and map/media panels are arranged for Po
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh developer-cockpit
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh developer-cockpit
 lunch sdk_car_scalableui_developer_cockpit_x86_64-trunk_staging-userdebug
 ```
 

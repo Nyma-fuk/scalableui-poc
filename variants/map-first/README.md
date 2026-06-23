@@ -28,7 +28,7 @@ The map owns most of the display while a narrow right rail shows glanceable cont
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh map-first
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh map-first
 lunch sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug
 ```
 

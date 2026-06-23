@@ -91,8 +91,8 @@ All apps からの launch は `app_panel` 優先で扱います。
 
 関係箇所:
 
-- [AppLaunchProvider.kt](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt)
-- [0001-all-apps-launch-to-app-panel.patch](/home/y-fuk/work/android-automotiveos15-lts3/workdir/scalableui-poc/patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch)
+- [AppLaunchProvider.kt](<AAOS15_LTS3_ROOT>/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt)
+- [0001-all-apps-launch-to-app-panel.patch](<SCALABLEUI_POC_ROOT>/patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch)
 
 ここで `com.android.car.carlauncher.extra.LAUNCH_IN_APP_PANEL=true` を付けています。
 
@@ -107,7 +107,7 @@ SystemUI では次の順で panel を決めます。
 
 関係箇所:
 
-- [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java)
+- [PanelAutoTaskStackTransitionHandlerDelegate.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java)
 
 ### 4.3 既存 task の再利用 / 移動
 
@@ -117,8 +117,8 @@ SystemUI では次の順で panel を決めます。
 
 関係箇所:
 
-- [TaskPanelInfoRepository.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java)
-- [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java)
+- [TaskPanelInfoRepository.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java)
+- [PanelAutoTaskStackTransitionHandlerDelegate.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java)
 
 これにより、
 
@@ -246,13 +246,13 @@ flowchart LR
 
 | HMI 要素 | 実装の主担当 | 変更箇所 |
 | --- | --- | --- |
-| 3 panel の固定 home | ScalableUI panel 定義 + runtime geometry | [config.xml](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/config.xml), [home_panel_primary.xml](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary.xml), [EditableHomeRuntimeLayoutController.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/EditableHomeRuntimeLayoutController.java) |
-| header から app picker を開く | custom home app | [BasePanelHeaderActivity.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BasePanelHeaderActivity.java), [HomeAppPickerActivity.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeAppPickerActivity.java) |
-| app assignment 永続化 | custom home app | [HomeLayoutStore.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeLayoutStore.java) |
-| split drag | custom home app + SystemUI runtime layout | [BaseSplitGripActivity.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BaseSplitGripActivity.java), [SystemEventHandler.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java), [EditableHomeRuntimeLayoutController.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/EditableHomeRuntimeLayoutController.java) |
-| panel 内 app を selected panel に表示 | ScalableUI routing + custom launch hint | [HomeRuntimeBridge.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeRuntimeBridge.java), [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java) |
-| All apps から fullscreen 表示 | Launcher patch + ScalableUI launch root panel | [AppLaunchProvider.kt](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt), [app_panel.xml](/home/y-fuk/work/android-automotiveos15-lts3/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/app_panel.xml) |
-| same-app move semantics | custom routing policy | [TaskPanelInfoRepository.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java), [PanelAutoTaskStackTransitionHandlerDelegate.java](/home/y-fuk/work/android-automotiveos15-lts3/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java) |
+| 3 panel の固定 home | ScalableUI panel 定義 + runtime geometry | [config.xml](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/values/config.xml), [home_panel_primary.xml](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/home_panel_primary.xml), [EditableHomeRuntimeLayoutController.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/EditableHomeRuntimeLayoutController.java) |
+| header から app picker を開く | custom home app | [BasePanelHeaderActivity.java](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BasePanelHeaderActivity.java), [HomeAppPickerActivity.java](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeAppPickerActivity.java) |
+| app assignment 永続化 | custom home app | [HomeLayoutStore.java](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeLayoutStore.java) |
+| split drag | custom home app + SystemUI runtime layout | [BaseSplitGripActivity.java](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/BaseSplitGripActivity.java), [SystemEventHandler.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java), [EditableHomeRuntimeLayoutController.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/EditableHomeRuntimeLayoutController.java) |
+| panel 内 app を selected panel に表示 | ScalableUI routing + custom launch hint | [HomeRuntimeBridge.java](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_demo_apps/apps/home/src/com/android/car/scalableui/hmi/home/HomeRuntimeBridge.java), [PanelAutoTaskStackTransitionHandlerDelegate.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java) |
+| All apps から fullscreen 表示 | Launcher patch + ScalableUI launch root panel | [AppLaunchProvider.kt](<AAOS15_LTS3_ROOT>/packages/apps/Car/Launcher/libs/appgrid/lib/src/com/android/car/carlauncher/repositories/appactions/AppLaunchProvider.kt), [app_panel.xml](<AAOS15_LTS3_ROOT>/packages/services/Car/car_product/scalableui_hmi_editable_home/rro/CarSystemUIScalableUiHmiEditableHomeRRO/res/xml/app_panel.xml) |
+| same-app move semantics | custom routing policy | [TaskPanelInfoRepository.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java), [PanelAutoTaskStackTransitionHandlerDelegate.java](<AAOS15_LTS3_ROOT>/packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java) |
 
 ---
 

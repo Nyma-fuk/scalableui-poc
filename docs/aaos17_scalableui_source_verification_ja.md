@@ -5,7 +5,8 @@
 対象 source tree:
 
 ```text
-/home/y-fuk/work/android17-r1
+<AAOS17_ROOT>
+repo manifest tag: android-17.0.0_r1
 ```
 
 重要な前提:

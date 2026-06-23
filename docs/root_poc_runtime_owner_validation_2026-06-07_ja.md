@@ -73,10 +73,10 @@ m -j10 CarSystemUI CarSystemUIScalableUiPocRRO emu_img_zip
 
 artifact:
 
-- `/tmp/scalableui-rro-audit/home-initial.png`
-- `/tmp/scalableui-rro-audit/home-dismissed.png`
-- `/tmp/scalableui-rro-audit/visible-home-dismissed.txt`
-- `/tmp/scalableui-rro-audit/panelstates-home-dismissed.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/home-initial.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/home-dismissed.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-home-dismissed.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/panelstates-home-dismissed.txt`
 
 確認:
 
@@ -95,12 +95,12 @@ artifact:
 
 artifact:
 
-- `/tmp/scalableui-rro-audit/visible-width-wide.txt`
-- `/tmp/scalableui-rro-audit/visible-width-narrow.txt`
-- `/tmp/scalableui-rro-audit/visible-width-balanced.txt`
-- `/tmp/scalableui-rro-audit/width-wide.png`
-- `/tmp/scalableui-rro-audit/width-narrow.png`
-- `/tmp/scalableui-rro-audit/width-balanced.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-width-wide.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-width-narrow.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-width-balanced.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/width-wide.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/width-narrow.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/width-balanced.png`
 
 確認:
 
@@ -123,12 +123,12 @@ artifact:
 
 artifact:
 
-- `/tmp/scalableui-rro-audit/visible-height-tall.txt`
-- `/tmp/scalableui-rro-audit/visible-height-compact.txt`
-- `/tmp/scalableui-rro-audit/visible-height-balanced.txt`
-- `/tmp/scalableui-rro-audit/height-tall.png`
-- `/tmp/scalableui-rro-audit/height-compact.png`
-- `/tmp/scalableui-rro-audit/height-balanced.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-height-tall.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-height-compact.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-height-balanced.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/height-tall.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/height-compact.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/height-balanced.png`
 
 確認:
 
@@ -146,8 +146,8 @@ artifact:
 
 artifact:
 
-- `/tmp/scalableui-rro-audit/appgrid-fullscreen.png`
-- `/tmp/scalableui-rro-audit/visible-appgrid.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/appgrid-fullscreen.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-appgrid.txt`
 
 確認:
 
@@ -158,9 +158,9 @@ artifact:
 
 artifact:
 
-- `/tmp/scalableui-rro-audit/settings-launch.png`
-- `/tmp/scalableui-rro-audit/visible-settings.txt`
-- `/tmp/scalableui-rro-audit/ui-settings.xml`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/settings-launch.png`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/visible-settings.txt`
+- `<EVIDENCE_DIR>/scalableui-rro-audit/ui-settings.xml`
 
 確認:
 

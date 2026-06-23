@@ -17,10 +17,10 @@ panel は固定レイアウトで、split を動かす UI は持ちません。
 
 前提:
 - AAOS15 系 checkout
-- この repository を checkout 内の `workdir/scalableui-poc` に置いている
+- この repository を checkout 内の `<SCALABLEUI_POC_ROOT>` に置いている
 
 手順:
-1. `bash workdir/scalableui-poc/variants/no-grip/scripts/apply_patches.sh`
+1. `bash <SCALABLEUI_POC_ROOT>/variants/no-grip/scripts/apply_patches.sh`
 2. `lunch sdk_car_scalableui_nogrip_x86_64-trunk_staging-userdebug`
 3. build
 

@@ -5,7 +5,7 @@
 注記:
 
 - この時点では `Phase 2` の root PoC は「部分合格」だった
-- 2026-06-01 の追加修正と再評価結果は [root_poc_fix_evaluation_2026-06-01_ja.md](/home/y-fuk/work/android-automotiveos15-lts3/workdir/scalableui-poc/docs/root_poc_fix_evaluation_2026-06-01_ja.md) を参照
+- 2026-06-01 の追加修正と再評価結果は [root_poc_fix_evaluation_2026-06-01_ja.md](<SCALABLEUI_POC_ROOT>/docs/root_poc_fix_evaluation_2026-06-01_ja.md) を参照
 
 ## 目的
 
@@ -39,16 +39,16 @@ ScalableUI PoC を次の 3 phase に分けて、Windows emulator 上で実機相
 
 ### 画面証跡
 
-- 初期表示: `/tmp/scalableui-phase-eval/phase1/home.png`
-- notice dismiss 後: `/tmp/scalableui-phase-eval/phase1/after-dismiss.png`
-- All Apps fullscreen: `/tmp/scalableui-phase-eval/phase1/all-apps.png`
+- 初期表示: `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/home.png`
+- notice dismiss 後: `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/after-dismiss.png`
+- All Apps fullscreen: `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/all-apps.png`
 
 ### dumpsys 証跡
 
-- `/tmp/scalableui-phase-eval/phase1/activities-after-dismiss.txt`
-- `/tmp/scalableui-phase-eval/phase1/visible-apps.txt`
-- `/tmp/scalableui-phase-eval/phase1/activities-all-apps.txt`
-- `/tmp/scalableui-phase-eval/phase1/visible-all-apps.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/activities-after-dismiss.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/visible-apps.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/activities-all-apps.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase1/visible-all-apps.txt`
 
 ### 補足
 
@@ -74,17 +74,17 @@ ScalableUI PoC を次の 3 phase に分けて、Windows emulator 上で実機相
 
 ### 画面証跡
 
-- 初期表示: `/tmp/scalableui-phase-eval/phase2/home.png`
-- notice dismiss 後: `/tmp/scalableui-phase-eval/phase2/after-dismiss.png`
-- `adb input swipe` 後: `/tmp/scalableui-phase-eval/phase2/after-vertical-drag.png`
-- event broadcast 後: `/tmp/scalableui-phase-eval/phase2/after-width-event.png`
+- 初期表示: `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/home.png`
+- notice dismiss 後: `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/after-dismiss.png`
+- `adb input swipe` 後: `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/after-vertical-drag.png`
+- event broadcast 後: `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/after-width-event.png`
 
 ### dumpsys 証跡
 
-- `/tmp/scalableui-phase-eval/phase2/visible-home.txt`
-- `/tmp/scalableui-phase-eval/phase2/visible-after-dismiss.txt`
-- `/tmp/scalableui-phase-eval/phase2/visible-after-vertical-drag.txt`
-- `/tmp/scalableui-phase-eval/phase2/visible-after-width-event.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/visible-home.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/visible-after-dismiss.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/visible-after-vertical-drag.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase2/visible-after-width-event.txt`
 
 ### 確認できた frame
 
@@ -129,17 +129,17 @@ ScalableUI PoC を次の 3 phase に分けて、Windows emulator 上で実機相
 
 ### 画面証跡
 
-- 初期表示: `/tmp/scalableui-phase-eval/phase3/home.png`
-- notice 表示中: `/tmp/scalableui-phase-eval/phase3/panel-control-open.png`
-- Panel Control menu: `/tmp/scalableui-phase-eval/phase3/panel-menu.png`
-- app selection 実行後: `/tmp/scalableui-phase-eval/phase3/after-assignment.png`
+- 初期表示: `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/home.png`
+- notice 表示中: `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/panel-control-open.png`
+- Panel Control menu: `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/panel-menu.png`
+- app selection 実行後: `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/after-assignment.png`
 
 ### dumpsys 証跡
 
-- `/tmp/scalableui-phase-eval/phase3/activities-home.txt`
-- `/tmp/scalableui-phase-eval/phase3/activities-panel-control.txt`
-- `/tmp/scalableui-phase-eval/phase3/activities-panel-menu.txt`
-- `/tmp/scalableui-phase-eval/phase3/activities-after-assignment.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/activities-home.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/activities-panel-control.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/activities-panel-menu.txt`
+- `<EVIDENCE_DIR>/scalableui-phase-eval/phase3/activities-after-assignment.txt`
 
 ### 評価
 

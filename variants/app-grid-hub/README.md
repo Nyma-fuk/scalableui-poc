@@ -26,7 +26,7 @@ All apps is treated as the central hub and launched apps are routed to fullscree
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh app-grid-hub
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh app-grid-hub
 lunch sdk_car_scalableui_app_grid_hub_x86_64-trunk_staging-userdebug
 ```
 

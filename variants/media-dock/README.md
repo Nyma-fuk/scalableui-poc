@@ -27,7 +27,7 @@ Media controls are emphasized with a large bottom dock and compact navigation.
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh media-dock
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh media-dock
 lunch sdk_car_scalableui_media_dock_x86_64-trunk_staging-userdebug
 ```
 

@@ -35,7 +35,7 @@ A map-first widget cockpit with a hidden right-side widget menu. The menu can la
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh widget-layout-lab
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh widget-layout-lab
 lunch sdk_car_scalableui_widget_layout_lab_x86_64-trunk_staging-userdebug
 ```
 

@@ -5,8 +5,8 @@
 - AOSP branch: `android16-qpr2-release`
 - product: `sdk_car_scalableui_declarative_multipanel_x86_64`
 - lunch: `sdk_car_scalableui_declarative_multipanel_x86_64-trunk_staging-userdebug`
-- Android tree: `/home/y-fuk/work/android16-qpr2-release`
-- emulator sysdir: `F:\aaos_images\android16-qpr2-declarative-multipanel\extracted\x86_64`
+- Android tree: `<ANDROID16_QPR2_ROOT>`
+- emulator sysdir: `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\extracted\x86_64`
 
 ## 結果
 
@@ -76,15 +76,15 @@ Home 復帰まで確認した。
 
 runtime log / dump / screenshot:
 
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\01_appgrid_open.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\02_appgrid_closed_by_retrigger.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\04_appgrid_closed_by_outside_tap.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\01_picker_open.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\02_calendar_in_user_slot.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\03_all_apps_open.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\04_calendar_fullscreen.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\05_home_restored.png`
-- `F:\aaos_images\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\summary.txt`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\01_appgrid_open.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\02_appgrid_closed_by_retrigger.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_appgrid_close_affordance\04_appgrid_closed_by_outside_tap.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\01_picker_open.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\02_calendar_in_user_slot.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\03_all_apps_open.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\04_calendar_fullscreen.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\05_home_restored.png`
+- `<AAOS_IMAGE_ROOT>\android16-qpr2-declarative-multipanel\runtime_after_close_affordance_full_flow\summary.txt`
 
 `dumpsys activity activities` で確認した root task:
 

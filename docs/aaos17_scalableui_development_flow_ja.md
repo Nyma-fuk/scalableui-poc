@@ -83,7 +83,7 @@ screenshot / overlay / package / dumpsys / logcat
 標準targetを選択する。
 
 ```bash
-cd ~/work/android17-r1
+cd <AAOS17_ROOT>
 source build/envsetup.sh
 lunch sdk_car_x86_64-trunk_staging-userdebug
 ```
@@ -127,26 +127,20 @@ SOONG_NINJA=ninja m -j6 emu_img_zip
 pgrep -af 'soong_build|soong_ui|build/soong/bin/m|prebuilts/build-tools/linux-x86/bin/ninja' || true
 if command -v lsof >/dev/null; then lsof out/.lock || true; fi
 free -h
-df -h ~/work/android17-r1 /mnt/f
+df -h <AAOS17_ROOT> <AAOS_IMAGE_ROOT>
 ```
 
 ## 手動Action
 
-Codex側には手動actionを用意している。
+この repository には、build process や `out/.lock` を確認するための補助scriptを置いている。
 
 ```bash
-/home/y-fuk/work/scalableui-poc/scripts/aaos17_scalableui_build_action.sh status
-/home/y-fuk/work/scalableui-poc/scripts/aaos17_scalableui_build_action.sh stop
-/home/y-fuk/work/scalableui-poc/scripts/aaos17_scalableui_build_action.sh commands
+<SCALABLEUI_POC_ROOT>/scripts/aaos17_scalableui_build_action.sh status
+<SCALABLEUI_POC_ROOT>/scripts/aaos17_scalableui_build_action.sh stop
+<SCALABLEUI_POC_ROOT>/scripts/aaos17_scalableui_build_action.sh commands
 ```
 
-Codex local hook側にも同じ用途のhelperを置いている。
-
-```bash
-/home/y-fuk/.codex/hooks/aaos17_scalableui_build_action.sh status
-/home/y-fuk/.codex/hooks/aaos17_scalableui_build_action.sh stop
-/home/y-fuk/.codex/hooks/aaos17_scalableui_build_action.sh commands
-```
+個人環境の hook や local helper を使う場合も、対象環境提示資料には絶対パスを載せず、各環境の補助scriptとして記載する。
 
 使い分け:
 

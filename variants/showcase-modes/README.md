@@ -28,7 +28,7 @@ A comparison layout keeps normal, calm, and app-focus concepts visible as separa
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh showcase-modes
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh showcase-modes
 lunch sdk_car_scalableui_showcase_modes_x86_64-trunk_staging-userdebug
 ```
 

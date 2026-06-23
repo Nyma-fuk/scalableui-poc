@@ -35,7 +35,7 @@ A ScalableUI-based multipanel home keeps system bars outside the managed area, k
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh editable-home
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh editable-home
 lunch sdk_car_scalableui_editable_home_x86_64-trunk_staging-userdebug
 ```
 
@@ -59,12 +59,12 @@ RRO patch for this variant.
 
 1. variant patch を適用する
 2. `lunch sdk_car_scalableui_editable_home_x86_64-trunk_staging-userdebug`
-3. `bash workdir/scalableui-poc/scripts/build_hmi_modules.sh editable-home`
-4. image まで必要なら `AAOS_IMAGE_ROOT=/mnt/f/aaos_images bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh editable-home`
+3. `bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh editable-home`
+4. image まで必要なら `AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh editable-home`
 5. 起動済み emulator に対して受け入れスクリプトを実行する
 
 ```bash
-bash workdir/scalableui-poc/scripts/verify_editable_home_acceptance.sh
+bash <SCALABLEUI_POC_ROOT>/scripts/verify_editable_home_acceptance.sh
 ```
 
 この script / 手動確認では次を見ます。
@@ -78,4 +78,4 @@ bash workdir/scalableui-poc/scripts/verify_editable_home_acceptance.sh
 - `SharedPreferences` に split ratio と assignment が保存されること
 - Home 再起動後も geometry / assignment が復元されること
 
-証跡は既定で `/tmp/editable-home-acceptance/` に出力され、`acceptance_report.md` にまとまります。
+証跡は既定で `<EVIDENCE_DIR>/editable-home-acceptance/` に出力され、`acceptance_report.md` にまとまります。
