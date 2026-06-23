@@ -14,7 +14,7 @@
 | 軸 | 選択肢 | 例 |
 | --- | --- | --- |
 | 主役 | map / media / app / calm / productivity | navigation-first, media cockpit |
-| 固定 panel 数 | 1 / 2 / 3 / 4以上 | map + media + user slot |
+| 固定 panel 数 | 1 / 2 / 3 / 4以上 | map + media + settings |
 | overlay | All Apps / app_panel / camera / picker | central floating All Apps |
 | routing | fixed panel / app_panel / priority panel | Settings は app_panel へ |
 | transition | Window State / Surface animation | maximize, dismiss fade |
@@ -28,7 +28,7 @@
 +----------------------+----------------------+
 |        map           |       media          |
 |                      +----------------------+
-|                      |     user slot        |
+|                      |     settings         |
 +----------------------+----------------------+
 ```
 
@@ -37,6 +37,7 @@
 - ScalableUI の RRO/XML、Panel、Variant、Transition、TaskPanel routing を確認する
 - Android17 へ段階的に移植する基準にする
 - All Apps、app_panel、固定 panel の境界を確認する
+- 古い dynamic workspace 方式ではなく、AAOS17 標準 target への差分適用として説明する
 
 Status:
 
@@ -87,7 +88,7 @@ Status:
 
 向いている用途:
 
-- entertainment / audio demo
+- entertainment / audio HMI 検討
 - media control を広く見せる
 - map を補助表示にする
 
@@ -192,7 +193,7 @@ Status:
 
 向いている用途:
 
-- demo で多くの app を素早く起動する
+- 多くの app を素早く起動する導線を検討する
 - fixed panel より launcher 的な操作を重視する
 
 必要な検討:
@@ -220,7 +221,7 @@ Status:
 
 - 情報量を減らす
 - driving 中の視覚負荷を下げる
-- normal / calm / app focus の比較 demo
+- normal / calm / app focus の比較を行う
 
 必要な検討:
 

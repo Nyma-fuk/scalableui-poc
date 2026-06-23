@@ -18,3 +18,8 @@
 - [declarative-multipanel](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
 - [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/variant_status_ja.md)
 - [AAOS17 Development Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/aaos17_scalableui_development_flow_ja.md)
+- [PoC Cleanup Plan](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/poc_repository_cleanup_plan_ja.md)
+
+### Legacy / Reference
+
+- dynamic-workspace / editable-home / generated variants are historical references, not the active creation flow.

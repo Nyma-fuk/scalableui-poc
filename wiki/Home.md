@@ -44,6 +44,41 @@ AAOS17:
 
 `TaskView` / `RemoteCarTaskView` は AAOS に存在しますが、ScalableUI `TaskPanel` の実体ではありません。
 
+## 現行の PoC 作成方法
+
+現在の作成方法は、過去の「variant generator で多数の demo app / 専用 product を生成する」方式ではありません。
+
+現行方針:
+
+1. 標準 AAOS17 emulator target を選ぶ。
+2. `variants/declarative-multipanel/patches` を移植元として使う。
+3. `device/generic/car/sdk_car_x86_64.mk` に PoC package set を追加する。
+4. `packages/services/Car/car_product/scalableui_declarative_multipanel/` に RRO / Stub HOME host を置く。
+5. `packages/apps/Car/SystemUI` には task routing / event / controller の最小差分だけを入れる。
+6. module build、`emu_img_zip`、emulator smoke evidence で確認する。
+
+```text
+<AAOS17_ROOT>
+  device/generic/car/sdk_car_x86_64.mk
+    -> car_scalableui_declarative_multipanel.mk を inherit
+
+  packages/services/Car/car_product/scalableui_declarative_multipanel/
+    -> Framework / CarService / CarSystemUI RRO
+    -> ScalableUiStubCarLauncher
+
+  packages/apps/Car/SystemUI/
+    -> 必要最小限の ScalableUI routing / event 差分
+```
+
+古い作成方法:
+
+| 方式 | 現在の扱い |
+| --- | --- |
+| PoC 専用 lunch product を Android17 に追加する | 原則使わない。Soong graph が重くなり切り分けが難しいため |
+| `dynamic-workspace` を現行 baseline として使う | historical / experimental |
+| generated variant suite をそのまま本格適用候補にする | generated idea。再利用時は source / build / runtime で再検証 |
+| demo app を多数追加する all-in-one PoC | active baseline ではない |
+
 ## PoC の分類
 
 | 区分 | 対象 | 扱い |
