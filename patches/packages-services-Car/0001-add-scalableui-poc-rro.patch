@@ -100,29 +100,38 @@ index 0000000000000000000000000000000000000000..1e2f76200e8fd3aa996b1be351e30646
 +</manifest>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..2621b8d1652388b4193fb24ed851a018a11f0220
+index 0000000000000000000000000000000000000000..9d032973c1b12741cd633376271d16a691955825
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/drawable/poc_grip_bar_background.xml
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,31 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 +    <item>
 +        <shape>
-+            <solid android:color="#CC11161B" />
++            <gradient
++                android:angle="0"
++                android:endColor="#C2181C22"
++                android:startColor="#E6262C34" />
 +            <corners android:radius="@dimen/poc_grip_corner_radius" />
 +            <stroke
 +                android:width="@dimen/poc_grip_stroke_width"
-+                android:color="#80FFFFFF" />
++                android:color="#33FFFFFF" />
 +        </shape>
 +    </item>
 +
 +    <item android:gravity="center">
 +        <shape>
-+            <solid android:color="#FFE082" />
++            <gradient
++                android:angle="0"
++                android:endColor="#FFB8C7DB"
++                android:startColor="#FFF4F8FF" />
 +            <corners android:radius="@dimen/poc_grip_corner_radius" />
 +            <size
-+                android:width="@dimen/poc_grip_handle_width"
++                android:width="40dp"
 +                android:height="@dimen/poc_grip_handle_height" />
++            <stroke
++                android:width="1dp"
++                android:color="#66FFFFFF" />
 +        </shape>
 +    </item>
 +</layer-list>
@@ -252,502 +261,64 @@ index 0000000000000000000000000000000000000000..8db9df0c3efdcb8b7d011aaea3b28785
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/calendar_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/calendar_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..ad6a348898004d8ef667f35597f67058cc4d1715
+index 0000000000000000000000000000000000000000..c52768da3af62598fe700c5cb0eccdaa3ed42478
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/calendar_panel.xml
-@@ -0,0 +1,190 @@
+@@ -0,0 +1,8 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="calendar_panel" defaultVariant="@id/w50_h50" role="@string/calendar_componentName" displayId="0">
-+    <Variant id="@+id/w40_h35">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="0" right="100%" bottom="35%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w40_h50">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="0" right="100%" bottom="50%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w40_h65">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="0" right="100%" bottom="65%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h35">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="0" right="100%" bottom="35%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h50">
++<Panel id="calendar_panel" defaultVariant="@id/opened" role="@string/calendar_componentName" displayId="0">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/calendar_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="50%" leftOffset="12dp" top="0" right="100%" bottom="50%" bottomOffset="12dp"/>
 +    </Variant>
-+    <Variant id="@+id/w50_h65">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="0" right="100%" bottom="65%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h35">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="0" right="100%" bottom="35%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h50">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="0" right="100%" bottom="50%" bottomOffset="12dp"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h65">
-+        <Layer layer="@integer/calendar_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="0" right="100%" bottom="65%" bottomOffset="12dp"/>
-+    </Variant>
-+    <KeyFrameVariant id="@+id/width_drag_h35">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h35"/>
-+        <KeyFrame frame="100" variant="@id/w60_h35"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h50">
-+        <KeyFrame frame="0" variant="@id/w40_h50"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h50"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h65">
-+        <KeyFrame frame="0" variant="@id/w40_h65"/>
-+        <KeyFrame frame="50" variant="@id/w50_h65"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <KeyFrameVariant id="@+id/height_drag_w40">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w40_h50"/>
-+        <KeyFrame frame="100" variant="@id/w40_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w50">
-+        <KeyFrame frame="0" variant="@id/w50_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w50_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w60">
-+        <KeyFrame frame="0" variant="@id/w60_h35"/>
-+        <KeyFrame frame="50" variant="@id/w60_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_horizontal_grip_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_horizontal_grip_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..12c6013460c5cf7e764311f22c47c5aec2ac60e6
+index 0000000000000000000000000000000000000000..2c69570f60adac3c6dbcc876011edfec78450d7b
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_horizontal_grip_panel.xml
-@@ -0,0 +1,191 @@
+@@ -0,0 +1,10 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="decor_horizontal_grip_panel" defaultVariant="@id/w50_h50" role="@string/default_config" displayId="0"
-+    controller="@xml/horizontal_grip_controller">
-+    <Variant id="@+id/w40_h35">
++<Panel id="decor_horizontal_grip_panel" defaultVariant="@id/opened"
++    role="@string/default_config" displayId="0" controller="@xml/horizontal_grip_controller">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/grip_panel_layer"/>
 +        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="35%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
++        <Bounds left="50%" leftOffset="12dp" top="50%" topOffset="-24dp" right="100%"
++            height="@dimen/scalableui_horizontal_grip_height"/>
 +    </Variant>
-+    <Variant id="@+id/w40_h50">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="50%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w40_h65">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="65%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h35">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="35%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h50">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="50%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h65">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="65%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h35">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="35%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h50">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="50%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h65">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="65%" topOffset="-24dp" right="100%" height="@dimen/scalableui_horizontal_grip_height"/>
-+    </Variant>
-+    <KeyFrameVariant id="@+id/width_drag_h35">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h35"/>
-+        <KeyFrame frame="100" variant="@id/w60_h35"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h50">
-+        <KeyFrame frame="0" variant="@id/w40_h50"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h50"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h65">
-+        <KeyFrame frame="0" variant="@id/w40_h65"/>
-+        <KeyFrame frame="50" variant="@id/w50_h65"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <KeyFrameVariant id="@+id/height_drag_w40">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w40_h50"/>
-+        <KeyFrame frame="100" variant="@id/w40_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w50">
-+        <KeyFrame frame="0" variant="@id/w50_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w50_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w60">
-+        <KeyFrame frame="0" variant="@id/w60_h35"/>
-+        <KeyFrame frame="50" variant="@id/w60_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_left_background_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_left_background_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..b544acdf720d1cd875661ab6b493c15f3e8ec21b
+index 0000000000000000000000000000000000000000..a8af6c9b39be0cc892e05e9713d59856b5c3e4b4
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_left_background_panel.xml
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="decor_left_background_panel" defaultVariant="@id/left_50"
++<Panel id="decor_left_background_panel" defaultVariant="@id/opened"
 +    role="@layout/scalableui_left_background_panel" displayId="0">
-+    <Variant id="@+id/left_40">
-+        <Layer layer="@integer/left_background_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="0" top="0" right="40%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/left_50">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/left_background_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="0" top="0" right="50%" bottom="100%"/>
 +    </Variant>
-+    <Variant id="@+id/left_60">
-+        <Layer layer="@integer/left_background_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="0" top="0" right="60%" bottom="100%"/>
-+    </Variant>
-+
-+    <KeyFrameVariant id="@+id/width_drag">
-+        <KeyFrame frame="0" variant="@id/left_40"/>
-+        <KeyFrame frame="50" variant="@id/left_50"/>
-+        <KeyFrame frame="100" variant="@id/left_60"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_vertical_grip_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_vertical_grip_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..d32c1812f16e76d5fc5c8d4259adbb5b4ebbbbd3
+index 0000000000000000000000000000000000000000..ed60610eaadadf03d66378ef216d8f996d7ccd7f
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/decor_vertical_grip_panel.xml
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,10 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="decor_vertical_grip_panel" defaultVariant="@id/left_50" role="@string/default_config" displayId="0"
-+    controller="@xml/vertical_grip_controller">
-+    <Variant id="@+id/left_40">
++<Panel id="decor_vertical_grip_panel" defaultVariant="@id/opened"
++    role="@string/default_config" displayId="0" controller="@xml/vertical_grip_controller">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/grip_panel_layer"/>
 +        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="-24dp" top="0" width="@dimen/scalableui_vertical_grip_width" bottom="100%"/>
++        <Bounds left="50%" leftOffset="-24dp" top="0"
++            width="@dimen/scalableui_vertical_grip_width" bottom="100%"/>
 +    </Variant>
-+    <Variant id="@+id/left_50">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="-24dp" top="0" width="@dimen/scalableui_vertical_grip_width" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/left_60">
-+        <Layer layer="@integer/grip_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="-24dp" top="0" width="@dimen/scalableui_vertical_grip_width" bottom="100%"/>
-+    </Variant>
-+
-+    <KeyFrameVariant id="@+id/width_drag">
-+        <KeyFrame frame="0" variant="@id/left_40"/>
-+        <KeyFrame frame="50" variant="@id/left_50"/>
-+        <KeyFrame frame="100" variant="@id/left_60"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/horizontal_grip_controller.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/horizontal_grip_controller.xml
 new file mode 100644
@@ -772,25 +343,13 @@ index 0000000000000000000000000000000000000000..31d38c834557d03991ce7f48d5cffc04
 +</Controller>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/map_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/map_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..2be2cd995a60d46a988f20c31c4c544b9ed89ce3
+index 0000000000000000000000000000000000000000..1a16a889689197780c516be7a487deac1fff134a
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/map_panel.xml
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="map_panel" defaultVariant="@id/left_50" role="@array/nav_components" displayId="0">
-+    <Variant id="@+id/left_40">
-+        <Layer layer="@integer/left_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds
-+            left="@dimen/scalableui_map_margin"
-+            top="@dimen/scalableui_map_margin"
-+            right="40%"
-+            rightOffset="@dimen/scalableui_map_split_gap"
-+            bottom="100%"
-+            bottomOffset="@dimen/scalableui_map_margin"/>
-+        <Corner radius="24dp"/>
-+    </Variant>
-+    <Variant id="@+id/left_50">
++<Panel id="map_panel" defaultVariant="@id/opened" role="@array/nav_components" displayId="0">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/left_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds
@@ -802,53 +361,13 @@ index 0000000000000000000000000000000000000000..2be2cd995a60d46a988f20c31c4c544b
 +            bottomOffset="@dimen/scalableui_map_margin"/>
 +        <Corner radius="24dp"/>
 +    </Variant>
-+    <Variant id="@+id/left_60">
-+        <Layer layer="@integer/left_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds
-+            left="@dimen/scalableui_map_margin"
-+            top="@dimen/scalableui_map_margin"
-+            right="60%"
-+            rightOffset="@dimen/scalableui_map_split_gap"
-+            bottom="100%"
-+            bottomOffset="@dimen/scalableui_map_margin"/>
-+        <Corner radius="24dp"/>
-+    </Variant>
-+
-+    <KeyFrameVariant id="@+id/width_drag">
-+        <KeyFrame frame="0" variant="@id/left_40"/>
-+        <KeyFrame frame="50" variant="@id/left_50"/>
-+        <KeyFrame frame="100" variant="@id/left_60"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_drag" toVariant="@id/width_drag"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_narrow" toVariant="@id/left_40"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_balanced" toVariant="@id/left_50"/>
-+
-+        <Transition fromVariant="@id/left_40" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_50" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/left_60" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+        <Transition fromVariant="@id/width_drag" onEvent="layout_width_left_wide" toVariant="@id/left_60"/>
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..b9d9bbc30582717168489e3a1c853674e27a5d0b
+index 0000000000000000000000000000000000000000..c51f16391f798f8c5e39837e5060efab4df776b1
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/overlays.xml
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,23 @@
 +<!--
 +  ~ Copyright (C) 2026 The Android Open Source Project
 +  ~
@@ -870,6 +389,7 @@ index 0000000000000000000000000000000000000000..b9d9bbc30582717168489e3a1c853674
 +    <item target="array/window_states" value="@array/window_states"/>
 +    <item target="array/config_untrimmable_activities" value="@array/config_untrimmable_activities"/>
 +    <item target="array/config_default_activities" value="@array/config_default_activities"/>
++    <item target="drawable/grip_bar_background" value="@drawable/poc_grip_bar_background"/>
 +</overlay>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/panel_app_grid.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/panel_app_grid.xml
 new file mode 100644
@@ -900,199 +420,17 @@ index 0000000000000000000000000000000000000000..5b1897984756717ec094b02e1227fcd4
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/radio_panel.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/radio_panel.xml
 new file mode 100644
-index 0000000000000000000000000000000000000000..1e92925493aa86de5865d82262f984684a42b0dc
+index 0000000000000000000000000000000000000000..de91436935060d2b8306c916bbf2b97625191459
 --- /dev/null
 +++ b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/radio_panel.xml
-@@ -0,0 +1,190 @@
+@@ -0,0 +1,8 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<Panel id="radio_panel" defaultVariant="@id/w50_h50" role="@string/radio_componentName" displayId="0">
-+    <Variant id="@+id/w40_h35">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="35%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w40_h50">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="50%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w40_h65">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="40%" leftOffset="12dp" top="65%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h35">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="35%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w50_h50">
++<Panel id="radio_panel" defaultVariant="@id/opened" role="@string/radio_componentName" displayId="0">
++    <Variant id="@+id/opened">
 +        <Layer layer="@integer/radio_panel_layer"/>
 +        <Visibility isVisible="true"/>
 +        <Bounds left="50%" leftOffset="12dp" top="50%" topOffset="12dp" right="100%" bottom="100%"/>
 +    </Variant>
-+    <Variant id="@+id/w50_h65">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="50%" leftOffset="12dp" top="65%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h35">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="35%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h50">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="50%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <Variant id="@+id/w60_h65">
-+        <Layer layer="@integer/radio_panel_layer"/>
-+        <Visibility isVisible="true"/>
-+        <Bounds left="60%" leftOffset="12dp" top="65%" topOffset="12dp" right="100%" bottom="100%"/>
-+    </Variant>
-+    <KeyFrameVariant id="@+id/width_drag_h35">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h35"/>
-+        <KeyFrame frame="100" variant="@id/w60_h35"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h50">
-+        <KeyFrame frame="0" variant="@id/w40_h50"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h50"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/width_drag_h65">
-+        <KeyFrame frame="0" variant="@id/w40_h65"/>
-+        <KeyFrame frame="50" variant="@id/w50_h65"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <KeyFrameVariant id="@+id/height_drag_w40">
-+        <KeyFrame frame="0" variant="@id/w40_h35"/>
-+        <KeyFrame frame="50" variant="@id/w40_h50"/>
-+        <KeyFrame frame="100" variant="@id/w40_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w50">
-+        <KeyFrame frame="0" variant="@id/w50_h35"/>
-+        <KeyFrame frame="50" variant="@id/w50_h50"/>
-+        <KeyFrame frame="100" variant="@id/w50_h65"/>
-+    </KeyFrameVariant>
-+    <KeyFrameVariant id="@+id/height_drag_w60">
-+        <KeyFrame frame="0" variant="@id/w60_h35"/>
-+        <KeyFrame frame="50" variant="@id/w60_h50"/>
-+        <KeyFrame frame="100" variant="@id/w60_h65"/>
-+    </KeyFrameVariant>
-+
-+    <Transitions>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_narrow" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_balanced" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_left_wide" toVariant="@id/w60_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+        <Transition fromVariant="@id/width_drag_h35" onEvent="layout_width_drag" toVariant="@id/width_drag_h35"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_narrow" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_left_wide" toVariant="@id/w60_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+        <Transition fromVariant="@id/width_drag_h50" onEvent="layout_width_drag" toVariant="@id/width_drag_h50"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_narrow" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_balanced" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_left_wide" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+        <Transition fromVariant="@id/width_drag_h65" onEvent="layout_width_drag" toVariant="@id/width_drag_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_compact" toVariant="@id/w40_h35"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_balanced" toVariant="@id/w40_h50"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_map_tall" toVariant="@id/w40_h65"/>
-+
-+        <Transition fromVariant="@id/w40_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/w40_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+        <Transition fromVariant="@id/height_drag_w40" onEvent="layout_height_drag" toVariant="@id/height_drag_w40"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_compact" toVariant="@id/w50_h35"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_balanced" toVariant="@id/w50_h50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_map_tall" toVariant="@id/w50_h65"/>
-+
-+        <Transition fromVariant="@id/w50_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/w50_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+        <Transition fromVariant="@id/height_drag_w50" onEvent="layout_height_drag" toVariant="@id/height_drag_w50"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_compact" toVariant="@id/w60_h35"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_balanced" toVariant="@id/w60_h50"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_map_tall" toVariant="@id/w60_h65"/>
-+
-+        <Transition fromVariant="@id/w60_h35" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h50" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/w60_h65" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+        <Transition fromVariant="@id/height_drag_w60" onEvent="layout_height_drag" toVariant="@id/height_drag_w60"/>
-+
-+    </Transitions>
 +</Panel>
 diff --git a/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/vertical_grip_controller.xml b/car_product/scalableui_poc/rro/CarSystemUIScalableUiPocRRO/res/xml/vertical_grip_controller.xml
 new file mode 100644

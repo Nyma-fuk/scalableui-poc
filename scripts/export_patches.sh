@@ -84,11 +84,44 @@ generate_patch \
 generate_patch \
   "packages/apps/Car/SystemUI" \
   "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch" \
+  "src/com/android/systemui/CarSysUIComponent.java" \
+  "src/com/android/systemui/CarSystemUIInitializer.java" \
+  "src/com/android/systemui/car/wm/scalableui/EventDispatcher.java" \
   "src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java" \
+  "src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java" \
+  "src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java" \
+  "src/com/android/systemui/car/wm/scalableui/panel/TaskPanel.java" \
   "src/com/android/systemui/car/wm/scalableui/systemevents/SystemEventHandler.java" \
   "src/com/android/systemui/car/wm/scalableui/panel/TaskPanelInfoRepository.java" \
+  "src/com/android/systemui/car/wm/scalableui/view/DecorPanelControllerBase.java" \
   "src/com/android/systemui/car/wm/scalableui/view/GripBarViewController.java" \
-  "tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java"
+  "src/com/android/systemui/wmshell/CarWMComponent.java" \
+  "src/com/android/systemui/wmshell/CarWMShellModule.java" \
+  "tests/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegateTest.java" \
+  --new-files \
+  "src/com/android/systemui/car/wm/scalableui/EditableHomeRuntimeLayoutController.java" \
+  "src/com/android/systemui/car/wm/scalableui/ScalableUiPocRuntimeLayoutController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceConstants.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceGeometry.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceGripView.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceGripViewController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceHeaderView.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceHeaderViewController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceModelStore.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspacePanelStateController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceRuntimeLayoutController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceTaskRouter.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceToolbarView.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceToolbarViewController.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceUiBridge.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceViewportHandleView.java" \
+  "src/com/android/systemui/car/wm/scalableui/workspace/WorkspaceViewportHandleViewController.java"
+
+generate_patch \
+  "packages/apps/Car/systemlibs" \
+  "patches/packages-apps-Car-systemlibs-car-scalable-ui-lib/0001-add-runtime-layout-variant-overrides.patch" \
+  "car-scalable-ui-lib/src/com/android/car/scalableui/loader/xml/PanelStateXmlParser.java" \
+  "car-scalable-ui-lib/src/com/android/car/scalableui/model/Variant.java"
 
 generate_patch \
   "packages/apps/Car/Launcher" \

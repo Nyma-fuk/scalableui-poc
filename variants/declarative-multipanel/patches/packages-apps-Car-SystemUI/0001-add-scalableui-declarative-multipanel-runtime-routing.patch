@@ -1,0 +1,288 @@
+diff --git a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
+index 837ab0eec707eb9b3e27656185c473aa17530cc5..41786ab5d48342075d40ec439b86c10ce3ffbd30 100644
+--- a/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
++++ b/src/com/android/systemui/car/wm/scalableui/PanelAutoTaskStackTransitionHandlerDelegate.java
+@@ -66,6 +66,9 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+ 
+     private static final Event EMPTY_EVENT = new Event.Builder(EMPTY_EVENT_ID).build();
+     private static final boolean DEBUG = Build.IS_DEBUGGABLE;
++    private static final String EXTRA_TARGET_PANEL_ID =
++            "com.android.car.scalableui.extra.TARGET_PANEL_ID";
++    private static final String TARGET_PANEL_URI_PARAM = "target_panel";
+ 
+     private final AutoTaskStackController mAutoTaskStackController;
+     private final PanelTransitionCoordinator mPanelTransitionCoordinator;
+@@ -200,7 +203,14 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+         String componentString = component != null ? component.flattenToString() : null;
+         String panelId;
+         TaskPanel panel = null;
+-        if (component != null) {
++        String targetPanelId = getTargetPanelId(request.getTriggerTask().baseIntent);
++        if (targetPanelId != null) {
++            panel = mPanelUtils.getTaskPanel(tp -> targetPanelId.equals(tp.getPanelId()));
++            if (panel == null) {
++                Log.w(TAG, "Requested target panel is not available: " + targetPanelId);
++            }
++        }
++        if (panel == null && component != null) {
+             panel = mPanelUtils.getTaskPanel(tp -> tp.handles(component));
+         }
+         if (panel == null) {
+@@ -231,6 +241,24 @@ public class PanelAutoTaskStackTransitionHandlerDelegate implements
+         }
+     }
+ 
++    @Nullable
++    private static String getTargetPanelId(@Nullable Intent intent) {
++        if (intent == null) {
++            return null;
++        }
++        String extra = intent.getStringExtra(EXTRA_TARGET_PANEL_ID);
++        if (extra != null && !extra.isEmpty()) {
++            return extra;
++        }
++        if (intent.getData() != null) {
++            String queryParam = intent.getData().getQueryParameter(TARGET_PANEL_URI_PARAM);
++            if (queryParam != null && !queryParam.isEmpty()) {
++                return queryParam;
++            }
++        }
++        return null;
++    }
++
+     @Override
+     public void onTransitionConsumed(@NonNull IBinder transition,
+             @NonNull Map<Integer, AutoTaskStackState> changedTaskStacks, boolean aborted,
+diff --git a/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java b/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
+index 59c5365df99daffab6d2a373b66f36aa966a2121..31a4c365077349a7892c66a98e03425098bbe066 100644
+--- a/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
++++ b/src/com/android/systemui/car/wm/scalableui/PanelConfigReader.java
+@@ -56,7 +56,8 @@ public class PanelConfigReader {
+     public void init() {
+         PanelPool.getInstance().clearPanels();
+         PanelPool.getInstance().setDelegate(id -> {
+-            if (id.startsWith(PanelState.DECOR_PANEL_ID_PREFIX)) {
++            if (id.startsWith(PanelState.DECOR_PANEL_ID_PREFIX)
++                    || isSpecDecorPanel(id)) {
+                 return mDecorPanelFactory.create(id);
+             } else {
+                 return mTaskPanelFactory.create(id);
+@@ -82,4 +83,12 @@ public class PanelConfigReader {
+             Trace.endSection();
+         }
+     }
++
++    private static boolean isSpecDecorPanel(String id) {
++        return "top_bar_panel".equals(id)
++                || "bottom_bar_panel".equals(id)
++                || "hvac_panel".equals(id)
++                || "empty_slot_hint_panel".equals(id)
++                || "edit_overlay_panel".equals(id);
++    }
+ }
+diff --git a/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java b/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
+index e5f33f7a8650c80d13779d7d02b1e78ec5ec1399..a033a360d2717f33e3f34848cda42bde9e157072 100644
+--- a/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
++++ b/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java
+@@ -123,7 +123,7 @@ public class PanelTransitionCoordinator {
+      *                    transition.
+      */
+     public void startTransition(PanelTransaction transaction) {
+-        if (transaction.hasWindowChanges()) {
++        if (transaction.hasWindowChanges() && hasTaskPanelWindowChanges(transaction)) {
+             mMainExecutor.execute(() -> {
+                 synchronized (mPendingPanelTransactions) {
+                     IBinder transition = mAutoTaskStackController.startTransition(
+@@ -133,10 +133,29 @@ public class PanelTransitionCoordinator {
+                 }
+             });
+         } else {
+-            // If the transaction does not involve window changes, execute it directly. Posting
+-            // to the shell main thread could introduce unnecessary latency and visual lag.
+-            updatePanelSurface(transaction);
++            // DecorPanel-only transitions can require AutoDecor creation before the surface update.
++            // DecorPanel#reset posts that creation to the shell main thread, so queue the surface
++            // update behind it to avoid applying the target variant before the view exists.
++            mMainExecutor.execute(() -> {
++                boolean decorReset = resetUnpreparedDecorPanel(transaction);
++                if (decorReset) {
++                    mMainExecutor.execute(() -> updatePanelSurface(transaction));
++                } else {
++                    updatePanelSurface(transaction);
++                }
++            });
++        }
++    }
++
++    private boolean hasTaskPanelWindowChanges(PanelTransaction transaction) {
++        for (Map.Entry<String, Transition> entry : transaction.getPanelTransactionStates()) {
++            TaskPanel taskPanel = mPanelUtils.getTaskPanel(
++                    p -> p.getRootStack() != null && p.getPanelId().equals(entry.getKey()));
++            if (taskPanel != null) {
++                return true;
++            }
+         }
++        return false;
+     }
+ 
+     /**
+@@ -150,7 +169,8 @@ public class PanelTransitionCoordinator {
+      * is set to be visible, then the {@code DecorPanel} will be reset to its
+      * default state.
+      */
+-    public void resetUnpreparedDecorPanel(PanelTransaction transaction) {
++    public boolean resetUnpreparedDecorPanel(PanelTransaction transaction) {
++        boolean didReset = false;
+         for (Map.Entry<String, Transition> entry : transaction.getPanelTransactionStates()) {
+             DecorPanel decorPanel = mPanelUtils.getDecorPanel(
+                     p -> p.getPanelId().equals(entry.getKey()));
+@@ -160,8 +180,10 @@ public class PanelTransitionCoordinator {
+             Variant toVariant = entry.getValue().getToVariant();
+             if (decorPanel.getAutoDecor() == null && toVariant.isVisible()) {
+                 decorPanel.reset();
++                didReset = true;
+             }
+         }
++        return didReset;
+     }
+ 
+     private void updatePanelSurface(PanelTransaction panelTransaction) {
+diff --git a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
+index 10b19487decc44bda534b44a9e8b6227f3406c96..8e2c35d76dee09df006d8df5eaf758037799b20e 100644
+--- a/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
++++ b/src/com/android/systemui/car/wm/scalableui/ScalableUIWMInitializer.java
+@@ -16,6 +16,14 @@
+ 
+ package com.android.systemui.car.wm.scalableui;
+ 
++import android.content.BroadcastReceiver;
++import android.content.Context;
++import android.content.Intent;
++import android.content.IntentFilter;
++import android.os.UserHandle;
++import android.util.Log;
++
++import com.android.car.scalableui.model.Event;
+ import com.android.wm.shell.dagger.WMSingleton;
+ import com.android.wm.shell.sysui.ShellInit;
+ 
+@@ -24,18 +32,55 @@ import com.android.wm.shell.sysui.ShellInit;
+  */
+ @WMSingleton
+ public class ScalableUIWMInitializer {
++    public static final String ACTION_PANEL_EVENT =
++            "com.android.car.scalableui.ACTION_PANEL_EVENT";
++    public static final String EXTRA_EVENT_ID = "event_id";
++    public static final String EXTRA_PANEL_ID = "panel_id";
++    public static final String EXTRA_COMPONENT_NAME = "component_name";
++    public static final String EXTRA_PACKAGE_NAME = "package_name";
++
++    private static final String TAG = ScalableUIWMInitializer.class.getSimpleName();
++
++    private final Context mContext;
+     private final ActionConfigReader mActionConfigReader;
+     private final PanelConfigReader mPanelConfigReader;
++    private final EventDispatcher mEventDispatcher;
+     private final PanelAutoTaskStackTransitionHandlerDelegate
+             mPanelAutoTaskStackTransitionHandlerDelegate;
++    private boolean mPanelEventReceiverRegistered;
++
++    private final BroadcastReceiver mPanelEventReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            if (!ACTION_PANEL_EVENT.equals(intent.getAction())) {
++                return;
++            }
++            String eventId = intent.getStringExtra(EXTRA_EVENT_ID);
++            if (eventId == null || eventId.isEmpty()) {
++                Log.w(TAG, "Ignoring ScalableUI panel event without event id");
++                return;
++            }
++            Event event = new Event.Builder(eventId)
++                    .setPanelId(intent.getStringExtra(EXTRA_PANEL_ID))
++                    .setComponentName(intent.getStringExtra(EXTRA_COMPONENT_NAME))
++                    .setPackageName(intent.getStringExtra(EXTRA_PACKAGE_NAME))
++                    .build();
++            Log.i(TAG, "Dispatch ScalableUI panel event: " + eventId);
++            mEventDispatcher.executeEvent(event);
++        }
++    };
+ 
+     public ScalableUIWMInitializer(ShellInit shellInit,
++            Context context,
+             ActionConfigReader actionConfigReader,
+             PanelConfigReader panelConfigReader,
++            EventDispatcher eventDispatcher,
+             PanelAutoTaskStackTransitionHandlerDelegate delegate) {
+         shellInit.addInitCallback(this::onInit, this);
++        mContext = context;
+         mActionConfigReader = actionConfigReader;
+         mPanelConfigReader = panelConfigReader;
++        mEventDispatcher = eventDispatcher;
+         mPanelAutoTaskStackTransitionHandlerDelegate = delegate;
+     }
+ 
+@@ -43,5 +88,16 @@ public class ScalableUIWMInitializer {
+         mPanelAutoTaskStackTransitionHandlerDelegate.init();
+         mPanelConfigReader.init();
+         mActionConfigReader.init();
++        registerPanelEventReceiver();
++    }
++
++    private void registerPanelEventReceiver() {
++        if (mPanelEventReceiverRegistered) {
++            return;
++        }
++        IntentFilter filter = new IntentFilter(ACTION_PANEL_EVENT);
++        mContext.registerReceiverForAllUsers(mPanelEventReceiver, filter,
++                null, null, Context.RECEIVER_EXPORTED);
++        mPanelEventReceiverRegistered = true;
+     }
+ }
+diff --git a/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java b/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
+index 906cbdf2424586e4479a8b5e0535b2f126a7208b..bdf497539a58d96fb69e7e0aed382f02ed08bc80 100644
+--- a/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
++++ b/src/com/android/systemui/car/wm/scalableui/panel/DecorPanel.java
+@@ -205,7 +205,6 @@ public final class DecorPanel extends BasePanel {
+                 new Rect(0, 0, bounds.width(), bounds.height()));
+         //TODO(b/404959846): replace with autoSurfaceTransaction api if available.
+         if (mDecorView != null) {
+-            mDecorView.setAlpha(variant == null ? getAlpha() : variant.getAlpha());
+             mDecorView.post(() -> {
+                 int vis;
+                 if (variant == null) {
+@@ -213,6 +212,7 @@ public final class DecorPanel extends BasePanel {
+                 } else {
+                     vis = variant.isVisible() ? View.VISIBLE : View.GONE;
+                 }
++                mDecorView.setAlpha(variant == null ? getAlpha() : variant.getAlpha());
+                 mDecorView.setVisibility(vis);
+             });
+         }
+diff --git a/src/com/android/systemui/wmshell/CarWMShellModule.java b/src/com/android/systemui/wmshell/CarWMShellModule.java
+index 7eb5a9dd1bc1a29b3a22bfd8763464cb279ebdb8..85667ce003d570797bd0ea48c1d55881eb89d648 100644
+--- a/src/com/android/systemui/wmshell/CarWMShellModule.java
++++ b/src/com/android/systemui/wmshell/CarWMShellModule.java
+@@ -25,6 +25,7 @@ import com.android.systemui.car.CarServiceProvider;
+ import com.android.systemui.car.wm.AutoCaptionPerDisplayInitializer;
+ import com.android.systemui.car.wm.CarFullscreenTaskMonitorListener;
+ import com.android.systemui.car.wm.scalableui.ActionConfigReader;
++import com.android.systemui.car.wm.scalableui.EventDispatcher;
+ import com.android.systemui.car.wm.scalableui.PanelAutoTaskStackTransitionHandlerDelegate;
+ import com.android.systemui.car.wm.scalableui.PanelConfigReader;
+ import com.android.systemui.car.wm.scalableui.ScalableUIWMInitializer;
+@@ -143,11 +144,12 @@ public abstract class CarWMShellModule {
+             Context context,
+             Optional<ActionConfigReader> actionConfigReaderOptional,
+             Optional<PanelConfigReader> panelConfigReaderOptional,
++            EventDispatcher eventDispatcher,
+             PanelAutoTaskStackTransitionHandlerDelegate delegate) {
+         if (isScalableUIEnabled(context) && panelConfigReaderOptional.isPresent()) {
+             return Optional.of(
+-                    new ScalableUIWMInitializer(shellInit, actionConfigReaderOptional.get(),
+-                            panelConfigReaderOptional.get(), delegate));
++                    new ScalableUIWMInitializer(shellInit, context, actionConfigReaderOptional.get(),
++                            panelConfigReaderOptional.get(), eventDispatcher, delegate));
+         }
+         return Optional.empty();
+     }

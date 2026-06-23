@@ -1,5 +1,7 @@
 # Widget Layout Lab Notes
 
+> Source verification: この文書は `widget-layout-lab` の variant note です。ScalableUI 標準 / PoC custom / 未確認事項の境界は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+
 ## 目的
 
 `widget-layout-lab` は、ユーザーが提示した Widget 配置案を ScalableUI で検証するための variant です。

@@ -5,6 +5,8 @@ ROOT_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
 WORKDIR="$ROOT_DIR/workdir/scalableui-poc"
 VARIANT="${1:-}"
 
+source "$WORKDIR/scripts/hmi_variants.sh"
+
 if [[ -z "$VARIANT" ]]; then
   echo "usage: $0 <variant-slug>" >&2
   echo "example: $0 map-first" >&2
@@ -90,6 +92,7 @@ apply_one_patch() {
 
 variant_device_patch="$(find "$VARIANT_DIR/patches/device-generic-car" -maxdepth 1 -name '*.patch' | sort | head -n 1)"
 variant_services_patch="$(find "$VARIANT_DIR/patches/packages-services-Car" -maxdepth 1 -name '*.patch' | sort | head -n 1)"
+variant_systemui_patch="$(find "$VARIANT_DIR/patches/packages-apps-Car-SystemUI" -maxdepth 1 -name '*.patch' 2>/dev/null | sort | head -n 1 || true)"
 
 if [[ -z "$variant_device_patch" || -z "$variant_services_patch" ]]; then
   echo "error: missing generated patches for variant: $VARIANT" >&2
@@ -100,12 +103,22 @@ variant_device_rel="${variant_device_patch#"$WORKDIR/"}"
 variant_services_rel="${variant_services_patch#"$WORKDIR/"}"
 
 apply_one_patch "device/generic/car" "$variant_device_rel"
-for patch_path in "$WORKDIR"/common/patches/packages-services-Car/*.patch; do
-  rel="${patch_path#"$WORKDIR/"}"
-  apply_one_patch "packages/services/Car" "$rel"
-done
+if hmi_variant_uses_common_runtime_patches "$VARIANT"; then
+  for patch_path in "$WORKDIR"/common/patches/packages-services-Car/*.patch; do
+    rel="${patch_path#"$WORKDIR/"}"
+    apply_one_patch "packages/services/Car" "$rel"
+  done
+fi
 apply_one_patch "packages/services/Car" "$variant_services_rel"
-apply_one_patch "packages/apps/Car/SystemUI" "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch"
-apply_one_patch "packages/apps/Car/Launcher" "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch"
+if [[ -n "$variant_systemui_patch" ]]; then
+  variant_systemui_rel="${variant_systemui_patch#"$WORKDIR/"}"
+  apply_one_patch "packages/apps/Car/SystemUI" "$variant_systemui_rel"
+fi
+if hmi_variant_uses_common_runtime_patches "$VARIANT"; then
+  apply_one_patch "packages/apps/Car/systemlibs/car-scalable-ui-lib" \
+    "patches/packages-apps-Car-systemlibs-car-scalable-ui-lib/0001-add-runtime-layout-variant-overrides.patch"
+  apply_one_patch "packages/apps/Car/SystemUI" "patches/packages-apps-Car-SystemUI/0001-app-grid-launch-root-and-grip-fixes.patch"
+  apply_one_patch "packages/apps/Car/Launcher" "patches/packages-apps-Car-Launcher/0001-all-apps-launch-to-app-panel.patch"
+fi
 
 echo "ScalableUI HMI variant '$VARIANT' patches are in place."
