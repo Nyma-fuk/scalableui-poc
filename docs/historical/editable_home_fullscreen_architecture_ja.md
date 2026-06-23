@@ -77,6 +77,7 @@
 PoC としては、
 
 - 任意 app 全般: `move semantics`
+
 - 個人検証側 app / 特定 app のみ: `duplicate semantics` を個別対応
 
 という二段構えが現実的です。
