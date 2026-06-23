@@ -45,6 +45,56 @@ AAOS17 の ScalableUI は、通常アプリの UI toolkit ではなく、CarSyst
 | Shell task organizer | `frameworks/base/libs/WindowManager/Shell/src/com/android/wm/shell/ShellTaskOrganizer.java` |
 | ScalableUI codelab RRO examples | `packages/apps/Car/References/scalable-ui/codelab` |
 
+## AAOS17 Source README
+
+AAOS17 source には ScalableUI の README が存在する。
+
+```text
+packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/README.md
+```
+
+この README は、ScalableUI を Android Automotive SystemUI 内の framework として説明している。通常アプリ向け UI toolkit ではなく、AAOS SysUI 内で panel や system window の presentation / behavior を管理する abstraction layer という位置づけである。
+
+README から読み取れる重要点は以下である。
+
+| README の観点 | 内容 | 設計上の意味 |
+| --- | --- | --- |
+| Overview | ScalableUI は AAOS SysUI 内で panel / system window の表示と振る舞いを管理する framework | app layer ではなく CarSystemUI / WMShell 側の仕組みとして扱う |
+| Window State | visibility、size、position、Z-order など、WindowManager が管理する重い状態 | app launch、close、resize、task placement は WM transition と結びつく |
+| Surface | alpha、scale、translation、crop など、SurfaceFlinger 側で効率よく動かせる描画属性 | fade、drag 中の見た目、overlay animation は surface transaction で扱える |
+| `PanelAutoTaskStackTransitionHandlerDelegate` | WM transition と ScalableUI event / PanelTransaction の橋渡し | app launch や task close を panel transition へ変換する入口 |
+| `PanelTransitionCoordinator` | panel animation、state change、surface update、state reconciliation を統括 | Window State 変更と direct surface animation の分岐点 |
+| `EventDispatcher` | system event を panel transaction に変換する | Home、task open、button 操作などを Transition に接続する |
+| Panels | `TaskPanel`、`DecorPanel`、`SysUIPanel` などの UI container | Activity task 用 panel と装飾用 panel を分けて設計する |
+| System Events | system-level event を受け取り dispatch する | user switch、keyguard、UXR、Home などと HMI state を連動できる |
+| System Windows | HUN、System Bar などを扱う | app panel だけでなく system UI window も同じ framework の文脈で扱う |
+
+README の workflow は、ScalableUI が二つの入口を持つことを示している。
+
+```mermaid
+flowchart TD
+    WM[Window Manager transition<br/>app launch / close / resize]
+    SE[System event<br/>Home / button / user / UXR]
+    Delegate[PanelAutoTaskStackTransitionHandlerDelegate]
+    Handler[SystemEventHandler]
+    Dispatcher[EventDispatcher]
+    Tx[PanelTransaction]
+    Coordinator[PanelTransitionCoordinator]
+    Shell[AutoTaskStackController / WMShell]
+    Surface[AutoSurfaceTransaction / SurfaceControl]
+
+    WM --> Delegate
+    Delegate --> Dispatcher
+    SE --> Handler
+    Handler --> Dispatcher
+    Dispatcher --> Tx
+    Tx --> Coordinator
+    Coordinator --> Shell
+    Coordinator --> Surface
+```
+
+この README の存在により、AAOS17 では ScalableUI の責務を source 内ドキュメントからも説明できる。特に、Window State と Surface を分けて考える点、delegate と coordinator の責務を分ける点は、XML や controller を設計するときの前提になる。
+
 ## Architecture Overview
 
 ```mermaid
@@ -267,6 +317,305 @@ source example:
 | 任意 UI から panel を追加・削除する | XML/RRO だけでは不可 | `StateManager.addState()` はあるが、UI / policy / persistence は別途必要 |
 | 任意アプリを任意 panel に保存付きで割り当てる | XML/RRO だけでは不可 | app picker、保存、権限、routing policy が必要 |
 | task を Panel A から Panel B へ移動する UX を完成させる | XML/RRO だけでは不可 | task reuse / reparent / focus / lifecycle の設計が必要 |
+
+## AAOS17 Source 内の ScalableUI サンプル
+
+AAOS17 source には ScalableUI を使った codelab RRO サンプルが存在する。
+
+```text
+packages/apps/Car/References/scalable-ui/codelab
+```
+
+これらはアプリ本体ではなく、SystemUI 向け RRO と XML 定義のサンプルである。主に `window_states`、`TaskPanel`、`DecorPanel`、`Variant`、`Transition`、`Controller`、`config_default_activities` の書き方を示している。
+
+### サンプル一覧
+
+| Sample module | Package | 画面構成 | 主に学べること |
+| --- | --- | --- | --- |
+| `OnePanelRRO` | `com.android.systemui.rro.scalableUI.onePanel.codelab` | `app_panel` だけの 1 panel 構成 | 最小 `TaskPanel`、open / close、Home で閉じる基本形 |
+| `TwoPanelRRO` | `com.android.systemui.rro.scalableUI.twoPanel.codelab` | `map_panel` + `app_panel` | 背景 map panel と app panel の 2 panel 構成、default activity |
+| `TwoPanelRROCast` | `com.android.systemui.rro.scalableUI.twoPanelCast.codelab` | `map_panel` + `app_panel` | 2 panel の基本構成を別 package として提供する例 |
+| `TwoPanelRROSafeBounds` | `com.android.systemui.rro.scalableUI.twoPanelSafeBounds.codelab` | `map_panel` + `app_panel` | safe bounds を意識した app panel 表示 |
+| `TwoPanelWithInsetsRRO` | `com.android.systemui.rro.scalableUI.twoPanelWithInset.codelab` | `map_panel` + `app_panel` | inset と panel bounds の関係 |
+| `BoundsExampleRRO` | `com.android.systemui.rro.scalableUI.bounds.example.codelab` | `background_panel` + `app_panel` | fullscreen / half-screen / system bar 付き bounds の切替 |
+| `DDPanelRRO` | `com.android.systemui.rro.scalableUI.dd` | `nav_panel` + `app_panel` | nav 用 panel と app 用 panel を別々に閉じ開きする構成 |
+| `SplitPanelHorzRRO` | `com.android.systemui.rro.scalableUI.splitPanel.horz.codelab` | `map_panel` + `app_panel` + grip / overlay decor panels | 横方向 split、drag event、overlay、grip bar |
+| `SplitPanelLandRRO` | `com.android.systemui.rro.scalableUI.splitLand.codelab` | `map_panel` + `app_panel` + split decor panels | landscape split layout、drag frame、overlay |
+| `ThreePanelRRO` | `com.android.systemui.rro.scalableUI.threePanel.codelab` | `map_panel` + `paintbooth_panel` + `kitchen_sink_panel` + decor panels | 3 task panel と task switch / split grip |
+| `SplitPanelRRO` | `com.android.systemui.rro.scalableUI.splitPanel.codelab` | `map_panel` + `app_panel` + `paintbooth_panel` + `themeplayground_panel` + `kitchen_sink_panel` + decor panels | 複数 task panel、task switch、drag split、overlay、frost overlay の総合例 |
+
+### 最小 1 panel: `OnePanelRRO`
+
+`OnePanelRRO` は `window_states` に `@xml/app_panel` だけを登録する最小構成である。
+
+画面構成:
+
+```text
+Display
+└── app_panel
+    ├── closed variant
+    └── opened variant
+```
+
+制御:
+
+- `_System_TaskOpenEvent` + `panelId=app_panel` で `opened` へ遷移する。
+- `_System_OnHomeEvent` で `closed` へ戻る。
+
+このサンプルは、ScalableUI の最小単位が `window_states` と `TaskPanel` XML であることを示す。
+
+### 2 panel: `TwoPanelRRO` / `TwoPanelRROCast`
+
+`TwoPanelRRO` と `TwoPanelRROCast` は、背景になる `map_panel` と、アプリ表示用の `app_panel` を持つ。
+
+画面構成:
+
+```text
+Display
+├── map_panel
+│   └── default activity
+└── app_panel
+    ├── closed
+    └── opened
+```
+
+`config_default_activities` では、`map_panel` に `com.android.car.portraitlauncher/.homeactivities.BackgroundPanelBaseActivity` を割り当てている。
+
+制御:
+
+- `map_panel` は `defaultVariant="@id/opened"` で Home 背景として開いた状態を持つ。
+- `app_panel` は `_System_TaskOpenEvent` + `panelId=app_panel` で開く。
+- `_System_OnHomeEvent` で `app_panel` を閉じ、`map_panel` を開いた状態に戻す。
+
+このサンプルは、背景 panel と foreground app panel の分離を示す。
+
+### Safe bounds / Insets: `TwoPanelRROSafeBounds` / `TwoPanelWithInsetsRRO`
+
+これらは 2 panel 構成をベースに、system bar や inset と panel bounds の関係を確認するためのサンプルである。
+
+画面構成:
+
+```text
+Display
+├── system bar / inset area
+├── map_panel
+└── app_panel
+```
+
+制御:
+
+- app panel の bounds を system UI 領域に対して安全に配置する。
+- `map_panel` と `app_panel` の transition を system event に連動させる。
+- `TwoPanelWithInsetsRRO` では `map_panel` 側にも `_System_TaskOpenEvent` を持たせ、app panel と map panel の関係を変えられる。
+
+このサンプルは、ScalableUI の bounds 設計では単に画面全体を分割するのではなく、system bar / inset / safe area を考慮する必要があることを示す。
+
+### Bounds 切替: `BoundsExampleRRO`
+
+`BoundsExampleRRO` は `background_panel` と `app_panel` を持ち、app panel に複数の bounds variant を定義する。
+
+画面構成:
+
+```text
+Display
+├── background_panel
+│   └── fullscreen background
+└── app_panel
+    ├── fullscreen
+    ├── fullscreenStatusNav
+    ├── fullscreenWithNavBar
+    ├── fullscreenWithSystem
+    ├── halfScreen
+    ├── closed
+    └── other bounds variants
+```
+
+制御:
+
+- `_Product_FullScreen`
+- `_Product_FullScreenWithNavBar`
+- `_Product_FullScreenWithSystem`
+- `_Product_HalfScreen`
+- `_System_OnHomeEvent`
+- `_System_TaskOpenEvent`
+
+のような event で app panel の bounds variant を切り替える。
+
+`background_panel` は `controller="@xml/background_stub_controller"` を持ち、`BaseTaskPanelController` と `PersistentActivity` の使い方も示している。
+
+このサンプルは、同じ TaskPanel を複数サイズへ変形させるための XML パターンを示す。
+
+### Navigation + app: `DDPanelRRO`
+
+`DDPanelRRO` は `nav_panel` と `app_panel` を持つ。
+
+画面構成:
+
+```text
+Display
+├── nav_panel
+│   ├── closed
+│   └── opened
+└── app_panel
+    ├── closed
+    └── opened
+```
+
+制御:
+
+- `_System_TaskOpenEvent` + `panelId=nav_panel` で nav panel を開く。
+- `_System_TaskOpenEvent` + `panelId=app_panel` で app panel を開く。
+- `_System_OnHomeEvent` で両方を閉じる、または Home 向け状態へ戻す。
+
+`nav_panel` には `map_panel_controller` が指定されており、panel 固有 controller の参照例にもなっている。
+
+### 横 split: `SplitPanelHorzRRO`
+
+`SplitPanelHorzRRO` は task panel と decor panel を組み合わせ、横方向 split と drag 操作を表現する。
+
+画面構成:
+
+```text
+Display
+├── map_panel
+├── app_panel
+├── decor_grip_bar_split_task
+├── decor_split_nav_overlay
+└── decor_split_app_overlay
+```
+
+主な controller:
+
+- `GripBarViewController`
+- `PanelOverlayController`
+
+制御:
+
+- `_System_TaskOpenEvent` で app / map panel の表示状態を変える。
+- `_User_DragEvent_split` や `_Drag_TaskSplitEvent_f0` / `f50` / `f100` で split 位置の段階を表現する。
+- overlay decor panel を使い、drag 中の対象領域や補助表示を重ねる。
+- `_System_EnterSuwEvent` / `_System_ExitSuwEvent` で setup wizard 状態とも連動する。
+
+このサンプルは、TaskPanel だけではなく DecorPanel を組み合わせて、操作ハンドルと overlay を構成する例である。
+
+### Landscape split: `SplitPanelLandRRO`
+
+`SplitPanelLandRRO` は landscape 向け split の例で、`map_panel` と `app_panel` に複数の split variant を持たせる。
+
+画面構成:
+
+```text
+Display
+├── map_panel
+├── app_panel
+├── decor_grip_bar_split_task
+├── decor_split_nav_overlay
+└── decor_split_theme_overlay
+```
+
+制御:
+
+- `_Drag_TaskSplitEvent_f0`
+- `_Drag_TaskSplitEvent_f50`
+- `_Drag_TaskSplitEvent_f100`
+- `_User_DragEvent_split` + `direction=increase/decrease`
+
+などを使い、drag による split ratio 変化を表現する。
+
+このサンプルは、同じ split コンセプトでも画面向きや layout によって variant 設計が変わることを示す。
+
+### 3 panel: `ThreePanelRRO`
+
+`ThreePanelRRO` は `map_panel`、`paintbooth_panel`、`kitchen_sink_panel` を中心に、decor panel を組み合わせる。
+
+画面構成:
+
+```text
+Display
+├── map_panel
+├── paintbooth_panel
+├── kitchen_sink_panel
+├── decor_split_nav_overlay
+├── decor_grip_bar_switch_task
+└── decor_split_grip_bar
+```
+
+default activities:
+
+- `paintbooth_panel;com.android.car.ui.paintbooth/com.android.car.ui.paintbooth.MainActivity`
+- `map_panel;com.android.car.portraitlauncher/.homeactivities.BackgroundPanelBaseActivity`
+- `kitchen_sink_panel;com.google.android.car.kitchensink/com.google.android.car.kitchensink.KitchenSinkActivity`
+
+制御:
+
+- `_System_TaskOpenEvent` で各 task panel を開く。
+- `_Drag_TaskSwitchEvent_top` / `_Drag_TaskSwitchEvent_bottom` で task switch 系の遷移を行う。
+- `GripBarViewController` と `PanelOverlayController` を使い、split / switch 操作の UI を重ねる。
+
+このサンプルは、複数 task panel を同時に扱い、task switch と split を XML transition で組み合わせる例である。
+
+### 総合 split: `SplitPanelRRO`
+
+`SplitPanelRRO` は codelab の中で最も大きい構成である。task panel と decor panel を多数持ち、task switch、drag split、overlay、frost overlay をまとめて扱う。
+
+画面構成:
+
+```text
+Display
+├── map_panel
+├── app_panel
+├── paintbooth_panel
+├── themeplayground_panel
+├── kitchen_sink_panel
+├── decor_grip_bar_switch_task
+├── decor_grip_bar_split_task
+├── decor_split_nav_overlay
+├── decor_split_theme_overlay
+└── decor_frost_overlay
+```
+
+default activities:
+
+- `paintbooth_panel;com.android.car.ui.paintbooth/com.android.car.ui.paintbooth.MainActivity`
+- `map_panel;com.android.car.portraitlauncher/.homeactivities.BackgroundPanelBaseActivity`
+- `kitchen_sink_panel;com.google.android.car.kitchensink/com.google.android.car.kitchensink.KitchenSinkActivity`
+
+主な制御:
+
+- `_System_TaskOpenEvent` で対象 panel を開き、他 panel を閉じる。
+- `_System_OnHomeEvent` で Home 状態へ戻る。
+- `_User_DragEvent_switch` と `_Drag_TaskSwitchEvent_top/bottom` で上下 task switch を扱う。
+- `_User_DragEvent_split` と `_Drag_TaskSplitEvent_*` で split 状態を扱う。
+- `_System_OnAnimationEndEvent` + `panelToVariantId` token で animation 後の連動遷移を行う。
+- DecorPanel の overlay と grip bar controller により、操作面と視覚補助を分離する。
+
+このサンプルは、ScalableUI が単なる fixed panel 配置だけでなく、event-driven な task panel / decor panel の連動を XML と controller で構成できることを示す。
+
+### サンプルから分かること
+
+| 観点 | サンプルが示すこと |
+| --- | --- |
+| `window_states` | 複数 panel XML を SystemUI RRO で列挙する |
+| `TaskPanel` | Activity task を置く panel を定義する |
+| `DecorPanel` | grip bar、overlay、frost、scrim などの装飾・操作面を定義する |
+| `Variant` | opened / closed / split frame / fullscreen などを状態として表す |
+| `Transition` | system event、drag event、animation end event で状態遷移する |
+| `onEventTokens` | `panelId`、`direction`、`panelToVariantId` などで transition 対象を絞る |
+| `Controller` | `GripBarViewController`、`PanelOverlayController`、`BaseTaskPanelController` などを XML から参照する |
+| `config_default_activities` | panel id と起動する Activity component を関連づける |
+| Layer | TaskPanel と DecorPanel の前後関係を制御する |
+
+### サンプルが示していないこと
+
+サンプル RRO は ScalableUI の XML / controller / transition の使い方を示すが、以下を完成機能として示すものではない。
+
+| 項目 | 理由 |
+| --- | --- |
+| 任意 app picker | サンプルは事前定義 component / role / default activity が中心 |
+| user layout persistence | XML 定義の variant はあるが、ユーザー編集結果の保存設計は別 |
+| panel editor | runtime UI で panel を追加・削除・保存する機能ではない |
+| task lifecycle policy 全体 | task open / close event はあるが、process death、user switching、multi-display の本格 policy は別途確認が必要 |
+| 通常 APK だけでの制御 | RRO と CarSystemUI controller 前提の構成である |
 
 ## Task Event
 
