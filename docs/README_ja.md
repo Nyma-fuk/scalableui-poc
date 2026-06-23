@@ -56,6 +56,7 @@
 | [architecture/scalableui_window_manager_flow_ja.md](architecture/scalableui_window_manager_flow_ja.md) | app launch から panel 表示までの責務分担 | WM / ATM / CarSystemUI / Launcher の関係を図で説明できる |
 | [architecture/aaos_app_layer_scalableui_scope_ja.md](architecture/aaos_app_layer_scalableui_scope_ja.md) | app layer と platform 差分の境界 | 個人検証で作れる成果物と対象 AAOS 環境で必要な取り込み作業を分けられる |
 | [android17/aaos17_scalableui_as_is_capability_ja.md](android17/aaos17_scalableui_as_is_capability_ja.md) | AAOS17 ScalableUI の As-Is 実力、Panel/XML/Task event/Controller の詳細 | source 根拠をもとに ScalableUI 標準実装の範囲を説明できる |
+| [android17/scalableui_demos/README.md](android17/scalableui_demos/README.md) | AAOS17 source 内の ScalableUI demo / sample の詳細 | codelab、DEWD、minimized controls の画面構成と取り込み条件を demo 単位で確認できる |
 | [android17/aaos17_scalableui_development_flow_ja.md](android17/aaos17_scalableui_development_flow_ja.md) | AAOS17 標準 target での開発フロー | Soong 負荷を抑えながら module build / image build へ進められる |
 | [android17/android17_scalableui_delta_ja.md](android17/android17_scalableui_delta_ja.md) | Android16 QPR2 PoC と Android17 ScalableUI の差分 | どの patch を再設計すべきか判断できる |
 | [workflows/variant_status_ja.md](workflows/variant_status_ja.md) | 各 variant の現行/過去/案の区分 | 古い variant を誤って現行 baseline として扱わずに済む |

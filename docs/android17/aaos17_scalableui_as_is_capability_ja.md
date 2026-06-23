@@ -328,6 +328,8 @@ packages/apps/Car/References/scalable-ui/codelab
 
 これらはアプリ本体ではなく、SystemUI 向け RRO と XML 定義のサンプルである。主に `window_states`、`TaskPanel`、`DecorPanel`、`Variant`、`Transition`、`Controller`、`config_default_activities` の書き方を示している。
 
+各 sample / demo の画面構成、trigger、実行時遷移、source 上の class / method、素の AAOS17 emulator への取り込み条件は、demo 別資料として [scalableui_demos/README.md](scalableui_demos/README.md) に分離している。この章は全体把握用で、実装単位の確認は demo 別資料を参照する。
+
 ### サンプル一覧
 
 | Sample module | Package | 画面構成 | 主に学べること |
