@@ -1,6 +1,6 @@
 # root PoC 修正評価メモ 2026-06-01
 
-> Source verification: この文書は 2026-06-01 時点の runtime 評価記録です。AOSP source 上の責務分担と未確認事項は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は 2026-06-01 時点の runtime 評価記録です。AOSP source 上の責務分担と未確認事項は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 対象
 
@@ -30,9 +30,9 @@
 
 ### 初期表示
 
-- screenshot: `/tmp/scalableui-fix-eval/home-initial.png`
-- dismiss 後: `/tmp/scalableui-fix-eval/home-after-dismiss.png`
-- visible windows: `/tmp/scalableui-fix-eval/visible-after-dismiss.txt`
+- screenshot: `<EVIDENCE_DIR>/scalableui-fix-eval/home-initial.png`
+- dismiss 後: `<EVIDENCE_DIR>/scalableui-fix-eval/home-after-dismiss.png`
+- visible windows: `<EVIDENCE_DIR>/scalableui-fix-eval/visible-after-dismiss.txt`
 
 確認できた代表 frame:
 
@@ -51,7 +51,7 @@
 
 ### vertical grip repeated swipe
 
-- artifact dir: `/tmp/scalableui-regress/v2/`
+- artifact dir: `<EVIDENCE_DIR>/scalableui-regress/v2/`
 - visible windows:
   - `visible-width-1.txt`
   - `visible-width-2.txt`
@@ -79,7 +79,7 @@
 
 ### horizontal grip repeated swipe
 
-- artifact dir: `/tmp/scalableui-regress/v2/`
+- artifact dir: `<EVIDENCE_DIR>/scalableui-regress/v2/`
 - visible windows:
   - `visible-height-7.txt`
   - `visible-height-9.txt`
@@ -106,10 +106,10 @@
 
 ### Settings launch
 
-- screenshot: `/tmp/scalableui-regress/v2/settings-launch.png`
-- UI dump: `/tmp/scalableui-regress/v2/ui-settings.xml`
-- visible windows: `/tmp/scalableui-regress/v2/visible-settings.txt`
-- top dump: `/tmp/scalableui-regress/v2/activity-top-settings.txt`
+- screenshot: `<EVIDENCE_DIR>/scalableui-regress/v2/settings-launch.png`
+- UI dump: `<EVIDENCE_DIR>/scalableui-regress/v2/ui-settings.xml`
+- visible windows: `<EVIDENCE_DIR>/scalableui-regress/v2/visible-settings.txt`
+- top dump: `<EVIDENCE_DIR>/scalableui-regress/v2/activity-top-settings.txt`
 
 再現コマンド:
 

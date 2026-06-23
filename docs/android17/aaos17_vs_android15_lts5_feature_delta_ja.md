@@ -21,9 +21,9 @@
 
 関連資料:
 
-- `docs/android17_scalableui_delta_ja.md`
+- `docs/android17/android17_scalableui_delta_ja.md`
   - Android 17 の ScalableUI / WMShell / CarSystemUI 差分を、現在の Android 16 PoC ブランチと比較した資料。
-- `docs/aaos_app_layer_scalableui_scope_ja.md`
+- `docs/architecture/aaos_app_layer_scalableui_scope_ja.md`
   - 個人検証側アプリケーションレイヤーで ScalableUI HMI をどこまで内製できるか、対象環境へ何を依頼すべきかを整理した資料。
 
 ## Executive Summary

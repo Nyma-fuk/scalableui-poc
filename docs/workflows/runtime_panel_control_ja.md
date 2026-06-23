@@ -1,6 +1,6 @@
 # Runtime Panel Control
 
-> Source verification: この文書は `widget-workspace` の historical PoC メモです。AAOS/AOSP live source で確認できる標準機能と、過去 patch / PoC custom 実装を分けて読んでください。詳細は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `widget-workspace` の historical PoC メモです。AAOS/AOSP live source で確認できる標準機能と、過去 patch / PoC custom 実装を分けて読んでください。詳細は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 目的
 

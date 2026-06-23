@@ -1,6 +1,6 @@
 # declarative-multipanel HMI 仕様
 
-> Source verification: この baseline は AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](../../../docs/aosp_source_verification_ja.md) を参照してください。
+> Source verification: この baseline は AAOS/AOSP source と照合済みです。詳細な claim 判定は [AOSP Source Verification](../../../docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 位置づけ
 

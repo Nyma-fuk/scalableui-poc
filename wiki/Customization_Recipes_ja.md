@@ -1,143 +1,167 @@
 # Customization Recipes
 
-## Recipe 1: 右上の Calendar を別 app に変える
+現行 `declarative-multipanel` baseline を前提にした変更レシピです。
+
+## Recipe 1: 固定 panel の app を変える
 
 触る場所:
-- `res/values/strings.xml`
-- `res/values/config.xml`
 
-やること:
-1. component 名を新しい app に置き換える
-2. `config_default_activities` の `calendar_panel;...` を更新する
+- `config_default_activities`
+- `strings.xml`
+- 対象 panel XML の `role`
 
-向いている例:
-- Calendar を media に置き換える
-- settings panel を右上に固定する
+できること:
 
-## Recipe 2: 左右の split を固定で `60/40` にする
-
-触る場所:
-- `map_panel.xml`
-- `decor_left_background_panel.xml`
-- `calendar_panel.xml`
-- `radio_panel.xml`
-
-やること:
-1. `left_60` 系を default にする
-2. `calendar_panel` / `radio_panel` の `left="60%"` 系を default にする
-3. grip variant なら drag を残すか外すか決める
-
-固定 layout にしたいなら、`no-grip` variant のように他 variant を消して 1 つだけ残すのが分かりやすいです。
-
-## Recipe 3: 右上と右下の split を固定で `35/65` にする
-
-触る場所:
-- `calendar_panel.xml`
-- `radio_panel.xml`
-
-やること:
-1. `w50_h35` と `w50_h65` を使う
-2. defaultVariant を更新する
-3. 不要な height drag 系の variant を整理する
-
-## Recipe 4: grip を完全に外す
-
-一番簡単なのは `variants/no-grip` をベースにすることです。
-
-自分で外す場合:
-1. `window_states` から grip panel を削除
-2. grip panel XML を削除または未使用にする
-3. target panel 側から drag event 用 transition を整理する
-4. grip 用 dimen / integer を整理する
-
-## Recipe 5: 4 枚目の固定 panel を追加する
-
-例:
-- 右下をさらに 2 分割して `media_panel` を作る
-
-やること:
-1. `media_panel.xml` を追加
-2. `window_states` に追加
-3. layer を追加
-4. `config_default_activities` に割り当てを追加
-5. 既存 `calendar_panel` / `radio_panel` の bounds を調整
-
-## Recipe 6: ある app を常に fullscreen に送りたい
-
-方法:
-- fixed panel に割り当てない
-- `config_default_activities` から外す
-- `app_panel` に流す
+- map / media / settings など、起動時に panel へ出す app を変える
+- 右上・右下など固定領域の役割を入れ替える
 
 注意:
-- app 自体の launch mode が `singleTask` などだと、期待どおりの task 分離にならないことがある
 
-## Recipe 7: `All apps` を使わず、直接固定 panel だけにしたい
+- app が狭い bounds に対応していない場合、panel 側だけでは UI 品質を保証できません。
+
+## Recipe 2: All Apps を中央 floating panel にする
 
 触る場所:
-- `config_default_activities`
-- `window_states`
+
 - `panel_app_grid.xml`
+- layer 定義
+- dismiss event
+- AppGrid / SystemUI routing
 
-方法:
-1. `panel_app_grid` を `window_states` から外す
-2. launcher 側から `All apps` の呼び出し導線を使わない
-3. fixed panel と `app_panel` だけで運用する
+確認すること:
 
-## Recipe 8: map をフロートではなく、完全な左ペインにしたい
+- どの panel が存在しても前面に出る
+- 背後の fullscreen app が消えない
+- All Apps icon 再タップで閉じる
+- panel 外タップで閉じる
 
-触る場所:
-- `map_panel.xml`
-- `decor_left_background_panel.xml`
+XML だけで足りない場合は、outside tap を event に変換する controller / Activity / SystemUI bridge が必要です。
 
-やること:
-1. `map_panel` の margin を減らすか無くす
-2. `Corner` を外す
-3. `decor_left_background_panel` との差を少なくする
-
-## Recipe 9: fullscreen overlay の閉じ方を変える
+## Recipe 3: 通常 app を fullscreen-ish `app_panel` に出す
 
 触る場所:
-- `panel_app_grid.xml`
+
 - `app_panel.xml`
-- `AppItemViewHolder.java`
+- `PanelAutoTaskStackTransitionHandlerDelegate`
+- app launch extra / routing policy
 
-変えられること:
-- app 起動後に `All apps` を閉じる / 閉じない
-- `Home` で閉じる
-- 特定 panel が開いたら閉じる
+使う場面:
 
-## Recipe 10: 新しい variant を増やす
+- 固定 panel に出ている map / calendar / settings をユーザーが再度起動した
+- ユーザーがその app に集中操作したい
 
-おすすめ手順:
-1. 既存 variant をコピー
-2. product 名を変更
-3. `README` を置く
-4. `docs` を置く
-5. patch を variant directory に分ける
-6. `apply_patches.sh` を置く
-7. 動いた時点で tag を切る
+設計方針:
 
-## Recipe 11: tag の付け方
+- 同じ app を多重起動しない
+- 既存 task を再利用できるか確認する
+- panel 最大化 / focus / Home 復帰をセットで設計する
 
-おすすめルール:
-- variant 名を含める
-- `v1`, `v2` のように時系列を付ける
-- 大きなレイアウト変更のたびに切る
+## Recipe 4: Home 復帰で直前 layout を戻す
+
+触る場所:
+
+- transition event
+- `PanelTransitionCoordinator`
+- previous state store
+- Home / Back handling
+
+できること:
+
+- app_panel 最大化前の panel 状態を保存する
+- Home 操作で最大化 panel を元の位置へ戻す
+- All Apps / overlay を閉じた状態へ戻す
+
+注意:
+
+- 直前状態の保存は PoC/custom 領域になりやすい。
+- user switching、process death、SystemUI restart 後の復元も別途考える。
+
+## Recipe 5: panel の split を固定で変える
+
+触る場所:
+
+- 対象 `*_panel.xml`
+- `Bounds`
+- `Layer`
+- gap / margin `dimens`
 
 例:
-- `grip-v1`
-- `grip-v2`
-- `no-grip-v1`
-- `four-panel-v1`
 
-## Recipe 12: 他の人に配る前のチェック
+- map を 60%、右側を 40%
+- 右 column を 35/65 に分割
+- card 風に margin / corner を増やす
 
-最低限見るポイント:
-- `README` が最新か
-- variant ごとの `docs` が最新か
-- patch が全部揃っているか
-- apply script が safe abort するか
-- tag を切ったか
+固定 layout だけなら RRO/XML で完結しやすいです。
 
-「自分の checkout で動く」だけでなく、「他人の clean checkout に安全に適用できるか」を最後に確認すると配布しやすいです。
+## Recipe 6: grip resize を入れる
+
+扱い:
+
+- 現行 baseline の主目的ではない
+- historical variant の知見は参照可能
+- Android17 では `GripBarBase` / `HorizontalGripBar` / `VerticalGripBar` 構成を source で確認する
+
+必要になるもの:
+
+- decor panel
+- controller
+- drag event
+- target panel transition
+- drag 中 preview と drag end commit の設計
+
+## Recipe 7: runtime panel 追加を試す
+
+扱い:
+
+- ScalableUI 標準だけでは完結しない
+- `StateManager.addState(...)` は存在するが、UI / geometry / persistence は custom
+
+必要になるもの:
+
+- panel model
+- panel ID 採番
+- bounds 計算
+- app picker
+- persistence
+- process death / SystemUI restart recovery
+
+## Recipe 8: 新しい HMI 案を variant として残す
+
+推奨:
+
+1. まず docs に HMI 案を書く。
+2. active baseline に入れるか、generated idea として残すか決める。
+3. active にする場合だけ patch を整える。
+4. Android17 では専用 product を増やさず、標準 target への差分として評価する。
+
+variant の状態は [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) に追記します。
+
+## Recipe 9: 対象環境へ渡す成果物を整える
+
+渡すもの:
+
+- HMI仕様
+- RRO/XML patch
+- SystemUI controller / event patch
+- product makefile 差分
+- build command
+- emulator smoke evidence
+- 未確認事項一覧
+
+説明の軸:
+
+- ScalableUI 標準でできること
+- PoC custom として追加したこと
+- 対象環境側で統合確認が必要なこと
+
+## Recipe 10: 変更前チェック
+
+最低限:
+
+```bash
+git status --short --branch
+git diff --check
+bash -n scripts/aaos17_scalableui_build_action.sh
+```
+
+runtime 変更なら module build、`emu_img_zip`、emulator smoke を追加します。

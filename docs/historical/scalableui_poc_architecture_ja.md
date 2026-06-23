@@ -1,6 +1,6 @@
 # ScalableUI PoC Architecture
 
-> Source verification: この文書は Dynamic Workspace PoC の構成メモです。AAOS/AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を正とします。現在の live `declarative-multipanel` baseline には、任意数 runtime panel を生成する `WorkspaceRuntimeLayoutController` 系の実装は含まれていません。
+> Source verification: この文書は Dynamic Workspace PoC の構成メモです。AAOS/AOSP 実装との照合結果は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を正とします。現在の live `declarative-multipanel` baseline には、任意数 runtime panel を生成する `WorkspaceRuntimeLayoutController` 系の実装は含まれていません。
 
 この文書は、今回の ScalableUI PoC が AAOS のどこに何を追加し、どこまでを ScalableUI 標準で扱い、どこからを custom 実装しているかを整理するための全体図です。
 
@@ -291,7 +291,7 @@ AAOS15 LTS5 / AAOS17 へ移植するときに優先して確認する場所:
 - product: `sdk_car_scalableui_dynamic_workspace_x86_64`
 - AVD: `Y-Fuk-dynamic-workspace-eval3`
 - emulator args: `-memory 6144 -cores 6 -gpu angle_indirect`
-- artifact: `/tmp/dw-eval-20260609-solid-refactor`
+- artifact: `<EVIDENCE_DIR>/dw-eval-20260609-solid-refactor`
 
 結果:
 

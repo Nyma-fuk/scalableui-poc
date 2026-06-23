@@ -1,6 +1,8 @@
 # ScalableUI HMI Variant Suite
 
-> Source verification: この文書は variant suite の運用メモです。各 variant の挙動は patch 適用後の AAOS source と build artifact で再確認してください。AOSP 実装との照合結果は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は variant suite の運用メモです。各 variant の挙動は patch 適用後の AAOS source と build artifact で再確認してください。AOSP 実装との照合結果は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
+>
+> 現在の扱い: historical / generated idea。現行baselineは `declarative-multipanel` です。Android17移植では、このsuiteのようにvariantごとの専用productを増やすのではなく、標準 `sdk_car_x86_64` へPoC差分を追加する方針を優先します。variantの状態は [variant_status_ja.md](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) を参照してください。
 
 この文書は、ScalableUI で検討した HMI 案を AAOS15 checkout に適用し、ビルド時の product / lunch target で切り替えるための手順です。
 
@@ -67,7 +69,7 @@
 clean な AAOS15 checkout で、repo root から実行します。
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_suite.sh
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_suite.sh
 ```
 
 この script は次を適用します。
@@ -103,7 +105,7 @@ m
 checkout を小さく保ちたい場合は、1 variant だけを適用できます。
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh map-first
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh map-first
 lunch sdk_car_scalableui_map_first_x86_64-trunk_staging-userdebug
 m
 ```
@@ -111,7 +113,7 @@ m
 variant ディレクトリ側の wrapper も同じことをします。
 
 ```bash
-bash workdir/scalableui-poc/variants/map-first/scripts/apply_patches.sh
+bash <SCALABLEUI_POC_ROOT>/variants/map-first/scripts/apply_patches.sh
 ```
 
 注意:
@@ -202,20 +204,20 @@ variant 定義は `scripts/generate_hmi_variants.py` に集約しています。
 2. generator を実行する
 
 ```bash
-python3 workdir/scalableui-poc/scripts/generate_hmi_variants.py
+python3 <SCALABLEUI_POC_ROOT>/scripts/generate_hmi_variants.py
 ```
 
 3. 生成された patch / docs を確認する
 
 ```bash
-git -C workdir/scalableui-poc diff --stat
+git -C <SCALABLEUI_POC_ROOT> diff --stat
 ```
 
 4. patch apply check を行う
 
 ```bash
-for p in workdir/scalableui-poc/common/patches/packages-services-Car/*.patch \
-         workdir/scalableui-poc/variants/*/patches/packages-services-Car/*.patch; do
+for p in <SCALABLEUI_POC_ROOT>/common/patches/packages-services-Car/*.patch \
+         <SCALABLEUI_POC_ROOT>/variants/*/patches/packages-services-Car/*.patch; do
   git -C packages/services/Car apply --check "$p"
 done
 ```
@@ -225,7 +227,7 @@ device patch は clean base に対して確認してください。
 ```bash
 tmp=$(mktemp -d)
 git -C device/generic/car show HEAD:AndroidProducts.mk > "$tmp/AndroidProducts.mk"
-git -C "$tmp" apply --check workdir/scalableui-poc/common/patches/device-generic-car/0001-add-scalableui-hmi-suite-products.patch
+git -C "$tmp" apply --check <SCALABLEUI_POC_ROOT>/common/patches/device-generic-car/0001-add-scalableui-hmi-suite-products.patch
 ```
 
 ## tag 管理
@@ -259,18 +261,18 @@ git push origin main hmi-suite-v1
 
 ## エミュレータ image の作成と保存
 
-Windows host の `F:\aaos_images` は、WSL からは `/mnt/f/aaos_images` として見えます。
+Windows host の `<AAOS_IMAGE_ROOT>` は、WSL からは `<AAOS_IMAGE_ROOT>` として見えます。
 
 先に app / RRO だけを順次 build して、Java / resource / overlay の問題を潰す場合:
 
 ```bash
-bash workdir/scalableui-poc/scripts/build_hmi_modules.sh
+bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh
 ```
 
 1 variant だけ確認する場合:
 
 ```bash
-bash workdir/scalableui-poc/scripts/build_hmi_modules.sh map-first
+bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh map-first
 ```
 
 エミュレータ image は、full build の生 output をコピーするのではなく、AAOS / Goldfish の配布用 target である `emu_img_zip` を使います。
@@ -279,21 +281,21 @@ script は各 variant で `m emu_img_zip` を実行し、`sdk-repo-linux-system-
 13 variant すべての emulator image zip を build して保存する場合:
 
 ```bash
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
-  bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> \
+  bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh
 ```
 
 1 variant だけ emulator image zip を build する場合:
 
 ```bash
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
-  bash workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh map-first
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> \
+  bash <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh map-first
 ```
 
 保存先:
 
 ```text
-/mnt/f/aaos_images/<variant>/
+<AAOS_IMAGE_ROOT>/<variant>/
   manifest.txt
   run.sh
   sdk-repo-linux-system-images.zip
@@ -310,22 +312,22 @@ AAOS_IMAGE_ROOT=/mnt/f/aaos_images \
 保存済み image から起動する場合:
 
 ```bash
-bash workdir/scalableui-poc/scripts/run_hmi_emulator.sh map-first
+bash <SCALABLEUI_POC_ROOT>/scripts/run_hmi_emulator.sh map-first
 ```
 
 または保存先の wrapper を使います。
 
 ```bash
-/mnt/f/aaos_images/map-first/run.sh
+<AAOS_IMAGE_ROOT>/map-first/run.sh
 ```
 
 emulator に追加 option を渡す場合:
 
 ```bash
-bash workdir/scalableui-poc/scripts/run_hmi_emulator.sh map-first -no-window -gpu swiftshader_indirect
+bash <SCALABLEUI_POC_ROOT>/scripts/run_hmi_emulator.sh map-first -no-window -gpu swiftshader_indirect
 ```
 
-`AAOS_IMAGE_ROOT` を指定しない場合、script は `/mnt/f/aaos_images` を使います。
+`AAOS_IMAGE_ROOT` を指定しない場合、script は `<AAOS_IMAGE_ROOT>` を使います。
 
 ## Windows host で emulator.exe から起動する
 
@@ -349,7 +351,7 @@ F:\Android\Sdk\platform-tools\adb.exe devices -l
 同じ AVD が既に起動中なら、先に emulator console から stop してから再起動します。
 
 ```powershell
-F:\Android\Sdk\platform-tools\adb.exe -s emulator-5554 emu kill
+F:\Android\Sdk\platform-tools\adb.exe -s <DEVICE_SERIAL> emu kill
 Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
   -ArgumentList '-avd','Y-Fuk-scalableui-widget-layout-lab','-no-snapshot-load'
 ```
@@ -383,13 +385,13 @@ variant ごとに「見た目が出た」だけで完了扱いにはしません
 自動検証の入口:
 
 ```bash
-bash workdir/scalableui-poc/scripts/verify_editable_home_acceptance.sh
+bash <SCALABLEUI_POC_ROOT>/scripts/verify_editable_home_acceptance.sh
 ```
 
 既定の artifact 出力先:
 
 ```text
-/tmp/editable-home-acceptance/
+<EVIDENCE_DIR>/editable-home-acceptance/
   acceptance_report.md
   home-l2.png
   home-l1.png

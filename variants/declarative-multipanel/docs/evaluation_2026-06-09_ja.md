@@ -1,6 +1,6 @@
 # declarative-multipanel 評価記録 2026-06-09
 
-> Source verification: この評価記録は runtime smoke の観測結果です。AAOS/AOSP source に基づく責務分担と claim 判定は [AOSP Source Verification](../../../docs/aosp_source_verification_ja.md) を参照してください。
+> Source verification: この評価記録は runtime smoke の観測結果です。AAOS/AOSP source に基づく責務分担と claim 判定は [AOSP Source Verification](../../../docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 評価対象
 
@@ -11,8 +11,8 @@
 - HOME replacement: `StubCarLauncher`
 - host emulator: Windows SDK emulator
 - AVD: `Y-Fuk-dynamic-workspace-clean2`
-- image: `/mnt/f/aaos_images/declarative-multipanel/extracted/x86_64`
-- final runtime artifact: `/tmp/aaos-spec-workspace-smoke-20260609-163618`
+- image: `<AAOS_IMAGE_ROOT>/declarative-multipanel/extracted/x86_64`
+- final runtime artifact: `<EVIDENCE_DIR>/aaos-spec-workspace-smoke-20260609-163618`
 
 現在の正は `v12 aaos-scalable-ui-specs baseline 評価` です。v9 から v11 は、`map_panel` / `settings_panel` を使っていた初期検証の履歴として残しています。
 
@@ -21,7 +21,7 @@
 module build:
 
 ```bash
-JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh declarative-multipanel
+JOBS=8 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh declarative-multipanel
 ```
 
 結果: 成功
@@ -29,8 +29,8 @@ JOBS=8 workdir/scalableui-poc/scripts/build_hmi_modules.sh declarative-multipane
 emulator image build:
 
 ```bash
-AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=4 \
-  workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh declarative-multipanel
+AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> JOBS=4 \
+  <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh declarative-multipanel
 ```
 
 結果: 成功
@@ -39,8 +39,8 @@ image zip:
 
 ```text
 out/target/product/emulator_car64_x86_64/sdk-repo-linux-system-images.zip
-/mnt/f/aaos_images/declarative-multipanel/sdk-repo-linux-system-images.zip
-/mnt/f/aaos_images/declarative-multipanel/extracted/x86_64
+<AAOS_IMAGE_ROOT>/declarative-multipanel/sdk-repo-linux-system-images.zip
+<AAOS_IMAGE_ROOT>/declarative-multipanel/extracted/x86_64
 ```
 
 ## 起動方法
@@ -48,7 +48,7 @@ out/target/product/emulator_car64_x86_64/sdk-repo-linux-system-images.zip
 ```powershell
 Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
   -ArgumentList '-avd','Y-Fuk-dynamic-workspace-clean2',
-                '-sysdir','F:\aaos_images\declarative-multipanel\extracted\x86_64',
+                '-sysdir','<AAOS_IMAGE_ROOT>\declarative-multipanel\extracted\x86_64',
                 '-wipe-data','-no-snapshot-load',
                 '-ports','5564,5565',
                 '-memory','6144',
@@ -59,7 +59,7 @@ Start-Process -FilePath 'F:\Android\Sdk\emulator\emulator.exe' `
 ADB:
 
 ```bash
-/mnt/f/Android/Sdk/platform-tools/adb.exe -s emulator-5564
+<ADB_BIN> -s <DEVICE_SERIAL>
 ```
 
 最終評価では boot completed は 32 秒で返りました。
@@ -116,10 +116,10 @@ Stub 内の `.CarLauncher` と `.AppGridActivity` が同じ task affinity のま
 summary:
 
 ```text
-artifact=/tmp/declarative-multipanel-stub-eval-20260609-v9
+artifact=<EVIDENCE_DIR>/declarative-multipanel-stub-eval-20260609-v9
 avd=Y-Fuk-dynamic-workspace-clean2
-serial=emulator-5564
-image_sysdir=F:\aaos_images\declarative-multipanel\extracted\x86_64
+serial=<DEVICE_SERIAL>
+image_sysdir=<AAOS_IMAGE_ROOT>\declarative-multipanel\extracted\x86_64
 systemui_pid_home=1489
 systemui_pid_after=1489
 carlauncher_pid_home=2829
@@ -149,9 +149,9 @@ fatal_exception_count=0
 ## v9 Screenshot artifact
 
 ```text
-/tmp/declarative-multipanel-stub-eval-20260609-v9/01-home.png
-/tmp/declarative-multipanel-stub-eval-20260609-v9/02-appgrid.png
-/tmp/declarative-multipanel-stub-eval-20260609-v9/03-after-appgrid-row-tap.png
+<EVIDENCE_DIR>/declarative-multipanel-stub-eval-20260609-v9/01-home.png
+<EVIDENCE_DIR>/declarative-multipanel-stub-eval-20260609-v9/02-appgrid.png
+<EVIDENCE_DIR>/declarative-multipanel-stub-eval-20260609-v9/03-after-appgrid-row-tap.png
 ```
 
 `02-appgrid.png` では `Apps` panel と launchable app 一覧を確認しました。
@@ -203,7 +203,7 @@ Out of scope:
 評価 artifact:
 
 ```text
-/tmp/declarative-multipanel-ui-eval-20260609-v10
+<EVIDENCE_DIR>/declarative-multipanel-ui-eval-20260609-v10
 ```
 
 build:
@@ -211,7 +211,7 @@ build:
 ```text
 module build: pass
 emu_img_zip: pass
-image save: first attempt failed because emulator-5564 locked old system.img/vendor.img
+image save: first attempt failed because <DEVICE_SERIAL> locked old system.img/vendor.img
 image save retry after emulator kill: pass
 ```
 
@@ -219,8 +219,8 @@ runtime summary:
 
 ```text
 avd=Y-Fuk-dynamic-workspace-clean2
-serial=emulator-5564
-image_sysdir=F:\aaos_images\declarative-multipanel\extracted\x86_64
+serial=<DEVICE_SERIAL>
+image_sysdir=<AAOS_IMAGE_ROOT>\declarative-multipanel\extracted\x86_64
 pm_path=package:/system_ext/priv-app/StubCarLauncher/StubCarLauncher.apk
 systemui_pid_home=2101
 systemui_pid_after_settings=2101
@@ -249,10 +249,10 @@ fatal_exception_count=0
 Screenshot artifact:
 
 ```text
-/tmp/declarative-multipanel-ui-eval-20260609-v10/02-home-dismissed.png
-/tmp/declarative-multipanel-ui-eval-20260609-v10/03-after-systembar-apps-tap.png
-/tmp/declarative-multipanel-ui-eval-20260609-v10/04-after-settings-from-appgrid.png
-/tmp/declarative-multipanel-ui-eval-20260609-v10/05-after-settings-item-tap.png
+<EVIDENCE_DIR>/declarative-multipanel-ui-eval-20260609-v10/02-home-dismissed.png
+<EVIDENCE_DIR>/declarative-multipanel-ui-eval-20260609-v10/03-after-systembar-apps-tap.png
+<EVIDENCE_DIR>/declarative-multipanel-ui-eval-20260609-v10/04-after-settings-from-appgrid.png
+<EVIDENCE_DIR>/declarative-multipanel-ui-eval-20260609-v10/05-after-settings-item-tap.png
 ```
 
 判定:
@@ -267,15 +267,15 @@ Screenshot artifact:
 実行:
 
 ```bash
-ADB_BIN=/mnt/f/Android/Sdk/platform-tools/adb.exe \
-OUT_DIR=/tmp/declarative-multipanel-smoke-20260609-script-v1 \
-  workdir/scalableui-poc/scripts/verify_declarative_multipanel_smoke.sh emulator-5564
+ADB_BIN=<ADB_BIN> \
+OUT_DIR=<EVIDENCE_DIR>/declarative-multipanel-smoke-20260609-script-v1 \
+  <SCALABLEUI_POC_ROOT>/scripts/verify_declarative_multipanel_smoke.sh <DEVICE_SERIAL>
 ```
 
 評価 artifact:
 
 ```text
-/tmp/declarative-multipanel-smoke-20260609-script-v1
+<EVIDENCE_DIR>/declarative-multipanel-smoke-20260609-script-v1
 ```
 
 report:
@@ -303,8 +303,8 @@ report:
 summary:
 
 ```text
-artifact=/tmp/declarative-multipanel-smoke-20260609-script-v1
-serial=emulator-5564
+artifact=<EVIDENCE_DIR>/declarative-multipanel-smoke-20260609-script-v1
+serial=<DEVICE_SERIAL>
 wm_size=1920x1080
 pm_path=package:/system_ext/priv-app/StubCarLauncher/StubCarLauncher.apk
 systemui_pid_home=2101
@@ -318,15 +318,15 @@ fatal_exception_count=0
 
 ## v12 aaos-scalable-ui-specs baseline 評価
 
-ユーザー指定の `/home/y-fuk/work/android-automotiveos15-lts3/aaos-scalable-ui-specs` を正として、固定 3 panel の Home workspace、user slot への app routing、workspace page / resize / swap event、layout edit overlay、camera override を smoke 化して評価しました。
+ユーザー指定の `<AAOS15_LTS3_ROOT>/aaos-scalable-ui-specs` を正として、固定 3 panel の Home workspace、user slot への app routing、workspace page / resize / swap event、layout edit overlay、camera override を smoke 化して評価しました。
 
 build:
 
 ```text
 module build: pass
 emu_img_zip: pass
-saved image: /mnt/f/aaos_images/declarative-multipanel/sdk-repo-linux-system-images.zip
-extracted image: /mnt/f/aaos_images/declarative-multipanel/extracted/x86_64
+saved image: <AAOS_IMAGE_ROOT>/declarative-multipanel/sdk-repo-linux-system-images.zip
+extracted image: <AAOS_IMAGE_ROOT>/declarative-multipanel/extracted/x86_64
 sha256: 4e1a8179ad17244ac26466daac900a409d19dcb044a09cd73f490b23d4dd79fd
 ```
 
@@ -334,10 +334,10 @@ runtime:
 
 ```text
 AVD: Y-Fuk-dynamic-workspace-clean2
-serial: emulator-5564
+serial: <DEVICE_SERIAL>
 host emulator: Windows SDK emulator
-artifact: /tmp/aaos-spec-workspace-smoke-20260609-163618
-report: /tmp/aaos-spec-workspace-smoke-20260609-163618/report.md
+artifact: <EVIDENCE_DIR>/aaos-spec-workspace-smoke-20260609-163618
+report: <EVIDENCE_DIR>/aaos-spec-workspace-smoke-20260609-163618/report.md
 ```
 
 smoke result:

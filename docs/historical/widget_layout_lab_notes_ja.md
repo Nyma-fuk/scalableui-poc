@@ -1,6 +1,6 @@
 # Widget Layout Lab Notes
 
-> Source verification: この文書は `widget-layout-lab` の variant note です。ScalableUI 標準 / PoC custom / 未確認事項の境界は [AOSP Source Verification](./aosp_source_verification_ja.md) を参照してください。
+> Source verification: この文書は `widget-layout-lab` の variant note です。ScalableUI 標準 / PoC custom / 未確認事項の境界は [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md) を参照してください。
 
 ## 目的
 
@@ -37,7 +37,7 @@
 
 ## 検証メモ
 
-- `JOBS=10 workdir/scalableui-poc/scripts/build_hmi_modules.sh widget-layout-lab` で demo APK / RRO の module build が成功しています。
+- `JOBS=10 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_modules.sh widget-layout-lab` で demo APK / RRO の module build が成功しています。
 - `m -j10 CarSystemUIScalableUiHmiWidgetLayoutLabRRO CarSystemUI` で SystemUI broadcast bridge と RRO の差分 build が成功しています。
-- `AAOS_IMAGE_ROOT=/mnt/f/aaos_images JOBS=10 workdir/scalableui-poc/scripts/build_hmi_emulator_images.sh widget-layout-lab` で `emu_img_zip` が成功し、`/mnt/f/aaos_images/widget-layout-lab/sdk-repo-linux-system-images.zip` に保存されています。
+- `AAOS_IMAGE_ROOT=<AAOS_IMAGE_ROOT> JOBS=10 <SCALABLEUI_POC_ROOT>/scripts/build_hmi_emulator_images.sh widget-layout-lab` で `emu_img_zip` が成功し、`<AAOS_IMAGE_ROOT>/widget-layout-lab/sdk-repo-linux-system-images.zip` に保存されています。
 - `debugfs` で `system_ext.img` を確認し、`CarSystemUIScalableUiHmiWidgetLayoutLabRRO` と `ScalableUiHmiCalendarDemoApp` / `ScalableUiHmiWeatherDemoApp` / `ScalableUiHmiWidgetMenuDemoApp` / `ScalableUiHmiWidgetMenuButtonDemoApp` / `ScalableUiHmiWidgetDropZoneDemoApp` の APK が含まれていることを確認しています。

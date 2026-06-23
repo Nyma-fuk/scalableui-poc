@@ -30,7 +30,7 @@ A compact Panel Control button reveals a hidden runtime menu. Users choose a des
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh widget-workspace
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh widget-workspace
 lunch sdk_car_scalableui_widget_workspace_x86_64-trunk_staging-userdebug
 ```
 

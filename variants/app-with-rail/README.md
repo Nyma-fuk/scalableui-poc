@@ -27,7 +27,7 @@ A large app workspace remains available while a side rail keeps shortcuts and st
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh app-with-rail
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh app-with-rail
 lunch sdk_car_scalableui_app_with_rail_x86_64-trunk_staging-userdebug
 ```
 

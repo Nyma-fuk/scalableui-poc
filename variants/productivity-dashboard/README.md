@@ -28,7 +28,7 @@ Calendar, tasks, phone, and map are arranged as a parked or pre-drive assistant 
 Run from the AAOS checkout root:
 
 ```bash
-bash workdir/scalableui-poc/scripts/apply_hmi_variant.sh productivity-dashboard
+bash <SCALABLEUI_POC_ROOT>/scripts/apply_hmi_variant.sh productivity-dashboard
 lunch sdk_car_scalableui_productivity_dashboard_x86_64-trunk_staging-userdebug
 ```
 
