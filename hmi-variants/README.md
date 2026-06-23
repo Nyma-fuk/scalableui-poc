@@ -1,7 +1,13 @@
 # HMI Variant Suite
 
+Historical / generated idea.
+
 This directory contains generated patch packs for all HMI ideas described in
 the wiki page `HMI_Pattern_Ideas_ja.md`.
+
+The current maintained baseline is `variants/declarative-multipanel`.
+For Android 17 work, prefer the standard `sdk_car_x86_64` target with PoC deltas
+instead of adding one product per idea.
 
 ## Variants
 
