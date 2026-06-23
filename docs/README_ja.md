@@ -59,6 +59,7 @@
 | [android17/scalableui_demos/README.md](android17/scalableui_demos/README.md) | AAOS17 source 内の ScalableUI demo / sample の詳細 | codelab、DEWD、minimized controls の画面構成と取り込み条件を demo 単位で確認できる |
 | [android17/aaos17_scalableui_development_flow_ja.md](android17/aaos17_scalableui_development_flow_ja.md) | AAOS17 標準 target での開発フロー | Soong 負荷を抑えながら module build / image build へ進められる |
 | [android17/android17_scalableui_delta_ja.md](android17/android17_scalableui_delta_ja.md) | Android16 QPR2 PoC と Android17 ScalableUI の差分 | どの patch を再設計すべきか判断できる |
+| [external/multipanel_landscape_rro_analysis_ja.md](external/multipanel_landscape_rro_analysis_ja.md) | `passenger6/MultiPanelLandscapeRRO` の外部 RRO demo 解析 | ScalableUI XML/RRO の複雑な landscape demo を source 根拠で説明できる |
 | [workflows/variant_status_ja.md](workflows/variant_status_ja.md) | 各 variant の現行/過去/案の区分 | 古い variant を誤って現行 baseline として扱わずに済む |
 | [workflows/poc_repository_cleanup_plan_ja.md](workflows/poc_repository_cleanup_plan_ja.md) | repository 整理方針 | docs / patches / variants の棚卸しを継続できる |
 
