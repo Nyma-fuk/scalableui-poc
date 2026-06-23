@@ -94,6 +94,8 @@ variant_device_patch="$(find "$VARIANT_DIR/patches/device-generic-car" -maxdepth
 variant_services_patch="$(find "$VARIANT_DIR/patches/packages-services-Car" -maxdepth 1 -name '*.patch' | sort | head -n 1)"
 variant_systemui_patch="$(find "$VARIANT_DIR/patches/packages-apps-Car-SystemUI" -maxdepth 1 -name '*.patch' 2>/dev/null | sort | head -n 1 || true)"
 
+variant_launcher_patch="$(find "$VARIANT_DIR/patches/packages-apps-Car-Launcher" -maxdepth 1 -name '*.patch' 2>/dev/null | sort | head -n 1 || true)"
+
 if [[ -z "$variant_device_patch" || -z "$variant_services_patch" ]]; then
   echo "error: missing generated patches for variant: $VARIANT" >&2
   exit 1
@@ -113,6 +115,10 @@ apply_one_patch "packages/services/Car" "$variant_services_rel"
 if [[ -n "$variant_systemui_patch" ]]; then
   variant_systemui_rel="${variant_systemui_patch#"$WORKDIR/"}"
   apply_one_patch "packages/apps/Car/SystemUI" "$variant_systemui_rel"
+fi
+if [[ -n "$variant_launcher_patch" ]]; then
+  variant_launcher_rel="${variant_launcher_patch#"$WORKDIR/"}"
+  apply_one_patch "packages/apps/Car/Launcher" "$variant_launcher_rel"
 fi
 if hmi_variant_uses_common_runtime_patches "$VARIANT"; then
   apply_one_patch "packages/apps/Car/systemlibs/car-scalable-ui-lib" \
