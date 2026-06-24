@@ -33,7 +33,7 @@
         <Transition onEvent="_System_OnHomeEvent" toVariant="@id/closed"/>
         <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=paintbooth_panel" toVariant="@id/closed"/>
         <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/closed"/>
-        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=kitchen_sink_panel" toVariant="@id/opened_blur"/>
+        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=kitchen_sink_panel" toVariant="@id/closed"/>
         <Transition onEvent="_Drag_TaskSwitchEvent_top" toVariant="@id/closed"/>
         <Transition onEvent="_Drag_TaskSwitchEvent_bottom" toVariant="@id/closed"/>
     </Transitions>

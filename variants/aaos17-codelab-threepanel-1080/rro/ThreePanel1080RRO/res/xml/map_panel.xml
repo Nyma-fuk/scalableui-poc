@@ -47,7 +47,7 @@
         <Transition onEvent="_System_OnHomeEvent" toVariant="@id/opened"/>
         <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=paintbooth_panel" toVariant="@id/opened_split"/>
         <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=app_panel" toVariant="@id/opened"/>
-        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=kitchen_sink_panel" toVariant="@id/opened_blur"/>
+        <Transition onEvent="_System_TaskOpenEvent" onEventTokens="panelId=kitchen_sink_panel" toVariant="@id/opened_split"/>
         <Transition onEvent="_Drag_TaskSwitchEvent_top" toVariant="@id/opened_lower"/>
         <Transition onEvent="_Drag_TaskSwitchEvent_bottom" toVariant="@id/opened_split"/>
     </Transitions>

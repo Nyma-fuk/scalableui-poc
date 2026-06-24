@@ -38,14 +38,14 @@
     <dimen name="top_breakpoint">300px</dimen>
     <dimen name="bottom_breakpoint">730px</dimen>
 
-    <dimen name="lower_grip_bar_switch_task_left">950px</dimen>
-    <dimen name="lower_grip_bar_switch_task_top">720px</dimen>
-    <dimen name="lower_grip_bar_switch_task_right">970px</dimen>
-    <dimen name="lower_grip_bar_switch_task_bottom">820px</dimen>
+    <dimen name="lower_grip_bar_switch_task_left">944px</dimen>
+    <dimen name="lower_grip_bar_switch_task_top">700px</dimen>
+    <dimen name="lower_grip_bar_switch_task_right">976px</dimen>
+    <dimen name="lower_grip_bar_switch_task_bottom">840px</dimen>
 
-    <dimen name="upper_grip_bar_switch_task_left">950px</dimen>
-    <dimen name="upper_grip_bar_switch_task_top">240px</dimen>
-    <dimen name="upper_grip_bar_switch_task_right">970px</dimen>
+    <dimen name="upper_grip_bar_switch_task_left">944px</dimen>
+    <dimen name="upper_grip_bar_switch_task_top">200px</dimen>
+    <dimen name="upper_grip_bar_switch_task_right">976px</dimen>
     <dimen name="upper_grip_bar_switch_task_bottom">340px</dimen>
 
 </resources>

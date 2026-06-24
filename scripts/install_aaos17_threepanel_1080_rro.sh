@@ -74,11 +74,54 @@ if [[ -n "${ADB_SERIAL}" ]]; then
     ADB_ARGS=(-s "${ADB_SERIAL}")
 fi
 
+adb_shell() {
+    "${ADB_BIN}" "${ADB_ARGS[@]}" shell "$@"
+}
+
+ensure_splitscreen_feature() {
+    if adb_shell pm list features | grep -Fq "android.software.car.splitscreen_multitasking"; then
+        return 0
+    fi
+
+    local feature_xml="${AAOS_ROOT}/packages/services/Car/car_product/dewd/android.software.car.splitscreen_multitasking.xml"
+    if [[ ! -f "${feature_xml}" ]]; then
+        echo "Missing split-screen feature XML: ${feature_xml}" >&2
+        exit 1
+    fi
+
+    echo "android.software.car.splitscreen_multitasking is missing; trying to install it into /product/etc/permissions" >&2
+    if ! "${ADB_BIN}" "${ADB_ARGS[@]}" root; then
+        echo "Failed to restart adbd as root. Start the emulator with -writable-system or use an image that already includes the feature." >&2
+        exit 1
+    fi
+    sleep 2
+    if ! "${ADB_BIN}" "${ADB_ARGS[@]}" remount; then
+        echo "Failed to remount partitions writable. Start the emulator with -writable-system or include the feature in the image build." >&2
+        exit 1
+    fi
+    "${ADB_BIN}" "${ADB_ARGS[@]}" push "${feature_xml}" \
+        /product/etc/permissions/android.software.car.splitscreen_multitasking.xml
+    echo "Installed split-screen feature XML. Rebooting before applying the RRO." >&2
+    "${ADB_BIN}" "${ADB_ARGS[@]}" reboot
+    "${ADB_BIN}" "${ADB_ARGS[@]}" wait-for-device
+    for _ in $(seq 1 120); do
+        if adb_shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' | grep -q '^1$'; then
+            return 0
+        fi
+        sleep 2
+    done
+    echo "Timed out waiting for emulator after feature XML install." >&2
+    exit 1
+}
+
 "${ADB_BIN}" "${ADB_ARGS[@]}" wait-for-device
+ensure_splitscreen_feature
 "${ADB_BIN}" "${ADB_ARGS[@]}" install -r "${APK_PATH}"
 "${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay disable --user 0 com.android.systemui.rro.scalableUI.threePanel.codelab || true
 "${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay disable --user 10 com.android.systemui.rro.scalableUI.threePanel.codelab || true
 "${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay enable --user 0 com.android.systemui.rro.scalableUI.threePanel1080.codelab
 "${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay enable --user 10 com.android.systemui.rro.scalableUI.threePanel1080.codelab || true
+"${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay enable-exclusive --user 0 --category com.android.systemui.rro.scalableUI.threePanel1080.codelab
+"${ADB_BIN}" "${ADB_ARGS[@]}" shell cmd overlay enable-exclusive --user 10 --category com.android.systemui.rro.scalableUI.threePanel1080.codelab || true
 
 echo "Installed and enabled ${APK_PATH}"

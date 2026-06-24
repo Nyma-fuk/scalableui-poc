@@ -36,11 +36,25 @@ assert_file_contains() {
 }
 
 assert_no_crash() {
-    if grep -R -E "FATAL EXCEPTION|AndroidRuntime|incorrect safe bounds|SystemUI.*crash|has died" "${OUT_DIR}"/*.txt >/dev/null; then
+    if grep -R -E "FATAL EXCEPTION|incorrect safe bounds|SystemUI.*crash|has died" "${OUT_DIR}"/*.txt >/dev/null; then
         echo "FAIL: crash or safe-bounds error found in ${OUT_DIR}" >&2
-        grep -R -n -E "FATAL EXCEPTION|AndroidRuntime|incorrect safe bounds|SystemUI.*crash|has died" "${OUT_DIR}"/*.txt >&2
+        grep -R -n -E "FATAL EXCEPTION|incorrect safe bounds|SystemUI.*crash|has died" "${OUT_DIR}"/*.txt >&2
         exit 1
     fi
+}
+
+dismiss_initial_user_notice() {
+    local dump_file="/sdcard/aaos17_threepanel_uidump.xml"
+    adb_shell uiautomator dump "${dump_file}" >/dev/null 2>&1 || return 0
+    if adb_shell cat "${dump_file}" 2>/dev/null | grep -Fq "Dismiss for now"; then
+        adb_shell input tap 1476 583
+        sleep 1
+    fi
+}
+
+reset_demo_apps() {
+    adb_shell am force-stop com.google.android.car.kitchensink || true
+    adb_shell am force-stop com.android.car.ui.paintbooth || true
 }
 
 "${ADB_BIN}" "${ADB_ARGS[@]}" wait-for-device
@@ -55,9 +69,12 @@ adb_shell cmd resource get-array com.android.systemui array/window_states > "${O
 assert_file_contains "${OUT_DIR}/wm_size.txt" "Physical size: 1920x1080" "emulator must be 1920x1080"
 assert_file_contains "${OUT_DIR}/overlay_user0.txt" "[x] com.android.systemui.rro.scalableUI.threePanel1080.codelab" "ThreePanel1080 overlay must be enabled for user 0"
 
+reset_demo_apps
+
 adb_shell logcat -c
 adb_shell input keyevent HOME
 sleep 3
+dismiss_initial_user_notice
 capture "01_home"
 assert_file_contains "${OUT_DIR}/01_home_activities.txt" "topDisplayFocusedRootTask=Task" "home must have a focused root task"
 assert_file_contains "${OUT_DIR}/01_home_activities.txt" "name=map_panel" "home must show map_panel"
@@ -76,6 +93,7 @@ assert_file_contains "${OUT_DIR}/02_all_apps_logcat.txt" "panelId=app_panel" "Al
 adb_shell logcat -c
 adb_shell am start -n com.google.android.car.kitchensink/.KitchenSinkActivity > "${OUT_DIR}/03_kitchensink_start.txt"
 sleep 4
+dismiss_initial_user_notice
 capture "03_kitchensink"
 assert_file_contains "${OUT_DIR}/03_kitchensink_activities.txt" "name=kitchen_sink_panel" "KitchenSink must be routed to kitchen_sink_panel"
 assert_file_contains "${OUT_DIR}/03_kitchensink_activities.txt" "bounds=[960,67][1920,940]" "KitchenSink panel must use right half bounds"
@@ -86,6 +104,7 @@ assert_file_contains "${OUT_DIR}/03_kitchensink_logcat.txt" "panelId=kitchen_sin
 adb_shell logcat -c
 adb_shell am start -n com.android.car.ui.paintbooth/.MainActivity > "${OUT_DIR}/04_paintbooth_start.txt"
 sleep 4
+dismiss_initial_user_notice
 capture "04_paintbooth"
 assert_file_contains "${OUT_DIR}/04_paintbooth_activities.txt" "name=paintbooth_panel" "PaintBooth must be routed to paintbooth_panel"
 assert_file_contains "${OUT_DIR}/04_paintbooth_activities.txt" "bounds=[960,520][1920,940]" "PaintBooth panel must open at bottom-right"

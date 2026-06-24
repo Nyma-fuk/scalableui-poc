@@ -10,7 +10,7 @@ AAOS17 `android-17.0.0_r1` の ScalableUI codelab ThreePanel RRO を、1920x1080
 | --- | --- | --- |
 | Home 表示 | `map_panel` が content area 全体に表示される | OK |
 | All Apps 起動 | system bar の app grid button から `com.android.car.carlauncher/.AppGridActivity` が `app_panel` に開く | OK |
-| KitchenSink 起動 | `map_panel` が左半分、`kitchen_sink_panel` が右半分に表示される | OK |
+| KitchenSink 起動 | `map_panel` が左半分へ縮み、overlay なしで `kitchen_sink_panel` が右半分に表示される | OK |
 | PaintBooth 起動 | `map_panel` が左半分、`paintbooth_panel` が右下に表示される | OK |
 | grip tap | `paintbooth_panel` が右上へ移動し、`map_panel` が左下へ縮む | OK |
 | top grip tap | `paintbooth_panel` が右下へ戻り、`map_panel` が左半分へ戻る | OK |
@@ -76,7 +76,7 @@ PaintBooth top after grip tap
 | `rro/ThreePanel1080RRO/res/xml/map_panel.xml` | home / split / lower の map panel 状態 |
 | `rro/ThreePanel1080RRO/res/xml/kitchen_sink_panel.xml` | KitchenSink 用右半分 panel |
 | `rro/ThreePanel1080RRO/res/xml/paintbooth_panel.xml` | PaintBooth 用右下 / 右上 panel |
-| `rro/ThreePanel1080RRO/res/xml/decor_grip_bar_switch_task.xml` | grip tap による panel 切り替え |
+| `rro/ThreePanel1080RRO/res/xml/decor_grip_bar_switch_task.xml` | split grip tap による PaintBooth の上下切り替え |
 
 ## ビルドと適用
 
@@ -97,6 +97,8 @@ scripts/install_aaos17_threepanel_1080_rro.sh
 - `com.android.car.ui.paintbooth`
 - `com.google.android.car.kitchensink`
 
+`android.software.car.splitscreen_multitasking` は `ScalableUIUtils.isScalableUIEnabled()` の有効化条件である。この feature が無い image では、RRO が enabled でも `map_panel` などの panel root task は生成されない。検証用 script は `-writable-system` で起動した emulator に対しては、この feature XML を `/product/etc/permissions` に投入してから RRO を適用する。
+
 ## 検証済みの根拠
 
 検証時は screenshot、`dumpsys activity activities`、`dumpsys window`、`logcat` を保存した。
@@ -104,15 +106,18 @@ scripts/install_aaos17_threepanel_1080_rro.sh
 | 項目 | 確認内容 |
 | --- | --- |
 | overlay | `com.android.systemui.rro.scalableUI.threePanel1080.codelab` が user 0 / user 10 で enabled |
+| feature | `android.software.car.splitscreen_multitasking` が存在し、ScalableUI initializer が起動可能 |
 | window states | `app_panel`, `map_panel`, `kitchen_sink_panel`, `paintbooth_panel`, `decor_split_nav_overlay`, `decor_grip_bar_switch_task` が読み込まれる |
 | Home | `_System_OnHomeEvent` で `map_panel` が `Rect(0, 67 - 1920, 940)` |
 | All Apps | system bar tap で `com.android.car.carlauncher/.AppGridActivity` が `app_panel` の `Rect(960, 67 - 1920, 940)` に開く |
-| KitchenSink | `_System_TaskOpenEvent panelId=kitchen_sink_panel` で右半分 `Rect(960, 67 - 1920, 940)` |
+| KitchenSink | `_System_TaskOpenEvent panelId=kitchen_sink_panel` で `map_panel` が左半分 `Rect(0, 67 - 960, 940)`、KitchenSink が右半分 `Rect(960, 67 - 1920, 940)`。Map overlay は閉じる |
 | PaintBooth | `_System_TaskOpenEvent panelId=paintbooth_panel` で右下 `Rect(960, 520 - 1920, 940)` |
 | grip top | `_Drag_TaskSwitchEvent_top` で PaintBooth が右上 `Rect(960, 67 - 1920, 520)` |
 | grip bottom | `_Drag_TaskSwitchEvent_bottom` で PaintBooth が右下 `Rect(960, 520 - 1920, 940)` |
 | Home return | `_System_OnHomeEvent` で app panels が offscreen、`map_panel` が full content に復帰 |
 | process stability | final validation log に fatal crash / safe bounds error なし |
+
+AAOS の initial user notice が前面に出る場合、検証 script は `Dismiss for now` を検出して閉じる。これは ScalableUI の panel 制御ではなく、AAOS 側の notice window が grip の touch event を吸うことを避けるためである。
 
 ## All Apps
 
