@@ -12,7 +12,7 @@ Usage:
   scripts/aaos17_scalableui_build_action.sh commands
 
 Environment:
-  ANDROID_ROOT=/home/y-fuk/work/android17-r1
+  ANDROID_ROOT=<android17-source-root>
 
 Purpose:
   Manual preflight/action helper for the AAOS17 ScalableUI PoC.
@@ -87,7 +87,7 @@ stop_builds() {
 
 commands() {
   cat <<'COMMANDS'
-cd ~/work/android17-r1
+cd <android17-source-root>
 source build/envsetup.sh
 lunch sdk_car_x86_64-trunk_staging-userdebug
 

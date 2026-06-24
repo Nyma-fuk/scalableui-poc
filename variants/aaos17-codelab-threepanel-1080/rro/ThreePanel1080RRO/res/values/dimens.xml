@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2025 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingDefaultResource,PxUsage">
+    <dimen name="screen_height">1080px</dimen>
+
+    <dimen name="top_bar_bottom">67px</dimen>
+
+    <dimen name="bottom_bar_top">940px</dimen>
+    <dimen name="bottom_bar_bottom">1080px</dimen>
+
+    <dimen name="app_grid_drawer_height">873px</dimen>
+
+    <dimen name="map_top">@dimen/top_bar_bottom</dimen>
+    <dimen name="map_right">960px</dimen>
+    <dimen name="map_bottom">@dimen/bottom_bar_top</dimen>
+
+    <dimen name="split_bottom">520px</dimen>
+
+    <dimen name="corner_radius">40dp</dimen>
+    <dimen name="drag_corner_radius">80dp</dimen>
+
+    <dimen name="app_height">873px</dimen>
+
+    <dimen name="top_breakpoint">300px</dimen>
+    <dimen name="bottom_breakpoint">730px</dimen>
+
+    <dimen name="lower_grip_bar_switch_task_left">950px</dimen>
+    <dimen name="lower_grip_bar_switch_task_top">720px</dimen>
+    <dimen name="lower_grip_bar_switch_task_right">970px</dimen>
+    <dimen name="lower_grip_bar_switch_task_bottom">820px</dimen>
+
+    <dimen name="upper_grip_bar_switch_task_left">950px</dimen>
+    <dimen name="upper_grip_bar_switch_task_top">240px</dimen>
+    <dimen name="upper_grip_bar_switch_task_right">970px</dimen>
+    <dimen name="upper_grip_bar_switch_task_bottom">340px</dimen>
+
+</resources>

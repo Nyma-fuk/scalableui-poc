@@ -277,7 +277,7 @@ Status:
 必要な検討:
 
 - debug panel を app にするか decor にするか
-- production image に入れないための product 分離
+- 配布用 image に入れないための product 分離
 - telemetry / privacy
 
 Status:

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2025 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingDefaultResource,PxUsage">
+  <dimen name="screen_height">2560px</dimen>
+
+  <dimen name="top_bar_bottom">86px</dimen>
+
+  <dimen name="bottom_bar_top">2410px</dimen>
+  <dimen name="bottom_bar_bottom">2560px</dimen>
+
+  <dimen name="map_top">0px</dimen>
+  <dimen name="map_right">1600px</dimen>
+
+  <dimen name="app_height">1100px</dimen>
+  <dimen name="split_bottom">1220px</dimen>
+
+  <dimen name="lower_grip_bar_switch_task_left">20px</dimen>
+  <dimen name="lower_grip_bar_switch_task_top">1700px</dimen>
+  <dimen name="lower_grip_bar_switch_task_right">40px</dimen>
+  <dimen name="lower_grip_bar_switch_task_bottom">2000px</dimen>
+
+  <dimen name="upper_grip_bar_switch_task_left">20px</dimen>
+  <dimen name="upper_grip_bar_switch_task_top">520px</dimen>
+  <dimen name="upper_grip_bar_switch_task_right">40px</dimen>
+  <dimen name="upper_grip_bar_switch_task_bottom">620px</dimen>
+</resources>
