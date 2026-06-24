@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="system_bar_app_drawer_intent" translatable="false">intent:#Intent;action=com.android.car.carlauncher.ACTION_APP_GRID;package=com.android.car.portraitlauncher;launchFlags=0x24000000;end</string>
+    <string name="system_bar_app_drawer_intent" translatable="false">intent:#Intent;action=com.android.car.carlauncher.ACTION_APP_GRID;component=com.android.car.carlauncher/com.android.car.carlauncher.AppGridActivity;launchFlags=0x24000000;end</string>
 
     <array name="window_states">
         <item>@xml/app_panel</item>

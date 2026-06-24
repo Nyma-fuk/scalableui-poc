@@ -11,7 +11,7 @@ TARGET_VARIANT="${TARGET_VARIANT:-userdebug}"
 ADB_BIN="${ADB_BIN:-adb}"
 ADB_SERIAL="${ADB_SERIAL:-}"
 
-DEST_DIR="${AAOS_ROOT}/packages/apps/Car/References/scalable-ui/codelab/ThreePanel1080RRO"
+BUILD_DIR="${BUILD_DIR:-/tmp/aaos17-threepanel-1080-rro-build}"
 
 if [[ ! -d "${AAOS_ROOT}/build" || ! -f "${AAOS_ROOT}/build/envsetup.sh" ]]; then
     echo "AAOS_ROOT does not look like an Android source tree: ${AAOS_ROOT}" >&2
@@ -23,21 +23,49 @@ if [[ ! -d "${VARIANT_DIR}" ]]; then
     exit 1
 fi
 
-mkdir -p "$(dirname "${DEST_DIR}")"
-rm -rf "${DEST_DIR}"
-cp -a "${VARIANT_DIR}" "${DEST_DIR}"
+mkdir -p "${BUILD_DIR}/flat"
+rm -rf "${BUILD_DIR}/flat"
+mkdir -p "${BUILD_DIR}/flat"
 
-(
-    cd "${AAOS_ROOT}"
-    # shellcheck disable=SC1091
-    source build/envsetup.sh
-    lunch "${TARGET_PRODUCT}-${TARGET_VARIANT}"
-    SOONG_NINJA="${SOONG_NINJA:-ninja}" m ThreePanel1080RRO
-)
+AAPT2="${AAPT2:-${AAOS_ROOT}/prebuilts/sdk/tools/linux/bin/aapt2}"
+ZIPALIGN="${ZIPALIGN:-${AAOS_ROOT}/prebuilts/build-tools/linux-x86/bin/zipalign}"
+APKSIGNER_JAR="${APKSIGNER_JAR:-${AAOS_ROOT}/prebuilts/sdk/tools/linux/lib/apksigner.jar}"
+ANDROID_JAR="${ANDROID_JAR:-${AAOS_ROOT}/prebuilts/sdk/current/public/android.jar}"
+PLATFORM_PK8="${PLATFORM_PK8:-${AAOS_ROOT}/build/make/target/product/security/platform.pk8}"
+PLATFORM_CERT="${PLATFORM_CERT:-${AAOS_ROOT}/build/make/target/product/security/platform.x509.pem}"
+JAVA_BIN="${JAVA_BIN:-}"
+if [[ -z "${JAVA_BIN}" ]]; then
+    JAVA_BIN="$(ls "${AAOS_ROOT}"/prebuilts/jdk/*/linux-x86/bin/java | head -1)"
+fi
 
-APK_PATH="$(find "${AAOS_ROOT}/out/target/product" -path '*/ThreePanel1080RRO.apk' -type f | head -1)"
-if [[ -z "${APK_PATH}" ]]; then
-    echo "ThreePanel1080RRO.apk was not found under ${AAOS_ROOT}/out/target/product" >&2
+for required in "${AAPT2}" "${ZIPALIGN}" "${APKSIGNER_JAR}" "${ANDROID_JAR}" \
+        "${PLATFORM_PK8}" "${PLATFORM_CERT}" "${JAVA_BIN}"; do
+    if [[ ! -e "${required}" ]]; then
+        echo "Required build input not found: ${required}" >&2
+        exit 1
+    fi
+done
+
+"${AAPT2}" compile --dir "${VARIANT_DIR}/res" -o "${BUILD_DIR}/flat"
+find "${BUILD_DIR}/flat" -name '*.flat' | sort > "${BUILD_DIR}/flats.list"
+"${AAPT2}" link \
+    -o "${BUILD_DIR}/ThreePanel1080RRO-unsigned.apk" \
+    --manifest "${VARIANT_DIR}/AndroidManifest.xml" \
+    -I "${ANDROID_JAR}" \
+    --auto-add-overlay \
+    @"${BUILD_DIR}/flats.list"
+"${ZIPALIGN}" -f -p 4 \
+    "${BUILD_DIR}/ThreePanel1080RRO-unsigned.apk" \
+    "${BUILD_DIR}/ThreePanel1080RRO-aligned.apk"
+"${JAVA_BIN}" -jar "${APKSIGNER_JAR}" sign \
+    --key "${PLATFORM_PK8}" \
+    --cert "${PLATFORM_CERT}" \
+    --out "${BUILD_DIR}/ThreePanel1080RRO-platform.apk" \
+    "${BUILD_DIR}/ThreePanel1080RRO-aligned.apk"
+
+APK_PATH="${BUILD_DIR}/ThreePanel1080RRO-platform.apk"
+if [[ ! -f "${APK_PATH}" ]]; then
+    echo "ThreePanel1080RRO apk was not generated: ${APK_PATH}" >&2
     exit 1
 fi
 

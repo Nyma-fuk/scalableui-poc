@@ -16,6 +16,9 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.systemui.rro.scalableUI.threePanel1080.codelab">
+    <uses-sdk
+        android:minSdkVersion="24"
+        android:targetSdkVersion="36" />
     <application android:hasCode="false" />
     <!-- priority need to be higher than CarSystemUIDewdUIRRO -->
     <overlay

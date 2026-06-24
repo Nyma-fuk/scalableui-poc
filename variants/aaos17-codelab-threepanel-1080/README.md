@@ -9,6 +9,7 @@ AAOS17 `android-17.0.0_r1` の ScalableUI codelab ThreePanel RRO を、1920x1080
 | 操作 | 期待するUI | 検証結果 |
 | --- | --- | --- |
 | Home 表示 | `map_panel` が content area 全体に表示される | OK |
+| All Apps 起動 | system bar の app grid button から `com.android.car.carlauncher/.AppGridActivity` が `app_panel` に開く | OK |
 | KitchenSink 起動 | `map_panel` が左半分、`kitchen_sink_panel` が右半分に表示される | OK |
 | PaintBooth 起動 | `map_panel` が左半分、`paintbooth_panel` が右下に表示される | OK |
 | grip tap | `paintbooth_panel` が右上へ移動し、`map_panel` が左下へ縮む | OK |
@@ -57,6 +58,7 @@ PaintBooth top after grip tap
 
 - RRO package: `com.android.systemui.rro.scalableUI.threePanel1080.codelab`
 - RRO module: `ThreePanel1080RRO`
+- All Apps intent: `com.android.car.carlauncher/.AppGridActivity`
 - `screen_height`: `1080px`
 - content top: `67px`
 - content bottom: `940px`
@@ -78,7 +80,7 @@ PaintBooth top after grip tap
 
 ## ビルドと適用
 
-標準 AAOS17 target に一時コピーして build / install / overlay enable する。
+標準 AAOS17 source tree の `aapt2` / platform key を使って RRO APK を作成し、install / overlay enable する。
 
 ```bash
 AAOS_ROOT=<aaos-root> \
@@ -88,9 +90,10 @@ scripts/install_aaos17_threepanel_1080_rro.sh
 
 前提:
 
-- `AAOS_ROOT` で `source build/envsetup.sh` と `lunch sdk_car_x86_64-trunk_staging-userdebug` が実行できること
+- `AAOS_ROOT` が AAOS17 source tree を指していること
 - 対象 emulator に `android.software.car.splitscreen_multitasking` feature が存在すること
 - `com.android.car.portraitlauncher`
+- `com.android.car.carlauncher`
 - `com.android.car.ui.paintbooth`
 - `com.google.android.car.kitchensink`
 
@@ -103,12 +106,19 @@ scripts/install_aaos17_threepanel_1080_rro.sh
 | overlay | `com.android.systemui.rro.scalableUI.threePanel1080.codelab` が user 0 / user 10 で enabled |
 | window states | `app_panel`, `map_panel`, `kitchen_sink_panel`, `paintbooth_panel`, `decor_split_nav_overlay`, `decor_grip_bar_switch_task` が読み込まれる |
 | Home | `_System_OnHomeEvent` で `map_panel` が `Rect(0, 67 - 1920, 940)` |
+| All Apps | system bar tap で `com.android.car.carlauncher/.AppGridActivity` が `app_panel` の `Rect(960, 67 - 1920, 940)` に開く |
 | KitchenSink | `_System_TaskOpenEvent panelId=kitchen_sink_panel` で右半分 `Rect(960, 67 - 1920, 940)` |
 | PaintBooth | `_System_TaskOpenEvent panelId=paintbooth_panel` で右下 `Rect(960, 520 - 1920, 940)` |
 | grip top | `_Drag_TaskSwitchEvent_top` で PaintBooth が右上 `Rect(960, 67 - 1920, 520)` |
 | grip bottom | `_Drag_TaskSwitchEvent_bottom` で PaintBooth が右下 `Rect(960, 520 - 1920, 940)` |
 | Home return | `_System_OnHomeEvent` で app panels が offscreen、`map_panel` が full content に復帰 |
 | process stability | final validation log に fatal crash / safe bounds error なし |
+
+## All Apps
+
+元の codelab RRO は `system_bar_app_drawer_intent` を `com.android.car.portraitlauncher` package 固定にしていた。1920x1080 の標準 AAOS17 emulator では標準の `com.android.car.carlauncher/.AppGridActivity` を使う方が素直なので、この variant では component 指定に変更している。
+
+`AppGridActivity` は通常の app task として `app_panel` に routing される想定である。
 
 ## 既知の未成立項目
 

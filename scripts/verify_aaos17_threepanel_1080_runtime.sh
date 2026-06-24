@@ -64,47 +64,57 @@ assert_file_contains "${OUT_DIR}/01_home_activities.txt" "name=map_panel" "home 
 assert_file_contains "${OUT_DIR}/01_home_activities.txt" "bounds=[0,67][1920,940]" "home map_panel bounds must cover content area"
 
 adb_shell logcat -c
-adb_shell am start -n com.google.android.car.kitchensink/.KitchenSinkActivity > "${OUT_DIR}/02_kitchensink_start.txt"
+adb_shell input tap 782 1032
 sleep 4
-capture "02_kitchensink"
-assert_file_contains "${OUT_DIR}/02_kitchensink_activities.txt" "name=kitchen_sink_panel" "KitchenSink must be routed to kitchen_sink_panel"
-assert_file_contains "${OUT_DIR}/02_kitchensink_activities.txt" "bounds=[960,67][1920,940]" "KitchenSink panel must use right half bounds"
-assert_file_contains "${OUT_DIR}/02_kitchensink_activities.txt" "bounds=[0,67][960,940]" "map_panel must shrink to left half for KitchenSink"
-assert_file_contains "${OUT_DIR}/02_kitchensink_logcat.txt" "_System_TaskOpenEvent" "KitchenSink launch must produce task open event"
-assert_file_contains "${OUT_DIR}/02_kitchensink_logcat.txt" "panelId=kitchen_sink_panel" "KitchenSink event must target kitchen_sink_panel"
+capture "02_all_apps"
+assert_file_contains "${OUT_DIR}/02_all_apps_activities.txt" "name=app_panel" "All Apps must be routed to app_panel"
+assert_file_contains "${OUT_DIR}/02_all_apps_activities.txt" "com.android.car.carlauncher/.AppGridActivity" "All Apps must open AppGridActivity"
+assert_file_contains "${OUT_DIR}/02_all_apps_activities.txt" "bounds=[960,67][1920,940]" "All Apps panel must use right half bounds"
+assert_file_contains "${OUT_DIR}/02_all_apps_logcat.txt" "_System_TaskOpenEvent" "All Apps launch must produce task open event"
+assert_file_contains "${OUT_DIR}/02_all_apps_logcat.txt" "panelId=app_panel" "All Apps event must target app_panel"
 
 adb_shell logcat -c
-adb_shell am start -n com.android.car.ui.paintbooth/.MainActivity > "${OUT_DIR}/03_paintbooth_start.txt"
+adb_shell am start -n com.google.android.car.kitchensink/.KitchenSinkActivity > "${OUT_DIR}/03_kitchensink_start.txt"
 sleep 4
-capture "03_paintbooth"
-assert_file_contains "${OUT_DIR}/03_paintbooth_activities.txt" "name=paintbooth_panel" "PaintBooth must be routed to paintbooth_panel"
-assert_file_contains "${OUT_DIR}/03_paintbooth_activities.txt" "bounds=[960,520][1920,940]" "PaintBooth panel must open at bottom-right"
-assert_file_contains "${OUT_DIR}/03_paintbooth_activities.txt" "bounds=[0,67][960,940]" "map_panel must stay left for PaintBooth"
-assert_file_contains "${OUT_DIR}/03_paintbooth_logcat.txt" "panelId=paintbooth_panel" "PaintBooth event must target paintbooth_panel"
+capture "03_kitchensink"
+assert_file_contains "${OUT_DIR}/03_kitchensink_activities.txt" "name=kitchen_sink_panel" "KitchenSink must be routed to kitchen_sink_panel"
+assert_file_contains "${OUT_DIR}/03_kitchensink_activities.txt" "bounds=[960,67][1920,940]" "KitchenSink panel must use right half bounds"
+assert_file_contains "${OUT_DIR}/03_kitchensink_activities.txt" "bounds=[0,67][960,940]" "map_panel must shrink to left half for KitchenSink"
+assert_file_contains "${OUT_DIR}/03_kitchensink_logcat.txt" "_System_TaskOpenEvent" "KitchenSink launch must produce task open event"
+assert_file_contains "${OUT_DIR}/03_kitchensink_logcat.txt" "panelId=kitchen_sink_panel" "KitchenSink event must target kitchen_sink_panel"
+
+adb_shell logcat -c
+adb_shell am start -n com.android.car.ui.paintbooth/.MainActivity > "${OUT_DIR}/04_paintbooth_start.txt"
+sleep 4
+capture "04_paintbooth"
+assert_file_contains "${OUT_DIR}/04_paintbooth_activities.txt" "name=paintbooth_panel" "PaintBooth must be routed to paintbooth_panel"
+assert_file_contains "${OUT_DIR}/04_paintbooth_activities.txt" "bounds=[960,520][1920,940]" "PaintBooth panel must open at bottom-right"
+assert_file_contains "${OUT_DIR}/04_paintbooth_activities.txt" "bounds=[0,67][960,940]" "map_panel must stay left for PaintBooth"
+assert_file_contains "${OUT_DIR}/04_paintbooth_logcat.txt" "panelId=paintbooth_panel" "PaintBooth event must target paintbooth_panel"
 
 adb_shell logcat -c
 adb_shell input tap 960 760
 sleep 3
-capture "04_grip_top"
-assert_file_contains "${OUT_DIR}/04_grip_top_activities.txt" "bounds=[960,67][1920,520]" "grip tap must move PaintBooth to top-right"
-assert_file_contains "${OUT_DIR}/04_grip_top_activities.txt" "bounds=[0,520][960,940]" "grip tap must move map_panel to lower-left"
-assert_file_contains "${OUT_DIR}/04_grip_top_logcat.txt" "_Drag_TaskSwitchEvent_top" "lower grip tap must emit top switch event"
+capture "05_grip_top"
+assert_file_contains "${OUT_DIR}/05_grip_top_activities.txt" "bounds=[960,67][1920,520]" "grip tap must move PaintBooth to top-right"
+assert_file_contains "${OUT_DIR}/05_grip_top_activities.txt" "bounds=[0,520][960,940]" "grip tap must move map_panel to lower-left"
+assert_file_contains "${OUT_DIR}/05_grip_top_logcat.txt" "_Drag_TaskSwitchEvent_top" "lower grip tap must emit top switch event"
 
 adb_shell logcat -c
 adb_shell input tap 960 280
 sleep 3
-capture "05_grip_bottom"
-assert_file_contains "${OUT_DIR}/05_grip_bottom_activities.txt" "bounds=[960,520][1920,940]" "top grip tap must return PaintBooth to bottom-right"
-assert_file_contains "${OUT_DIR}/05_grip_bottom_activities.txt" "bounds=[0,67][960,940]" "top grip tap must return map_panel to left half"
-assert_file_contains "${OUT_DIR}/05_grip_bottom_logcat.txt" "_Drag_TaskSwitchEvent_bottom" "top grip tap must emit bottom switch event"
+capture "06_grip_bottom"
+assert_file_contains "${OUT_DIR}/06_grip_bottom_activities.txt" "bounds=[960,520][1920,940]" "top grip tap must return PaintBooth to bottom-right"
+assert_file_contains "${OUT_DIR}/06_grip_bottom_activities.txt" "bounds=[0,67][960,940]" "top grip tap must return map_panel to left half"
+assert_file_contains "${OUT_DIR}/06_grip_bottom_logcat.txt" "_Drag_TaskSwitchEvent_bottom" "top grip tap must emit bottom switch event"
 
 adb_shell logcat -c
 adb_shell input keyevent HOME
 sleep 3
-capture "06_home_return"
-assert_file_contains "${OUT_DIR}/06_home_return_activities.txt" "name=map_panel" "home return must focus map_panel"
-assert_file_contains "${OUT_DIR}/06_home_return_activities.txt" "bounds=[0,67][1920,940]" "home return must restore map_panel content bounds"
-assert_file_contains "${OUT_DIR}/06_home_return_logcat.txt" "_System_OnHomeEvent" "home return must emit home event"
+capture "07_home_return"
+assert_file_contains "${OUT_DIR}/07_home_return_activities.txt" "name=map_panel" "home return must focus map_panel"
+assert_file_contains "${OUT_DIR}/07_home_return_activities.txt" "bounds=[0,67][1920,940]" "home return must restore map_panel content bounds"
+assert_file_contains "${OUT_DIR}/07_home_return_logcat.txt" "_System_OnHomeEvent" "home return must emit home event"
 
 assert_no_crash
 
