@@ -23,21 +23,21 @@ Before implementation work, read:
 
 1. `README.md`
 2. `docs/README_ja.md`
-3. `docs/aosp_source_verification_ja.md`
+3. `docs/verification/aosp_source_verification_ja.md`
 4. `variants/declarative-multipanel/docs/hmi_spec_ja.md`
-5. `docs/scalableui_window_manager_flow_ja.md`
+5. `docs/architecture/scalableui_window_manager_flow_ja.md`
 6. `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md`
-7. For Android 17 work: `docs/aaos17_scalableui_development_flow_ja.md`
+7. For Android 17 work: `docs/android17/aaos17_scalableui_development_flow_ja.md`
 
 ## Source Of Truth
 
 - `scripts/hmi_variants.sh` is the variant/product/module mapping used by build scripts.
 - `docs/README_ja.md` owns the document classification. Use it to separate ScalableUI general facts, active PoC docs, Android 17 porting docs, and historical experiments.
-- `docs/variant_status_ja.md` owns the current/historical/generated status of each variant.
+- `docs/workflows/variant_status_ja.md` owns the current/historical/generated status of each variant.
 - `variants/declarative-multipanel/` owns the current clean product/RRO/StubCarLauncher patch.
 - `variants/declarative-multipanel/docs/hmi_spec_ja.md` owns the active HMI specification.
-- `docs/scalableui_window_manager_flow_ja.md` owns ScalableUI / WindowManager / Launcher relationship diagrams.
-- `docs/aaos17_scalableui_development_flow_ja.md` owns the Android 17 standard-target development flow.
+- `docs/architecture/scalableui_window_manager_flow_ja.md` owns ScalableUI / WindowManager / Launcher relationship diagrams.
+- `docs/android17/aaos17_scalableui_development_flow_ja.md` owns the Android 17 standard-target development flow.
 - `variants/declarative-multipanel/docs/evaluation_2026-06-09_ja.md` owns current runtime evaluation history.
 - `scripts/verify_declarative_multipanel_smoke.sh` owns the baseline runtime smoke.
 

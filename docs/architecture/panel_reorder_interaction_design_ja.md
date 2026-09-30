@@ -41,6 +41,10 @@ Map を右端へ drop:
 
 編集モードでは、アプリ操作を意図的に停止し、編集Overlayが入力を専有できる。Panel swap自体の状態管理、Surface preview、Drop確定、復元を先に独立して検証できる。
 
+公式Scalable UIの`KeyFrameVariant`は、0..1の連続fractionからbounds等を補間する標準部品であり、既存sampleにもdrag transitionがある。ただし、この部品だけでは「Panel全面の長押し検出」「Map gestureとのarbitration」「3-slot swap policy」「保存・復元」は提供されない。本設計は標準のdrag/transition部品を再利用しつつ、その外側の入力・編集policyを追加する。
+
+またWM invariantsに合わせ、drag中はSurface previewを優先し、Drop時に最終boundsを一度のtransitionで確定する。Activityをdrag中の各frameでrelayoutさせない。
+
 | 観点 | 通常画面の全面長押し | 編集モード中だけ操作 | 判定 |
 | --- | --- | --- | --- |
 | Mapのpan / pinch | gesture arbitrationが必要 | 通常モードでは無干渉 | 編集モードを優先 |
@@ -79,7 +83,7 @@ Panelの位置交換では、Taskを別Panelへreparentしない。たとえば 
 
 - [`passenger6/car-systemui-win98-pod`](https://github.com/passenger6/car-systemui-win98-pod)
 - [Building a desktop on AAOS with Scalable UI](https://medium.com/@passenger6/building-a-desktop-on-aaos-with-scalable-ui-framework-dc339ed3cc1c)
-- 調査時のrepository commit: `3e4512ec606d63cd74364f7be32b9d68220b3446`
+- 調査時のrepository commit: `3e4512ec606d63cd74364f7be32b9d68220b3446`（2026-10-01にremote HEADと一致確認）
 
 採用する中核原則:
 

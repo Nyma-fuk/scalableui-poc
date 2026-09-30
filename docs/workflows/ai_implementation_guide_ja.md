@@ -4,6 +4,7 @@
 > 現在の現行baselineは `declarative-multipanel` である。
 > この文書には Dynamic Workspace 時代の実装知見も含まれるが、Dynamic Workspace は historical / experimental として扱う。
 > docsの分類は [Docs Index](../README_ja.md) と [Variant Status](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/workflows/variant_status_ja.md) を正とする。
+> AAOS17のbranch/hashと最新capabilityは [2026-10-01 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を正とする。
 
 この文書は、AI agent がこの repository だけを入口にして、ScalableUI と今回の PoC を理解し、実装・build・評価まで進めるための実装ガイドです。
 
@@ -73,6 +74,8 @@ ScalableUI 標準で担うこと:
 - TaskPanel / DecorPanel を作る
 - Activity task を panel root task に載せる
 - transition に従って panel の visibility / bounds / layer を更新する
+- `KeyFrameVariant`で連続fractionに応じたvisual propertyを補間する
+- `TaskBehavior`で新規task launchのsource root task policyを指定する
 
 PoC custom で担うこと:
 
@@ -80,14 +83,14 @@ PoC custom で担うこと:
 - `StateManager.addState(...)` で runtime panel を追加する
 - panel ごとの width / component / order / viewport offset を保存する
 - header / grip / toolbar / viewport handle を Dynamic Workspace 専用 decor として生成する
-- drag 中に task surface を重く更新しない preview policy
+- 標準`KeyFrameVariant` / Surface transactionを使ったdrag previewを、製品入力と結ぶpolicy
 - panel assignment と fullscreen app launch の routing policy
 
 検証済み境界:
 
 - `StateManager.addState(...)` は存在するが、任意数 runtime panel 生成は標準 RRO / XML 初期化ではない
 - `RemoteCarTaskView` / `TaskView` は ScalableUI `TaskPanel` の実体ではない
-- Panel 間の既存 task reparent は、AOSP API として可能性はあるが live ScalableUI source では標準機能として未確認
+- `TaskBehavior.REPARENT_TO_SOURCE`は新規task launch policyであり、Panel間の任意な既存task移動editorは標準完成機能として未確認
 
 ## 5. Patch の役割
 

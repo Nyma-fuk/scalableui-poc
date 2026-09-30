@@ -21,6 +21,15 @@ sdk_car_x86_64-trunk_staging-userdebug
 
 この方針により、対象環境へ説明する際も「素のAAOS17 emulator targetへの追加差分」として扱える。
 
+公式advanced windowing実装条件として、`config_enableScalableUI=true`だけでなく`android.software.car.splitscreen_multitasking` featureと競合legacy windowingの無効化を確認する。現行AAOS17 sourceの`device/generic/car/sdk_car_x86_64.mk`は、DEWDのfeature XMLを`product/etc/permissions`へcopyする定義を持つ。
+
+runtime確認例:
+
+```bash
+<ADB_BIN> -s <DEVICE_SERIAL> shell pm list features \
+  | grep android.software.car.splitscreen_multitasking
+```
+
 ## なぜ標準targetを使うか
 
 Android 17のSoongは、Android.bp解析の終盤で巨大なmodule graphをまとめて処理する。

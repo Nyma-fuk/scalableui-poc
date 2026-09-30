@@ -13,6 +13,8 @@
 
 詳細な status は [../docs/workflows/variant_status_ja.md](../docs/workflows/variant_status_ja.md) を参照する。
 
+AAOS17のbranch/hashとScalableUI capabilityは [2026-10-01 source snapshot](../docs/verification/aaos17_source_snapshot_2026-10-01_ja.md) を基準にする。
+
 ## Android17 方針
 
 Android17 では variant ごとの専用 product を増やすより、標準 `sdk_car_x86_64-trunk_staging-userdebug` に PoC 差分を重ねる方針を優先する。

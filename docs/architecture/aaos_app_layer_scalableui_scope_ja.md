@@ -4,6 +4,8 @@
 
 本資料は、個人調査側が AAOS 上で動作するアプリケーションを開発し、対象環境が AAOS システムイメージへ実装・統合する体制を前提に、ScalableUI を使った HMI カスタマイズの責務境界を整理する。
 
+AAOS17側のsource基準は [2026-10-01 snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) とする。
+
 ここでいう「アプリケーションレイヤー」は、通常 APK として提供できる Activity、Service、設定、アプリ内 UI、アプリ間 Intent 連携を指す。一方、ScalableUI の有効化、Panel 定義、TaskPanel への Activity 配置、SystemUI/CarLauncher/WMShell 連携は、AAOS システム側の統合領域である。
 
 ## 結論

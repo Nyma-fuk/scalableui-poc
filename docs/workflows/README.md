@@ -2,6 +2,8 @@
 
 実装、検証、整理、variant 管理のための作業資料。
 
+現行AAOS17 source基準は [2026-10-01 snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md)。historical/generated workflowは現行standard-target手順と分けて読む。
+
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
 | [ai_implementation_guide_ja.md](ai_implementation_guide_ja.md) | AI 実装時の前提、source verification の読み方、作業順 | 実装前に確認すべき docs と検証観点を揃えられる |

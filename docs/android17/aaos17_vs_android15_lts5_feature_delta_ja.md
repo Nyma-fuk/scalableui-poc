@@ -1,6 +1,8 @@
-# AAOS17 / Android 17 新規・変更機能整理
+# Android 17・AAOS 25Q4・AAOS15 LTS5 差分整理
 
-本資料は、Android 17 / AAOS 25Q4 で追加・変更された機能を、Android Automotive OS 15 LTS5 を比較対象として整理する。
+本資料は、Android 17とAAOS 25Q4の公式情報を、Android Automotive OS 15 LTS5を比較対象として整理する。
+
+重要: Android 17とAAOS 25Q4は同義ではない。AAOS 25Q4は公式golden releaseでAPI level 16.1と記載される別release trainであり、Android 17 release notesとは分けて扱う。本資料では、AAOS25Q4で先行・明文化されたScalable UI機能とAndroid17 sourceへの移行影響を合わせて確認するため、両方を比較材料としている。
 
 比較対象は以下とした。
 
@@ -16,19 +18,20 @@
   - https://source.android.com/docs/whatsnew/android-17-release
 - AAOS 25Q4 release notes
   - https://source.android.com/docs/automotive/start/releases/aaos-25q4
+  - official golden release / API level 16.1
 
 注意: 本資料は「manifest 差分」と「公式リリースノート」をベースにした一次整理である。各機能の本格適用可否、既存 PoC への直接影響、対象環境 BSP との差分は、個別リポジトリのソースコード差分、ビルド、実機またはエミュレータ検証で別途確認する必要がある。
 
 関連資料:
 
 - `docs/android17/android17_scalableui_delta_ja.md`
-  - Android 17 の ScalableUI / WMShell / CarSystemUI 差分を、現在の Android 16 PoC ブランチと比較した資料。
+  - Android 17 の ScalableUI / WMShell / CarSystemUI 差分を、調査当時の Android 16 PoC と比較した資料。
 - `docs/architecture/aaos_app_layer_scalableui_scope_ja.md`
   - 個人検証側アプリケーションレイヤーで ScalableUI HMI をどこまで内製できるか、対象環境へ何を依頼すべきかを整理した資料。
 
 ## Executive Summary
 
-Android 17 / AAOS 25Q4 は、Android 15 LTS5 から見ると、単なるマイナーバージョン更新ではなく、車載 HMI、SDV、アプリ互換、メモリ管理、セキュリティ、テスト要件の更新がまとまって入る大きな移行になる。
+Android 17と、別release trainのAAOS 25Q4を合わせて調査すると、Android 15 LTS5からの移行では車載HMI、SDV、アプリ互換、メモリ管理、セキュリティ、テスト要件に大きな更新がある。
 
 特に AAOS として重要なのは次の 5 点である。
 
@@ -46,9 +49,11 @@ manifest 差分としては、Android 17 側の project 数は `1087`、Android 
 
 ```mermaid
 flowchart LR
-    A[Android Automotive OS 15 LTS5] --> B[Android 17 / AAOS 25Q4]
+    A[Android Automotive OS 15 LTS5] --> B[Android 17 source]
+    A --> Q[AAOS 25Q4 release notes<br/>API level 16.1]
 
     B --> HMI[HMI / Windowing<br/>Scalable UI officialization]
+    Q --> HMI
     B --> SDV[Software Defined Vehicle<br/>system/software_defined_vehicle]
     B --> APP[App compatibility<br/>safe rectangle / DPI / per-app overrides]
     B --> VEHICLE[Vehicle APIs<br/>VHAL enum access / car data logging]
@@ -141,7 +146,7 @@ Android 17 release notes でも、Android 17 以降では Scalable UI を使っ�
 
 ### 個人検証側 PoC への影響
 
-現在の ScalableUI PoC は Android 16 ベースに ScalableUI の panel / TaskPanel / transition / All Apps / fullscreen panel 挙動を移植している。Android 17 へ移る場合、既存 PoC で独自実装していた一部の安定化要素は、AAOS 25Q4 の公式 Scalable UI 機能に寄せられる可能性がある。
+調査対象のAndroid 16 QPR2 PoCは、ScalableUIのpanel / TaskPanel / transition / All Apps / fullscreen panel挙動を扱っていた。Android 17へ移る場合、PoCで独自実装していた一部の安定化要素は、AAOS25Q4以降に公式化されたScalable UI機能へ寄せられる可能性がある。
 
 特に確認すべき点は以下である。
 
@@ -197,7 +202,7 @@ AAOS 25Q4 では、Car Ready Mobile Apps の CDD / CTS compliance を検証し�
 
 ### 個人検証側 PoC への影響
 
-ScalableUI の panel に third-party app を表示する場合、単に task を panel に入れるだけでは実機品質にはならない。Android 17 / AAOS 25Q4 では、次の観点を HMI 仕様・検証仕様に入れる必要がある。
+ScalableUIのpanelにthird-party appを表示する場合、単にtaskをpanelへ入れるだけでは実機品質にはならない。Android17 sourceとAAOS25Q4公式要件の双方から、次の観点をHMI仕様・検証仕様に入れる必要がある。
 
 - panel 内でアプリの重要 UI が隠れないか。
 - fullscreen panel 化したときの safe rectangle が正しいか。
@@ -255,7 +260,7 @@ Android 17 では Contact Picker と location indicators が追加されてい�
 
 ### 影響
 
-個人検証側で操作ログ、起動アプリ、panel 使用状況、車両データ購読状況を収集する場合、Android 17 / AAOS 25Q4 では privacy / consent / user visibility の設計がより重要になる。
+個人検証側で操作ログ、起動アプリ、panel使用状況、車両データ購読状況を収集する場合、Android17およびAAOS25Q4以降を検討するうえでprivacy / consent / user visibilityの設計がより重要になる。
 
 ScalableUI で「どの panel にどの task が表示されたか」「どの transition が実行されたか」を収集することは、SystemUI 側に統合すれば実現可能性がある。一方で、ユーザー操作や位置情報、通信、連絡先などに関わる情報は、OS 標準の privacy 表示、permission、platform logging policy と衝突しない設計にする必要がある。
 
@@ -365,7 +370,7 @@ PoC 移植や対象環境折り込みでは、従来の「ビルド中に生成�
 
 ## PoC に追加すべき検証観点
 
-Android 17 / AAOS 25Q4 へ進める場合、既存の ScalableUI PoC には次の検証を追加する。
+Android17へ移植し、AAOS25Q4で明文化された要件も取り込む場合、既存のScalableUI PoCには次の検証を追加する。
 
 1. `carsysui-dump-panelstates` による panel state 記録。
 2. `carsysui-dispatch-event` による transition event の外部制御確認。
@@ -396,7 +401,7 @@ Android 17 / AAOS 25Q4 へ進める場合、既存の ScalableUI PoC には次�
 
 ## 結論
 
-Android 17 / AAOS 25Q4 は、ScalableUI だけでなく、AAOS 全体として SDV platform、車載アプリ互換、メモリ管理、privacy/logging、audio、security、test compliance が大きく更新されている。
+Android17 sourceとAAOS25Q4 release notesを合わせると、ScalableUIだけでなく、AAOS全体としてSDV platform、車載アプリ互換、メモリ管理、privacy/logging、audio、security、test complianceが大きく更新されている。ただし両者を同一releaseとして扱わない。
 
 個人検証側の ScalableUI PoC にとって最も重要なのは、Android 17 の ScalableUI を単なる UI レイアウト機能として扱わず、task focus、restart、debug tooling、Perfetto、safe rectangle、memory pressure、user switching まで含めた HMI platform として評価することである。
 

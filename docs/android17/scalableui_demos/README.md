@@ -2,6 +2,8 @@
 
 AAOS17 source に含まれる ScalableUI demo / sample RRO を demo ごとに分けて解析した資料。各文書は、全体像、画面構成図、画面遷移、trigger、関係 class / method、素の AAOS17 emulator への取り込み可否をまとめる。
 
+2026-10-01に [AAOS17 Source Snapshot](../../verification/aaos17_source_snapshot_2026-10-01_ja.md) と再照合した。対象Car/SystemUIは`android17-release`と固定tagで同一commit `8dd6b4135ad531ae26adc96f99a4f6f2eb693138`のため、各demo文書のXML/class表は現行sourceにも適用できる。個別のruntime結果は各資料に記録した時点の証跡であり、未実施操作を補完しない。
+
 ## Demo List
 
 | 種別 | Demo | 説明 | 文書 |

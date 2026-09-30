@@ -331,7 +331,7 @@ Panel 全面dragによる3-slot並べ替えの実現方式は、[Panel 全面操
 - target panel routing の明確化
 - ユーザー操作による panel 追加 / 削除
 - drag による panel 移動
-- grip による連続 resize
+- grip入力と`KeyFrameVariant`を結ぶ製品向け連続resize UX（補間modelとsampleは標準に存在）
 - ユーザーが任意 app を任意 panel に割り当てる UI
 - runtime model / persistence
 - reverse gear / real camera signal 連携

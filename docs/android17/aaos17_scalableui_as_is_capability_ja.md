@@ -32,7 +32,8 @@ AAOS17 の ScalableUI は、通常アプリの UI toolkit ではなく、CarSyst
 | Transition | event に応じて variant を切り替え、WM transition と surface animation を扱う | HMI 固有 event 設計、入力制御、永続化 policy の全自動化 |
 | Controller | Panel ごとの初期 Activity、persistent Activity、package 変更追従などを扱う | XML だけで任意 Java/Kotlin controller を追加すること |
 | Runtime 変更 | `StateManager.addState()` / `reloadPanelState()` の下回りはある | ユーザー操作での panel editor / app picker / layout persistence |
-| Panel並べ替え | grip drag、spy input、Surface transactionなど実装部品はある | Panel全面長押しswap、drop policy、永続化を含む完成機能 |
+| Drag / resize | `KeyFrameVariant`、grip drag、panel update、Surface transactionなど実装部品はある | Panel全面長押しswap、drop policy、永続化を含む完成editor |
+| Task launch policy | `TaskBehavior`で新規taskのsource root task残留/復帰を指定できる | 任意の既存taskを自由にPanel間移動する完成機能 |
 | App 表示 | `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` として表示する | `Panel -> Activity` の直接モデル |
 | Launcher | Home / AppGrid などの入口になれる | ScalableUI の panel 管理主体になること |
 
@@ -47,6 +48,7 @@ AAOS17 の ScalableUI は、通常アプリの UI toolkit ではなく、CarSyst
 | Automotive WMShell support | `packages/services/Car/libs/car-wm-shell-lib/src/com/android/wm/shell/automotive` |
 | Shell task organizer | `frameworks/base/libs/WindowManager/Shell/src/com/android/wm/shell/ShellTaskOrganizer.java` |
 | ScalableUI codelab RRO examples | `packages/apps/Car/References/scalable-ui/codelab` |
+| Required feature declaration | `packages/services/Car/car_product/dewd/android.software.car.splitscreen_multitasking.xml` |
 
 ## AAOS17 Source README
 
@@ -1257,6 +1259,8 @@ portrait より panel 数を抑え、landscape 表示に合わせた map / widge
 | Controller instance | Dagger map に登録された factory から作る | `PanelControllerInitializer.java`, `PanelControllerModule.java` | あり |
 | Runtime addState | state 追加 API | `StateManager.addState()` | 部品あり |
 | Runtime reload | state map reload API | `StateManager.reloadPanelState()` | あり |
+| KeyFrame drag | 0..1 fractionでvariant属性を補間 | `KeyFrameVariant.java`, drag samples | あり |
+| New-task launch policy | `DEFAULT` / `REMAIN_IN_SOURCE` / `REPARENT_TO_SOURCE` | `TaskPanel.trySetRootTaskLaunchBehavior()` | あり |
 | User layout editor | app picker / persistence / restore まで一式 | source 上の完成機能としては確認しない | なし |
 | Task migration UX | Panel 間で既存 task を移す完成 policy | source 上の完成機能としては確認しない | 要設計 |
 | TaskView equivalence | TaskPanel が TaskView そのもの | `TaskPanel.java`, `TaskView.java` | なし |

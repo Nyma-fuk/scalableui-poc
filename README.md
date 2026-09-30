@@ -5,7 +5,7 @@
 重要:
 
 - ScalableUI / WindowManager / ActivityTaskManager の正は、この repository の docs ではなく AAOS/AOSP source code です。
-- source 照合結果は [docs/verification/aosp_source_verification_ja.md](docs/verification/aosp_source_verification_ja.md) と [docs/verification/aaos17_scalableui_source_verification_ja.md](docs/verification/aaos17_scalableui_source_verification_ja.md) を正とします。
+- source 照合結果は [AAOS17 source snapshot](docs/verification/aaos17_source_snapshot_2026-10-01_ja.md)、[AAOS17 source verification](docs/verification/aaos17_scalableui_source_verification_ja.md)、[全Docs監査結果](docs/verification/documentation_audit_2026-10-01_ja.md) を正とします。
 - この repository には、現行PoC、Android17移植メモ、過去variantの実験記録が混在していました。現在は下記の区分で読む前提に整理しています。
 
 ## 情報の区分
@@ -25,6 +25,8 @@ docs全体の読み分けは [docs/README_ja.md](docs/README_ja.md) を参照し
 
 現在の実装・評価の基準は `declarative-multipanel` です。
 
+2026-09-27更新の公式overviewは、Scalable UIを新規AAOS programへ強く推奨し、AAOS 16以降では無効構成はCTSを通過しないと説明しています。このrepositoryではScalableUIを任意demo機能ではなく、互換性を意識したwindowing基盤として扱います。
+
 目的:
 
 - RRO/XMLでScalableUI panel、variant、transitionを宣言する
@@ -37,8 +39,10 @@ docs全体の読み分けは [docs/README_ja.md](docs/README_ja.md) を参照し
 
 - 「Panelにアプリを表示する」は、実装上は `Panel -> TaskPanel -> task/root task -> Activity` です。
 - `RemoteCarTaskView` / `TaskView` はAAOSに存在しますが、ScalableUI `TaskPanel` の実体として扱いません。
-- runtime panel生成、任意panel移動、永続化、pickerは、ScalableUI標準だけでは完結せずPoC/custom領域です。
+- runtime resize、`KeyFrameVariant`、drag sampleはScalableUI標準に存在します。一方、任意panelの追加・並べ替えeditor、入力競合解決、app picker、layout永続化はPoC/custom領域です。
 - `WindowContainerTransaction.reparent()` はAOSPに存在しますが、現在確認したScalableUI sourceだけでは、Panel間task reparentの標準機能とは判断しません。
+
+公式`TaskBehavior`には新規taskの`newTaskLaunchPolicy`として`DEFAULT`、`REMAIN_IN_SOURCE`、`REPARENT_TO_SOURCE`があります。これは任意の既存taskをユーザー操作でPanel間移動する完成機能とは区別します。
 
 ## Android17での開発方針
 

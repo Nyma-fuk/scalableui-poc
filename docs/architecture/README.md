@@ -2,6 +2,8 @@
 
 ScalableUI と AAOS platform の責務分担を説明する資料。
 
+2026-10-01時点のAAOS17 sourceと公式Scalable UI資料で再確認済み。特にWindowManager invariants、dedicated root task、`KeyFrameVariant`、`TaskBehavior`と任意layout editorの境界を反映している。
+
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
 | [scalableui_window_manager_flow_ja.md](scalableui_window_manager_flow_ja.md) | app launch、ActivityTaskManager、WindowManager/Shell、TaskPanel、Panel 表示の流れ | 「Panel に app が表示される」実体を図で説明できる |

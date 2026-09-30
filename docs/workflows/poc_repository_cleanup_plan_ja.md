@@ -12,7 +12,7 @@ ScalableUI そのものの情報、現行 PoC、Android17 移植、過去実験�
 | --- | --- | --- |
 | ScalableUI source verification | `docs/verification/aosp_source_verification_ja.md`, `docs/verification/aaos17_scalableui_source_verification_ja.md` | source 事実の基準 |
 | Active PoC | `variants/declarative-multipanel/` | 現行 baseline |
-| Android17 porting | `docs/aaos17_*`, `scripts/aaos17_scalableui_build_action.sh` | 標準 AAOS17 target への移植手順 |
+| Android17 porting | `docs/android17/`, `scripts/aaos17_scalableui_build_action.sh` | 標準 AAOS17 target への移植手順 |
 | Historical patches | `patches/`, `common/patches/` | 過去実装。削除せず分類する |
 | Historical variants | `dynamic-workspace`, `editable-home`, `widget-workspace`, `widget-layout-lab`, `no-grip` | 実験記録として保持 |
 | Generated ideas | `fixed-3zone` など | HMI 案として保持。再利用時は再検証 |

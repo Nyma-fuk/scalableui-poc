@@ -4,6 +4,14 @@
 
 AAOS15 LTS3では専用product patchとして評価しました。Android17では専用productを作らず、標準 `sdk_car_x86_64-trunk_staging-userdebug` にPoC差分を追加する方針へ変更しています。
 
+状態の区別:
+
+| 対象 | 状態 |
+| --- | --- |
+| AAOS15 LTS3 patch / v12 smoke | build・runtime評価済みのpoint-in-time evidence |
+| AAOS17 standard targetへの移植 | source統合中。RRO/module/image/runtimeの完了証跡は未取得 |
+| AAOS17 capability | [2026-10-01 source snapshot](../../docs/verification/aaos17_source_snapshot_2026-10-01_ja.md)で再確認済み |
+
 以前の `dynamic-workspace` は、任意 panel 追加、移動、resize、app picker、永続化まで一気に扱うため PoC として重くなっていました。この variant はそこをいったんリセットし、Passenger6 / MultiPanelLandscapeRRO に近い「RRO で panel と transition を宣言し、AAOS 側の ScalableUI orchestration に任せる」構成へ戻しています。
 
 ただし、AAOS15 LTS3 では spec の一部を成立させるために最小限の `CarSystemUI` runtime 修正も含めます。主な理由は、DecorPanel-only transition、target panel routing、StubCarLauncher 分離を安定させるためです。
@@ -71,4 +79,4 @@ SOONG_NINJA=ninja m -j6 emu_img_zip
 
 v12 smoke では、`nav_panel` / `media_panel` / `user_slot_panel`、AppGrid から user slot への Calendar routing、workspace page / resize / swap event、layout edit overlay、camera override を Windows host emulator で pass 確認しています。
 
-grip の連続 resize、任意 app picker、panel add / remove、layout persistence は次 phase の対象です。
+`KeyFrameVariant`とgrip drag / runtime resizeの標準部品はAAOS17 sourceに存在します。このbaselineで未実装なのは、連続入力を製品UXとして完結させるcontroller、任意app picker、panel add / remove、reorder、layout persistenceです。

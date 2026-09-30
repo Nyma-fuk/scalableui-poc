@@ -83,6 +83,8 @@ sdk_car_x86_64-trunk_staging-userdebug
 
 この構成は「素のAAOS17 emulatorへの追加差分」として扱う。
 
+製品統合条件として、`config_enableScalableUI`、`android.software.car.splitscreen_multitasking` feature、競合するlegacy windowing / split-screen設定の無効化をセットで確認する。標準`sdk_car_x86_64.mk`にはfeature XMLのcopy定義があるが、最終imageでも`pm list features`を確認する。
+
 | 系統 | 目的 |
 | --- | --- |
 | As-Is検証 | PoC差分なしの `sdk_car_x86_64` でAndroid 17標準挙動を担保する |

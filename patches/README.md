@@ -4,6 +4,8 @@
 
 ## 現在の扱い
 
+2026-10-01の [Docs監査](../docs/verification/documentation_audit_2026-10-01_ja.md) でも、root-level patchはhistoricalとして維持する判定。現行AAOS17 sourceへ機械的に再適用しない。
+
 | Path | Status | 備考 |
 | --- | --- | --- |
 | `device-generic-car/` | Historical | 初期 PoC product 追加 patch |

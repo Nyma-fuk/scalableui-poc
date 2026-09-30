@@ -105,7 +105,7 @@ Android17 workspace 側の主な対応先:
 4. image を作って emulator smoke を取る。
 5. docs と patch を同期する。
 
-最初から runtime panel 追加、永続化、reparent、drag resize まで入れると、ScalableUI 標準の問題か PoC custom の問題か切り分けにくくなります。
+最初からruntime panel追加、永続化、任意task移動、reorder editorまで入れると、ScalableUI標準の問題かPoC customの問題か切り分けにくくなります。`KeyFrameVariant`やsample dragは標準部品として再利用し、gesture / policy / persistenceを別段階にします。
 
 ## 6. panel と app の割り当て
 

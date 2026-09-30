@@ -51,6 +51,8 @@ AAOS17 の ScalableUI は、CarSystemUI 内で panel、system bar、HUN、SUW、
 | Runtime resize は存在するか | 事実 | 公式 ecosystem page が runtime panel size change に言及し、source に `PanelUpdateConsumer` / `ScalableUIPanelUpdateImpl` がある |
 | 任意 panel 生成 editor が標準であるか | 未確認 | panel state の XML/DCF load と runtime update は確認できるが、任意 editor / persistence は確認できない |
 | Drag 操作は可能か | 事実。ただし範囲限定 | `GripBarViewController` と sample XML が drag event を dispatch する。任意 layout editor 全体は別設計 |
+| `KeyFrameVariant`は連続dragに使えるか | 事実 | 公式variant referenceが0..1 fractionによるvisual property補間を明記 |
+| ScalableUI有効化はboolだけでよいか | 不十分 | `android.software.car.splitscreen_multitasking` featureと競合legacy windowing無効化も公式implement条件 |
 | HUN panel は標準的に制御対象か | 事実 | Android 17+ 公式 page と `HunWindow` 実装で確認できる |
 | System bar は XML だけで完結するか | 一部事実 | XML で配置や metadata を定義するが、View / Window は Dagger module 側の実装も関係する |
 | SUW panel は標準的な組み込み対象か | 事実 | 公式 page と `SetupPanelController` / sample `suw_panel.xml` で確認できる |
@@ -61,6 +63,10 @@ AAOS17 の ScalableUI は、CarSystemUI 内で panel、system bar、HUN、SUW、
 | 領域 | 公式ページ | AAOS17 source evidence |
 | --- | --- | --- |
 | 概要 / sample experience | `https://source.android.com/docs/automotive/scalableui?hl=ja` | `packages/apps/Car/SystemUI/samples/README.md` |
+| 実装条件 | `https://source.android.com/docs/automotive/scalableui/implement` | SystemUI config、feature XML、product integration |
+| Panel XML | `https://source.android.com/docs/automotive/scalableui/panel-ref` | `PanelConfigReader.java`, `TaskPanel.java`, XML parser |
+| Variant / KeyFrame | `https://source.android.com/docs/automotive/scalableui/variant-ref` | `Variant.java`, `KeyFrameVariant.java`, `KeyFrameVariantParser.java` |
+| Transition | `https://source.android.com/docs/automotive/scalableui/transitions-ref` | `Transition.java`, `StateManager.java`, `PanelTransitionCoordinator.java` |
 | WM invariants | `https://source.android.com/docs/automotive/scalableui/wm-invariants?hl=ja` | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/PanelTransitionCoordinator.java` |
 | System bars | `https://source.android.com/docs/automotive/scalableui/system-bars?hl=ja` | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/configuration/SystemBarConfiguration.kt`, `systemwindow/SystemBarWindowImpl.java` |
 | HUN panels | `https://source.android.com/docs/automotive/scalableui/hun-panels?hl=ja` | `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui/systemwindow/HunWindow.kt`, `samples/DEWDCommon/res-common/xml/hun_panel.xml` |
@@ -374,7 +380,8 @@ sequenceDiagram
 | 項目 | 更新後の理解 |
 | --- | --- |
 | Runtime resize | 標準機能として存在する。公式 page と `PanelUpdateConsumer` / sample drag XML で確認できる |
-| Drag interaction | sample と controller は存在する。ただし layout editor 全体とは別 |
+| Drag interaction | `KeyFrameVariant`による連続補間、sample、controllerは存在する。ただしgesture arbitrationやlayout editor全体とは別 |
+| Task launch reparent | `TaskBehavior.newTaskLaunchPolicy="REPARENT_TO_SOURCE"`は標準。ただし任意の既存taskをPanel間移動するeditorとは別 |
 | Runtime panel add/delete | 標準の完成済み editor としては未確認。XML/DCF initial state と runtime update の組み合わせで設計する領域 |
 | App assignment persistence | 標準だけで完結するとは未確認。controller または別 storage 設計が必要 |
 | HUN / SUW / SystemBar | AAOS17 ScalableUI の明確な制御対象として扱える |

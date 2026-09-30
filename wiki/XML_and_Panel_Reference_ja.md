@@ -2,6 +2,8 @@
 
 このページは、ScalableUI の XML / RRO を読むためのクイックリファレンスです。
 
+基準: 2026-10-01の [AAOS17 Source Snapshot](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_source_snapshot_2026-10-01_ja.md) と、2026年9月更新の公式panel / variant / transition reference。
+
 ## 1. Source上の実装モデル
 
 Android17 source 確認済みのモデル:
@@ -59,6 +61,8 @@ ScalableUI が読む panel 定義の一覧です。
 
 Android17 の `PanelConfigReader.loadFromXml()` は、この配列を読み、`XmlModelLoader.createPanelState(...)` で `PanelState` を生成します。
 
+製品側では`config_enableScalableUI=true`だけでなく、公式implement資料が要求する`android.software.car.splitscreen_multitasking` featureと、競合するlegacy windowing / split-screen機能が無効であることも確認します。
+
 ## 4. `config_default_activities`
 
 固定 panel と初期 Activity の紐付けです。
@@ -100,6 +104,8 @@ AAOS branch によって XML root tag の期待値が異なる場合がありま
 - `Corner`
 - `Insets`
 - focus policy
+- `SafeBounds`
+- `Background`
 
 例:
 
@@ -111,7 +117,19 @@ AAOS branch によって XML root tag の期待値が異なる場合がありま
 </Variant>
 ```
 
-## 7. Transition
+連続drag / resizeでは`KeyFrameVariant`を使い、0..100の`framePosition`にvariantを割り当てて、0..1のfractionからvisual propertyを補間できます。これはScalableUI標準部品ですが、pointer入力、Map gestureとの競合、reorder policy、永続化は別設計です。
+
+## 7. TaskBehavior
+
+`TaskPanel`では新規task launch policyを定義できます。
+
+```xml
+<TaskBehavior newTaskLaunchPolicy="REPARENT_TO_SOURCE"/>
+```
+
+公式に記載される値は`DEFAULT`、`REMAIN_IN_SOURCE`、`REPARENT_TO_SOURCE`です。これは新規taskのlaunch root behaviorであり、任意の既存taskをユーザー操作でPanel間移動する汎用editorではありません。
+
+## 8. Transition
 
 event から variant へ遷移する定義です。
 
@@ -134,7 +152,7 @@ event から variant へ遷移する定義です。
 
 event 名や token schema は PoC / project custom になる場合があります。本格適用では送信元制限、permission、spoofing 対策も必要です。
 
-## 8. Layer
+## 9. Layer
 
 重なり順です。
 
@@ -146,7 +164,7 @@ background < fixed panels < decor / controls < app_panel < panel_app_grid < prio
 
 All Apps を常に前面にしたい場合は、XML の layer だけでなく、Window State、input、focus、outside tap、system bar / HUN との重なりも確認します。
 
-## 9. Window State と Surface
+## 10. Window State と Surface
 
 Android17 の ScalableUI README では次の区別が明確です。
 
@@ -157,7 +175,7 @@ Android17 の ScalableUI README では次の区別が明確です。
 
 panel 最大化や task routing は Window State 寄りです。scrim fade や見た目だけの dismiss animation は Surface 寄りにできる可能性があります。
 
-## 10. `panel_app_grid` と `app_panel`
+## 11. `panel_app_grid` と `app_panel`
 
 `panel_app_grid`:
 
@@ -171,13 +189,13 @@ panel 最大化や task routing は Window State 寄りです。scrim fade や�
 - Settings など集中操作したい app の逃がし先
 - Home 復帰時に直前 layout を戻す対象
 
-## 11. Runtime panel generation
+## 12. Runtime panel generation
 
 Android17 source には `StateManager.addState(...)` と `reloadPanelState(...)` が存在します。
 
-ただし、任意 panel の追加 UI、geometry、永続化、app picker、drag preview は ScalableUI 標準だけでは完結しません。PoC/custom として扱います。
+ただし、任意panelの追加UI、geometry、並べ替えpolicy、永続化、app pickerはScalableUI標準だけでは完結しません。drag previewは`KeyFrameVariant`やSurface transactionを使えますが、end-to-end editorはPoC/customとして扱います。
 
-## 12. 参照
+## 13. 参照
 
 - [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
 - [AOSP Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aosp_source_verification_ja.md)

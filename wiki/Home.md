@@ -5,6 +5,7 @@
 現在の読み方:
 
 - ScalableUI そのものの正は AAOS/AOSP source code です。
+- 2026-10-01のbranch/hash基準は [AAOS17 Source Snapshot](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_source_snapshot_2026-10-01_ja.md) です。
 - 現行 PoC baseline は `variants/declarative-multipanel` です。
 - Android17 では PoC 専用 product を増やさず、標準 `sdk_car_x86_64-trunk_staging-userdebug` に PoC 差分を重ねます。
 - `dynamic-workspace`、`editable-home`、`widget-workspace`、generated variant suite は historical / experimental として残します。
@@ -13,9 +14,10 @@
 
 1. [Repository README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/README.md)
 2. [Docs Index](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/README_ja.md)
-3. [AAOS17 ScalableUI Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
-4. [AAOS ScalableUI / WindowManager 表示フロー](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)
-5. [declarative-multipanel README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
+3. [AAOS17 Source Snapshot](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_source_snapshot_2026-10-01_ja.md)
+4. [AAOS17 ScalableUI Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
+5. [AAOS ScalableUI / WindowManager 表示フロー](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)
+6. [declarative-multipanel README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/variants/declarative-multipanel/README.md)
 
 ## Wiki Pages
 
@@ -84,7 +86,7 @@ AAOS17:
 | 区分 | 対象 | 扱い |
 | --- | --- | --- |
 | Active baseline | `variants/declarative-multipanel` | 現行 PoC として保守 |
-| Android17 porting | `docs/aaos17_*`, `scripts/aaos17_*` | 標準 target への差分適用方針を正とする |
+| Android17 porting | `docs/android17/`, `scripts/aaos17_*` | 標準 target への差分適用方針を正とする |
 | Historical / experimental | `dynamic-workspace`, `editable-home`, `widget-workspace`, `widget-layout-lab`, `no-grip` | 正しい実験記録として残す |
 | Generated idea | `fixed-3zone`, `map-first`, `media-dock` など | 再利用する場合は source / build / runtime で再検証 |
 
@@ -94,6 +96,6 @@ AAOS17:
 
 - ScalableUI 標準機能と PoC custom 実装を混ぜて説明しない。
 - 「Panel に Activity を直接貼る」と説明しない。
-- runtime panel 追加、任意 app assignment、persistence、drag resize は custom 領域として扱う。
+- runtime resize、`KeyFrameVariant`、drag sampleは標準部品として扱う。任意panel追加・並べ替えeditor、入力競合解決、app assignment、persistenceはcustom領域として扱う。
 - Android17 作業では専用 product を増やさず、標準 `sdk_car_x86_64` に差分を載せる。
 - runtime 挙動に影響する変更は build だけで完了にせず、emulator smoke evidence を残す。

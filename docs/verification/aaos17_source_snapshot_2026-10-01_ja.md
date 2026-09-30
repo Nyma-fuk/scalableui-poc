@@ -24,6 +24,18 @@ AAOS17 ScalableUI の調査・実装・説明で使用する branch、tag、comm
 - `https://android.googlesource.com/platform/manifest/+/refs/heads/android17-release`
 - `https://android.googlesource.com/platform/manifest/+/refs/tags/android-17.0.0_r1`
 
+公式Scalable UI referenceの確認対象:
+
+| Page | 2026-10-01時点で確認した要点 |
+| --- | --- |
+| `scalableui` overview | dedicated root task、TaskPanel / DecorPanel、Android17 advanced windowing、CTS上の位置づけ |
+| `implement` | `config_enableScalableUI`、`android.software.car.splitscreen_multitasking`、競合legacy windowing無効化 |
+| `panel-ref` | `window_states`、`TaskBehavior`、`Restart`、controller metadata |
+| `variant-ref` | bounds / safe bounds / insets / background、`KeyFrameVariant`による連続補間 |
+| `transitions-ref` / `event-ref` | event filter、from/to variant、animation、token matching |
+| `wm-invariants` | launch configuration、Home lifecycle、overlay/insets、immersive、corner |
+| `ecosystem` | runtime resizeの性能影響、overlayによる視覚的緩和、app側のadaptive/insets対応 |
+
 ## ScalableUI 関連 project hash
 
 `git ls-remote` で公式 `android17-release` を確認し、ローカル checkout の基準 commit と照合した。
@@ -71,7 +83,7 @@ android-17.0.0_r1 / CP2A.260605.016
 | App表示 | `TaskPanel -> RootTaskStack / Task -> Activity` | `Panel -> Activity` の直接モデル、TaskViewとの同一性 |
 | 状態遷移 | Event / token、`PanelTransaction`、WM transition、Surface transaction | HMI固有の編集policyや競合解決の自動生成 |
 | Runtime update | `StateManager.addState()` / `reloadPanelState()`、panel update API | app picker、永続化、復元まで含む完成済み layout editor |
-| Drag入力 | sample の grip drag、caption/spy input、`pilferPointers()` を組み合わせられる部品 | Panel全面長押しswapの標準実装 |
+| Drag入力 | `KeyFrameVariant`、sampleのgrip drag、caption/spy input、`pilferPointers()`を組み合わせられる部品 | Panel全面長押しswapの標準実装 |
 | System UI | system bar、HUN、SUW、UXR/user/task event との統合 | 製品固有要件を設定だけで完結させる仕組み |
 
 固定3-slotの Panel 入れ替えは実現可能だが、ScalableUI 標準機能を有効化するだけでは完成しない。Map の pinch / pan と競合させない第一候補は編集モードであり、全面長押し方式を採る場合は spy input、long-press 判定後の pointer pilfer、Surface preview、drop 時の slot state commit を追加する。詳細は [Panel並べ替え入力設計](../architecture/panel_reorder_interaction_design_ja.md) を参照する。

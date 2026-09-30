@@ -28,6 +28,9 @@ Android17 の ScalableUI 関連記述は、大枠では現在の整理と整合�
 | Panel にアプリを表示する | Partially Correct | 実装上は `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` |
 | TaskPanel は TaskView / RemoteCarTaskView である | Incorrect | Android17 source では別経路 |
 | Runtime panel generation は標準機能として完結する | Partially Correct | `StateManager.addState()` は存在するが、標準初期化は XML/DCF reload |
+| Continuous drag / resize の部品はある | Correct | `KeyFrameVariant`、drag event、DEWD/codelab sample、panel update APIがある |
+| 任意のPanel reorder editorが標準で完成している | Incorrect | 入力競合、swap policy、保存・復元を含む完成UIは確認できない |
+| `REPARENT_TO_SOURCE`で任意taskを自由にPanel間移動できる | Incorrect | `TaskBehavior`は新規task launch behavior。既存taskを任意に移動するeditorとは別 |
 | Android17 では PoC 専用 product を作る | Incorrect | 現在のPoC workflowでは標準 `sdk_car_x86_64-trunk_staging-userdebug` に PoC 差分を重ねる |
 | `BasePanel -> SysUIPanel` は確認済み rename と言い切る | Unverified | Android17 source が `SysUIPanel` を使うことは確認済み。Android16 比較 tree が現時点でローカル未存在のため、rename 断定は避ける |
 

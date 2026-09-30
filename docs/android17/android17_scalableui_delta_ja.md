@@ -48,7 +48,7 @@ Gitiles 上で確認した manifest tag 情報:
 | `packages/services/Car` | `b8fe0e1e8f` | `25Q4-release` 系 merge commit |
 | `frameworks/base` | `45034f0663f9` | `25Q4-release` 系 merge commit |
 
-現在の AAOS tree には PoC の working tree 差分が存在する。特に `packages/services/Car` には `car_product/scalableui_declarative_multipanel` が追加され、`packages/apps/Car/SystemUI` には ScalableUI runtime routing 向けの変更が入っている。
+調査当時のAndroid16 AAOS treeにはPoCのworking tree差分が存在した。特に`packages/services/Car`には`car_product/scalableui_declarative_multipanel`が追加され、`packages/apps/Car/SystemUI`にはScalableUI runtime routing向けの変更が入っていた。
 
 PoC 側の Android 16 QPR2 パッチ:
 
@@ -509,7 +509,7 @@ Android 17 の `packages/services/Car` では `car_ui_portrait` 配下に大き�
 
 ## この PoC の Android 16 QPR2 workspace 側の PoC 差分
 
-現在の Android 16 QPR2 workspace には以下の PoC working tree 差分がある。
+調査当時のAndroid 16 QPR2 workspaceには以下のPoC working tree差分があった。
 
 ### packages/apps/Car/SystemUI
 
@@ -552,7 +552,9 @@ Android 17 の `packages/services/Car` では `car_ui_portrait` 配下に大き�
 | 9 | product / RRO target resources | overlay compile / runtime enable に影響 |
 | 10 | StubCarLauncher permissions | HOME role、privapp、Package visibility、multi-user に影響 |
 
-## 推奨移植ステップ
+## 当初の推奨移植ステップ（履歴）
+
+以下は移植開始時の手順記録である。現在の標準target、build順序、統合場所は [AAOS17 ScalableUI PoC開発フロー](aaos17_scalableui_development_flow_ja.md) を正とする。
 
 1. 新規 checkout を `android-17.0.0_r1` で作成する。
 2. `packages/apps/Car/SystemUI` の ScalableUI README を正として、PoC の event / controller 設計を Window State と Surface に再分類する。
@@ -581,7 +583,7 @@ Android 17 の `packages/services/Car` では `car_ui_portrait` 配下に大き�
 | CI/CD flow | Android 17 branch を別 track とし、SystemUI / WMShell API diff check を追加 |
 | integration handoff | Android 17 では ScalableUI core 差分が大きいため、単純 patch apply ではなく移植作業として依頼 |
 
-## 現在の確認状態
+## 2026-10-01時点の確認状態
 
 | 項目 | 状態 |
 | --- | --- |

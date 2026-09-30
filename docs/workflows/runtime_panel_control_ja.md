@@ -4,10 +4,10 @@
 
 ## 目的
 
-`widget-workspace` は、ユーザーが実行時に「どのアプリを、どの Panel に表示するか」を選べる HMI として更新しています。
+`widget-workspace` は、当時ユーザーが実行時に「どのアプリを、どの Panel に表示するか」を選べる HMI として更新した実験です。
 
 以前の構成では左側の `PanelMenuActivity` が常時表示され、アプリ選択ボタンは固定で `workspace_panel` へルーティングしていました。
-現在の構成では、常時表示されるのは小さな `Panel Control` ボタンだけです。
+当時の最終構成では、常時表示されるのは小さな `Panel Control` ボタンだけです。
 ユーザーがこのボタンを押した時だけ、隠れていた `panel_menu` が開きます。
 
 ## 操作モデル
@@ -38,8 +38,9 @@ All Apps から起動されたアプリは `com.android.car.carlauncher.extra.LA
 検証注記:
 
 - AOSP の `WindowContainerTransaction` には `reparent()` / `reparentTasks()` が存在する
+- Android17公式`TaskBehavior`には新規task launch用の`REPARENT_TO_SOURCE`がある
 - この文書の `WindowContainerToken` ベース reparent は `widget-workspace` 実験時の PoC / patch 方針である
-- 現在の live ScalableUI source だけでは、Panel 間既存 task reparent を標準機能として確認できない
+- 新規task launch policyと、Panel間の任意な既存task reparent editorを同一視しない
 - 「Panel にアプリを表示」は実装上 `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` である
 
 ## Launcher が背後で動く理由
@@ -73,8 +74,8 @@ AAOS では、通常の Android と同じく `HOME` category を持つ Activity 
 ## 注意点
 
 高負荷アプリを同じ Activity component で複数起動すると、CPU / GPU / memory / decoder / surface を二重に消費する可能性があります。
-そのため現在の PoC は safety-first の runtime policy とし、Panel Control と All Apps の起動では `FLAG_ACTIVITY_MULTIPLE_TASK` を使いません。
+そのため当時の PoC は safety-first の runtime policy とし、Panel Control と All Apps の起動では `FLAG_ACTIVITY_MULTIPLE_TASK` を使いませんでした。
 代わりに `FLAG_ACTIVITY_CLEAR_TOP` と `FLAG_ACTIVITY_SINGLE_TOP` を付け、同じ task 内に同じ Activity instance が積み重なることも抑えます。
 
-同じ app を別 Panel に表示したい場合は、既存 task があればそれを移動します。
-完全に独立した複数 instance を評価したい場合は、別 APK / 別 package / 別 taskAffinity で評価用 app を用意する方が、実機HMIの resource risk と切り分けやすいです。
+このhistorical PoCでは、同じappを別Panelに表示したい場合、既存taskがあればcustom routingで移動する方針でした。
+完全に独立した複数instanceを評価する場合は、別APK / 別package / 別taskAffinityで評価用appを用意する方が、実機HMIのresource riskと切り分けやすくなります。

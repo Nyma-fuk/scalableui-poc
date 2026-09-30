@@ -4,6 +4,8 @@
 
 ## 現在の扱い
 
+2026-10-01の [Docs監査](../docs/verification/documentation_audit_2026-10-01_ja.md) でも、このdirectoryはhistorical patch共有部品として維持する判定。Android17の現行sourceへ直接適用しない。
+
 | Path | Status | 備考 |
 | --- | --- | --- |
 | `patches/device-generic-car/` | Historical / generated suite | 複数 HMI product をまとめて追加する過去の suite 用 patch |

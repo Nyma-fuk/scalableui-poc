@@ -2,6 +2,8 @@
 
 Android17 ベースへ ScalableUI PoC を移すための資料。
 
+source基準は`android17-release` / `android-17.0.0_r1`。AAOS 25Q4 release notesはScalable UIの先行機能を確認する比較資料だが、Android 17と同一releaseとしては扱わない。
+
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
 | [../verification/aaos17_source_snapshot_2026-10-01_ja.md](../verification/aaos17_source_snapshot_2026-10-01_ja.md) | 最新 `android17-release` と固定tag、主要project hash、PoC差分の境界 | 追随先と再現可能な検証点を使い分けられる |
@@ -12,4 +14,4 @@ Android17 ベースへ ScalableUI PoC を移すための資料。
 | [../../variants/aaos17-codelab-threepanel-1080/README.md](../../variants/aaos17-codelab-threepanel-1080/README.md) | AAOS17 codelab ThreePanel RRO を 1920x1080 emulator に合わせた検証結果 | Home、KitchenSink、PaintBooth、grip tap、Home 復帰の UI 動作を再現できる |
 | [android17_scalableui_delta_ja.md](android17_scalableui_delta_ja.md) | Android16 QPR2 PoC と Android17 ScalableUI の差分 | そのまま再適用できない patch を見分けられる |
 | [android17_as_is_scalableui_migration_plan_ja.md](android17_as_is_scalableui_migration_plan_ja.md) | AAOS17 As-Is を崩さず PoC 差分を載せる計画 | 移植順序と検証観点を決められる |
-| [aaos17_vs_android15_lts5_feature_delta_ja.md](aaos17_vs_android15_lts5_feature_delta_ja.md) | Android15 LTS5 と Android17 の AAOS 差分 | ScalableUI 以外の影響候補を洗い出せる |
+| [aaos17_vs_android15_lts5_feature_delta_ja.md](aaos17_vs_android15_lts5_feature_delta_ja.md) | Android15 LTS5、別release trainのAAOS 25Q4、Android17 sourceの差分 | ScalableUI以外の影響候補をrelease区分を保って洗い出せる |

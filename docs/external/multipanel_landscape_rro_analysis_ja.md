@@ -5,12 +5,15 @@
 | Item | Value |
 | --- | --- |
 | Repository | https://github.com/passenger6/MultiPanelLandscapeRRO |
-| Inspected commit | `5c034fa0c1acdda8f67fe986a6b8e95c35aec20a` |
+| Inspected commit | `5c034fa0c1acdda8f67fe986a6b8e95c35aec20a`（2026-10-01にremote HEADと一致確認） |
+| AAOS照合基準 | `android17-release` / `android-17.0.0_r1`、2026-10-01 snapshot |
 | Main RRO source | `MultiPanelLandscapeRRO/` |
 | Prebuilt artifacts | `prebuilt/` |
 | Screenshot | `screenshot.png` |
 
 この資料は、公開 repository の README と RRO XML を source として解析したもの。ScalableUI の runtime 本体については AAOS17 source の `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui` と `packages/apps/Car/systemlibs/car-scalable-ui-lib/src/com/android/car/scalableui` の責務に照らして読む。
+
+この文書は上表のcommitに固定した解析であり、外部repositoryの将来のHEAD更新を表さない。
 
 ## Executive Summary
 

@@ -26,13 +26,15 @@
 
 AAOS17 source の基準は [2026-10-01 source snapshot](verification/aaos17_source_snapshot_2026-10-01_ja.md)。追随先は `android17-release` manifest `29ace668ae756c7b8917c57abb440f6518844b0c`、再現可能な build / runtime 基準は `android-17.0.0_r1` / `CP2A.260605.016` とする。
 
+公式overviewの2026-09更新により、ScalableUIは新規AAOS programで推奨され、AAOS 16以降のCTS成立にも関係する標準windowing基盤として扱う。
+
 重要な前提:
 
 - ScalableUI の正はこの repo の docs ではなく AAOS/AOSP source code。
 - Android17 では PoC 専用 product を増やさず、標準 `sdk_car_x86_64-trunk_staging-userdebug` に PoC 差分を載せる。
 - `dynamic-workspace`、`editable-home`、`widget-workspace`、generated variant suite は historical / experimental。
 - 「Panel に Activity を直接表示する」と説明しない。実装上は `Panel -> TaskPanel -> RootTaskStack / Task -> Activity`。
-- runtime panel 生成、任意 app assignment、persistence、drag resize は ScalableUI 標準だけでは完結しない。
+- runtime resize、`KeyFrameVariant`、drag sampleは標準に存在する。任意panel editor、reorder、app assignment、persistenceは追加実装が必要。
 
 ## Shared Wording
 
@@ -53,6 +55,7 @@ AAOS17 source の基準は [2026-10-01 source snapshot](verification/aaos17_sour
 
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
+| [verification/documentation_audit_2026-10-01_ja.md](verification/documentation_audit_2026-10-01_ja.md) | repository内Markdown全体の最新性、分類、意図的に保持した履歴 | current情報とpoint-in-time記録を混同せずに読める |
 | [verification/aaos17_source_snapshot_2026-10-01_ja.md](verification/aaos17_source_snapshot_2026-10-01_ja.md) | 最新AAOS17 branch、固定tag、主要project hash、local差分の境界 | capability評価のsource基準を再現できる |
 | [verification/aosp_source_verification_ja.md](verification/aosp_source_verification_ja.md) | docs の主張を AAOS/AOSP source で照合した結果 | ScalableUI 標準機能と PoC/custom 実装を切り分けられる |
 | [verification/aaos17_scalableui_source_verification_ja.md](verification/aaos17_scalableui_source_verification_ja.md) | Android17 source 上の ScalableUI 実装 | Android17 前提で Panel / TaskPanel / StateManager を説明できる |

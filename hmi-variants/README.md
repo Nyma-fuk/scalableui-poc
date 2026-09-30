@@ -9,6 +9,8 @@ The current maintained baseline is `variants/declarative-multipanel`.
 For Android 17 work, prefer the standard `sdk_car_x86_64` target with PoC deltas
 instead of adding one product per idea.
 
+The 2026-10-01 [documentation audit](../docs/verification/documentation_audit_2026-10-01_ja.md) keeps the entries below as AAOS15 generated ideas; their dedicated products are not the Android 17 workflow.
+
 ## Variants
 
 | Variant | Product | HMI |

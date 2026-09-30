@@ -4,6 +4,8 @@
 
 ここにある資料は正しい知見を含むが、現行 baseline ではない。Android17 作業や現在の `declarative-multipanel` の根拠に使う場合は、必ず `verification/` の source 照合と現在の build / runtime で再確認する。
 
+2026-10-01の [全Docs監査](../verification/documentation_audit_2026-10-01_ja.md) では、日付付き結果と当時のclass / patch名をpoint-in-time evidenceとして保持し、現行sourceへ機械的に書き換えない方針を確認した。
+
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
 | [dynamic_workspace_notes_ja.md](dynamic_workspace_notes_ja.md) | runtime workspace 実験の内容 | runtime panel 生成系の過去知見を参照できる |

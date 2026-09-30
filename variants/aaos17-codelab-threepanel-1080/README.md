@@ -2,6 +2,8 @@
 
 AAOS17 `android-17.0.0_r1` の ScalableUI codelab ThreePanel RRO を、1920x1080 landscape emulator で実際に動くように調整した検証用 variant。
 
+対象sourceは [2026-10-01 snapshot](../../docs/verification/aaos17_source_snapshot_2026-10-01_ja.md) のCar/SystemUI commit `8dd6b4135ad531ae26adc96f99a4f6f2eb693138`と同一。以下のruntime結果は実施時点の証跡として扱う。
+
 この variant は現行 PoC baseline ではなく、AAOS17 ScalableUI の As-Is 機能を UI として確認するための独立サンプルである。
 
 ## できること

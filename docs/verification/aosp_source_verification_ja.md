@@ -3,6 +3,8 @@
 この文書は、ScalableUI PoC の docs を前提にせず、AAOS15 LTS3 / AOSP ソースコードを正として確認した結果をまとめる。
 Android17 固有の確認結果は [aaos17_scalableui_source_verification_ja.md](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md) を参照する。
 
+2026-10-01再監査: AAOS15のpoint-in-time判定は維持し、Android17については [固定source snapshot](aaos17_source_snapshot_2026-10-01_ja.md) と2026年9月更新の公式Scalable UI referenceで補完した。
+
 対象は主に次の実装である。
 
 - `packages/apps/Car/SystemUI/src/com/android/systemui/car/wm/scalableui`
@@ -19,14 +21,14 @@ Android17 固有の確認結果は [aaos17_scalableui_source_verification_ja.md]
 - `declarative-multipanel` の固定 XML / RRO baseline は、AOSP 実装と概ね整合する。
 - `TaskPanel` は Activity を直接保持する概念ではなく、root task stack / task を介して Activity を表示する。
 - `RemoteCarTaskView` / `TaskView` は AAOS に存在するが、ScalableUI の `TaskPanel` 表示経路とは別である。
-- runtime panel 追加、任意 panel 移動、永続化、picker、drag preview は ScalableUI 標準だけでは完結せず、PoC / custom runtime 実装として扱う。
+- runtime resize、`KeyFrameVariant`、drag sampleはScalableUI標準に存在する。任意panel追加・並べ替えeditor、gesture arbitration、永続化、pickerはPoC / custom runtime実装として扱う。
 - `WindowContainerTransaction.reparent()` は AOSP に存在するが、現在の live ScalableUI source だけでは「Panel A から Panel B へ既存 task を直接 reparent する」実装は確認できない。
+- Android17の`TaskBehavior.newTaskLaunchPolicy`は新規task launchの`DEFAULT` / `REMAIN_IN_SOURCE` / `REPARENT_TO_SOURCE`を提供するが、任意の既存task移動とは区別する。
 
-一致率:
+判定の読み方:
 
-- 主要 claim 22 件中、Correct 12 / Partially Correct 6 / Unverified 3 / Incorrect 1。
-- 広義の一致率は 18 / 22、約 82%。
-- ただし runtime workspace 系 docs は、未適用 patch や過去 variant の記述を含むため、本格適用設計の根拠にする前に live source と再照合する必要がある。
+- 各claimの`Correct` / `Partially Correct` / `Unverified` / `Incorrect`を根拠sourceと対で読む。
+- runtime workspace系docsは、未適用patchや過去variantの記述を含むため、本格適用設計の根拠にする前にlive sourceと再照合する。
 
 本格適用可能性:
 
@@ -48,6 +50,8 @@ Android17 固有の確認結果は [aaos17_scalableui_source_verification_ja.md]
 | Workspace | AOSP 標準概念ではなく PoC HMI モデル。複数 Panel / Decor / runtime model の集合。 | Partially Correct | ScalableUI source に `Workspace` core concept はない。 |
 | Assignment | 標準では `Role` / `config_default_activities`。任意 app picker assignment はPoC custom。 | Partially Correct | `AutoTaskStackHelper.java`, Stub `AppGridActivity.java` |
 | Runtime Panel | `StateManager.addState()` は存在するが、任意数 panel 生成 UI / 永続化 / geometry は標準初期化経路ではない。 | Partially Correct | `StateManager.java`, `PanelConfigReader.java` |
+| KeyFrame drag | `KeyFrameVariant`とdrag sampleは標準。gesture取得、任意reorder、保存までのeditorは別実装。 | Partially Correct | `KeyFrameVariant.java`, `samples/DEWDSplit`, Android17公式variant reference |
+| Task launch policy | `TaskBehavior`は新規taskのsource root taskへの残留/復帰policyを持つ。既存taskの任意Panel間移動とは別。 | Partially Correct | `TaskPanel.trySetRootTaskLaunchBehavior()`, Android17公式panel reference |
 | RemoteTaskView | ScalableUI TaskPanel の実体ではない。AAOS の RemoteCarTaskView / TaskView 経路は別に存在する。 | Incorrect if mapped to ScalableUI | `RemoteCarTaskViewServerImpl.java`, `TaskView.java`, `TaskPanel.java` |
 | TaskDisplayArea | Activity launch / display area の platform 概念。Workspace と同一視しない。 | Partially Correct | `RootWindowContainer.java`, `TaskDisplayArea.java` |
 

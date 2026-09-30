@@ -8,6 +8,25 @@
 
 目的は、ScalableUI を「Launcher 内の widget 実装」ではなく、「SystemUI が WindowManager / ActivityTaskManager と連携して複数アプリ Activity を panel として orchestrate する仕組み」として理解することです。
 
+## 2026-10-01時点の公式仕様との対応
+
+| 公式仕様 | WindowManager / ScalableUI上の意味 |
+| --- | --- |
+| 各Panelは独立管理用のdedicated root taskに対応 | ActivityをPanelへ直接貼らず、`TaskPanel -> RootTaskStack / Task`経由で扱う |
+| `window_states`から`TaskPanel` / `DecorPanel`を読む | RRO/XMLはSystemUIが追跡するPanel modelを宣言する入口 |
+| `Variant`はbounds、visibility、layer、alpha、focus、insets等を持つ | Window stateの確定値として扱い、Activity configurationと整合させる |
+| `KeyFrameVariant`は0..1のfractionで連続補間する | grip dragやresizeの標準部品。ただしgesture UI、reorder policy、persistenceまで自動提供しない |
+| `TaskBehavior.newTaskLaunchPolicy`がある | 新規taskの`DEFAULT` / `REMAIN_IN_SOURCE` / `REPARENT_TO_SOURCE`を定義できる。任意の既存task移動とは別 |
+| `android.software.car.splitscreen_multitasking`が必要 | feature宣言と、競合するlegacy windowing / split-screen機能の無効化も製品統合条件 |
+
+WindowManager invariantsとして、次を設計条件にする。
+
+- standard Activityは最終bounds / densityを一度のlaunch transitionで確定し、起動直後の二段階resizeを避ける。
+- Home sceneへ戻るときは、背後のstandard Activityを単に隠すだけでなくstopped stateへ移す。
+- app contentを独自overlayで覆わず、必要な領域は`DecorPanel`と`SystemOverlay` insetsで扱う。
+- immersive requestをPanel resizeの暗黙triggerにしない。
+- standard Activity surfaceへの任意corner適用を避け、display-level roundingとの整合を取る。
+
 ## 全体像
 
 ```mermaid
@@ -269,7 +288,7 @@ StubCarLauncher
 
 短く言うと、`ActivityTaskManager` が task を生み、`WindowManager / Shell` が配置し、`ScalableUI` が HMI としての panel 方針を決めます。
 
-注意: AOSP の `WindowContainerTransaction` には `reparent()` / `reparentTasks()` が存在します。ただし、現在の live ScalableUI source だけでは「既存 task を Panel A から Panel B へ直接 reparent する」標準実装は確認できていません。panel assignment / relocation を説明するときは、標準 ScalableUI と PoC custom routing を分けて扱います。
+注意: AOSP の `WindowContainerTransaction` には `reparent()` / `reparentTasks()` があり、ScalableUIの`TaskBehavior`には新規task launch時の`REPARENT_TO_SOURCE` policyがあります。ただし、これは「任意の既存taskをユーザー操作でPanel AからPanel Bへ直接移動する完成済みeditor」と同義ではありません。panel assignment / relocationを説明するときは、標準launch policyとPoC custom routingを分けて扱います。
 
 ## Panel と Activity の対応
 

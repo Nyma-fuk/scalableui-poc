@@ -11,6 +11,7 @@
 - [Repository README](https://github.com/Nyma-fuk/scalableui-poc/blob/main/README.md)
 - [Docs Index](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/README_ja.md)
 - [AAOS17 Source Verification](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md)
+- [AAOS17 Source Snapshot](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_source_snapshot_2026-10-01_ja.md)
 - [WindowManager Flow](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/architecture/scalableui_window_manager_flow_ja.md)
 
 ### Active PoC

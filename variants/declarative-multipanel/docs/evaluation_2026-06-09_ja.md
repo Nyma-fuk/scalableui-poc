@@ -2,6 +2,8 @@
 
 > Source verification: この評価記録は runtime smoke の観測結果です。AAOS/AOSP source に基づく責務分担と claim 判定は [AOSP Source Verification](../../../docs/verification/aosp_source_verification_ja.md) を参照してください。
 
+> Point-in-time evidence: この結果はAAOS15 LTS3での2026-06-09評価記録であり、AAOS17 runtimeの合格を意味しません。AAOS17 source基準は [2026-10-01 snapshot](../../../docs/verification/aaos17_source_snapshot_2026-10-01_ja.md) を参照してください。
+
 ## 評価対象
 
 - product: `sdk_car_scalableui_declarative_multipanel_x86_64`
