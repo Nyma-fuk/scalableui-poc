@@ -55,6 +55,7 @@
 | [verification/aaos17_scalableui_source_verification_ja.md](verification/aaos17_scalableui_source_verification_ja.md) | Android17 source 上の ScalableUI 実装 | Android17 前提で Panel / TaskPanel / StateManager を説明できる |
 | [architecture/scalableui_window_manager_flow_ja.md](architecture/scalableui_window_manager_flow_ja.md) | app launch から panel 表示までの責務分担 | WM / ATM / CarSystemUI / Launcher の関係を図で説明できる |
 | [architecture/aaos_app_layer_scalableui_scope_ja.md](architecture/aaos_app_layer_scalableui_scope_ja.md) | app layer と platform 差分の境界 | 個人検証で作れる成果物と対象 AAOS 環境で必要な取り込み作業を分けられる |
+| [architecture/panel_reorder_interaction_design_ja.md](architecture/panel_reorder_interaction_design_ja.md) | Panel全面長押しと編集モード方式の入力・Surface・Drop設計 | 固定3-slotのPanel swapを通常アプリ操作と分離して段階実装できる |
 | [android17/aaos17_scalableui_as_is_capability_ja.md](android17/aaos17_scalableui_as_is_capability_ja.md) | AAOS17 ScalableUI の As-Is 実力、Panel/XML/Task event/Controller の詳細 | source 根拠をもとに ScalableUI 標準実装の範囲を説明できる |
 | [android17/official_scalableui_factcheck_ja.md](android17/official_scalableui_factcheck_ja.md) | 公式 ScalableUI ページと AAOS17 source の照合結果 | 事実、事実の詳細、設計上の想定を分けて説明できる |
 | [android17/scalableui_demos/README.md](android17/scalableui_demos/README.md) | AAOS17 source 内の ScalableUI demo / sample の詳細 | codelab、DEWD、minimized controls の画面構成と取り込み条件を demo 単位で確認できる |

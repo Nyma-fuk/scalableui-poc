@@ -323,6 +323,8 @@ Panel 管理の主体:
 
 ## custom 実装が必要な範囲
 
+Panel 全面dragによる3-slot並べ替えの実現方式は、[Panel 全面操作による 3-slot 並べ替え設計](../../../docs/architecture/panel_reorder_interaction_design_ja.md) に整理しています。現行baselineへ直ちにruntime実装を加えたものではなく、編集モード方式を第一段階、通常画面の長押し方式を後続実験として扱います。
+
 - 標準 `CarLauncher` を HMI と干渉しない Stub に置き換えること
 - AppGrid から target panel ID を付けて Activity を起動すること
 - AAOS15 LTS3 で DecorPanel-only transition を安定させること
