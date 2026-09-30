@@ -4,7 +4,7 @@
 
 この文書は、Android 17 / AAOS17 の source code に存在する ScalableUI の実力を一枚で把握するための資料である。
 
-対象は `android-17.0.0_r1` の AAOS source tree とする。説明の正は repository 内の説明文ではなく、AAOS/AOSP source code である。
+対象は `android-17.0.0_r1` の AAOS source tree とする。2026-10-01 時点の公式 `android17-release` でも主要 ScalableUI project は同一 hash である。正確な branch / tag / project hash とlocal差分は [AAOS17 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を参照する。説明の正は repository 内の説明文ではなく、AAOS/AOSP source code である。
 
 この文書では、以下をまとめる。
 
@@ -21,6 +21,8 @@
 
 AAOS17 の ScalableUI は、通常アプリの UI toolkit ではなく、CarSystemUI 内で WindowManager / WMShell / ActivityTaskManager と接続し、Panel 単位で task 表示、状態遷移、surface animation を扱う framework である。
 
+2026-09-27更新の公式overviewはScalableUIを新規AAOS programに強く推奨し、AAOS 16以降では無効構成はCTSを通過しないとしている。したがって、これは単なるsample UIではなく、互換性を意識した標準windowing基盤として評価する。
+
 重要な結論は以下である。
 
 | 領域 | As-Is でできること | As-Is だけでは完結しないこと |
@@ -30,6 +32,7 @@ AAOS17 の ScalableUI は、通常アプリの UI toolkit ではなく、CarSyst
 | Transition | event に応じて variant を切り替え、WM transition と surface animation を扱う | HMI 固有 event 設計、入力制御、永続化 policy の全自動化 |
 | Controller | Panel ごとの初期 Activity、persistent Activity、package 変更追従などを扱う | XML だけで任意 Java/Kotlin controller を追加すること |
 | Runtime 変更 | `StateManager.addState()` / `reloadPanelState()` の下回りはある | ユーザー操作での panel editor / app picker / layout persistence |
+| Panel並べ替え | grip drag、spy input、Surface transactionなど実装部品はある | Panel全面長押しswap、drop policy、永続化を含む完成機能 |
 | App 表示 | `Panel -> TaskPanel -> RootTaskStack / Task -> Activity` として表示する | `Panel -> Activity` の直接モデル |
 | Launcher | Home / AppGrid などの入口になれる | ScalableUI の panel 管理主体になること |
 

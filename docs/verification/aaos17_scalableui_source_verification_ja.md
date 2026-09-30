@@ -1,12 +1,15 @@
 # AAOS17 ScalableUI Source Verification
 
-この文書は、AAOS17 / Android 17 `android-17.0.0_r1` workspace の source を正として、ScalableUI 関連記述の整合性を確認した結果をまとめる。
+この文書は、AAOS17 / Android 17 `android-17.0.0_r1` workspace の source を正として、ScalableUI 関連記述の整合性を確認した結果をまとめる。2026-10-01 に公式 `android17-release` と再照合し、主要 ScalableUI project の HEAD がこの固定tag checkoutと同一であることを確認した。branch、tag、project hash の詳細は [AAOS17 Source Snapshot](aaos17_source_snapshot_2026-10-01_ja.md) を参照する。
 
 対象 source tree:
 
 ```text
 <AAOS17_ROOT>
 repo manifest tag: android-17.0.0_r1
+manifest commit: 5bc9a7ce1cd78dd53613bbfd0ebf506e1e4adb0f
+follow-up branch: android17-release @ 29ace668ae756c7b8917c57abb440f6518844b0c
+build id: CP2A.260605.016
 ```
 
 重要な前提:

@@ -24,6 +24,8 @@
 
 現行 baseline は `variants/declarative-multipanel`。
 
+AAOS17 source の基準は [2026-10-01 source snapshot](verification/aaos17_source_snapshot_2026-10-01_ja.md)。追随先は `android17-release` manifest `29ace668ae756c7b8917c57abb440f6518844b0c`、再現可能な build / runtime 基準は `android-17.0.0_r1` / `CP2A.260605.016` とする。
+
 重要な前提:
 
 - ScalableUI の正はこの repo の docs ではなく AAOS/AOSP source code。
@@ -51,6 +53,7 @@
 
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
+| [verification/aaos17_source_snapshot_2026-10-01_ja.md](verification/aaos17_source_snapshot_2026-10-01_ja.md) | 最新AAOS17 branch、固定tag、主要project hash、local差分の境界 | capability評価のsource基準を再現できる |
 | [verification/aosp_source_verification_ja.md](verification/aosp_source_verification_ja.md) | docs の主張を AAOS/AOSP source で照合した結果 | ScalableUI 標準機能と PoC/custom 実装を切り分けられる |
 | [verification/aaos17_scalableui_source_verification_ja.md](verification/aaos17_scalableui_source_verification_ja.md) | Android17 source 上の ScalableUI 実装 | Android17 前提で Panel / TaskPanel / StateManager を説明できる |
 | [architecture/scalableui_window_manager_flow_ja.md](architecture/scalableui_window_manager_flow_ja.md) | app launch から panel 表示までの責務分担 | WM / ATM / CarSystemUI / Launcher の関係を図で説明できる |

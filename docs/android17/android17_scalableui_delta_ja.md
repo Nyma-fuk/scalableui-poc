@@ -2,11 +2,13 @@
 
 ## 目的
 
-Android 17.0.0 Release 1 (`android-17.0.0_r1`) で更新された ScalableUI 関連実装と、現在の workspace にある Android 16 QPR2 ベースの ScalableUI PoC との差分を明確にする。
+Android 17.0.0 Release 1 (`android-17.0.0_r1`) で更新された ScalableUI 関連実装と、調査当時の Android 16 QPR2 ベース ScalableUI PoC との差分を明確にする。
 
 本資料は、Android 17 への移植作業を開始する前の一次整理を起点にしている。
 その後、Android 17 `sdk_car_x86_64-trunk_staging-userdebug` のAs-Is build / emulator起動確認を実施した。
 移植作業の最新方針は [aaos17_scalableui_development_flow_ja.md](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/android17/aaos17_scalableui_development_flow_ja.md) を正とする。
+
+> 現在のAAOS17 checkoutの基準は本資料作成時のAndroid16 workspaceではない。2026-10-01時点の branch / tag / exact project hash は [AAOS17 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を正とする。
 
 ## 比較対象
 
@@ -26,21 +28,21 @@ Gitiles 上で確認した manifest tag 情報:
 | message | `Android 17.0.0 Release 1` |
 | tagger date | `2026-06-16 23:31:21 +0000` |
 
-関連 project の Android 17 tag:
+関連 project の Android 17 annotated tag と、実際の source commit:
 
-| project | Android 17 tag commit |
-| --- | --- |
-| `platform/packages/apps/Car/SystemUI` | `0052c28c` |
-| `platform/packages/services/Car` | `0b5729dbd5` |
-| `platform/frameworks/base` | `23149ba144e8` |
+| project | tag object | peeled source commit |
+| --- | --- | --- |
+| `platform/packages/apps/Car/SystemUI` | `0052c28c8abbdce79061481ee871600e1a46f034` | `8dd6b4135ad531ae26adc96f99a4f6f2eb693138` |
+| `platform/packages/services/Car` | `0b5729dbd5744a8ec156becc0c51e43e4bd58f9e` | `9f04df65daa8b9a65ee05fd4039fe95446874d76` |
+| `platform/frameworks/base` | `23149ba144e850fe494a91ffa13f8019455c0804` | `94b4c163b7dfe5ce3607f7bb8456f9573f7de57d` |
 
-### 現在 workspace の Android 16 QPR2
+### 調査当時の Android 16 QPR2 workspace
 
 比較用 checkout:
 
 `<ANDROID16_QPR2_ROOT>`
 
-| project | local HEAD | 備考 |
+| project | 当時の local HEAD | 備考 |
 | --- | --- | --- |
 | `packages/apps/Car/SystemUI` | `43736f34` | `25Q4-release` 系 merge commit |
 | `packages/services/Car` | `b8fe0e1e8f` | `25Q4-release` 系 merge commit |

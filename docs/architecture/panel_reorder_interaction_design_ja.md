@@ -5,6 +5,8 @@
 > Target: AAOS17 `sdk_car_x86_64-trunk_staging-userdebug` + 現行 `declarative-multipanel`
 >
 > 調査時点: 2026-10-01
+>
+> AAOS17 source基準: [`android17-release` / `android-17.0.0_r1` snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md)
 
 ## 1. 目的
 

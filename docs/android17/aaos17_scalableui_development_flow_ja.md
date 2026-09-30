@@ -7,6 +7,8 @@ Android 17 AAOS emulatorのAs-Is挙動を壊さずに、ScalableUI PoCを段階�
 AAOS17 source上のScalableUI実装確認は [aaos17_scalableui_source_verification_ja.md](https://github.com/Nyma-fuk/scalableui-poc/blob/main/docs/verification/aaos17_scalableui_source_verification_ja.md) を正とする。
 この文書は、その確認結果を前提にした開発手順を扱う。
 
+source追随先は `android17-release`、再現可能なbuild基準は `android-17.0.0_r1` / `CP2A.260605.016` とする。2026-10-01時点のexact hashは [AAOS17 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を参照する。
+
 今回の開発では、PoC専用の新productを作るのではなく、build実績のある標準AAOS17 emulator
 targetへPoC差分を重ねる。
 

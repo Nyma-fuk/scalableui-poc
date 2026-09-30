@@ -4,13 +4,21 @@
 
 この文書は、Android Developers の ScalableUI 公式ページと AAOS17 source code を照合し、ScalableUI で確認できる事実、事実の詳細、そこからの設計上の想定を分けて整理する。
 
-確認日: 2026-06-24
+初回確認日: 2026-06-24
+
+source snapshot再確認日: 2026-10-01
 
 対象 source:
 
 ```text
 android-17.0.0_r1
+manifest commit: 5bc9a7ce1cd78dd53613bbfd0ebf506e1e4adb0f
+android17-release: 29ace668ae756c7b8917c57abb440f6518844b0c
 ```
+
+主要 ScalableUI project の branch HEAD は固定tag checkoutと同一だった。hash一覧とlocal PoC差分は [AAOS17 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を参照する。
+
+2026-10-01の再確認では、公式overviewの最終更新日は2026-09-27、app ecosystemは2026-09-24だった。
 
 この文書では次の言葉を厳密に分ける。
 
@@ -25,6 +33,15 @@ android-17.0.0_r1
 AAOS17 の ScalableUI は、CarSystemUI 内で panel、system bar、HUN、SUW、system event、transition、runtime panel update を扱う高度な windowing framework として確認できる。
 
 一方で、公式ページと AAOS17 source code だけでは、ユーザー操作で任意の panel を自由に追加・削除・並べ替えし、その状態を永続化する完成済み editor 機能までは確認できない。動的な panel サイズ変更や panel update の仕組みは存在するが、任意 layout editor を実現する場合は、ScalableUI の event / transition / controller / panel update API を使った追加設計として扱うべきである。
+
+2026-09更新の公式overviewで明確になった位置づけ:
+
+| 公式記述 | このPoCでの扱い |
+| --- | --- |
+| 新規AAOS programへのScalableUI採用を強く推奨 | 将来向けのwindowing基盤として扱い、独自WM実装への置換を前提にしない |
+| AAOS 16以降はScalableUI無効構成ではCTSを通過しない | `config_enableScalableUI`を単なる任意demo flagとして説明しない |
+| Android 17 advanced windowingとしてHUN、system bar、WM invariants、SUW integrationを列挙 | app panelだけでなくsystem windowと互換性要件までcapability範囲に含める |
+| Panelはdedicated root taskに対応し、TaskPanelまたはview-based DecorPanelとして使う | `TaskPanel -> RootTaskStack / Task -> Activity`というsource読解と一致 |
 
 重要な結論は以下である。
 

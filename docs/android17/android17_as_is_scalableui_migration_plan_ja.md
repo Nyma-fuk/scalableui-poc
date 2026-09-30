@@ -20,6 +20,8 @@ docs/android17/aaos17_scalableui_development_flow_ja.md
 Android 17 `android-17.0.0_r1` の `sdk_car_x86_64-trunk_staging-userdebug`
 をAs-Is基準とする。
 
+これは再現可能な固定検証点であり、追随先は公式 `android17-release` である。2026-10-01時点では主要 ScalableUI project の branch HEAD とこの checkout の基準 commit は同一。exact hash とlocal PoC差分は [AAOS17 Source Snapshot](../verification/aaos17_source_snapshot_2026-10-01_ja.md) を参照する。
+
 確認済みの基準は以下。
 
 | 項目 | 結果 |

@@ -4,6 +4,7 @@ Android17 ベースへ ScalableUI PoC を移すための資料。
 
 | 文書 | 何が理解できるか | 何ができるようになるか |
 | --- | --- | --- |
+| [../verification/aaos17_source_snapshot_2026-10-01_ja.md](../verification/aaos17_source_snapshot_2026-10-01_ja.md) | 最新 `android17-release` と固定tag、主要project hash、PoC差分の境界 | 追随先と再現可能な検証点を使い分けられる |
 | [aaos17_scalableui_development_flow_ja.md](aaos17_scalableui_development_flow_ja.md) | 標準 AAOS17 emulator target を維持する開発手順 | module build、`emu_img_zip`、runtime smoke へ段階的に進められる |
 | [aaos17_scalableui_as_is_capability_ja.md](aaos17_scalableui_as_is_capability_ja.md) | AAOS17 ScalableUI の As-Is 実力、Panel/XML/Task event/Controller の全体像 | source 根拠をもとに ScalableUI でできること・できないことを説明できる |
 | [official_scalableui_factcheck_ja.md](official_scalableui_factcheck_ja.md) | 公式 ScalableUI ページと AAOS17 source を照合した事実・詳細・想定 | HUN、SUW、system bar、event、runtime resize、drag、carousel の説明で断定できる範囲を分けられる |
